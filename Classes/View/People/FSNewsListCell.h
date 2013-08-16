@@ -18,7 +18,6 @@
     UILabel *_lab_NewsDescription;
     //UILabel *_lab_VisitVolume;
     UILabel *_lab_NewsType;
-    
     FSAsyncImageView *_image_Onright;
     //UIImageView *_image_Footprint;
     
@@ -26,5 +25,6 @@
 
 -(BOOL)isDownloadPic;
 -(NSString *)timeTostring:(NSNumber *)time;
+@property(nonatomic,retain)UIView * leftView;
 
 @end

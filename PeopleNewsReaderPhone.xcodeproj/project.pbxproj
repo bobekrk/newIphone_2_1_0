@@ -361,7 +361,7 @@
 		04FB294A1675B6D400F6BBFE /* weathercell_beijing2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FB29441675B6D400F6BBFE /* weathercell_beijing2@2x.png */; };
 		04FB294B1675B6D400F6BBFE /* weathercell_tianqibeijing.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FB29451675B6D400F6BBFE /* weathercell_tianqibeijing.png */; };
 		04FB294C1675B6D400F6BBFE /* weathercell_tianqibeijing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04FB29461675B6D400F6BBFE /* weathercell_tianqibeijing@2x.png */; };
-		0AE0769717BB14AC006B6358 /* FSOneDayNewsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE0769617BB14AC006B6358 /* FSOneDayNewsObject.m */; };
+		0A6383A417BDC26D002A9611 /* FSOneDayNewsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6383A317BDC26D002A9611 /* FSOneDayNewsObject.m */; };
 		0AE0769A17BB9A6A006B6358 /* MyNewsLIstView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE0769917BB9A69006B6358 /* MyNewsLIstView.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -1210,8 +1210,8 @@
 		04FB29441675B6D400F6BBFE /* weathercell_beijing2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weathercell_beijing2@2x.png"; sourceTree = "<group>"; };
 		04FB29451675B6D400F6BBFE /* weathercell_tianqibeijing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weathercell_tianqibeijing.png; sourceTree = "<group>"; };
 		04FB29461675B6D400F6BBFE /* weathercell_tianqibeijing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weathercell_tianqibeijing@2x.png"; sourceTree = "<group>"; };
-		0AE0769517BB14AB006B6358 /* FSOneDayNewsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSOneDayNewsObject.h; sourceTree = "<group>"; };
-		0AE0769617BB14AC006B6358 /* FSOneDayNewsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSOneDayNewsObject.m; sourceTree = "<group>"; };
+		0A6383A217BDC26D002A9611 /* FSOneDayNewsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSOneDayNewsObject.h; sourceTree = "<group>"; };
+		0A6383A317BDC26D002A9611 /* FSOneDayNewsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSOneDayNewsObject.m; sourceTree = "<group>"; };
 		0AE0769817BB9A69006B6358 /* MyNewsLIstView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNewsLIstView.h; sourceTree = "<group>"; };
 		0AE0769917BB9A69006B6358 /* MyNewsLIstView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNewsLIstView.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -2500,9 +2500,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0AE0769517BB14AB006B6358 /* FSOneDayNewsObject.h */,
-				0AE0769617BB14AC006B6358 /* FSOneDayNewsObject.m */,
 				5850C1D2179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld */,
+				0A6383A217BDC26D002A9611 /* FSOneDayNewsObject.h */,
+				0A6383A317BDC26D002A9611 /* FSOneDayNewsObject.m */,
 				5889DB2D17B1EADB00ED76BA /* FSLoadingImageObject.h */,
 				5889DB2E17B1EADB00ED76BA /* FSLoadingImageObject.m */,
 				8212197115C677CF00B713FB /* Content */,
@@ -4264,8 +4264,8 @@
 				58AE68B917AF7F6F0007203C /* TCWBRequest.m in Sources */,
 				5889DB2F17B1EADB00ED76BA /* FSLoadingImageObject.m in Sources */,
 				58CDA27C17BA30E300984B06 /* FSOneDayNewsObjectx.m in Sources */,
-				0AE0769717BB14AC006B6358 /* FSOneDayNewsObject.m in Sources */,
 				0AE0769A17BB9A6A006B6358 /* MyNewsLIstView.m in Sources */,
+				0A6383A417BDC26D002A9611 /* FSOneDayNewsObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

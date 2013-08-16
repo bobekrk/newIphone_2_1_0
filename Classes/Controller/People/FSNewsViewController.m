@@ -56,41 +56,46 @@
     _myScroview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
     _myScroview.showsHorizontalScrollIndicator  = NO;
     _myScroview.tag            = 1000;
-    _myScroview.delegate       = self;
+    //_myScroview.delegate       = self;
     _myScroview.contentSize    = CGSizeMake(56*[_fs_GZF_ChannelListDAO.objectList count], 44);
     
     
     for (int i = 0; i<[_fs_GZF_ChannelListDAO.objectList count]; i++) {
         FSChannelObject *CObject = [_fs_GZF_ChannelListDAO.objectList objectAtIndex:i];
-        UIButton * button   = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.tag          = i;
-        button.frame        =  CGRectMake(i*56, 0, 56, 44);
+        UIButton * button        = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.tag               = i;
+        button.frame             =  CGRectMake(i*56, 0, 56, 44);
 
-        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 56, 44)];
-        label.tag       = 100;
-        label.textAlignment = UITextAlignmentCenter;
-        label.text      = CObject.channelname;
+        UILabel * label          = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 56, 44)];
+        label.tag                = 100;
+        label.textAlignment      = UITextAlignmentCenter;
+        label.text               = CObject.channelname;
         [button addSubview:label];
         [label release];
         [button addTarget:self action:@selector(buttonCliCked:) forControlEvents:UIControlEventTouchUpInside];
         [_myScroview addSubview:button];
         if (i == 0) {
-            label.textColor = [UIColor redColor];
+            label.textColor      = [UIColor redColor];
         }else
         {
-            label.textColor = [UIColor lightGrayColor];
+            label.textColor      = [UIColor lightGrayColor];
         }
     }
-    NSLog(@"%@",self.myNaviBar);
     [self.myNaviBar removeFromSuperview];
     [self.view addSubview:_myScroview];
     [_myScroview release];
-    _topRedImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 40, 56, 4)];
-    _topRedImageView.image = [UIImage imageNamed:@"topSelected.png"];
+    _topRedImageView            = [[UIImageView alloc]initWithFrame:CGRectMake(0, 40, 56, 4)];
+    _topRedImageView.image      = [UIImage imageNamed:@"topSelected.png"];
     [_myScroview addSubview:_topRedImageView];
     [_topRedImageView release];
     
+    
+    
     [self addNewsScrollView];
+    UIView * lineView           = [[UIView alloc]initWithFrame:CGRectMake(0, 42, 320, 2)];
+    lineView.backgroundColor    = [UIColor redColor];
+    [self.view addSubview:lineView];
+    [lineView release];
 }
 
 
@@ -99,49 +104,42 @@
     float xx = (ISIPHONE5?576:480)-44-49-20;
     float offset = (_canBeHaveNaviBar?44:0);
     UIScrollView * scroview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, offset, 320, xx)];
-    scroview.contentSize    = CGSizeMake(320*10, xx);
+    scroview.contentSize    = CGSizeMake(320*_fs_GZF_ChannelListDAO.objectList.count, xx);
     scroview.delegate       = self;
+    scroview.tag            = 2000;
     [self.view addSubview:scroview];
     [scroview release];
     scroview.pagingEnabled  = YES;
     
-
     
-    MyNewsLIstView * view1 = [[MyNewsLIstView alloc]initWithChanel:_fs_GZF_ChannelListDAO currentIndex:0 parentViewController:self];
-    view1.frame            = CGRectMake(0, 0, 320, xx);
-    view1.parentDelegate   = view1;
-    [scroview addSubview:view1];
-    [view1 release];
- //   [view1 refreshDataSource];
     
-    MyNewsLIstView * view2 = [[MyNewsLIstView alloc]initWithChanel:_fs_GZF_ChannelListDAO currentIndex:1 parentViewController:self];
-    view2.frame            = CGRectMake(320, 0, 320, xx);
-    view2.parentDelegate   = view2;
-    [scroview addSubview:view2];
-    [view2 release];
-    //   [view1 refreshDataSource];
-    
-    MyNewsLIstView * view3 = [[MyNewsLIstView alloc]initWithChanel:_fs_GZF_ChannelListDAO currentIndex:3 parentViewController:self];
-    view3.frame            = CGRectMake(320*2, 0, 320, xx);
-    view3.parentDelegate   = view3;
-    [scroview addSubview:view3];
-    [view3 release];
+    for (int i = 0; i< _fs_GZF_ChannelListDAO.objectList.count; i++) {
+        MyNewsLIstView * view1 = [[MyNewsLIstView alloc]initWithChanel:_fs_GZF_ChannelListDAO currentIndex:i parentViewController:self];
+        view1.frame            = CGRectMake(i*320, 0, 320, xx);
+        view1.parentDelegate   = view1;
+        [scroview addSubview:view1];
+        [view1 release];
+    }
 }
 
--(void)indexChange:(int)index
-{
-    NSLog(@"%d",[_fs_GZF_ChannelListDAO.objectList count]);
-}
 -(void)buttonCliCked:(UIButton*)sender
 {
+    //[self manuseletctbutton:sender.tag];
     [self changeButtonColor:sender.tag];
     _currentIndex = sender.tag;
-    [self indexChange:sender.tag];
+    UIScrollView * view = (UIScrollView *)[self.view viewWithTag:2000];
+    view.contentOffset  = CGPointMake(sender.tag*320, 0);
+
+}
+-(void)manuseletctbutton:(int)x
+{
+    [self changeButtonColor:x];
+    _currentIndex = x;
 }
 -(void)changeButtonColor:(int)index
 {
     [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationDuration:0.1];
     if (index == _currentIndex) {
         return;
     }
@@ -215,7 +213,22 @@
 	return [UIImage imageNamed:@"news_sel.png"];
 }
 
-
+#pragma mark -----左右滑动
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    int x = scrollView.contentOffset.x/320;
+    [self manuseletctbutton:x];
+    UIView * view = [_myScroview viewWithTag:x];
+    int index = view.frame.origin.x;
+    int yyy   = _myScroview.contentOffset.x;
+    if (index - yyy > 320) {
+        _myScroview.contentOffset = CGPointMake(index - 320+ 50, 0);
+    }else if(yyy > index)
+    {
+        _myScroview.contentOffset = CGPointMake(index, 0);
+    }
+    
+}
 
 #pragma mark - 
 #pragma FSTableContainerViewDelegate mark
@@ -265,6 +278,10 @@
     }
     
 
+}
+-(void)didReceiveMemoryWarning
+{
+    NSLog(@"received memory warninng");
 }
 
 @end

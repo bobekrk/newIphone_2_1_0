@@ -87,6 +87,13 @@
     //self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    
+    
+    _leftView = [[UIView alloc] init];
+    [self addSubview:_leftView];
+    _leftView.backgroundColor = [UIColor lightGrayColor];
+    [_leftView release];
+    
 }
 
 -(void)setDayPattern:(BOOL)is_day{
@@ -96,6 +103,8 @@
 
 -(void)doSomethingAtLayoutSubviews{
     
+    _leftView.frame = CGRectMake(0, 0, 4, self.frame.size.height);
+    
  //   _image_Footprint.image = [UIImage imageNamed:@"xin.png"];
     
     if ([self.data isKindOfClass:[FSMyFaverateObject class]]) {
@@ -103,7 +112,7 @@
         _lab_NewsTitle.text = obj.title;
         _lab_NewsDescription.text = obj.news_abstract;
 //        _lab_VisitVolume.text = [NSString stringWithFormat:@"%d",[obj.browserCount integerValue]];
-       _lab_NewsType.text = [NSString stringWithFormat:@"%@",[self timeTostring:obj.timestamp]];
+       //_lab_NewsType.text = [NSString stringWithFormat:@"%@",[self timeTostring:obj.timestamp]];
         
         NSString *defaultDBPath = obj.picture;
         NSString *loaclFile = getFileNameWithURLString(defaultDBPath, getCachesPath());
@@ -111,16 +120,17 @@
         _image_Onright.localStoreFileName = loaclFile;
     }
     else{
-        FSOneDayNewsObject *obj = (FSOneDayNewsObject *)self.data;
-        _lab_NewsTitle.text = obj.title;
+        FSOneDayNewsObject *obj   = (FSOneDayNewsObject *)self.data;
+        _lab_NewsTitle.text       = obj.title;
         _lab_NewsDescription.text = obj.news_abstract;
-//        _lab_VisitVolume.text = [NSString stringWithFormat:@"%d",[obj.browserCount integerValue]];
-        _lab_NewsType.text = [NSString stringWithFormat:@"%@",[self timeTostring:obj.timestamp]];
+        NSLog(@"%@",obj.isRedColor);
+        //        _lab_VisitVolume.text = [NSString stringWithFormat:@"%d",[obj.browserCount integerValue]];
+        //_lab_NewsType.text = [NSString stringWithFormat:@"%@",[self timeTostring:obj.timestamp]];
         
         
-        NSString *defaultDBPath = obj.picture;
-        NSString *loaclFile = getFileNameWithURLString(defaultDBPath, getCachesPath());
-        _image_Onright.urlString = defaultDBPath;
+        NSString *defaultDBPath   = obj.picture;
+        NSString *loaclFile       = getFileNameWithURLString(defaultDBPath, getCachesPath());
+        _image_Onright.urlString  = defaultDBPath;
         _image_Onright.localStoreFileName = loaclFile;
     }
     

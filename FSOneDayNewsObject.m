@@ -2,7 +2,7 @@
 //  FSOneDayNewsObject.m
 //  PeopleNewsReaderPhone
 //
-//  Created by ark on 13-8-14.
+//  Created by ark on 13-8-16.
 //
 //
 
@@ -29,5 +29,6 @@
 @dynamic realtimeid;
 @dynamic kind;
 @dynamic UPDATE_DATE;
+@dynamic isRedColor;
 
 @end

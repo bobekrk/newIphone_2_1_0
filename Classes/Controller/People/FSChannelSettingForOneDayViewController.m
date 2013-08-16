@@ -427,16 +427,22 @@
             
             ;
             //FSChannelObject * changeleobject = [_fs_GZF_ChannelListDAO.objectList objectAtIndex:0];
-            FSChannelObject *CObject = [_fs_GZF_ChannelListDAO.objectList objectAtIndex:0];
-            NSArray * arry = [[FSBaseDB sharedFSBaseDB]getObjectsByKeyWithName:@"FSUserSelectObject" key:nil value:nil];
-            [[FSBaseDB sharedFSBaseDB] deleteObjectByObjectS:arry];
-            FSUserSelectObject *sobj = (FSUserSelectObject *)[[FSBaseDB sharedFSBaseDB] insertObject:@"FSUserSelectObject"];
-            
-            sobj.kind = @"YAOWENCHANNEL";
-            sobj.keyValue1 = CObject.channelname;
-            sobj.keyValue2 = CObject.channelid;
-            [FSBaseDB saveDB];
-            [_fs_GZF_ChannelListDAO.objectList removeObjectAtIndex:0];
+            //FSChannelObject *CObject = [_fs_GZF_ChannelListDAO.objectList objectAtIndex:0];
+            if ([_fs_GZF_ChannelListDAO.objectList count] > 0) {
+                NSArray * arry = [[FSBaseDB sharedFSBaseDB]getObjectsByKeyWithName:@"FSUserSelectObject" key:nil value:nil];
+                [[FSBaseDB sharedFSBaseDB] deleteObjectByObjectS:arry];
+                for (FSChannelObject *CObject in _fs_GZF_ChannelListDAO.objectList) {
+                    FSUserSelectObject *sobj = (FSUserSelectObject *)[[FSBaseDB sharedFSBaseDB] insertObject:@"FSUserSelectObject"];
+                    
+                    sobj.kind = @"YAOWENCHANNEL";
+                    sobj.keyValue1 = CObject.channelname;
+                    sobj.keyValue2 = CObject.channelid;
+
+                }
+                [FSBaseDB saveDB];
+                [_fs_GZF_ChannelListDAO.objectList removeObjectAtIndex:0];
+            }
+           
             
         
             

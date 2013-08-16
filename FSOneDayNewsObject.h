@@ -2,7 +2,7 @@
 //  FSOneDayNewsObject.h
 //  PeopleNewsReaderPhone
 //
-//  Created by ark on 13-8-14.
+//  Created by ark on 13-8-16.
 //
 //
 
@@ -31,5 +31,6 @@
 @property (nonatomic, retain) NSString * realtimeid;
 @property (nonatomic, retain) NSString * kind;
 @property (nonatomic, retain) NSString * UPDATE_DATE;
+@property (nonatomic, retain) NSNumber * isRedColor;
 
 @end

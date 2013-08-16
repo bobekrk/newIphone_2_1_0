@@ -13,7 +13,7 @@
 
 @class FS_GZF_ForOnedayNewsFocusTopDAO,FS_GZF_ForNewsListDAO,FSUserSelectObject,FS_GZF_ChannelListDAO;
 
-@interface FSNewsViewController : FSBasePeopleViewController <FSTitleViewDelegate,FSTableContainerViewDelegate,UIScrollViewDelegate, UIGestureRecognizerDelegate>{
+@interface FSNewsViewController : FSBasePeopleViewController <FSTableContainerViewDelegate,UIScrollViewDelegate, UIGestureRecognizerDelegate>{
 @protected
 //    FSRoutineNewsListContentView    *_routineNewsListContentView;
 //    FSRoutineNewsListContentView    *_routineNewsListContentView1;

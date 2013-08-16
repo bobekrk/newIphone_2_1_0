@@ -25,18 +25,18 @@
 
 @interface FSTableView : UITableView {
 @protected
-	BOOL _dragging;
-	CGSize _oldSize;
-	NSUInteger _assistantViewFlag;
-	FSTableAssistantView *_topView;
-	FSTableAssistantView *_bottomView;
+	BOOL                    _dragging;
+	CGSize                  _oldSize;
+	NSUInteger              _assistantViewFlag;
+	FSTableAssistantView   *_topView;
+	FSTableAssistantView   *_bottomView;
 	FSTableAssistantIIView *_btnBottom;
-	id _parentDelegate;
+	id                      _parentDelegate;
 	//上下部分的背景图层
-	CALayer *_topLayer;
-	CALayer *_bottomLayer;
-    BOOL _isrefreshDataSource;
-    BOOL _isRefreshing;
+	CALayer                *_topLayer;
+	CALayer                *_bottomLayer;
+    BOOL                    _isrefreshDataSource;
+    BOOL                    _isRefreshing;
 }
 
 @property (nonatomic, assign) id parentDelegate;

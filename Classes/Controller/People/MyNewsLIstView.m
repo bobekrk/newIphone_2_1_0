@@ -38,6 +38,7 @@
         _isfirstShow         = YES;
         [self initDataModel];
         self.aChannelListDAO = aDao;
+        self.aViewController = aController;
     }
     self.currentIndex        = index;
     return self;
@@ -88,7 +89,7 @@
 	if (status == FSBaseDAOCallBack_WorkingStatus) {
 		if (1) {
 			FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:CGRectZero];
-			[indicatorMessageView showIndicatorMessageViewInView:self withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
+			//[indicatorMessageView showIndicatorMessageViewInView:self withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
 			[indicatorMessageView release];
 		}
 	} else {
@@ -350,13 +351,21 @@
         if (row== 0) {
             return;
         }
+        //FSNewsListCell * cell = [sender.tvList cellForRowAtIndexPath:indexPath];
+        if (_currentIndex > 0 && _currentIndex < [_fs_GZF_ForNewsListDAO.objectList count]) {
+            FSOneDayNewsObject *xx = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:_currentIndex];
+            xx.isRedColor          = [NSNumber numberWithInt:0];
+        }
+        
+        _currentIndex         = indexPath.row;
         FSOneDayNewsObject *o = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
+        o.isRedColor          = [NSNumber numberWithInt:1];
         FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
         fsNewsContainerViewController.obj                            = o;
         fsNewsContainerViewController.FCObj                          = nil;
         fsNewsContainerViewController.newsSourceKind                 = NewsSourceKind_PuTongNews;
         
-        
+        NSLog(@"%@ %@",self.aViewController,self.aViewController.navigationController);
         [self.aViewController.navigationController pushViewController:fsNewsContainerViewController animated:YES];
         [fsNewsContainerViewController release];
         [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
@@ -388,6 +397,14 @@
             if (row <= [_fs_GZF_ForNewsListDAO.objectList count]) {
                 // FSOneDayNewsObject *o = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
                 //NSLog(@"FSOneDayNewsObject:%d  :%@",row,o.title);
+                //NSLog(@"%@",sender.tvList.class);
+//                FSNewsListCell * cell = (FSNewsListCell *)[sender.tvList cellForRowAtIndexPath:indexPath];
+//                if (_currentIndex == indexPath.row) {
+//                    cell.leftView.backgroundColor = [UIColor redColor];
+//                }else
+//                {
+//                     cell.leftView.backgroundColor = [UIColor lightGrayColor];
+//                }
                 return [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
             }
             
