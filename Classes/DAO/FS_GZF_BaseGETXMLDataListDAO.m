@@ -15,7 +15,7 @@
 - (id)init {
 	self = [super init];
 	if (self) {
-        _objectList = nil;
+        
 		//_objectList = [[NSMutableArray alloc] init];
 	}
 	return self;

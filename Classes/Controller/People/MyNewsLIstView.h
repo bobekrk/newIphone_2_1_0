@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "FSTableContainerView.h"
 #import "FS_GZF_ChannelListDAO.h"
+#import "FSNewsListCell.h"
+#import "FSOneDayNewsObject.h"
 @class FS_GZF_ForOnedayNewsFocusTopDAO,FS_GZF_ForNewsListDAO,FSUserSelectObject,FS_GZF_ChannelListDAO;
 @interface MyNewsLIstView : FSTableContainerView<FSTableContainerViewDelegate,UIScrollViewDelegate, UIGestureRecognizerDelegate,FSBaseDAODelegate>
 {
@@ -19,6 +21,8 @@
     UIScrollView                    * _myScroview;
     BOOL                             _isfirstShow;
     int                              _currentIndex;
+    //FSNewsListCell                  *_currentCell;
+    FSOneDayNewsObject              *_currentObject;
 }
 -(id)initWithChanel:(FS_GZF_ChannelListDAO*)aDao currentIndex:(int)index parentViewController:(UIViewController*)aController;
 @property(nonatomic,assign)int currentIndex;

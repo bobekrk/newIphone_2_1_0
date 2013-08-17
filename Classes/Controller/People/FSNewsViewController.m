@@ -186,8 +186,8 @@
     [super viewWillAppear:NO];
     if (_isfirstShow) {
         _isfirstShow = NO;
+        [_fs_GZF_ChannelListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
     }
-    [_fs_GZF_ChannelListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
 }
 
 -(void)doSomethingForViewFirstTimeShow{

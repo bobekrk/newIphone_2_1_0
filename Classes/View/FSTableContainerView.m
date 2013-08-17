@@ -196,6 +196,7 @@
 	} else {
 		[self initializeCell:cell withData:[self cellDataObjectWithIndexPath:indexPath] withIndexPath:indexPath];
 	}
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

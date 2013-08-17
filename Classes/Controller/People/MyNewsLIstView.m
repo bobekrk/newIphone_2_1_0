@@ -16,6 +16,7 @@
 #import "FSFocusTopObject.h"
 #import "FSNewsContainerViewController.h"
 #import "FSWebViewForOpenURLViewController.h"
+#import <UIKit/UITableView.h>
 @implementation MyNewsLIstView
 - (id)initWithFrame:(CGRect)frame
 {
@@ -351,14 +352,22 @@
         if (row== 0) {
             return;
         }
-        //FSNewsListCell * cell = [sender.tvList cellForRowAtIndexPath:indexPath];
-        if (_currentIndex > 0 && _currentIndex < [_fs_GZF_ForNewsListDAO.objectList count]) {
-            FSOneDayNewsObject *xx = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:_currentIndex];
-            xx.isRedColor          = [NSNumber numberWithInt:0];
+        FSNewsListCell * cell = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:indexPath];
+        cell.leftView.backgroundColor = [UIColor redColor];
+        cell.lab_NewsTitle.textColor      = [UIColor grayColor];
+        int i = 0;
+        for (FSOneDayNewsObject * obj in _fs_GZF_ForNewsListDAO.objectList) {
+            if ([_currentObject isEqual:obj]) {
+                obj.isRedColor = [NSNumber numberWithInt:0];
+                FSNewsListCell * cell = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i+1 inSection:0]];
+                cell.leftView.backgroundColor = [UIColor lightGrayColor];
+                break;
+            }
+            i++;
         }
-        
-        _currentIndex         = indexPath.row;
         FSOneDayNewsObject *o = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
+        o.isReaded            = [NSNumber numberWithInt:1];
+        _currentObject        = o;
         o.isRedColor          = [NSNumber numberWithInt:1];
         FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
         fsNewsContainerViewController.obj                            = o;

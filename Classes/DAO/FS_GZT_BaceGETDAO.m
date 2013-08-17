@@ -282,7 +282,7 @@
 //需要覆盖的两个类
 
 - (void)readDataFromBufferWithQueryDataKind:(Query_DataKind)dataKind {
-   
+    NSLog(@"%p",self);
 	//NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	if (self.fetchRequest == nil) {
 		NSFetchRequest *request = [[NSFetchRequest alloc] init];
