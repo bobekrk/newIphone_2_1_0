@@ -2,7 +2,7 @@
 //  FSOneDayNewsObject.h
 //  PeopleNewsReaderPhone
 //
-//  Created by ark on 13-8-16.
+//  Created by lygn128 on 13-8-17.
 //
 //
 

@@ -22,7 +22,7 @@
     //UIImageView *_image_Footprint;
     
 }
-
+@property(nonatomic,retain)UILabel * lab_NewsTitle;
 -(BOOL)isDownloadPic;
 -(NSString *)timeTostring:(NSNumber *)time;
 @property(nonatomic,retain)UIView * leftView;
