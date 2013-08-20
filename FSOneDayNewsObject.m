@@ -2,7 +2,7 @@
 //  FSOneDayNewsObject.m
 //  PeopleNewsReaderPhone
 //
-//  Created by lygn128 on 13-8-17.
+//  Created by lygn128 on 13-8-19.
 //
 //
 

@@ -48,29 +48,53 @@
 
 -(void)addLeftButtonItem
 {
-    UIBarButtonItem * leftbutton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"peopleLogo.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showLoadingView)];
-    NSLog(@"%@",self.myNaviBar.topItem);
-	self.myNaviBar.topItem.leftBarButtonItem = leftbutton;
-    [leftbutton release];
+//    UIBarButtonItem * leftbutton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"返回.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showLoadingView)];
+//    leftbutton.tintColor         = [UIColor whiteColor];
+//    NSLog(@"%@",self.myNaviBar.topItem);
+//	self.myNaviBar.topItem.leftBarButtonItem = leftbutton;
+//    
+//    
+//    
+//    [leftbutton release];
+    
+    
+    UIButton *btnNaviOption = [[UIButton alloc] initWithFrame:CGRectZero];
+	UIImage *imageBG = [UIImage imageNamed:@"返回.png"];
+	[btnNaviOption setBackgroundImage:imageBG forState:UIControlStateNormal];
+	[btnNaviOption setBackgroundImage:imageBG forState:UIControlStateHighlighted];
+    btnNaviOption.highlighted = YES;
+    
+	[btnNaviOption addTarget:self action:@selector(showLoadingView) forControlEvents:UIControlEventTouchUpInside];
+    //[btnNaviOption addTarget:self action:@selector(settingActionLock:) forControlEvents:UIControlEventTouchDown];
+    
+    
+    UIBarButtonItem *settingBarItem = [[UIBarButtonItem alloc] initWithCustomView:btnNaviOption];
+	btnNaviOption.frame = CGRectMake(0.0f, 0.0f, imageBG.size.width, imageBG.size.height);
+	self.myNaviBar.topItem.leftBarButtonItem = settingBarItem;
+    
+	[settingBarItem release];
+	[btnNaviOption release];
+
 }
 -(void)addRightButtonItem
 {
     UIButton *btnNaviOption = [[UIButton alloc] initWithFrame:CGRectZero];
-	UIImage *imageBG = [UIImage imageNamed:@"naviOption.png"];
+	UIImage *imageBG = [UIImage imageNamed:@"右抽屉.png"];
 	[btnNaviOption setBackgroundImage:imageBG forState:UIControlStateNormal];
 	[btnNaviOption setBackgroundImage:imageBG forState:UIControlStateHighlighted];
     btnNaviOption.highlighted = YES;
     
 	[btnNaviOption addTarget:self action:@selector(settingAction:) forControlEvents:UIControlEventTouchUpInside];
-    
     [btnNaviOption addTarget:self action:@selector(settingActionLock:) forControlEvents:UIControlEventTouchDown];
     
-	UIBarButtonItem *settingBarItem = [[UIBarButtonItem alloc] initWithCustomView:btnNaviOption];
-	btnNaviOption.frame = CGRectMake(0.0f, 0.0f, 42.0f, 33.0f);
-	self.myNaviBar.topItem.rightBarButtonItem = settingBarItem;
     
+    UIBarButtonItem *settingBarItem = [[UIBarButtonItem alloc] initWithCustomView:btnNaviOption];
+	btnNaviOption.frame = CGRectMake(0.0f, 0.0f, imageBG.size.width, imageBG.size.height);
+	self.myNaviBar.topItem.rightBarButtonItem = settingBarItem;
+
 	[settingBarItem release];
 	[btnNaviOption release];
+    //[right release];
 }
 - (void)loadChildView {
 	//self.title = NSLocalizedString(@"人民新闻", nil);

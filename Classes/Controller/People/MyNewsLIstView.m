@@ -54,8 +54,8 @@
         _fs_GZF_ForNewsListDAO.lastid              = nil;
         _isfirstShow                               = NO;
     }
-   [_fs_GZF_ForNewsListDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
-   [_fs_GZF_ForOnedayNewsFocusTopDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+//   [_fs_GZF_ForNewsListDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+//   [_fs_GZF_ForOnedayNewsFocusTopDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
    
 }
 
@@ -290,7 +290,7 @@
         _fs_GZF_ForOnedayNewsFocusTopDAO.objectList = nil;
         [_fs_GZF_ForOnedayNewsFocusTopDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
         
-        _fs_GZF_ForNewsListDAO.objectList = nil;
+        //_fs_GZF_ForNewsListDAO.objectList = nil;
         [_fs_GZF_ForNewsListDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
         
     }
@@ -352,12 +352,12 @@
         if (row== 0) {
             return;
         }
-        FSNewsListCell * cell = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:indexPath];
-        cell.leftView.backgroundColor = [UIColor redColor];
+        FSNewsListCell * cell             = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:indexPath];
+        cell.leftView.backgroundColor     = [UIColor redColor];
         cell.lab_NewsTitle.textColor      = [UIColor grayColor];
         int i = 0;
         for (FSOneDayNewsObject * obj in _fs_GZF_ForNewsListDAO.objectList) {
-            if ([_currentObject isEqual:obj]) {
+            if ([_currentObject isEqual:obj] && ![_currentObject isEqual:[_fs_GZF_ForNewsListDAO.objectList objectAtIndex:indexPath.row-1]]) {
                 obj.isRedColor = [NSNumber numberWithInt:0];
                 FSNewsListCell * cell = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i+1 inSection:0]];
                 cell.leftView.backgroundColor = [UIColor lightGrayColor];
@@ -380,20 +380,59 @@
         [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
     }
     else{
-        FSOneDayNewsObject *o = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
-        o.isReaded            = [NSNumber numberWithBool:YES];
+        FSOneDayNewsObject *o                                        = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
+        o.isReaded                                                   = [NSNumber numberWithBool:YES];
         FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
         
         fsNewsContainerViewController.obj                            = o;
         fsNewsContainerViewController.FCObj                          = nil;
-        fsNewsContainerViewController.newsSourceKind = NewsSourceKind_PuTongNews;
+        fsNewsContainerViewController.newsSourceKind                 = NewsSourceKind_PuTongNews;
         
         //NSLog(@"1_newsListData:%@",o.title);
+        [UIView commitAnimations];
         [self.aViewController.navigationController pushViewController:fsNewsContainerViewController animated:YES];
         [fsNewsContainerViewController release];
         [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
     }
+    [_fs_GZF_ForNewsListDAO.managedObjectContext save:nil];
+    [FSBaseDB saveDB];
     
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+	NSString *cellIdentifierString = [self cellIdentifierStringWithIndexPath:indexPath];
+	
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierString];
+    
+    //cell.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"CellBackground"]];
+    
+	if (cell == nil) {
+		cell = (UITableViewCell *)[[[self cellClassWithIndexPath:indexPath] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierString];
+	}
+	
+	if ([cell isKindOfClass:[FSTableViewCell class]]) {
+        
+		FSTableViewCell *fsCell = (FSTableViewCell *)cell;
+        //fsCell.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"CellBackground"]];
+		[fsCell setParentDelegate:self];
+		[fsCell setRowIndex:[indexPath row]];
+		[fsCell setSectionIndex:[indexPath section]];
+		[fsCell setCellShouldWidth:tableView.frame.size.width];
+		[fsCell setData:[self cellDataObjectWithIndexPath:indexPath]];
+        [fsCell setSelectionStyle:[self cellSelectionStyl:indexPath]];
+        [fsCell doSomethingAtLayoutSubviews];
+	} else {
+		[self initializeCell:cell withData:[self cellDataObjectWithIndexPath:indexPath] withIndexPath:indexPath];
+	}
+    if (indexPath.row > 0 ) {
+        FSNewsListCell * xxcell              = (FSNewsListCell *)cell;
+        FSOneDayNewsObject * object          = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:indexPath.row -1];
+        NSLog(@"%@",object.isReaded);
+        xxcell.leftView.backgroundColor      = ([object.isRedColor isEqualToNumber:[NSNumber numberWithInt:1]]?[UIColor redColor]:[UIColor lightGrayColor]);
+        xxcell.lab_NewsTitle.textColor       = ([object.isReaded   isEqualToNumber:[NSNumber numberWithInt:1]]?[UIColor lightGrayColor]:[UIColor blackColor]);
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
 }
 -(NSObject *)tableViewCellData:(FSTableContainerView *)sender withIndexPath:(NSIndexPath *)indexPath{
 	NSInteger row = [indexPath row];
