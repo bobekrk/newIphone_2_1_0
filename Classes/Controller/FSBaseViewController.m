@@ -134,9 +134,6 @@
 #pragma mark PrivateMethod
 - (void)layoutControllerViewWithInterfaceOrientation:(UIInterfaceOrientation)willToOrientation {
 	CGRect rClient = CGRectZero;
-#ifdef MYDEBUG
-	//NSLog(@"%@:layoutControllerViewWithInterfaceOrientation:%d", self,[self retainCount]);
-#endif
     FSControllerAdjustLayout adjustLayout = [self isManualLayout];
 	if (adjustLayout == FSControllerAdjustLayout_Self_Manual) {
 		rClient = [self manualLayoutView];
@@ -158,9 +155,7 @@
 				rClient = CGRectMake(slideViewController.controllerViewOffset, 0.0f, rClient.size.width - slideViewController.controllerViewOffset, rClient.size.height);
 			}
 		}
-#ifdef MYDEBUG
-		//NSLog(@"%@:rClient:%@", self, NSStringFromCGRect(rClient));
-#endif
+
 		
 		if (_fsTabBarItem != nil) {
 			rClient = CGRectMake(rClient.origin.x, 0.0f, rClient.size.width, rClient.size.height - _fsTabBarItem.tabBarHeight);
@@ -204,26 +199,17 @@
 		return UIInterfaceOrientationMaskAll;
 	}
 }
-//// Returns interface orientation masks.
-//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {// NS_AVAILABLE_IOS(6_0);
-//    
-//}
+
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-#ifdef MYDEBUG
-	//NSLog(@"FSTabBarItem:%@", _fsTabBarItem);
-	//NSLog(@"%@.willRotateToInterfaceOrientation:%d", self,[self retainCount]);
-#endif
+
 	[self layoutControllerViewWithInterfaceOrientation:toInterfaceOrientation];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-#ifdef MYDEBUG
-	//NSLog(@"viewWillAppear:%@[animated:%@]:%d", self, animated ? @"YES" : @"NO",[self retainCount]);
-#endif
-	
+
 	if (self.navigationController != nil) {
 		UIViewController *navRootController = nil;
 		NSArray *navControllers = self.navigationController.viewControllers;
@@ -264,16 +250,11 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-#ifdef MYDEBUG
-	//NSLog(@"viewDidAppear:%@[animated:%@]:%d", self, animated ? @"YES" : @"NO",[self retainCount]);
-#endif
 	_controllerViewState = FSControllerViewAppearState;
 	
 	if (!_isFirstTimeShow) {
 		_isFirstTimeShow = YES;
-#ifdef MYDEBUG
-		//NSLog(@"%@:doSomethingForViewFirstTimeShow", self);
-#endif
+
 		[self doSomethingForViewFirstTimeShow];
 		
 	}

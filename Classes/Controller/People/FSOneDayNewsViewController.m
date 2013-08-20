@@ -166,16 +166,18 @@
 
 
 -(void)swipeLeftAction:(id)sender{
-    if ([self.fsSlideViewController.leftViewController isKindOfClass:[FSLocalWeatherViewController class]]) {
-        //NSLog(@"swipeLeftAction 111111");
-        [self.fsSlideViewController slideViewController:self.fsSlideViewController.leftViewController withKind:PushViewControllerKind_Left withAnimation:YES];
-    }
-    else{
-        //NSLog(@"swipeLeftAction 222222");
-       FSLocalWeatherViewController *weatherCtrl = [[FSLocalWeatherViewController alloc] init];
-        [self.fsSlideViewController slideViewController:weatherCtrl withKind:PushViewControllerKind_Left withAnimation:YES];
-        [weatherCtrl release];
-    }
+//    if ([self.fsSlideViewController.leftViewController isKindOfClass:[FSLocalWeatherViewController class]]) {
+//        //NSLog(@"swipeLeftAction 111111");
+//        [self.fsSlideViewController slideViewController:self.fsSlideViewController.leftViewController withKind:PushViewControllerKind_Left withAnimation:YES];
+//    }
+//    else{
+//        //NSLog(@"swipeLeftAction 222222");
+//       FSLocalWeatherViewController *weatherCtrl = [[FSLocalWeatherViewController alloc] init];
+//        [self.fsSlideViewController slideViewController:weatherCtrl withKind:PushViewControllerKind_Left withAnimation:YES];
+//        [weatherCtrl release];
+//    }
+    
+    [self  showLoadingView];
 	
 }
 

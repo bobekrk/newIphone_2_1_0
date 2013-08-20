@@ -200,7 +200,7 @@
         
         [bodyString release];
     } else {
-        FSLog(@"HTML Template error:%@", error);
+        //FSLog(@"HTML Template error:%@", error);
     }
     
 }

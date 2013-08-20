@@ -182,6 +182,7 @@
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 		[UIView setAnimationDuration:0.3];
+        [UIView commitAnimations];
 	}
 	if (hide) {
 		_fsTabBar.frame = CGRectMake(0.0 - _fsTabBar.frame.size.width, _fsTabBar.frame.origin.y, _fsTabBar.frame.size.width, _fsTabBar.frame.size.height);
@@ -191,9 +192,6 @@
         //_fsTabBar.frame = CGRectMake(0.0, self.view.frame.size.height - _fsTabBar.frame.size.height, _fsTabBar.frame.size.width, _fsTabBar.frame.size.height);
 	}
 	
-	if (animation) {
-		[UIView commitAnimations];
-	}
 	
 	if (hide) {
 		_fsSelectedViewController.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);

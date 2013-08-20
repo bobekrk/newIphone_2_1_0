@@ -50,7 +50,6 @@
 	[_webDataBuffer release];
     
 	[_parentDelegate release];
-    NSLog(@"4444");
 	[super dealloc];
 }
 

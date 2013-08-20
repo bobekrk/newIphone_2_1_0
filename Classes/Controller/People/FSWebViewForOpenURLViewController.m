@@ -177,7 +177,18 @@
 
 
 - (void)goBackToParent:(id)sender {
-	[self.navigationController dismissModalViewControllerAnimated:YES];
+    if (self.presentingViewController) {
+        [self dismissModalViewControllerAnimated:YES];
+    }else if (self.navigationController)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+
+    }else
+    {
+        [self.view removeFromSuperview];
+    }
+	    
+    
 }
 
 - (void)browserGo:(id)sender {
@@ -194,12 +205,13 @@
         [_webView goBack];
     }
     else{
-        if (!_withOutToolbar){
-            [self dismissModalViewControllerAnimated:YES];
-        }
-        else{
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }
+//        if (!_withOutToolbar){
+//            [self dismissModalViewControllerAnimated:YES];
+//        }
+//        else{
+//            [self.navigationController popToRootViewControllerAnimated:YES];
+//        }
+        [self goBackToParent:nil];
         
     }
 }

@@ -378,7 +378,6 @@
 
 
 -(void)swipeLeftAction:(id)sender{
-    
     [self resetViewControllerWithAnimated:YES];
 }
 

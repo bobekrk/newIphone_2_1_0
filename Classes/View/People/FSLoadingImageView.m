@@ -12,6 +12,8 @@
 #import "FS_GZF_ForLoadingImageDAO.h"
 #import "FSLoadingImageObject.h"
 #import "FSShareIconContainView.h"
+#import "FSNewsContainerViewController.h"
+#import "FSWebViewForOpenURLViewController.h"
 #define FSLOADING_IMAGEVIEW_ANIMATION_KEY @"FSLOADING_IMAGEVIEW_ANIMATION_KEY_STRING"
 
 #define FSLOADING_IMAGEVIEW_URL @"http://mobile.app.people.com.cn:81/news2/news.php?act=focuspicture&type=loading&channelid=&count=&rt=xml"
@@ -40,8 +42,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-		self.userInteractionEnabled = YES;
-		self.multipleTouchEnabled = NO;
+		//self.multipleTouchEnabled = NO;
+        self.userInteractionEnabled = YES;
         firstTime = YES;
     }
     return self;
@@ -49,7 +51,8 @@
 -(void)buttonClick:(UIButton*)sender
 {
     FSLoadingImageObject *obj = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
-    int flag                  = [obj.adFlag intValue];
+    NSLog(@"%@",obj.adFlag);
+    int flag                  = [obj.adLinkFlag intValue];
     int x = sender.tag;
     switch (x) {
         case -1:
@@ -59,12 +62,6 @@
             break;
         case -2:
         {
-//                _fsShareIconContainView.frame  = CGRectMake(0, self.frame.size.height, self.frame.size.width, [_fsShareIconContainView getHeight]);
-//                [UIView beginAnimations:nil context:NULL];
-//                [UIView setAnimationDuration:0.6];
-//                _fsShareIconContainView.frame  = CGRectMake(0, self.frame.size.height-[_fsShareIconContainView getHeight], self.frame.size.width, [_fsShareIconContainView getHeight]);
-//                _fsShareIconContainView.isShow = YES;
-//                [UIView commitAnimations];
             _fsShareIconContainView = [[FSShareIconContainView alloc] initWithFrame:CGRectZero];
             _fsShareIconContainView.parentDelegate = self;
             [self addSubview:_fsShareIconContainView];
@@ -81,24 +78,46 @@
             break;
         case -3:
         {
-            if (flag == 2) {
-//                FSWebBrowserViewController *browserCtrl = [[FSWebBrowserViewController alloc] init];
-//                browserCtrl.URLString = adObject.ad_AD_LINK;
-//                [FSModalControllerManager showViewController:browserCtrl
-//                                          withAnimationStyle:FSModalControllerAnimationStyle_FromRightToLeft];
-//                [browserCtrl release];
-            } else if (flag == 3) {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:obj.adLink]];
-            } else if (flag == 1) {
-//                FSPeopleDailyContentPhoneViewController *contentCtrl = [[FSPeopleDailyContentPhoneViewController alloc] init];
-//                contentCtrl.NSID = adObject.ad_AD_LINK;
-//                [FSModalControllerManager showViewController:contentCtrl
-//                                          withAnimationStyle:FSModalControllerAnimationStyle_FromRightToLeft];
-//                [contentCtrl release];
-            }else if (flag == 0)
-            {
-                
+            if (flag == 1) {
+//                FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
+//                fsNewsContainerViewController.FCObj = o;
+//                fsNewsContainerViewController.newsSourceKind = NewsSourceKind_ShiKeNews;
+//                
+//                [self.navigationController pushViewController:fsNewsContainerViewController animated:YES];
+//                //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
+//                
+//                [fsNewsContainerViewController release];
+//                [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
             }
+            else if (flag == 3){
+                NSString * string =[NSString stringWithFormat:@"http://%@",obj.adLink];
+                NSURL *url = [[NSURL alloc] initWithString:string];
+                [[UIApplication sharedApplication] openURL:url];
+                [url release];
+            }
+            else if (flag == 2){//内嵌浏览器
+                FSWebViewForOpenURLViewController *fsWebViewForOpenURLViewController = [[FSWebViewForOpenURLViewController alloc] init];
+                
+                fsWebViewForOpenURLViewController.urlString = [NSString stringWithFormat:@"http://%@",obj.adLink];
+                fsWebViewForOpenURLViewController.withOutToolbar = NO;
+                //[[UIApplication sharedApplication].keyWindow
+               // [self.window.rootViewController.navigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
+                
+                if ([[UIApplication sharedApplication].keyWindow.rootViewController isKindOfClass:[UINavigationController class]]) {
+                    UINavigationController * navi = (UINavigationController *)([UIApplication sharedApplication].keyWindow.rootViewController);
+                    [navi pushViewController:fsWebViewForOpenURLViewController animated:YES];
+                    [fsWebViewForOpenURLViewController release];
+                }else
+                {
+                    [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:fsWebViewForOpenURLViewController animated:YES];
+                    [fsWebViewForOpenURLViewController release];
+                }
+                //[self.navigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
+                //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
+                //[fsWebViewForOpenURLViewController release];
+            }
+            [self timeOutEvent];
+
         }
             break;
             
@@ -106,6 +125,8 @@
             break;
     }
 }
+
+
 
 -(void)layoutSubviews{
     
@@ -123,8 +144,6 @@
     }
     
     [self addSubview:defaultImage];
-    
-    
    
 
     [defaultImage release];
@@ -139,28 +158,9 @@
     [_fsShareIconContainView release];
 }
 
--(void)returnButton:(id)sender{
-    //NSLog(@"returnButtonreturnButton 1212");
-    if ([_parentDelegate respondsToSelector:@selector(fsLoaddingImageViewWillDisappear:)]) {
-		[_parentDelegate fsLoaddingImageViewWillDisappear:self];
-	}
-	
-	CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-	
-	animation.duration = 0.3;
-	animation.delegate = self;
-	animation.removedOnCompletion = NO;
-	animation.fillMode = kCAFillModeForwards;
-	animation.fromValue = [NSValue valueWithCGPoint:self.layer.position];
-	animation.toValue = [NSValue valueWithCGPoint:CGPointMake(self.layer.position.x - self.layer.bounds.size.width, self.layer.position.y)];
-	[self.layer addAnimation:animation forKey:FSLOADING_IMAGEVIEW_ANIMATION_KEY];
-}
+
 
 -(void)dealloc{
-#ifdef MYDEBUG
-	NSLog(@"%@:dealloc", self);
-#endif
-    [_returnButton release];
     [_fs_GZF_ForLoadingImageDAO release];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LOADINGIMAGE_LOADING_XML_COMPELECT object:nil];
     [super dealloc];
@@ -234,7 +234,6 @@
         
         [adImageView updateAsyncImageView];
         [adImageView release];
-        _returnButton.alpha = 1.0f;
         [self addButtons];
     }
 }

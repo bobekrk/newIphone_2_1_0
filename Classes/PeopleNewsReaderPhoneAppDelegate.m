@@ -87,7 +87,7 @@
     
     //友盟追踪 end
     
-    [self showLoadingView];
+//    [self showLoadingView];
     
 //    GlobalConfig *config = [GlobalConfig shareConfig];
 //	BOOL isShowChannel = [config isPostChannel];
@@ -101,6 +101,8 @@
     //激活统计
     [self postStatistice];
     
+    //[self  fsLoaddingImageViewWillDisappear:nil];
+    [self showFirstLoad];
     [self.window makeKeyAndVisible];
 #ifdef MYDEBUG
  	NSLog(@"%@", NSLocalizedString(@"DemoTitle", nil)); 
@@ -441,10 +443,19 @@
 #pragma mark PrivateMethod
 
 -(void)showLoadingView{
-    FSLoadingImageView *loadingView = [[FSLoadingImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-    loadingView.parentDelegate = self;
+    float xxx = ISIPHONE5?548:460;
+    FSLoadingImageView *loadingView = [[FSLoadingImageView alloc] initWithFrame:CGRectMake(0, 0, 320, xxx)];
+    loadingView.userInteractionEnabled = YES;
+    //loadingView.parentDelegate = self;
     [self.window addSubview:loadingView];
     [loadingView release];
+//    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 320)];
+//    view.backgroundColor = [UIColor redColor];
+//    [self.window addSubview:view];
+//    UIButton * button = [UIButton buttonWithType: UIButtonTypeRoundedRect];
+//    button.frame = CGRectMake(0, 400, 100, 100);
+//    [loadingView addSubview:button];
+    
 }
 
 
@@ -529,14 +540,15 @@
 }
 
 - (void)fsChannelSettingForOneDayViewControllerDidDisapper:(FSChannelSettingForOneDayViewController *)sender {
-	self.window.rootViewController = _slideViewController;
-	[_navChannelSettingController.view removeFromSuperview];
-	[_navChannelSettingController release];
-	_navChannelSettingController = nil;
+//	self.window.rootViewController = _slideViewController;
+//	[_navChannelSettingController.view removeFromSuperview];
+//	[_navChannelSettingController release];
+//	_navChannelSettingController = nil;
+    [self showMainUserInterface];
 }
-
-- (void)fsLoaddingImageViewWillDisappear:(FSLoadingImageView *)sender {
-	GlobalConfig *config = [GlobalConfig shareConfig];
+-(void)showFirstLoad
+{
+    GlobalConfig *config = [GlobalConfig shareConfig];
 	BOOL isShowChannel = [config isPostChannel];
 	
 	if (!isShowChannel) {
@@ -544,6 +556,11 @@
 	} else {
 		[self showMainUserInterface];
 	}
+    [self showLoadingView];
+}
+
+- (void)fsLoaddingImageViewWillDisappear:(FSLoadingImageView *)sender {
+	
 }
 
 - (void)fsLoaddingImageViewDidDisappear:(FSLoadingImageView *)sender {

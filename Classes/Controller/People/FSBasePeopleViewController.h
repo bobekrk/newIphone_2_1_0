@@ -21,5 +21,6 @@
 }
 
 -(void)updataWeatherMessage;
+-(void)showLoadingView;
 
 @end

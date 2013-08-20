@@ -387,11 +387,20 @@
 - (void)executeFetchRequest:(NSFetchRequest *)request {
 	NSError *error = nil;
 	NSArray *resultSet = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    for (FSOneDayNewsObject *o in resultSet)
+    {
+        //o.isReaded = [NSNumber numberWithInt:1];
+    }
+    [self.managedObjectContext save:nil];
+    //NSArray *array2 = [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext] getObjectsByKeyWithName:@"FSChannelObject" key:@"channelid" value:o.channelid];
+
 	if (!error) {
         
 		if ([resultSet count]>0) {
             
             for (FSOneDayNewsObject *o in resultSet) {
+                NSArray *array3 = [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext] getObjectsByKeyWithName:@"FSChannelObject" key:@"channelid" value:o.channelid];
                 if ([o.channalIcon length]==0 && self.SetChannalIcon) {
                     NSArray *array = [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext] getObjectsByKeyWithName:@"FSChannelObject" key:@"channelid" value:o.channelid];
                     if ([array count]>0) {
@@ -404,8 +413,27 @@
                     self.lastid = o.realtimeid;//by zhiliang
                 }
             }
-            
-            self.objectList = (NSMutableArray *)resultSet;
+            if (self.objectList.count == 0) {
+                for (FSOneDayNewsObject * xxobj in resultSet) {
+                    [self.objectList addObject:xxobj];
+                }
+            }else{
+                for (FSOneDayNewsObject * xxobj in resultSet) {
+                    int kk = -1;
+                    for (int i = 0 ; i< self.objectList.count; i++) {
+                        FSOneDayNewsObject * innerobject = [self.objectList objectAtIndex:i];
+                        if ([xxobj.newsid  isEqualToString:innerobject.newsid]) {
+                            kk = -100;
+                            break;
+                        }
+
+                    }
+                    if (kk == -1) {
+                        [self.objectList insertObject:xxobj atIndex:0];
+                    }
+                    
+                }
+            }
             self.isRecordListTail = [self.objectList count] < [self.fetchRequest fetchLimit];
             [self setBufferFlag];
         }

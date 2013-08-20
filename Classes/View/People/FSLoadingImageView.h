@@ -18,7 +18,6 @@
     BOOL                       firstTime;
     FS_GZF_ForLoadingImageDAO *_fs_GZF_ForLoadingImageDAO;
     
-    UIButton                  *_returnButton;
     BOOL                       _switch;
     FSShareIconContainView    *_fsShareIconContainView;
 }
