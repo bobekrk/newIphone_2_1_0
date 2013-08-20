@@ -43,8 +43,6 @@
 //   [_fsNewsContainerCommentListView release];
 //    [_scrollView release];
     [_comment_content release];
-    _fsNewsContainerWebView.parentDelegate = NULL;
-    [_fsNewsContainerWebView release];
 }
 
 -(void)doSomethingAtInit{
@@ -60,12 +58,12 @@
     _fsNewsContainerWebView = [[FSNewsContainerWebView alloc] init];
     _fsNewsContainerWebView.parentDelegate = self;
     [self addSubview:_fsNewsContainerWebView];
-
+    [_fsNewsContainerWebView release];
     
     _fsNewsDitailToolBar = [[FSNewsDitailToolBar alloc] init];
     _fsNewsDitailToolBar.clipsToBounds = YES;
-    _fsNewsDitailToolBar.frame = CGRectMake(0, self.frame.size.height - 40 , self.frame.size.width, 40);
     _fsNewsDitailToolBar.parentDelegate = self;
+    _fsNewsDitailToolBar.backgroundColor  = [UIColor redColor];
     [self addSubview:_fsNewsDitailToolBar];
     [_fsNewsDitailToolBar release];
     
@@ -77,7 +75,12 @@
 
 
 -(void)doSomethingAtLayoutSubviews{
+  
+    if (_isFirstShow) {
+        _fsNewsDitailToolBar.frame = CGRectMake(0, self.frame.size.height - 40 , self.frame.size.width, 40);
+        _isFirstShow = NO;
         
+    }
     if (self.data==nil) {
         return;
     }
@@ -86,11 +89,7 @@
         _fsNewsContainerWebView.hasebeenLoad = NO;
     }
     
-    if (_isFirstShow) {
-        _fsNewsDitailToolBar.frame = CGRectMake(0, self.frame.size.height - 40 , self.frame.size.width, 40);
-        _isFirstShow = NO;
-        
-    }
+
     
     [UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:0.4];
