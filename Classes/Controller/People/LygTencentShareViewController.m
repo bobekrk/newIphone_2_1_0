@@ -7,12 +7,6 @@
 //
 
 #import "LygTencentShareViewController.h"
-#define QQAPPKEY  @"801359590"
-//#define QQAPPKEY  @"801327874"
-#define QQSECRET  @"b1d02cc7dddba7ef9864063c627c4b29"
-//#define QQSECRET  @"ac84e250295bbbfa85b6d0784b0ffb02"
-//#define REDIRECTURL @"http://weibo.com/u/1160145827"
-#define REDIRECTURL @"http://mobile.app.people.com.cn/soft/peopleclient.apk"
 #import "FSSinaBlogLoginViewController.h"
 @interface LygTencentShareViewController ()
 
@@ -46,7 +40,7 @@
     
     if (_tcWBEngine == nil) {
         //TCWBEngine *wbengine = [[TCWBEngine alloc] initWithAppKey:QQAPPKEY appSecret:QQSECRET];
-        TCWBEngine * wbengine = [[TCWBEngine alloc]initWithAppKey:QQAPPKEY andSecret:QQSECRET andRedirectUrl:REDIRECTURL];
+        TCWBEngine * wbengine = [[TCWBEngine alloc]initWithAppKey:QQAPPKEY andSecret:QQSECRET andRedirectUrl:QQREDIRECTURL];
         self.tcWBEngine = wbengine;
         wbengine.rootViewController = self;
         [wbengine release];

@@ -10,7 +10,7 @@
 #import "FSSinaBlogLoginViewController.h"
 #import "FSPeopleBlogShareLoginViewController.h"
 #import "FSNetEaseBlogShareLoginViewController.h"
-
+#import "LygTencentShareViewController.h"
 //新浪微博
 #define kWBSDKDemoAppKey @"1368810072"
 #define kWBSDKDemoAppSecret @"5dd07c1fd64d4e3ba3bef34ec59edfa1"
@@ -53,6 +53,7 @@
 	}
 	
 	_netEaseEngine = [[NetEaseEngine alloc] init];
+    _tencentEngine = [[TCWBEngine alloc]initWithAppKey:QQAPPKEY andSecret:QQSECRET andRedirectUrl:QQREDIRECTURL];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -82,7 +83,7 @@
 
 -(NSInteger)tableViewNumberInSection:(FSTableContainerView *)sender section:(NSInteger)section{
     
-    return 3;
+    return 4;
 }
 
 -(NSObject *)tableViewCellData:(FSTableContainerView *)sender withIndexPath:(NSIndexPath *)indexPath{
@@ -97,22 +98,6 @@
     NSMutableDictionary *dir = [[[NSMutableDictionary alloc] init] autorelease];
     
     if (row == 0) {
-        [dir setValue:@"新浪微博" forKey:@"title"];
-        if ([_engine isLoggedIn] && ![_engine isAuthorizeExpired]) {
-            [dir setValue:@"1" forKey:@"key"];
-        } else {
-            [dir setValue:@"0" forKey:@"key"];
-        }
-        return dir;
-    }else if (row == 1){
-        [dir setValue:@"网易微博" forKey:@"title"];
-        if ([_netEaseEngine isLogIn]) {
-            [dir setValue:@"1" forKey:@"key"];
-        } else {
-            [dir setValue:@"0" forKey:@"key"];
-        }
-        return dir;
-    }else if (row == 2){
         [dir setValue:@"人民微博" forKey:@"title"];
         NSArray *array = [[FSBaseDB sharedFSBaseDB] getObjectsByKeyWithName:@"FSLoginObject" key:@"userKind" value:LOGIN_USER_KIND_PEOPLE_BLOG];
         if ([array count]>0) {
@@ -122,6 +107,32 @@
             [dir setValue:@"0" forKey:@"key"];
         }
         return dir;
+    }else if (row == 1){
+        [dir setValue:@"新浪微博" forKey:@"title"];
+        if ([_engine isLoggedIn] && ![_engine isAuthorizeExpired]) {
+            [dir setValue:@"1" forKey:@"key"];
+        } else {
+            [dir setValue:@"0" forKey:@"key"];
+        }
+        return dir;
+    }else if (row == 2){
+        [dir setValue:@"腾讯微博" forKey:@"title"];
+        if ([_tencentEngine isLoggedIn]) {
+            [dir setValue:@"1" forKey:@"key"];
+        } else {
+            [dir setValue:@"0" forKey:@"key"];
+        }
+        return dir;
+    }else if(row == 3)
+    {
+        [dir setValue:@"网易微博" forKey:@"title"];
+        if ([_netEaseEngine isLogIn]) {
+            [dir setValue:@"1" forKey:@"key"];
+        } else {
+            [dir setValue:@"0" forKey:@"key"];
+        }
+        return dir;
+
     }
     return nil;
 }
@@ -131,19 +142,6 @@
     NSInteger row = [indexPath row];
     
     if (row == 0) {
-        if ([_engine isLoggedIn] && ![_engine isAuthorizeExpired]) {
-            [_engine logOut];
-        } else {
-            [self showSinaBlogLoginController];
-        }
-    }else if (row == 1){
-        if ([_netEaseEngine isLogIn]) {
-            [_netEaseEngine logOut];
-        } else {
-            [self showNetEaseBlogLoginController];
-        }
-        
-    }else if (row == 2){
         NSArray *array = [[FSBaseDB sharedFSBaseDB] getObjectsByKeyWithName:@"FSLoginObject" key:@"userKind" value:LOGIN_USER_KIND_PEOPLE_BLOG];
         if ([array count]>0) {
             [[FSBaseDB sharedFSBaseDB] deleteObjectByKey:@"FSLoginObject" key:@"userKind" value:LOGIN_USER_KIND_PEOPLE_BLOG];
@@ -153,11 +151,55 @@
         else{
             [self showPeopleLoginController];
         }
+    }else if (row == 1)
+    {
+        if ([_engine isLoggedIn] && ![_engine isAuthorizeExpired]) {
+            [_engine logOut];
+        } else {
+            [self showSinaBlogLoginController];
+        }
+
+   }else if (row == 2)
+   {
+       if ([_tencentEngine isLoggedIn]) {
+           [_tencentEngine logOut];
+           [self loginSuccesss:YES];
+       }else
+       {
+           [self showTencentLoginCOntroller];
+       }
+   }
+    else if(row == 3)
+    {
+        if ([_netEaseEngine isLogIn]) {
+            [_netEaseEngine logOut];
+            [self loginSuccesss:YES];
+        } else {
+            [self showNetEaseBlogLoginController];
+        }
+        
+
     }
     
 }
 
 //********************************
+-(void)showTencentLoginCOntroller
+{
+//    LygTencentShareViewController *fsSinaBlogShareViewController = [[LygTencentShareViewController alloc] init];
+//    fsSinaBlogShareViewController.withnavTopBar                  = YES;
+//    fsSinaBlogShareViewController.title                          = @"腾讯微博分享";
+//    //fsSinaBlogShareViewController.shareContent                   = [self shareContent];
+//    [self presentViewController:fsSinaBlogShareViewController animated:YES completion:nil];
+//    [fsSinaBlogShareViewController release];
+    _tencentEngine.rootViewController = self;
+    [_tencentEngine logInWithDelegate:self onSuccess:@selector(loginSuccesss) onFailure:nil];
+
+}
+-(void)loginSuccesss
+{
+    [self loginSuccesss:YES];
+}
 
 -(void)showSinaBlogLoginController{
     NSLog(@"%d",self.navigationController.navigationBarHidden);

@@ -11,7 +11,7 @@
 #import "AuthorizeDelegate.h"
 #import "WBUtil.h"
 #define BUFFERSIZE    4000  
-#define MAXADDRS    32  
+#define MAXADDRS      32  
 
 #define TCURLSchemePrefix              @"TC_"
 
@@ -1236,7 +1236,10 @@ static id   handurldelegate = nil;
 //    NSString *strPath = [FileStreame getUserDirectory:name];
 //    [FileStreame deleteDirectory:strPath];
     
-//    G_LOGOUT = [self deleteAuthorizeDataInKeychain];
+    G_LOGOUT = [self deleteAuthorizeDataInKeychain];
+    if ([self.delegate respondsToSelector:_onSuccessCallback]) {
+        [self.delegate  performSelector:_onSuccessCallback];
+    }
     return G_LOGOUT;
 }
 
