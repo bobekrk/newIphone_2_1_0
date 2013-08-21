@@ -93,7 +93,12 @@
                     i++;
                     
                 }
-                _scrollView.contentSize = CGSizeMake(self.frame.size.width, 20+(imageSize+spacing)*line +imageSize);
+                UIImage * image         = [UIImage imageNamed:@"人民新闻有温度.png"];
+                UIImageView * view      = [[UIImageView alloc]initWithFrame:CGRectMake(320 - image.size.width - 20, 40 + (imageSize+spacing)*line +imageSize, image.size.width, image.size.height)];
+                view.image              = image;
+                [_scrollView addSubview:view];
+                [view release];
+                _scrollView.contentSize = CGSizeMake(self.frame.size.width, 20+(imageSize+spacing)*line +imageSize + image.size.height + 50);
             }
             
         }

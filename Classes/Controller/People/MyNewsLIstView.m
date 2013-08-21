@@ -54,8 +54,8 @@
         _fs_GZF_ForNewsListDAO.lastid              = nil;
         _isfirstShow                               = NO;
     }
-//   [_fs_GZF_ForNewsListDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
-//   [_fs_GZF_ForOnedayNewsFocusTopDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+   [_fs_GZF_ForNewsListDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+   [_fs_GZF_ForOnedayNewsFocusTopDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
    
 }
 

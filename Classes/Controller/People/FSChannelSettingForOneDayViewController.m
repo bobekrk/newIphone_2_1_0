@@ -72,14 +72,6 @@
 }
 
 - (void)loadChildView {
-
-	
-//	UIBarButtonItem *rightDebugItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(finishChannelSettingForOneDay:)];
-//	self.navigationItem.rightBarButtonItem = rightDebugItem;
-//	[rightDebugItem release];
-	
-	//self.navigationController.view.layer.zPosition = -20;
-    
     _fsChannelSettingForOneDayView = [[FSChannelSettingForOneDayView alloc] init];
     _fsChannelSettingForOneDayView.parentDelegate = self;
     [self.view addSubview:_fsChannelSettingForOneDayView];
@@ -96,30 +88,31 @@
          UINavigationItem *topItem = [[UINavigationItem alloc] init];
          NSArray *items = [[NSArray alloc] initWithObjects:topItem, nil];
          _navTopBar.items = items;
-         _navTopBar.topItem.title = @"人民新闻";//NSLocalizedString([self setTitle], nil);
+         _navTopBar.topItem.title = @"订阅我的头条";//NSLocalizedString([self setTitle], nil);
          [topItem release];
          [items release];
          [self.view addSubview:_navTopBar];
          
         
         UIButton *returnBT = [[UIButton alloc] init];
-        [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT_1.png"] forState:UIControlStateNormal];
-        [returnBT setTitle:NSLocalizedString(@"完成", nil) forState:UIControlStateNormal];
+        [returnBT setBackgroundImage:[UIImage imageNamed:@"返回.png"] forState:UIControlStateNormal];
+       // [returnBT setTitle:NSLocalizedString(@"完成", nil) forState:UIControlStateNormal];
         returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
         [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
         [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
         returnBT.frame = CGRectMake(0, 0, 55, 30);
         returnBT.contentHorizontalAlignment =UIControlContentHorizontalAlignmentCenter;
         
-        UIBarButtonItem *returnButton = [[UIBarButtonItem alloc] initWithCustomView:returnBT];
+        UIBarButtonItem *returnButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回.png"] style:UIBarButtonItemStylePlain target:self action:@selector(returnBack:)];
+        returnButton.tintColor       = [UIColor whiteColor];
         _navTopBar.topItem.leftBarButtonItem = returnButton;
         [returnButton release];
         [returnBT release];
     }
     else{
         UIButton *returnBT = [[UIButton alloc] init];
-        [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT_1.png"] forState:UIControlStateNormal];
-        [returnBT setTitle:NSLocalizedString(@"完成", nil) forState:UIControlStateNormal];
+        [returnBT setBackgroundImage:[UIImage imageNamed:@"返回.png"] forState:UIControlStateNormal];
+       // [returnBT setTitle:NSLocalizedString(@"完成", nil) forState:UIControlStateNormal];
         returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
         
         [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
@@ -210,7 +203,6 @@
         _fsChannelSettingForOneDayView.data = @"11";
         _fsChannelSettingForOneDayView.frame = CGRectMake(0.0f, 0.0f, rect.size.width, rect.size.height);
     }
-    
     _fsNewbieGuideView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height+44);
     
     if (!self.isReSetting) {
