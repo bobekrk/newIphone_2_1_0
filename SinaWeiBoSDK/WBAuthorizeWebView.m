@@ -43,27 +43,28 @@
 
 - (id)init
 {
-    if (self = [super initWithFrame:CGRectMake(0, 0, 320, 480)])
+    float xxx = ISIPHONE5?548:460;
+    if (self = [super initWithFrame:CGRectMake(0, 0, 320, xxx)])
     {
         // background settings
         [self setBackgroundColor:[UIColor clearColor]];
         [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
         
         // add the panel view
-        panelView = [[UIView alloc] initWithFrame:CGRectMake(0, 30, 320, 440)];
+        panelView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, xxx)];
         [panelView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.55]];
         [[panelView layer] setMasksToBounds:NO]; // very important
         [[panelView layer] setCornerRadius:10.0];
         [self addSubview:panelView];
         
         // add the conainer view
-        containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, 320, 420)];
+        containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, xxx)];
         [[containerView layer] setBorderColor:[UIColor colorWithRed:0. green:0. blue:0. alpha:0.7].CGColor];
         [[containerView layer] setBorderWidth:1.0];
         
         
         // add the web view
-        webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 390)];
+        webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, xxx)];
         webView.scalesPageToFit = YES;
 		[webView setDelegate:self];
 		[containerView addSubview:webView];

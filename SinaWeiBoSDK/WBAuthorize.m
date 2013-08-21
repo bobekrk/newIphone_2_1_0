@@ -142,7 +142,7 @@
 
 -(void)BulLoginwebView{
     
-    self.LoginwebView = nil;
+    //self.LoginwebView = nil;
      
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:appKey, @"client_id",
                             @"code", @"response_type",
@@ -151,12 +151,16 @@
     NSString *urlString = [WBRequest serializeURL:kWBAuthorizeURL
                                            params:params
                                        httpMethod:@"GET"];
+    if (!self.LoginwebView) {
+        WBAuthorizeWebView *webView = [[WBAuthorizeWebView alloc] init];
+        [webView setDelegate:self];
+        [webView loadRequestWithURL:[NSURL URLWithString:urlString]];
+        self.LoginwebView = webView;
+//        CGRect rect = webView.superview.frame;
+//        webView.frame = rect;
+        [webView release];
+    }
     
-    WBAuthorizeWebView *webView = [[WBAuthorizeWebView alloc] init];
-    [webView setDelegate:self];
-    [webView loadRequestWithURL:[NSURL URLWithString:urlString]];
-    self.LoginwebView = webView;
-    [webView release];
 }
 
 - (void)startAuthorizeUsingUserID:(NSString *)userID password:(NSString *)password

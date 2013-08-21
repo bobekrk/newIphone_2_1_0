@@ -1198,6 +1198,7 @@ static id   handurldelegate = nil;
         authViewController.requestURLString         = urlString;
     authViewController.title                        = @"腾讯微博授权";
     authViewController.isnavTopBar                  = YES;
+    authViewController.canBeHaveNaviBar             = YES;
     [authViewController setDelegate:self];
     [_rootViewController presentModalViewController:authViewController animated:YES];
     [authViewController release];

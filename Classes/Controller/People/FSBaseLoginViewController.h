@@ -41,7 +41,7 @@
 -(NSString *)inputUserNamnePrompt;
 -(NSString *)bagroundImageName;
 - (void)loginServer:(FSBaseLoginViewController *)sender;
-
+-(void)addSubView;
 -(void)returnToParentView;
 
 @end

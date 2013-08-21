@@ -35,15 +35,7 @@
 
 @synthesize parentDelegate = _parentDelegate;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        self.isnavTopBar = NO;
-    }
-    return self;
-}
+
 
 - (void)viewDidLoad
 {
@@ -86,9 +78,7 @@
     if (self.isnavTopBar) {
         
         _navTopBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, FSSETTING_VIEW_NAVBAR_HEIGHT)];
-#ifdef __IPHONE_5_0
         [_navTopBar setBackgroundImage:[UIImage imageNamed: @"navigatorBar.png"] forBarMetrics:UIBarMetricsDefault];
-#endif
         UINavigationItem *topItem = [[UINavigationItem alloc] init];
         NSArray *items = [[NSArray alloc] initWithObjects:topItem, nil];
         _navTopBar.items = items;
@@ -127,8 +117,12 @@
 	
     
 	
-	//初始化屏幕控件
-	_ivDescription = [[UIImageView alloc] initWithFrame:CGRectZero];
+    [self addSubView];
+
+}
+-(void)addSubView
+{
+    _ivDescription = [[UIImageView alloc] initWithFrame:CGRectZero];
 	_ivDescription.image = [UIImage imageNamed:[self bagroundImageName]];
     _ivDescription.alpha = 0.4f;
 	[self.view addSubview:_ivDescription];
@@ -184,8 +178,9 @@
 	[_lblDescription setNumberOfLines:99];
 	[_lblDescription setTextColor:[UIColor colorWithRed:209.0f / 255.0f green:10.0f / 255.0f blue:10.0f / 255.0f alpha:0.95]];
 	[self.view addSubview:_lblDescription];
-    
+
 }
+
 
 - (void)goBackToParent:(id)sender {
     

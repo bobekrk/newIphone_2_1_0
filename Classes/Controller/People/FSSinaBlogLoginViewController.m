@@ -26,20 +26,11 @@
 
 @synthesize sinaWBEngine = _sinaWBEngine;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        self.title = @"新浪微博授权";
-    }
-    return self;
-}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,7 +47,10 @@
     return @"Default-568h@2x.png";
 }
 
-
+-(void)addSubView
+{
+    
+}
 -(void)loadChildView{
     [super loadChildView];
     
@@ -79,22 +73,23 @@
         [_sinaWBEngine setDelegate:self];
 		[_sinaWBEngine logIn_gazf];
         
-        UIView *contanview = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
+        //UIView *contanview = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
         
-        self.view = contanview;
-        [contanview release];
+
         
         self.view.backgroundColor = COLOR_BLACK;
         [self.view addSubview:_sinaWBEngine.authorize.LoginwebView];
         
         CGRect rect = _sinaWBEngine.authorize.LoginwebView.frame;
-        
+        NSLog(@"%f",self.view.frame.size.height);
+        NSLog(@"%@",_sinaWBEngine.authorize.LoginwebView);
         if (self.isnavTopBar) {
-            _sinaWBEngine.authorize.LoginwebView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height);
+            
+            _sinaWBEngine.authorize.LoginwebView.frame = CGRectMake(0, 44, rect.size.width, self.view.frame.size.width);
             [self.view addSubview:_navTopBar];
         }
         else{
-            _sinaWBEngine.authorize.LoginwebView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height);
+            _sinaWBEngine.authorize.LoginwebView.frame = CGRectMake(0, 44, rect.size.width, self.view.frame.size.width);
         }
         
         //self.view = _sinaWBEngine.authorize.LoginwebView;

@@ -205,6 +205,7 @@
     NSLog(@"%d",self.navigationController.navigationBarHidden);
     FSSinaBlogLoginViewController *fsSinaBlogLoginViewController = [[FSSinaBlogLoginViewController alloc] init];
     fsSinaBlogLoginViewController.title                          = @"新浪微博授权";
+    fsSinaBlogLoginViewController.canBeHaveNaviBar               = YES;
     fsSinaBlogLoginViewController.sinaWBEngine = _engine;
     fsSinaBlogLoginViewController.parentDelegate = self;
     if (self.isnavTopBar) {
