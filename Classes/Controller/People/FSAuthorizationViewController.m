@@ -193,6 +193,7 @@
 //    [self presentViewController:fsSinaBlogShareViewController animated:YES completion:nil];
 //    [fsSinaBlogShareViewController release];
     _tencentEngine.rootViewController = self;
+    _tencentEngine.myTitle            = @"账号绑定";
     [_tencentEngine logInWithDelegate:self onSuccess:@selector(loginSuccesss) onFailure:nil];
 
 }
@@ -204,7 +205,7 @@
 -(void)showSinaBlogLoginController{
     NSLog(@"%d",self.navigationController.navigationBarHidden);
     FSSinaBlogLoginViewController *fsSinaBlogLoginViewController = [[FSSinaBlogLoginViewController alloc] init];
-    fsSinaBlogLoginViewController.title                          = @"新浪微博授权";
+    fsSinaBlogLoginViewController.title                          = @"账号绑定";
     fsSinaBlogLoginViewController.canBeHaveNaviBar               = YES;
     fsSinaBlogLoginViewController.sinaWBEngine = _engine;
     fsSinaBlogLoginViewController.parentDelegate = self;
@@ -222,6 +223,7 @@
     
     if (self.isnavTopBar) {
         FSPeopleBlogShareLoginViewController *fsPeopleBlogShareLoginViewController = [[FSPeopleBlogShareLoginViewController alloc] init];
+        fsPeopleBlogShareLoginViewController.title                                 = @"账号绑定";
         fsPeopleBlogShareLoginViewController.parentDelegate = self;
         fsPeopleBlogShareLoginViewController.isnavTopBar = YES;
         [self presentModalViewController:fsPeopleBlogShareLoginViewController animated:YES];
@@ -230,6 +232,7 @@
     else{
         FSPeopleBlogShareLoginViewController *fsPeopleBlogShareLoginViewController = [[FSPeopleBlogShareLoginViewController alloc] init];
         fsPeopleBlogShareLoginViewController.parentDelegate = self;
+        fsPeopleBlogShareLoginViewController.title                                 = @"账号绑定";
         [self.navigationController pushViewController:fsPeopleBlogShareLoginViewController animated:YES];
         [fsPeopleBlogShareLoginViewController release];
     }
@@ -239,6 +242,7 @@
     
     if (self.isnavTopBar) {
         FSNetEaseBlogShareLoginViewController *fsNetEaseBlogShareLoginViewController = [[FSNetEaseBlogShareLoginViewController alloc] init];
+        fsNetEaseBlogShareLoginViewController.title                                   = @"账号绑定";
         fsNetEaseBlogShareLoginViewController.engine = _netEaseEngine;
         fsNetEaseBlogShareLoginViewController.parentDelegate = self;
         fsNetEaseBlogShareLoginViewController.isnavTopBar = YES;
@@ -247,6 +251,7 @@
     }
     else{
         FSNetEaseBlogShareLoginViewController *fsNetEaseBlogShareLoginViewController = [[FSNetEaseBlogShareLoginViewController alloc] init];
+        fsNetEaseBlogShareLoginViewController.title                                   = @"账号绑定";
         fsNetEaseBlogShareLoginViewController.engine = _netEaseEngine;
         fsNetEaseBlogShareLoginViewController.parentDelegate = self;
         [self.navigationController pushViewController:fsNetEaseBlogShareLoginViewController animated:YES];

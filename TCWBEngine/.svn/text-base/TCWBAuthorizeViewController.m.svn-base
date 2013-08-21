@@ -12,12 +12,10 @@
 @synthesize delegate;
 @synthesize returnCode, err;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+
+-(void)addSubView
+{
+    
 }
 
 - (void)didReceiveMemoryWarning{
@@ -40,20 +38,9 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-//    NSBundle *main = [NSBundle mainBundle];
 
-    // 授权  
-//    NSString *strAuth = [main localizedStringForKey:KLanguageAuth value:nil table:kTCWBTable];
-//    [self.navigationItem setTitle:strAuth];
-//    
-//    
-//
-//    NSString *strCancel = [main localizedStringForKey:KLanguageCancel value:nil table:kTCWBTable];
-//    UIBarButtonItem *baritemCancel = [[UIBarButtonItem alloc] initWithTitle:strCancel style:UIBarButtonItemStyleBordered target:self action:@selector(onButtonCancel)];
-//    [self.navigationItem setLeftBarButtonItem:baritemCancel];
-//    [baritemCancel release];
 
-    webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 40, 320, self.view.frame.size.height - _navTopBar.frame.size.height)];
+    webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 44, 320, self.view.frame.size.height - _navTopBar.frame.size.height)];
     [webView setDelegate:self];
     NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:requestURLString]
                                             cachePolicy:NSURLRequestReloadIgnoringLocalCacheData

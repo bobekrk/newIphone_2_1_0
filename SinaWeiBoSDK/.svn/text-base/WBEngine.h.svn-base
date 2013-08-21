@@ -57,24 +57,24 @@
 
 @interface WBEngine : NSObject <WBAuthorizeDelegate, WBRequestDelegate>
 {
-    NSString        *appKey;
-    NSString        *appSecret;
-    
-    NSString        *userID;
-    NSString        *accessToken;
-    NSTimeInterval  expireTime;
-    
-    NSString        *redirectURI;
-    
-    // Determine whether user must log out before another logging in.
-    BOOL            isUserExclusive;
-    
-    WBRequest       *request;
-    WBAuthorize     *authorize;
-    
-    id<WBEngineDelegate> delegate;
-    
-    UIViewController *rootViewController;
+//    NSString        *appKey;
+//    NSString        *appSecret;
+//    
+//    NSString        *userID;
+//    NSString        *accessToken;
+//    NSTimeInterval  expireTime;
+//    
+//    NSString        *redirectURI;
+//    
+//    // Determine whether user must log out before another logging in.
+//    BOOL            isUserExclusive;
+//    
+//    WBRequest       *request;
+//    WBAuthorize     *authorize;
+//    
+//    id<WBEngineDelegate> delegate;
+//    
+//    UIViewController *rootViewController;
 }
 
 @property (nonatomic, retain) NSString *appKey;

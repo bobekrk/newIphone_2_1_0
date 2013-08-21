@@ -63,7 +63,7 @@
     _fsNewsDitailToolBar = [[FSNewsDitailToolBar alloc] init];
     _fsNewsDitailToolBar.clipsToBounds = YES;
     _fsNewsDitailToolBar.parentDelegate = self;
-    _fsNewsDitailToolBar.backgroundColor  = [UIColor redColor];
+    //_fsNewsDitailToolBar.backgroundColor  = [UIColor redColor];
     [self addSubview:_fsNewsDitailToolBar];
     [_fsNewsDitailToolBar release];
     

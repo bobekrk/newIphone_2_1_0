@@ -1196,7 +1196,11 @@ static id   handurldelegate = nil;
     
     TCWBAuthorizeViewController *authViewController = [[TCWBAuthorizeViewController alloc] init];
         authViewController.requestURLString         = urlString;
+
     authViewController.title                        = @"腾讯微博授权";
+    if (self.myTitle) {
+        authViewController.title                    = self.myTitle;
+    }
     authViewController.isnavTopBar                  = YES;
     authViewController.canBeHaveNaviBar             = YES;
     [authViewController setDelegate:self];

@@ -76,6 +76,7 @@
 @property (nonatomic, assign) BOOL              isSSOAuth;
 @property (nonatomic, assign) id                auth_delegate;
 @property (nonatomic, assign) id                delegate;
+@property (nonatomic, copy)   NSString         *myTitle;
 
 
 - (BOOL)isLoggedIn;

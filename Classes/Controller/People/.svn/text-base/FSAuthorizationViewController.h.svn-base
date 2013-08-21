@@ -11,13 +11,15 @@
 #import "WBEngine.h"
 #import "NetEaseEngine.h"
 #import "FSBaseLoginViewController.h"
-
+#import "TCWBEngine.h"
 
 @interface FSAuthorizationViewController : FSBaseSettingViewController<WBEngineDelegate,FSBaseLoginViewControllerDelegate>{
 @protected
     WBEngine *_engine;
 	
 	NetEaseEngine *_netEaseEngine;
+    TCWBEngine    *_tencentEngine;
+    
 }
 
 - (void)showSinaBlogLoginController;
