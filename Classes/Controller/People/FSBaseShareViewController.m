@@ -106,13 +106,21 @@
 }
 
 -(void)returnBack:(id)sender{
-    if (_withnavTopBar){
-        [self dismissModalViewControllerAnimated:YES];
-    }
-    else{
+//    if (_withnavTopBar){
+//        [self dismissModalViewControllerAnimated:YES];
+//    }
+//    else{
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+    if (self.navigationController) {
         [self.navigationController popViewControllerAnimated:YES];
+    }else if(self.presentingViewController)
+    {
+        [self dismissModalViewControllerAnimated:YES];
+    }else
+    {
+        [self.view removeFromSuperview];
     }
-    
 }
 
 -(void)senderBt:(id)sender{
@@ -148,11 +156,15 @@
 }
 
 -(void)returnToParentView{
-    if (_withnavTopBar){
-        [self dismissModalViewControllerAnimated:YES];
-    }
-    else{
+
+    if (self.navigationController) {
         [self.navigationController popViewControllerAnimated:YES];
+    }else if (self.presentingViewController)
+    {
+        [self dismissModalViewControllerAnimated:YES];
+    }else
+    {
+        [self.view removeFromSuperview];
     }
 }
 

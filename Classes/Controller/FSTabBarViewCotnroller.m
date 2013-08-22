@@ -27,12 +27,18 @@
 	self = [super init];
 	if (self) {
 		self.hideWhenNavigation = YES;
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheTabBarIndex) name:@"changeTheTabBarIndex" object:nil];
 	}
 	return self;
+}
+-(void)changeTheTabBarIndex
+{
+    _fsTabBar.fsSelectedIndex = 0;
 }
 
 - (void)dealloc {
 	[_fsTabBar release];
+    [[NSNotificationCenter defaultCenter]removeObject:self];
     [super dealloc];
 }
 
@@ -122,8 +128,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-    _fsTabBar.fsSelectedIndex = 0;
+    _fsTabBar.fsSelectedIndex = 1;
 	[_fsSelectedViewController viewDidAppear:animated];
+//    _fsTabBar.fsSelectedIndex = 0;
+//    _fsTabBar.fsSelectedIndex = 1;
 }
 
 #pragma mark -

@@ -14,6 +14,10 @@
 #import "FSShareIconContainView.h"
 #import "FSNewsContainerViewController.h"
 #import "FSWebViewForOpenURLViewController.h"
+#import "FSSinaBlogShareViewController.h"
+#import "FSNetEaseBlogShareViewController.h"
+#import "FSPeopleBlogShareViewController.h"
+#import "FSSlideViewController.h"
 #define FSLOADING_IMAGEVIEW_ANIMATION_KEY @"FSLOADING_IMAGEVIEW_ANIMATION_KEY_STRING"
 
 #define FSLOADING_IMAGEVIEW_URL @"http://mobile.app.people.com.cn:81/news2/news.php?act=focuspicture&type=loading&channelid=&count=&rt=xml"
@@ -48,6 +52,166 @@
     }
     return self;
 }
+-(NSString *)shareContent{
+    NSString *newsContent;
+    NSString *resultStr;
+
+    FSLoadingImageObject * object = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
+    NSMutableString * string = [[NSMutableString alloc]init];
+    [string appendFormat:@"【%@】%@->详见：%@",object.adTitle,object.adDesc,object.adLink];
+    
+    
+    return [string autorelease];
+}
+-(void)fsBaseContainerViewTouchEvent:(FSBaseContainerView *)sender{
+    
+    if ([sender isEqual:_fsShareIconContainView]) {
+        switch (_fsShareIconContainView.shareSelectEvent) {
+            case ShareSelectEvent_return:
+                break;
+            case ShareSelectEvent_sina:
+                NSLog(@"分享到新浪微博");
+            {
+                FSSinaBlogShareViewController *fsSinaBlogShareViewController = [[FSSinaBlogShareViewController alloc] init];
+                
+                fsSinaBlogShareViewController.withnavTopBar                  = YES;
+                fsSinaBlogShareViewController.title                          = @"新浪微博分享";
+                fsSinaBlogShareViewController.shareContent = [self shareContent];
+//                [self presentViewController:fsSinaBlogShareViewController animated:YES completion:nil];
+                if ([[UIApplication sharedApplication].keyWindow.rootViewController isKindOfClass:[FSSlideViewController class]]) {
+                    FSSlideViewController * slider  = (FSSlideViewController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                    [slider.rootViewController presentModalViewController:fsSinaBlogShareViewController animated:YES];
+                    
+                }else
+                {
+                    NSLog(@"%@", [UIApplication sharedApplication].keyWindow.rootViewController);
+                    //[[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:fsPeopleBlogShareViewController animated:YES];
+                    UINavigationController * navi = (UINavigationController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                    [navi pushViewController:fsSinaBlogShareViewController animated:YES];
+                    
+                }
+   
+                [fsSinaBlogShareViewController release];
+                [self removeFromSuperview];
+            }
+                
+                break;
+            case ShareSelectEvent_netease:
+            {
+                NSLog(@"分享到网易微博");
+                FSNetEaseBlogShareViewController *fsNetEaseBlogShareViewController = [[FSNetEaseBlogShareViewController alloc] init];
+                fsNetEaseBlogShareViewController.withnavTopBar                     = YES;
+                fsNetEaseBlogShareViewController.shareContent                      = [self shareContent];
+                if ([[UIApplication sharedApplication].keyWindow.rootViewController isKindOfClass:[FSSlideViewController class]]) {
+                    FSSlideViewController * slider  = (FSSlideViewController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                    [slider.rootViewController presentModalViewController:fsNetEaseBlogShareViewController animated:YES];
+                    
+                }else
+                {
+                    NSLog(@"%@", [UIApplication sharedApplication].keyWindow.rootViewController);
+                    //[[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:fsPeopleBlogShareViewController animated:YES];
+                    UINavigationController * navi = (UINavigationController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                    [navi pushViewController:fsNetEaseBlogShareViewController animated:YES];
+                    
+                }
+                
+                [fsNetEaseBlogShareViewController release];
+                [self removeFromSuperview];
+
+            }
+                                //}
+                
+                break;
+            case ShareSelectEvent_weixin:
+                //[self sendShareWeiXin:0];
+                break;
+            case ShareSelectEvent_friend:
+            {
+                //[self sendShareWeiXin:1];
+            }
+                
+                break;
+            case ShareSelectEvent_peopleBlog:
+            {
+                NSLog(@"分享到人民微博");
+                FSPeopleBlogShareViewController *fsPeopleBlogShareViewController = [[FSPeopleBlogShareViewController alloc] init];
+                fsPeopleBlogShareViewController.withnavTopBar                    = YES;
+                fsPeopleBlogShareViewController.shareContent = [self shareContent];
+                //[[UIApplication sharedApplication].keyWindow.rootViewController.rootViewController presentModalViewController:fsPeopleBlogShareViewController animated:YES];
+                if ([[UIApplication sharedApplication].keyWindow.rootViewController isKindOfClass:[FSSlideViewController class]]) {
+                    FSSlideViewController * slider  = (FSSlideViewController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                    [slider.rootViewController presentModalViewController:fsPeopleBlogShareViewController animated:YES];
+                    
+                }else
+                {
+                    NSLog(@"%@", [UIApplication sharedApplication].keyWindow.rootViewController);
+                    //[[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:fsPeopleBlogShareViewController animated:YES];
+                    UINavigationController * navi = (UINavigationController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                    [navi pushViewController:fsPeopleBlogShareViewController animated:YES];
+                    
+
+                }
+                [fsPeopleBlogShareViewController release];
+                [self removeFromSuperview];
+            }
+                break;
+//            case ShareSelectEvent_mail:
+//                NSLog(@"邮件分享");
+//                if ([MFMailComposeViewController canSendMail]) {
+//                    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+//                    picker.mailComposeDelegate = self;
+//                    [picker setSubject:_fs_GZF_NewsContainerDAO.cobj.title];
+//                    
+//                    NSArray *toRecipients = [NSArray arrayWithObject:@"[email][/email]"];
+//                    [picker setToRecipients:toRecipients];
+//                    NSString *emailBody = [self shareContent];
+//                    [picker setMessageBody:emailBody isHTML:NO];
+//                    [self presentModalViewController:picker animated:YES];
+//                    [picker release];
+//                }
+//                else{
+//                    FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
+//                    informationMessageView.parentDelegate = self;
+//                    [informationMessageView showInformationMessageViewInView:self.view
+//                                                                 withMessage:@"请先设置您的邮箱再分享，谢谢！"
+//                                                            withDelaySeconds:2.0f
+//                                                            withPositionKind:PositionKind_Vertical_Horizontal_Center
+//                                                                  withOffset:0.0f];
+//                    
+//                    [self performSelector:@selector(shearWithMail) withObject:nil afterDelay:1.5];
+//                }
+//                
+//                break;
+//            case ShareSelectEvent_message:
+//                NSLog(@"短信分享");
+//                [NTESNBSMSManager sharedSMSManager].smsBody = [self shareContent];
+//                [NTESNBSMSManager sharedSMSManager].pushNavigation = self.navigationController;
+//                [[NTESNBSMSManager sharedSMSManager] pushSMSComposer];
+//                break;
+//            case ShareSelectEvent_tencent:
+//            {
+//                LygTencentShareViewController *fsSinaBlogShareViewController = [[LygTencentShareViewController alloc] init];
+//                fsSinaBlogShareViewController.withnavTopBar                  = YES;
+//                fsSinaBlogShareViewController.title                          = @"腾讯微博分享";
+//                fsSinaBlogShareViewController.shareContent                   = [self shareContent];
+//                [self presentViewController:fsSinaBlogShareViewController animated:YES completion:nil];
+//                [fsSinaBlogShareViewController release];
+//            }
+//                break;
+            default:
+                break;
+        }
+        NSLog(@"。。。。。。。。。");
+        //_fsNewsContainerView.userInteractionEnabled = YES;
+        _fsShareIconContainView.isShow = NO;
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.6];
+        _fsShareIconContainView.frame = CGRectMake(0, self.frame.size.height+44, self.frame.size.width, [_fsShareIconContainView getHeight]);
+        [self timeOutEvent];
+        [UIView commitAnimations];
+        
+    }
+}
 -(void)buttonClick:(UIButton*)sender
 {
     FSLoadingImageObject *obj = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
@@ -62,16 +226,17 @@
             break;
         case -2:
         {
+            [_timer invalidate];
             _fsShareIconContainView = [[FSShareIconContainView alloc] initWithFrame:CGRectZero];
             _fsShareIconContainView.parentDelegate = self;
-            [self addSubview:_fsShareIconContainView];
+            [[UIApplication sharedApplication].keyWindow addSubview:_fsShareIconContainView];
             [_fsShareIconContainView release];
             
             [self bringSubviewToFront:_fsShareIconContainView];
-            _fsShareIconContainView.frame  = CGRectMake(0, 0, 300, 100);
+            _fsShareIconContainView.frame  = CGRectMake(0, [UIApplication sharedApplication].keyWindow.frame.size.height, 320, 320);
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.6];
-            _fsShareIconContainView.frame  = CGRectMake(0, 0, 300, 300);
+            _fsShareIconContainView.frame  = CGRectMake(0, [UIApplication sharedApplication].keyWindow.frame.size.height -320, 320, 320);
             _fsShareIconContainView.isShow = YES;
             [UIView commitAnimations];
         }
@@ -222,7 +387,7 @@
         adImageView.alpha = 1.0f;
         [UIView commitAnimations];
         
-        _timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(timerEvent) userInfo:nil repeats:NO];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timerEvent) userInfo:nil repeats:NO];
         
         if ([UIScreen mainScreen].bounds.size.height==568.0f) {
             
@@ -270,6 +435,11 @@
 }
 
 -(void)timeOutEvent{
+    static int i = 0;
+    if (i== 0 ) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"changeTheTabBarIndex" object:self];
+        i++;
+    }
     
      NSLog(@"timeOutEvent");
     
@@ -291,6 +461,9 @@
 	animation.toValue = [NSValue valueWithCGPoint:CGPointMake(self.layer.position.x - self.layer.bounds.size.width, self.layer.position.y)];
 	
 	[self.layer addAnimation:animation forKey:FSLOADING_IMAGEVIEW_ANIMATION_KEY];
+    
+    
+    
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {

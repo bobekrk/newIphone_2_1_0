@@ -184,9 +184,15 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:NO];
-    if (_isfirstShow) {
-        _isfirstShow = NO;
+    if (_fs_GZF_ChannelListDAO.objectList.count < 11) {
         [_fs_GZF_ChannelListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+    }
+
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (_fs_GZF_ChannelListDAO.objectList.count > 0) {
+        [self addKindsScrollView];
     }
 }
 

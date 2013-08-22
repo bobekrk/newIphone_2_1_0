@@ -7,6 +7,9 @@
 //
 
 #import "FSShareIconContainView.h"
+#import "FSPeopleBlogShareViewController.h"
+#import "FSNetEaseBlogShareViewController.h"
+#import "FSSinaBlogShareViewController.h"
 
 @implementation FSShareIconContainView
 

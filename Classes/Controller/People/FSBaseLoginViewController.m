@@ -288,12 +288,21 @@
 }
 
 -(void)returnToParentView{
-    if (self.isnavTopBar){
+//    if (self.isnavTopBar){
+//        [self dismissModalViewControllerAnimated:YES];
+//        return;
+//    }
+//    
+//    [self.navigationController popViewControllerAnimated:YES];
+    if (self.navigationController) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else if (self.presentingViewController)
+    {
         [self dismissModalViewControllerAnimated:YES];
-        return;
+    }else
+    {
+        [self.view removeFromSuperview];
     }
-    
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
