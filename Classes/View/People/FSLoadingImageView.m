@@ -53,9 +53,28 @@
         // Initialization code
 		//self.multipleTouchEnabled = NO;
         self.userInteractionEnabled = YES;
+        UILongPressGestureRecognizer * gester = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(saveImage)];
+        [self addGestureRecognizer:gester];
+        [gester release];
         firstTime = YES;
     }
     return self;
+}
+-(void)saveImage
+{
+    FSAsyncImageView * view = (FSAsyncImageView *)[self  viewWithTag:1000];
+    if (view) {
+        if (_timer) {
+            [_timer invalidate];
+            _timer = nil;
+            UIImage * imagee = view.imageView.image;
+            UIImageWriteToSavedPhotosAlbum(imagee, nil, nil, nil);
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"保存成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+            [alert release];
+        }
+    }
+    NSLog(@"xxxxxxxxxx");
 }
 -(NSString *)shareContent{
     NSString *newsContent;
@@ -517,7 +536,7 @@
         FSAsyncImageView *adImageView = [[FSAsyncImageView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
         NSString *localStoreFileName = getFileNameWithURLString(obj.picUrl, getCachesPath());
         adImageView.alpha = 0.0f;
-        
+        adImageView.tag   = 1000;
         adImageView.urlString = obj.picUrl;
         adImageView.localStoreFileName = localStoreFileName;
         adImageView.imageCuttingKind = ImageCuttingKind_fixrect;
