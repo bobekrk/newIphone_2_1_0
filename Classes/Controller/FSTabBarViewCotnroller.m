@@ -50,7 +50,7 @@
 	self.view.backgroundColor = [UIColor blackColor];
 	
 	[self inner_initializeFSViewControllers];
-	//_fsTabBar.fsSelectedIndex = 0;
+	_fsTabBar.fsSelectedIndex = 1;
 }
 
 
@@ -128,7 +128,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-    _fsTabBar.fsSelectedIndex = 1;
+    //_fsTabBar.fsSelectedIndex = 1;
 	[_fsSelectedViewController viewDidAppear:animated];
 //    _fsTabBar.fsSelectedIndex = 0;
 //    _fsTabBar.fsSelectedIndex = 1;

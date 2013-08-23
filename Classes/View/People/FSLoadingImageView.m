@@ -18,6 +18,11 @@
 #import "FSNetEaseBlogShareViewController.h"
 #import "FSPeopleBlogShareViewController.h"
 #import "FSSlideViewController.h"
+#import "LygTencentShareViewController.h"
+#import "NTESNBSMSManager.h"
+#import <MessageUI/MessageUI.h>
+#import "PeopleNewsReaderPhoneAppDelegate.h"
+//#import "MFMailComposeViewController.h"
 #define FSLOADING_IMAGEVIEW_ANIMATION_KEY @"FSLOADING_IMAGEVIEW_ANIMATION_KEY_STRING"
 
 #define FSLOADING_IMAGEVIEW_URL @"http://mobile.app.people.com.cn:81/news2/news.php?act=focuspicture&type=loading&channelid=&count=&rt=xml"
@@ -58,7 +63,7 @@
 
     FSLoadingImageObject * object = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
     NSMutableString * string = [[NSMutableString alloc]init];
-    [string appendFormat:@"【%@】%@->详见：%@",object.adTitle,object.adDesc,object.adLink];
+    [string appendFormat:@"【%@】%@->详见：%@ ->下载人民新闻客户端:https://itunes.apple.com/cn/app/id424180337",object.adTitle,object.adDesc,object.adLink];
     
     
     return [string autorelease];
@@ -123,11 +128,16 @@
                 
                 break;
             case ShareSelectEvent_weixin:
-                //[self sendShareWeiXin:0];
+            {
+                [self sendShareWeiXin:0];
+                [self removeFromSuperview];
+            }
+                
                 break;
             case ShareSelectEvent_friend:
             {
-                //[self sendShareWeiXin:1];
+                [self sendShareWeiXin:1];
+                [self removeFromSuperview];
             }
                 
                 break;
@@ -149,68 +159,197 @@
                     UINavigationController * navi = (UINavigationController*)[UIApplication sharedApplication].keyWindow.rootViewController;
                     [navi pushViewController:fsPeopleBlogShareViewController animated:YES];
                     
-
                 }
                 [fsPeopleBlogShareViewController release];
                 [self removeFromSuperview];
             }
                 break;
-//            case ShareSelectEvent_mail:
-//                NSLog(@"邮件分享");
-//                if ([MFMailComposeViewController canSendMail]) {
-//                    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
-//                    picker.mailComposeDelegate = self;
-//                    [picker setSubject:_fs_GZF_NewsContainerDAO.cobj.title];
-//                    
-//                    NSArray *toRecipients = [NSArray arrayWithObject:@"[email][/email]"];
-//                    [picker setToRecipients:toRecipients];
-//                    NSString *emailBody = [self shareContent];
-//                    [picker setMessageBody:emailBody isHTML:NO];
-//                    [self presentModalViewController:picker animated:YES];
-//                    [picker release];
-//                }
-//                else{
-//                    FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
-//                    informationMessageView.parentDelegate = self;
-//                    [informationMessageView showInformationMessageViewInView:self.view
-//                                                                 withMessage:@"请先设置您的邮箱再分享，谢谢！"
-//                                                            withDelaySeconds:2.0f
-//                                                            withPositionKind:PositionKind_Vertical_Horizontal_Center
-//                                                                  withOffset:0.0f];
-//                    
-//                    [self performSelector:@selector(shearWithMail) withObject:nil afterDelay:1.5];
-//                }
-//                
-//                break;
-//            case ShareSelectEvent_message:
-//                NSLog(@"短信分享");
-//                [NTESNBSMSManager sharedSMSManager].smsBody = [self shareContent];
-//                [NTESNBSMSManager sharedSMSManager].pushNavigation = self.navigationController;
-//                [[NTESNBSMSManager sharedSMSManager] pushSMSComposer];
-//                break;
-//            case ShareSelectEvent_tencent:
-//            {
-//                LygTencentShareViewController *fsSinaBlogShareViewController = [[LygTencentShareViewController alloc] init];
-//                fsSinaBlogShareViewController.withnavTopBar                  = YES;
-//                fsSinaBlogShareViewController.title                          = @"腾讯微博分享";
-//                fsSinaBlogShareViewController.shareContent                   = [self shareContent];
-//                [self presentViewController:fsSinaBlogShareViewController animated:YES completion:nil];
-//                [fsSinaBlogShareViewController release];
-//            }
-//                break;
+            case ShareSelectEvent_mail:
+            {
+                if ([MFMailComposeViewController canSendMail]) {
+                    [self retain];
+                    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+                    picker.mailComposeDelegate = self;
+                    [picker setSubject:[self shareContent]];
+                    
+                    NSArray *toRecipients = [NSArray arrayWithObject:@"[email][/email]"];
+                    [picker setToRecipients:toRecipients];
+                    NSString *emailBody = [self shareContent];
+                    [picker setMessageBody:emailBody isHTML:NO];
+                    [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:picker animated:YES];
+                    [picker release];
+                    [self removeFromSuperview];
+                }
+                else{
+                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"不能发送" message:@"请设置邮箱" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+                    [alert show];
+                    [alert release];
+                }
+            }
+                
+                break;
+                
+            case ShareSelectEvent_message:
+            {
+                NSLog(@"短信分享");
+                [self retain];
+                MFMessageComposeViewController  * controller = [[MFMessageComposeViewController alloc]init];
+                controller.delegate                          = self;
+                controller.messageComposeDelegate            = self;
+                controller.body                              = [self shareContent];
+                [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:controller animated:YES];
+                [controller release];
+                [self removeFromSuperview];
+                
+                
+            }
+                
+                break;
+            case ShareSelectEvent_tencent:
+            {
+                LygTencentShareViewController *fsSinaBlogShareViewController = [[LygTencentShareViewController alloc] init];
+                fsSinaBlogShareViewController.withnavTopBar                  = YES;
+                fsSinaBlogShareViewController.title                          = @"腾讯微博分享";
+                fsSinaBlogShareViewController.shareContent                   = [self shareContent];
+                if ([[UIApplication sharedApplication].keyWindow.rootViewController isKindOfClass:[FSSlideViewController class]]) {
+                    FSSlideViewController * slider  = (FSSlideViewController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                    [slider.rootViewController presentModalViewController:fsSinaBlogShareViewController animated:YES];
+                    
+                }else
+                {
+                    NSLog(@"%@", [UIApplication sharedApplication].keyWindow.rootViewController);
+                    //[[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:fsPeopleBlogShareViewController animated:YES];
+                    UINavigationController * navi = (UINavigationController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                    [navi pushViewController:fsSinaBlogShareViewController animated:YES];
+                    
+                    
+                }
+                [fsSinaBlogShareViewController release];
+                [self removeFromSuperview];
+            }
+                break;
             default:
                 break;
         }
-        NSLog(@"。。。。。。。。。");
-        //_fsNewsContainerView.userInteractionEnabled = YES;
         _fsShareIconContainView.isShow = NO;
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.6];
-        _fsShareIconContainView.frame = CGRectMake(0, self.frame.size.height+44, self.frame.size.width, [_fsShareIconContainView getHeight]);
+        [_fsShareIconContainView removeFromSuperview];
+        //_fsShareIconContainView.frame = CGRectMake(0, self.frame.size.height+44, self.frame.size.width, [_fsShareIconContainView getHeight]);
         [self timeOutEvent];
         [UIView commitAnimations];
         
     }
+}
+//微信
+
+-(void)sendShareWeiXin:(int)isSendToFriend{
+    if (1) {
+        NSString *newsContent;
+        
+//        if (self.newsSourceKind == NewsSourceKind_ShiKeNews && _FCObj==nil) {
+//            
+//            if (self.obj!=nil) {
+//                if ([self.obj.news_abstract length]>90) {
+//                    
+//                    newsContent = [self.obj.news_abstract substringToIndex:90];
+//                    newsContent = [newsContent stringByReplacingOccurrencesOfString:@"　　" withString:@""];
+//                    newsContent = [newsContent stringByReplacingOccurrencesOfString:@" " withString:@""];
+//                    newsContent = [newsContent stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+//                    newsContent = [newsContent stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+//                    
+//                }
+//                else{
+//                    newsContent = [NSString stringWithFormat:@"%@",self.obj.news_abstract];
+//                }
+//            }
+//            
+//            if (self.FavObj!=nil) {
+//                if ([self.FavObj.news_abstract length]>90) {
+//                    newsContent = [self.FavObj.news_abstract substringToIndex:90];
+//                    newsContent = [newsContent stringByReplacingOccurrencesOfString:@"　　" withString:@""];
+//                    newsContent = [newsContent stringByReplacingOccurrencesOfString:@" " withString:@""];
+//                    newsContent = [newsContent stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+//                    newsContent = [newsContent stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+//                }
+//                else{
+//                    newsContent = [NSString stringWithFormat:@"%@",self.FavObj.news_abstract];
+//                }
+//            }
+//        }
+//        else{
+//            if ([_fs_GZF_NewsContainerDAO.cobj.content length]>90) {
+//                
+//                newsContent = [_fs_GZF_NewsContainerDAO.cobj.content substringToIndex:90];
+//                NSLog(@"newsContent:%@",newsContent);
+//                newsContent = [newsContent stringByReplacingOccurrencesOfString:@"　　" withString:@""];
+//                newsContent = [newsContent stringByReplacingOccurrencesOfString:@" " withString:@""];
+//                newsContent = [newsContent stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+//                newsContent = [newsContent stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+//                
+//            }
+//            else{
+//                newsContent = [NSString stringWithFormat:@"%@",_fs_GZF_NewsContainerDAO.cobj.content];
+//            }
+//        }
+        
+        
+        
+        PeopleNewsReaderPhoneAppDelegate*appDelegate = (PeopleNewsReaderPhoneAppDelegate *)[UIApplication sharedApplication].delegate;
+        
+        /*
+         UIImage *image = [UIImage imageNamed:@"icon-72.png"];
+         if (![appDelegate sendWXMidiaMessage:@"人民新闻微信分享" content:shareContent thumbImage:image webURL:shortURL]) {
+         [CommonFuncs showMessage:@"人民新闻" ContentMessage:@"不能分享到微信，请确认安装了最新版本的微信客户端"];
+         }
+         */
+        
+        //
+        //        if (![appDelegate sendWXTextMessage:newsContent]) {
+        //            ;
+        //        }
+        //        return;
+        [self retain];
+        UIImage *image = [UIImage imageNamed:@"icon@2x.png"];
+        if (isSendToFriend == 0) {
+            if (![appDelegate sendWXMidiaMessage:[self shareContent] content:newsContent thumbImage:image webURL:@"https://itunes.apple.com/cn/app/id424180337"]) {
+                //[CommonFuncs showMessage:@"人民新闻" ContentMessage:@"不能分享到微信，请确认安装了最新版本的微信客户端"];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"人民新闻" message:@"不能分享到微信，请确认安装了最新版本的微信客户端" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+                [alert release];
+            }
+            else{
+                NSLog(@"sendShareWeiXin fail");
+            }
+        }else
+        {
+            if (![appDelegate sendWXMidiaMessagePYQ:[self shareContent] content:[self shareContent] thumbImage:image webURL:@"https://itunes.apple.com/cn/app/id424180337"]) {
+                //[CommonFuncs showMessage:@"人民新闻" ContentMessage:@"不能分享到微信，请确认安装了最新版本的微信客户端"];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"人民新闻" message:@"不能分享到微信，请确认安装了最新版本的微信客户端" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+                [alert release];
+            }
+            else{
+                NSLog(@"sendShareWeiXin fail");
+            }
+            
+        }
+        
+        
+	} else {
+        //[CommonFuncs showMessage:@"人民新闻" ContentMessage:@"正文内容不存在"];
+	}
+    
+}
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error __OSX_AVAILABLE_STARTING(__MAC_NA,__IPHONE_3_0)
+{
+    [self release];
+    [controller dismissModalViewControllerAnimated:YES];
+}
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+    [controller dismissModalViewControllerAnimated:YES];
+    [self release];
 }
 -(void)buttonClick:(UIButton*)sender
 {
@@ -226,7 +365,10 @@
             break;
         case -2:
         {
-            [_timer invalidate];
+            if (_timer) {
+                [_timer invalidate];
+                _timer = nil;
+            }
             _fsShareIconContainView = [[FSShareIconContainView alloc] initWithFrame:CGRectZero];
             _fsShareIconContainView.parentDelegate = self;
             [[UIApplication sharedApplication].keyWindow addSubview:_fsShareIconContainView];

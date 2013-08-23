@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "FSShareIconContainView.h"
-
+#import <MessageUI/MessageUI.h>
 @class FS_GZF_ForLoadingImageDAO;
 
-@interface FSLoadingImageView : UIView{
+@interface FSLoadingImageView : UIView<MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate,MFMailComposeViewControllerDelegate>{
 @protected
     id                         _parentDelegate;
     NSTimer                   *_timer;
