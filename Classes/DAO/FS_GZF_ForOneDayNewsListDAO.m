@@ -413,27 +413,28 @@
                     self.lastid = o.realtimeid;//by zhiliang
                 }
             }
-            if (self.objectList.count == 0) {
-                for (FSOneDayNewsObject * xxobj in resultSet) {
-                    [self.objectList addObject:xxobj];
-                }
-            }else{
-                for (FSOneDayNewsObject * xxobj in resultSet) {
-                    int kk = -1;
-                    for (int i = 0 ; i< self.objectList.count; i++) {
-                        FSOneDayNewsObject * innerobject = [self.objectList objectAtIndex:i];
-                        if ([xxobj.newsid  isEqualToString:innerobject.newsid]) {
-                            kk = -100;
-                            break;
-                        }
-
-                    }
-                    if (kk == -1) {
-                        [self.objectList insertObject:xxobj atIndex:0];
-                    }
-                    
-                }
-            }
+            self.objectList = (NSMutableArray*)resultSet;
+//            if (self.objectList.count == 0) {
+//                for (FSOneDayNewsObject * xxobj in resultSet) {
+//                    [self.objectList addObject:xxobj];
+//                }
+//            }else{
+//                for (FSOneDayNewsObject * xxobj in resultSet) {
+//                    int kk = -1;
+//                    for (int i = 0 ; i< self.objectList.count; i++) {
+//                        FSOneDayNewsObject * innerobject = [self.objectList objectAtIndex:i];
+//                        if ([xxobj.newsid  isEqualToString:innerobject.newsid]) {
+//                            kk = -100;
+//                            break;
+//                        }
+//
+//                    }
+//                    if (kk == -1) {
+//                        [self.objectList insertObject:xxobj atIndex:0];
+//                    }
+//                    
+//                }
+//            }
             self.isRecordListTail = [self.objectList count] < [self.fetchRequest fetchLimit];
             [self setBufferFlag];
         }

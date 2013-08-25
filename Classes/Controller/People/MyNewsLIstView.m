@@ -366,36 +366,34 @@
             i++;
         }
         FSOneDayNewsObject *o = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
-        o.isReaded            = [NSNumber numberWithInt:1];
         _currentObject        = o;
         o.isRedColor          = [NSNumber numberWithInt:1];
         FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
         fsNewsContainerViewController.obj                            = o;
         fsNewsContainerViewController.FCObj                          = nil;
         fsNewsContainerViewController.newsSourceKind                 = NewsSourceKind_PuTongNews;
-        
+        [[NSUserDefaults standardUserDefaults]setValue:[NSNumber numberWithInt:1] forKey:o.newsid];
+
         NSLog(@"%@ %@",self.aViewController,self.aViewController.navigationController);
         [self.aViewController.navigationController pushViewController:fsNewsContainerViewController animated:YES];
         [fsNewsContainerViewController release];
         [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     else{
         FSOneDayNewsObject *o                                        = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
-        o.isReaded                                                   = [NSNumber numberWithBool:YES];
-        FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
-        
+               FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
         fsNewsContainerViewController.obj                            = o;
         fsNewsContainerViewController.FCObj                          = nil;
         fsNewsContainerViewController.newsSourceKind                 = NewsSourceKind_PuTongNews;
-        
-        //NSLog(@"1_newsListData:%@",o.title);
         [UIView commitAnimations];
         [self.aViewController.navigationController pushViewController:fsNewsContainerViewController animated:YES];
         [fsNewsContainerViewController release];
         [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
     }
-    [_fs_GZF_ForNewsListDAO.managedObjectContext save:nil];
-    [FSBaseDB saveDB];
+    
+    //[_fs_GZF_ForNewsListDAO.managedObjectContext save:nil];
+    //[FSBaseDB saveDB];
     
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -429,7 +427,8 @@
         FSOneDayNewsObject * object          = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:indexPath.row -1];
         NSLog(@"%@",object.isReaded);
         xxcell.leftView.backgroundColor      = ([object.isRedColor isEqualToNumber:[NSNumber numberWithInt:1]]?[UIColor redColor]:[UIColor lightGrayColor]);
-        xxcell.lab_NewsTitle.textColor       = ([object.isReaded   isEqualToNumber:[NSNumber numberWithInt:1]]?[UIColor lightGrayColor]:[UIColor blackColor]);
+        NSNumber * num = [[NSUserDefaults standardUserDefaults]valueForKey:object.newsid];
+        xxcell.lab_NewsTitle.textColor       = (num?[UIColor lightGrayColor]:[UIColor blackColor]);
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
