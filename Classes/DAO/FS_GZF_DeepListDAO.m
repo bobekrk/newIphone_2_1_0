@@ -93,7 +93,14 @@
 
 #pragma mark -
 #pragma mark NSCMLParserDelegate
-
+- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
+{
+    NSLog(@"%@",parseError);
+}
+- (void)parser:(NSXMLParser *)parser validationErrorOccurred:(NSError *)validationError
+{
+    NSLog(@"%@",validationError);
+}
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
     _currentElementName = elementName;
@@ -105,10 +112,13 @@
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
 	if ([elementName isEqualToString:deep_item]) {
-        
+        NSLog(@"-------------------");
         //[_objectList addObject:_obj];
         //[_obj release];
         //_obj = nil;
+    }
+    if ([elementName isEqualToString:@"root"]) {
+        [FSBaseDB saveDB];
     }
 }
 
@@ -130,16 +140,16 @@
 
 - (void)parser:(NSXMLParser *)parser foundCDATA:(NSData *)CDATABlock {
 	
-    if ([_currentElementName isEqualToString:deep_title]) {
+    if ([_currentElementName isEqualToString:@"title"]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
 		_obj.title = trimString(content);
 		[content release];
-	} else if ([_currentElementName isEqualToString:deep_news_abstract]) {
+	} else if ([_currentElementName isEqualToString:@"news_abstract"]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
 		_obj.news_abstract = trimString(content);
 		[content release];
 	}
-    else if ([_currentElementName isEqualToString:deep_timestamp]) {
+    else if ([_currentElementName isEqualToString:@"timestamp"]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
         NSString *temp = trimString(content);
         NSNumber *tempNumber = [[NSNumber alloc] initWithInt:[temp intValue]];
@@ -147,27 +157,27 @@
 		[content release];
         [tempNumber release];
 	}
-    else if ([_currentElementName isEqualToString:deep_pubDate]) {
+    else if ([_currentElementName isEqualToString:@"pubDate"]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
 		_obj.pubDate = trimString(content);
 		[content release];
 	}
-    else if ([_currentElementName isEqualToString:deep_pictureLogo]) {
+    else if ([_currentElementName isEqualToString:@"pictureLogo"]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
 		_obj.pictureLogo = trimString(content);
 		[content release];
 	}
-    else if ([_currentElementName isEqualToString:deep_pictureLink]) {
+    else if ([_currentElementName isEqualToString:@"pictureLink"]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
 		_obj.pictureLink = trimString(content);
 		[content release];
 	}
-    else if ([_currentElementName isEqualToString:deep_deepid]) {
+    else if ([_currentElementName isEqualToString:@"deepid"]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
 		_obj.deepid = trimString(content);
 		[content release];
 	}
-    else if ([_currentElementName isEqualToString:deep_sort]) {
+    else if ([_currentElementName isEqualToString:@"sort"]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
         NSString *temp = trimString(content);
         NSNumber *tempNumber = [[NSNumber alloc] initWithInt:[temp intValue]];

@@ -2,7 +2,7 @@
 //  FSTopicObject.h
 //  PeopleNewsReaderPhone
 //
-//  Created by ganzf on 13-4-11.
+//  Created by lygn128 on 13-8-26.
 //
 //
 

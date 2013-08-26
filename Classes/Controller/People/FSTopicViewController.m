@@ -14,7 +14,7 @@
 #import "FS_GZF_DeepListDAO.h"
 
 #import "FSDeepPageContainerController.h"
-
+#import "ASIHTTPRequest.h"
 #define FLOATTING_HEIGHT 52.0f
 
 #define FSLEFT_RIGHT_SPACE 38.0f
@@ -38,7 +38,6 @@
 }
 
 - (void)dealloc {
-    [_scrollPageView release];
     [_deepFloattingTitleView release];
     [_fs_GZF_DeepListDAO release];
     [super dealloc];
@@ -46,7 +45,7 @@
 
 - (void)ownerPicture {
     //有图模式
-    _scrollPageView = [[FSScrollPageView alloc] initWithFrame:CGRectMake(FSLEFT_RIGHT_SPACE, 20.0f, self.view.frame.size.width - FSLEFT_RIGHT_SPACE * 2.0f, self.view.frame.size.height-40)];
+    _scrollPageView = [[FSScrollPageView alloc] initWithFrame:CGRectMake(FSLEFT_RIGHT_SPACE, 20.0f + 44, self.view.frame.size.width - FSLEFT_RIGHT_SPACE * 2.0f, self.view.frame.size.height-40)];
     _scrollPageView.parentDelegate = self;
     _scrollPageView.clipsToBounds = NO;
     _scrollPageView.leftRightSpace = 10.0f;
@@ -55,11 +54,12 @@
     [tapGes release];
     
     [self.view addSubview:_scrollPageView];
+    [_scrollPageView release];
     
     _deepFloattingTitleView = [[FSDeepFloatingTitleView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - FLOATTING_HEIGHT-20, self.view.frame.size.width, FLOATTING_HEIGHT)];
     //_deepFloattingTitleView.backgroundColor = [UIColor whiteColor];
     
-    if ([UIScreen mainScreen].applicationFrame.size.height>480.0f) {
+    if (ISIPHONE5) {
         [self.view addSubview:_deepFloattingTitleView];
     }
 
@@ -100,13 +100,21 @@
 
 -(void)doSomethingForViewFirstTimeShow{
    // NSLog(@"doSomethingForViewFirstTimeShow:%@",self);
-    [_fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+    //[_fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
     //[_topicListData GETData];      
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:NO];
-    [_fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+   // [_fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+    ASIHTTPRequest * reqquest = [[ASIHTTPRequest alloc]initWithURL:[NSURL URLWithString:@"http://mobile.app.people.com.cn:81/topic/topic.php?act=info_list&rt=xml&type=list&iswp=0"]];
+    [reqquest setCompletionBlock:^{
+        NSLog(@"%@",reqquest.responseString);
+    }];
+    [reqquest setFailedBlock:^{
+        
+    }];
+    //[reqquest startAsynchronous];
 }
 
 - (void)layoutControllerViewWithInterfaceOrientation:(UIInterfaceOrientation)willToOrientation {
@@ -120,20 +128,19 @@
     if ([_fs_GZF_DeepListDAO.objectList count] == 0 || currentTimeInterval - _TimeInterval>60*2) {
         NSLog(@"刷新1111");
         _TimeInterval = currentTimeInterval;
-        [_fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+        //[_fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
     }
     else{
         NSLog(@"时间过短");
         //[_scrollPageView loadPageData];
     }
-    [self updataWeatherMessage];
+    //[self updataWeatherMessage];
 }
 
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    
-    
+    [_fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -151,6 +158,7 @@
 
 - (UIImage *)tabBarItemSelectedImage {
 	return [UIImage imageNamed:@"deep_sel.png"];
+     
 }
 
 - (void)layoutControllerViewWithRect:(CGRect)rect {
@@ -159,15 +167,68 @@
 //    _ivBackground.frame = CGRectMake(0.0f, 0.0f, rect.size.width, rect.size.height);
     
     if (rect.size.height>450) {
-         _scrollPageView.frame = CGRectMake(FSLEFT_RIGHT_SPACE, 25.0f, rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f, (rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f)/2*3-18);
+         _scrollPageView.frame = CGRectMake(FSLEFT_RIGHT_SPACE, 25.0f + 44 , rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f , (rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f)/2*3-18);
     }
     else{
-         _scrollPageView.frame = CGRectMake(FSLEFT_RIGHT_SPACE, 10.0f, rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f, (rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f)/2*3-18);
+         _scrollPageView.frame = CGRectMake(FSLEFT_RIGHT_SPACE, 10.0f + 44, rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f , (rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f)/2*3-18);
     }
    
     //NSLog(@"layoutControllerViewWithRect:%f  h:%f",_scrollPageView.frame.size.width,rect.size.height);
     _deepFloattingTitleView.frame= CGRectMake(FSLEFT_RIGHT_SPACE+12, 18.0f + _scrollPageView.frame.size.height, rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f -24,rect.size.height- 18.0f - _scrollPageView.frame.size.height);
 }
+- (void)dataAccessObjectSync:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status{
+    
+    //self.currentDAOData = sender;
+	//self.currentDAOStatus = status;
+	NSLog(@"%u",status);
+	if (status == FSBaseDAOCallBack_WorkingStatus) {
+		if (1) {
+			FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:CGRectZero];
+			[indicatorMessageView showIndicatorMessageViewInView:self.view withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
+			[indicatorMessageView release];
+		}
+	} else {
+		[FSIndicatorMessageView dismissIndicatorMessageViewInView:self.view];
+		
+		switch (status) {
+			case FSBaseDAOCallBack_HostErrorStatus:
+				
+			case FSBaseDAOCallBack_NetworkErrorStatus:
+                
+			case FSBaseDAOCallBack_NetworkErrorAndNoBufferStatus:
+                
+			case FSBaseDAOCallBack_NetworkErrorAndDataIsTailStatus:
+                
+			case FSBaseDAOCallBack_DataFormatErrorStatus:
+                
+			case FSBaseDAOCallBack_URLErrorStatus:
+                
+			case FSBaseDAOCallBack_UnknowErrorStatus:
+                
+			case FSBaseDAOCallBack_POSTDataZeroErrorStatus:{
+				FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
+                informationMessageView.parentDelegate = self;
+                                [informationMessageView showInformationMessageViewInView:self.view
+                                                                             withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]
+                                                                        withDelaySeconds:0.3
+                                                                        withPositionKind:PositionKind_Vertical_Horizontal_Center
+                                                                              withOffset:0.0f];
+				[informationMessageView release];
+				break;
+			}
+			default:
+				break;
+		}
+		if (status == FSBaseDAOCallBack_HostErrorStatus) {
+			
+		}
+	}
+    
+	[self doSomethingWithDAO:sender withStatus:status];
+    
+    
+}
+
 
 
 #pragma mark -
@@ -184,6 +245,8 @@
 //    }
     
     if ([sender isEqual:_fs_GZF_DeepListDAO]) {
+        NSLog(@"%u",status);
+        NSLog(@"%d",_fs_GZF_DeepListDAO.objectList.count);
         if (status == FSBaseDAOCallBack_SuccessfulStatus || status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
             NSLog(@"_fs_GZF_DeepListDAO:%d",[_fs_GZF_DeepListDAO.objectList count]);
             

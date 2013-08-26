@@ -152,7 +152,6 @@
 		04AAA854167B2144001F800A /* quxiao.png in Resources */ = {isa = PBXBuildFile; fileRef = 04AAA84A167B2142001F800A /* quxiao.png */; };
 		04AAA855167B2144001F800A /* quxiao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04AAA84B167B2142001F800A /* quxiao@2x.png */; };
 		04AB6A60171651ED00BAA213 /* FSTopicPriorObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AB6A5F171651ED00BAA213 /* FSTopicPriorObject.m */; };
-		04AB6A661716532400BAA213 /* FSTopicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AB6A651716532400BAA213 /* FSTopicObject.m */; };
 		04AF8F77167C65D90080361B /* FS_GZF_FeedbackPOSTXMLDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AF8F76167C65D90080361B /* FS_GZF_FeedbackPOSTXMLDAO.m */; };
 		04B0C4CD1683FA7C0062BF5E /* login_denglu.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B0C4C91683FA7C0062BF5E /* login_denglu.png */; };
 		04B0C4CE1683FA7C0062BF5E /* login_denglu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B0C4CA1683FA7C0062BF5E /* login_denglu@2x.png */; };
@@ -428,6 +427,7 @@
 		58CDA27C17BA30E300984B06 /* FSOneDayNewsObjectx.m in Sources */ = {isa = PBXBuildFile; fileRef = 58CDA27B17BA30E200984B06 /* FSOneDayNewsObjectx.m */; };
 		58D8B0FF17A745EF00816844 /* 返回.png in Resources */ = {isa = PBXBuildFile; fileRef = 58D8B0FD17A745EE00816844 /* 返回.png */; };
 		58D8B10017A745EF00816844 /* 返回@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58D8B0FE17A745EE00816844 /* 返回@2x.png */; };
+		58EE8B0617CB65AA00A8A935 /* FSTopicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EE8B0517CB65AA00A8A935 /* FSTopicObject.m */; };
 		58FA000017A7CDCD00841355 /* clearh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FAFFF717A7CDCD00841355 /* clearh@2x.png */; };
 		58FA000117A7CDCD00841355 /* collect.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FAFFF817A7CDCD00841355 /* collect.png */; };
 		58FA000217A7CDCD00841355 /* collect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58FAFFF917A7CDCD00841355 /* collect@2x.png */; };
@@ -946,8 +946,6 @@
 		04AAA84B167B2142001F800A /* quxiao@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "quxiao@2x.png"; sourceTree = "<group>"; };
 		04AB6A5E171651ED00BAA213 /* FSTopicPriorObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSTopicPriorObject.h; sourceTree = "<group>"; };
 		04AB6A5F171651ED00BAA213 /* FSTopicPriorObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSTopicPriorObject.m; sourceTree = "<group>"; };
-		04AB6A641716532400BAA213 /* FSTopicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSTopicObject.h; sourceTree = "<group>"; };
-		04AB6A651716532400BAA213 /* FSTopicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSTopicObject.m; sourceTree = "<group>"; };
 		04AF8F75167C65D90080361B /* FS_GZF_FeedbackPOSTXMLDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FS_GZF_FeedbackPOSTXMLDAO.h; sourceTree = "<group>"; };
 		04AF8F76167C65D90080361B /* FS_GZF_FeedbackPOSTXMLDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FS_GZF_FeedbackPOSTXMLDAO.m; sourceTree = "<group>"; };
 		04B0C4C91683FA7C0062BF5E /* login_denglu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_denglu.png; sourceTree = "<group>"; };
@@ -1328,6 +1326,8 @@
 		58CDA27B17BA30E200984B06 /* FSOneDayNewsObjectx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSOneDayNewsObjectx.m; sourceTree = "<group>"; };
 		58D8B0FD17A745EE00816844 /* 返回.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回.png"; sourceTree = "<group>"; };
 		58D8B0FE17A745EE00816844 /* 返回@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回@2x.png"; sourceTree = "<group>"; };
+		58EE8B0417CB65AA00A8A935 /* FSTopicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSTopicObject.h; sourceTree = "<group>"; };
+		58EE8B0517CB65AA00A8A935 /* FSTopicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSTopicObject.m; sourceTree = "<group>"; };
 		58FA000517A7CFD200841355 /* clear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clear@2x.png"; sourceTree = "<group>"; };
 		58FA000717A7D00800841355 /* order.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = order.png; sourceTree = "<group>"; };
 		58FA000817A7D00800841355 /* order@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "order@2x.png"; sourceTree = "<group>"; };
@@ -2511,12 +2511,12 @@
 				581546D717C1965400EFEF20 /* FSOneDayNewsObject.h */,
 				581546D817C1965400EFEF20 /* FSOneDayNewsObject.m */,
 				5850C1D2179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld */,
+				58EE8B0417CB65AA00A8A935 /* FSTopicObject.h */,
+				58EE8B0517CB65AA00A8A935 /* FSTopicObject.m */,
 				5889DB2D17B1EADB00ED76BA /* FSLoadingImageObject.h */,
 				5889DB2E17B1EADB00ED76BA /* FSLoadingImageObject.m */,
 				8212197115C677CF00B713FB /* Content */,
 				8212197215C677CF00B713FB /* Image */,
-				04AB6A641716532400BAA213 /* FSTopicObject.h */,
-				04AB6A651716532400BAA213 /* FSTopicObject.m */,
 				04AB6A5E171651ED00BAA213 /* FSTopicPriorObject.h */,
 				04AB6A5F171651ED00BAA213 /* FSTopicPriorObject.m */,
 				04E11B841706ABC300CD0265 /* FSRecommentAPPObject.h */,
@@ -4271,7 +4271,6 @@
 				04E11B861706ABC300CD0265 /* FSRecommentAPPObject.m in Sources */,
 				04C64FAE170BCDC100473578 /* FSNewbieGuideView.m in Sources */,
 				04AB6A60171651ED00BAA213 /* FSTopicPriorObject.m in Sources */,
-				04AB6A661716532400BAA213 /* FSTopicObject.m in Sources */,
 				7325E15B173B766F007D8224 /* FSSettingWithSwtichButtonCell.m in Sources */,
 				5850C1D4179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld in Sources */,
 				58AE68A217AF4B5D0007203C /* LygTencentShareViewController.m in Sources */,
@@ -4282,6 +4281,7 @@
 				58CDA27C17BA30E300984B06 /* FSOneDayNewsObjectx.m in Sources */,
 				0AE0769A17BB9A6A006B6358 /* MyNewsLIstView.m in Sources */,
 				581546D917C1965400EFEF20 /* FSOneDayNewsObject.m in Sources */,
+				58EE8B0617CB65AA00A8A935 /* FSTopicObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -52,7 +52,7 @@
     NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:self.dataBuffer];
     xmlParser.delegate = self;
     NSLog(@"");
-    @try {
+    //@try {
         if ([xmlParser parse]) {
             //NSLog(@"NSXMLParser complete:%@[%f]",[self timestampFlag],[[NSDate date] timeIntervalSince1970]);
             
@@ -71,19 +71,17 @@
             
             [self performSelectorOnMainThread:@selector(inner_CallbackScreen) withObject:nil waitUntilDone:[NSThread isMainThread]];
         } else {
+            NSLog(@"%@",xmlParser.parserError);
             
         }
-    }
-    @catch (NSException * e) {
-#ifdef MYDEBUG
-    //NSLog(@"NSXMLParser.ExceptionB:%@", [e reason]);
-#endif
-        NSLog(@"------Exception Caught-------");
-        [self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_NetworkErrorStatus];
-    }
-    @finally {
-        
-    }
+   // }
+//    @catch (NSException * e) {
+//        NSLog(@"------Exception Caught-------");
+//        [self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_NetworkErrorStatus];
+//    }
+//    @finally {
+//        
+//    }
     //NSLog(@"555555");
     [xmlParser release];
 
