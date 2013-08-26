@@ -29,4 +29,5 @@
 @property(nonatomic,retain)FS_GZF_ChannelListDAO              *aChannelListDAO;
 @property(nonatomic,assign)UIViewController                   *aViewController;
 @property(nonatomic,retain)NSDate                             *reFreshDate;
+@property(nonatomic,copy)  NSString                           *currentNewsId;
 @end

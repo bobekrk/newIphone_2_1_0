@@ -355,23 +355,23 @@
         FSNewsListCell * cell             = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:indexPath];
         cell.leftView.backgroundColor     = [UIColor redColor];
         cell.lab_NewsTitle.textColor      = [UIColor grayColor];
+        FSOneDayNewsObject *o = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
         int i = 0;
         for (FSOneDayNewsObject * obj in _fs_GZF_ForNewsListDAO.objectList) {
-            if ([_currentObject isEqual:obj] && ![_currentObject isEqual:[_fs_GZF_ForNewsListDAO.objectList objectAtIndex:indexPath.row-1]]) {
-                obj.isRedColor = [NSNumber numberWithInt:0];
+            if ([obj.newsid isEqualToString:self.currentNewsId] && ![o.newsid isEqualToString:self.currentNewsId]) {
                 FSNewsListCell * cell = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i+1 inSection:0]];
                 cell.leftView.backgroundColor = [UIColor lightGrayColor];
-                break;
+                
             }
             i++;
         }
-        FSOneDayNewsObject *o = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
+
         _currentObject        = o;
-        o.isRedColor          = [NSNumber numberWithInt:1];
         FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
         fsNewsContainerViewController.obj                            = o;
         fsNewsContainerViewController.FCObj                          = nil;
         fsNewsContainerViewController.newsSourceKind                 = NewsSourceKind_PuTongNews;
+        self.currentNewsId                                           = o.newsid;
         [[NSUserDefaults standardUserDefaults]setValue:[NSNumber numberWithInt:1] forKey:o.newsid];
 
         NSLog(@"%@ %@",self.aViewController,self.aViewController.navigationController);
@@ -411,7 +411,6 @@
 	if ([cell isKindOfClass:[FSTableViewCell class]]) {
         
 		FSTableViewCell *fsCell = (FSTableViewCell *)cell;
-        //fsCell.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"CellBackground"]];
 		[fsCell setParentDelegate:self];
 		[fsCell setRowIndex:[indexPath row]];
 		[fsCell setSectionIndex:[indexPath section]];
@@ -421,12 +420,11 @@
         [fsCell doSomethingAtLayoutSubviews];
 	} else {
 		[self initializeCell:cell withData:[self cellDataObjectWithIndexPath:indexPath] withIndexPath:indexPath];
-	}
+	} 
     if (indexPath.row > 0 ) {
-        FSNewsListCell * xxcell              = (FSNewsListCell *)cell;
+        FSNewsListCell     * xxcell          = (FSNewsListCell *)cell;
         FSOneDayNewsObject * object          = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:indexPath.row -1];
-        NSLog(@"%@",object.isReaded);
-        xxcell.leftView.backgroundColor      = ([object.isRedColor isEqualToNumber:[NSNumber numberWithInt:1]]?[UIColor redColor]:[UIColor lightGrayColor]);
+        xxcell.leftView.backgroundColor      = ([object.newsid isEqualToString:self.currentNewsId]?[UIColor redColor]:[UIColor lightGrayColor]);
         NSNumber * num = [[NSUserDefaults standardUserDefaults]valueForKey:object.newsid];
         xxcell.lab_NewsTitle.textColor       = (num?[UIColor lightGrayColor]:[UIColor blackColor]);
     }
