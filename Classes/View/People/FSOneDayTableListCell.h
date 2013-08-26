@@ -14,7 +14,7 @@
     
     
     
-    UILabel *_lab_title;
+    //UILabel *_lab_title;
     UILabel *_lab_description;
     //UILabel *_lab_VisitVolume;
     //UILabel *_lab_newsType;
@@ -39,7 +39,7 @@
     //UIImageView *_image_VisitIcon;
     
 }
-
+@property(nonatomic,retain)UILabel * lab_title;
 -(void)setContainer;
 
 -(BOOL)isDownloadPic;

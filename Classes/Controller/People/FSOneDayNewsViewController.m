@@ -28,6 +28,7 @@
 
 #import "FSNewsContainerViewController.h"
 #import "FSWebViewForOpenURLViewController.h"
+#import "FSOneDayTableListCell.h"
 
 
 @implementation FSOneDayNewsViewController
@@ -247,7 +248,7 @@
 }
 
 -(void)tableViewDataSourceDidSelected:(FSTableContainerView *)sender withIndexPath:(NSIndexPath *)indexPath{
-    
+    NSLog(@"%@",[sender.tvList cellForRowAtIndexPath:indexPath]);
     NSInteger section = [indexPath section];
 	NSInteger row = [indexPath row];
 
@@ -257,6 +258,8 @@
     if (section <= [_sectionMessage count]) {
         FSSectionObject *Obj = [_sectionMessage objectAtIndex:section-1];
         FSOneDayNewsObject *o = [_newsListData.objectList objectAtIndex:Obj.sectionBeginIndex+row];
+        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:o.newsid];
+        [[NSUserDefaults standardUserDefaults]synchronize];
         FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
         NSLog(@"fsNewsContainerViewController1:%d",[fsNewsContainerViewController retainCount]);
         fsNewsContainerViewController.obj = o;
@@ -265,10 +268,15 @@
         NSLog(@"fsNewsContainerViewController2:%d",[fsNewsContainerViewController retainCount]);
         
         [self.navigationController pushViewController:fsNewsContainerViewController animated:YES];
-        //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
-        NSLog(@"fsNewsContainerViewController3:%d",[fsNewsContainerViewController retainCount]);
         [fsNewsContainerViewController release];
         [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
+    }
+    if (section > 0) {
+        UITableViewCell * cell = [sender.tvList cellForRowAtIndexPath:indexPath];
+        if ([cell isKindOfClass:[FSOneDayTableListCell class]]) {
+            FSOneDayTableListCell * xxcell = (FSOneDayTableListCell*)cell;
+            xxcell.lab_title.textColor     = [UIColor lightGrayColor];
+        }
     }
     
 }
@@ -380,10 +388,6 @@
 		if (status == FSBaseDAOCallBack_SuccessfulStatus ||
 			status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
             //NSLog(@"_newsListData");
-//#ifdef MYDEBUG
-//            NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceNow:0];
-//            NSLog(@"doSomethingWithDAO 1:%f :%@",[date timeIntervalSince1970],sender);
-//#endif
             
             if (status == FSBaseDAOCallBack_SuccessfulStatus) {
                 [self reSetSectionMessage];
@@ -421,11 +425,6 @@
                     [_fs_GZF_GetWeatherMessageDAO operateOldBufferData];
                     //[_fsOneDayNewsListContainerView loaddingComplete];
                     [_fsWeatherView doSomethingAtLayoutSubviews];
-                    //NSLog(@"self:%@ :%d",self,[self retainCount]);
-//                    NSInteger k = [self retainCount];
-//                    for (NSInteger i=0; i<k-1; i++) {
-//                        [self release];
-//                    }
                     
                 }
             }

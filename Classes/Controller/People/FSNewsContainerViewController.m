@@ -52,6 +52,26 @@
 @synthesize newsSourceKind = _newsSourceKind;
 @synthesize newsID = _newsID;
 
+FSMyFaverateObject             *_FavObj;
+FSOneDayNewsObject             *_obj;
+FSFocusTopObject               *_FCObj;
+FSNewsContainerView            *_fsNewsContainerView;
+FSShareIconContainView         *_fsShareIconContainView;
+FSShareNoticView               *_fsShareNoticView;
+
+FS_GZF_NewsContainerDAO        *_fs_GZF_NewsContainerDAO;
+FS_GZF_CommentListDAO          *_fs_GZF_CommentListDAO;
+FS_GZF_NewsCommentPOSTXMLDAO   *_fs_GZF_NewsCommentPOSTXMLDAO;
+
+//新浪微博
+WBEngine                       *_sinaWBEngine;
+
+BOOL                            _isNewNavigation;
+UINavigationBar                *_navTopBar;
+
+NewsSourceKind                  _newsSourceKind;
+
+NSString                       *_newsID;
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -61,19 +81,23 @@
 
 
 - (void)dealloc {
-    //
-    
+    _fsNewsContainerView.parentDelegate = nil;
     [_fs_GZF_CommentListDAO release];
-    //_fs_GZF_NewsContainerDAO.parentDelegate = NULL;
+    _fs_GZF_CommentListDAO = nil;
+    _fs_GZF_NewsContainerDAO.parentDelegate = NULL;
     [_fs_GZF_NewsContainerDAO release];
-    //_fs_GZF_NewsCommentPOSTXMLDAO.parentDelegate = NULL;
+    _fs_GZF_NewsContainerDAO = nil;
+    _fs_GZF_NewsCommentPOSTXMLDAO.parentDelegate = NULL;
     [_fs_GZF_NewsCommentPOSTXMLDAO release];
+    _fs_GZF_NewsCommentPOSTXMLDAO = nil;
     [_sinaWBEngine release];
-    
+    _sinaWBEngine = nil;
     [_obj release];
+    _obj = nil;
     [_FCObj release];
+    _FCObj = nil;
     [_FavObj release];
-    
+    _FavObj = nil;
     [super dealloc];
 }
 

@@ -28,6 +28,11 @@
             }
     return self;
 }
+-(void)dealloc
+{
+    //[FSNewsContainerWebView  ]
+    [super dealloc];
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

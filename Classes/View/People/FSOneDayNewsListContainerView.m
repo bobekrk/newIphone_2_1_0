@@ -12,7 +12,7 @@
 #import "FSOneDayTableListCell.h"
 #import "FSSectionObject.h"
 #import "FSTimeViewForSection.h"
-
+#import "FSOneDayNewsObject.h"
 @implementation FSOneDayNewsListContainerView
 
 @synthesize timeArray = _timeArray;
@@ -37,7 +37,9 @@
 
 -(void)dealloc{
     [_timerView release];
+    _timeArray = nil;
     [_heightArray release];
+    _heightArray = nil;
     
     [super dealloc];
 }
@@ -74,6 +76,55 @@
         _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_BOTTOM_BUTTON_VIEW | FSTABLEVIEW_ASSISTANT_TOP_VIEW | FSTABLEVIEW_ASSISTANT_BOTTOM_VIEW;
         _oldCount=arrayCount;
     }
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+	NSString *cellIdentifierString = [self cellIdentifierStringWithIndexPath:indexPath];
+	
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierString];
+    //cell.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"CellBackground"]];
+    
+	if (cell == nil) {
+		cell = (UITableViewCell *)[[[self cellClassWithIndexPath:indexPath] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierString];
+	}
+	
+	if ([cell isKindOfClass:[FSTableViewCell class]]) {
+        //FSOneDayTableListCell
+        
+		FSTableViewCell *fsCell = (FSTableViewCell *)cell;
+        //fsCell.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"CellBackground"]];
+		[fsCell setParentDelegate:self];
+		[fsCell setRowIndex:[indexPath row]];
+		[fsCell setSectionIndex:[indexPath section]];
+		[fsCell setCellShouldWidth:tableView.frame.size.width];
+		[fsCell setData:[self cellDataObjectWithIndexPath:indexPath]];
+        
+        [fsCell setSelectionStyle:[self cellSelectionStyl:indexPath]];
+        [fsCell doSomethingAtLayoutSubviews];
+    } else {
+		[self initializeCell:cell withData:[self cellDataObjectWithIndexPath:indexPath] withIndexPath:indexPath];
+	}
+    
+    if (indexPath.section > 0) {
+        FSTableViewCell *fsCell = (FSTableViewCell *)cell;
+        FSOneDayNewsObject *o = (FSOneDayNewsObject *)fsCell.data;
+        if (o) {
+            NSLog(@"%@",o.newsid);
+            NSNumber * number = [[NSUserDefaults standardUserDefaults]valueForKey:o.newsid];
+            if (number) {
+                FSOneDayTableListCell * xxcell = (FSOneDayTableListCell*)cell;
+                xxcell.lab_title.textColor     = [UIColor lightGrayColor];
+            }else
+            {
+                FSOneDayTableListCell * xxcell = (FSOneDayTableListCell*)cell;
+                xxcell.lab_title.textColor     = [UIColor blackColor];
+            }
+            
+        }
+
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
 }
 
 
