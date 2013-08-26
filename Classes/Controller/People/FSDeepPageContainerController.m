@@ -77,6 +77,9 @@
 //    for (NSInteger i=0; i<k-1; i++) {
 //        [self release];
 //    }
+    float xxxxx  = ISIPHONE5?460:548;
+    UIImage *image = [UIImage imageNamed:@""];
+    UIButton * button = [UIButton alloc]initWithFrame:CGRectMake(0, xxxxx - , <#CGFloat width#>, <#CGFloat height#>)
     
     NSLog(@"%@.viewDidDisappear:%d",self,[self retainCount]);
 }
