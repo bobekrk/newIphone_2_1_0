@@ -44,10 +44,10 @@
 
 
     
-    [self.contentView addSubview:_kindsLabel];
-    [self.contentView addSubview:_nameLabel];
-    [self.contentView addSubview:_dateLabel];
-    [self.contentView addSubview:_abstractLabel];
+    [self addSubview:_kindsLabel];
+    [self addSubview:_nameLabel];
+    [self addSubview:_dateLabel];
+    [self addSubview:_abstractLabel];
     
     
     [_kindsLabel     release];
@@ -98,7 +98,7 @@
 -(void)doSomethingAtLayoutSubviews{
     
     //_leftView.frame = CGRectMake(0, 0, 4, self.frame.size.height);
-    
+    self.backgroundColor = [UIColor redColor];
     //   _image_Footprint.image = [UIImage imageNamed:@"xin.png"];
     
     if ([self.data isKindOfClass:[FSTopicObject class]]) {

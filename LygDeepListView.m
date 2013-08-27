@@ -40,16 +40,12 @@
         _tvList.dataSource   = self;
         _oldCount            = 0;
         _isfirstShow         = YES;
-       // [self initDataModel];
-       // self.myDeepListDao   = aDao;
-        _myDeepListDao = [[FS_GZF_DeepListDAO alloc]init];
-        _myDeepListDao.parentDelegate = self;
+        _myDeepListDao       = aDao;
+        //_myDeepListDao.parentDelegate = self;
         self.delegte         = aDeleagte;
         [_myDeepListDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
     }
-    //self.currentIndex        = index;
     return self;
-
 }
 
 
@@ -150,10 +146,12 @@
 	}
     
 	[self doSomethingWithDAO:sender withStatus:status];
-    
-    
 }
-
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	
+	return _myDeepListDao.objectList.count;
+	
+}
 
 
 -(UITableViewStyle)initializeTableViewStyle{
@@ -395,14 +393,9 @@
 	} else {
 		[self initializeCell:cell withData:[self cellDataObjectWithIndexPath:indexPath] withIndexPath:indexPath];
 	}
-    if (indexPath.row > 0 ) {
-//        FSNewsListCell     * xxcell          = (FSNewsListCell *)cell;
-//        FSOneDayNewsObject * object          = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:indexPath.row -1];
-//        xxcell.leftView.backgroundColor      = ([object.newsid isEqualToString:self.currentNewsId]?[UIColor redColor]:[UIColor lightGrayColor]);
-//        NSNumber * num = [[NSUserDefaults standardUserDefaults]valueForKey:object.newsid];
-        //xxcell.lab_NewsTitle.textColor       = (num?[UIColor lightGrayColor]:[UIColor blackColor]);
-    }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    LygDeepTableViewCell * xxcell = (LygDeepTableViewCell*)cell;
+    xxcell.kindsLabel.backgroundColor = [UIColor redColor];
+    
     return cell;
 }
 -(NSObject *)tableViewCellData:(FSTableContainerView *)sender withIndexPath:(NSIndexPath *)indexPath{

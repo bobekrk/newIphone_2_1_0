@@ -55,14 +55,15 @@
     
     //[self.view addSubview:_scrollPageView];
     //[_scrollPageView release];
-    
-    _deepFloattingTitleView = [[FSDeepFloatingTitleView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - FLOATTING_HEIGHT-20, self.view.frame.size.width, FLOATTING_HEIGHT)];
-    //_deepFloattingTitleView.backgroundColor = [UIColor whiteColor];
-    
     if (ISIPHONE5) {
-        [self.view addSubview:_deepFloattingTitleView];
+        _deepFloattingTitleView = [[FSDeepFloatingTitleView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - FLOATTING_HEIGHT-20, self.view.frame.size.width, FLOATTING_HEIGHT)];
+         [self.view addSubview:_deepFloattingTitleView];
+    }else
+    {
+        _deepFloattingTitleView = nil;
     }
     
+    //_deepFloattingTitleView.backgroundColor = [UIColor whiteColor];
     _myDeepListView = [[LygDeepListView alloc]initWithDeepListDao:_fs_GZF_DeepListDAO initDelegate:self];
     float xxxx      = ISIPHONE5?(548 - 44 - 44):(460 - 44 - 44);
     _myDeepListView.frame = CGRectMake(0, 44, 320, xxxx);

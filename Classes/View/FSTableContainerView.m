@@ -38,12 +38,13 @@
 		
 		_tvList = [[FSTableView alloc] initWithFrame:CGRectZero style:[self initializeTableViewStyle]];
                 _tvList.backgroundView = nil;
+        _tvList.parentDelegate = self;
 		_tvList.separatorStyle = UITableViewCellSeparatorStyleNone;
 		[_tvList setSectionFooterHeight:0.0f];
 		[_tvList setSectionHeaderHeight:0.0f];
 		[_tvList setDelegate:self];
 		[_tvList setDataSource:self];
-		[_tvList setParentDelegate:self];
+		//[_tvList setParentDelegate:self];
 		_tvSize = CGSizeZero;
 		[self addSubview:_tvList];
 		

@@ -180,10 +180,10 @@
     else if ([_currentElementName isEqualToString:@"sort"]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
         NSString *temp = trimString(content);
-        NSNumber *tempNumber = [[NSNumber alloc] initWithInt:[temp intValue]];
-		_obj.sort = tempNumber;
+        //NSNumber *tempNumber = [[NSNumber alloc] initWithInt:[temp intValue]];
+		_obj.sort = temp;
 		[content release];
-        [tempNumber release];
+        //[tempNumber release];
 	}
 }
 
