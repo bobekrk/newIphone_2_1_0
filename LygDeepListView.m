@@ -31,21 +31,7 @@
     }
     return self;
 }
-/*-(id)initWithChanel:(FS_GZF_ChannelListDAO*)aDao currentIndex:(int)index parentViewController:(UIViewController*)aController
-{
-    if (self = [super init]) {
-        _tvList.parentDelegate = self;
-        _tvList.delegate     = self;
-        _tvList.dataSource   = self;
-        _oldCount            = 0;
-        _isfirstShow         = YES;
-        [self initDataModel];
-        self.aChannelListDAO = aDao;
-        self.aViewController = aController;
-    }
-    self.currentIndex        = index;
-    return self;
-}*/
+
 -(id)initWithDeepListDao:(FS_GZF_DeepListDAO*)aDao initDelegate:(id)aDeleagte
 {
     if (self = [super init]) {
@@ -55,8 +41,11 @@
         _oldCount            = 0;
         _isfirstShow         = YES;
        // [self initDataModel];
-        self.myDeepListDao   = aDao;
+       // self.myDeepListDao   = aDao;
+        _myDeepListDao = [[FS_GZF_DeepListDAO alloc]init];
+        _myDeepListDao.parentDelegate = self;
         self.delegte         = aDeleagte;
+        [_myDeepListDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
     }
     //self.currentIndex        = index;
     return self;
@@ -114,7 +103,9 @@
 {
     NSLog(@"--------------------");
 }
-- (void)dataAccessObjectSync:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status{
+- (void)dataAccessObjectSync:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status
+{
+    NSLog(@"%d",self.myDeepListDao.objectList.count);
     if (status == FSBaseDAOCallBack_WorkingStatus) {
 		if (1) {
 			FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:CGRectZero];
@@ -181,7 +172,7 @@
 }
 
 -(NSString *)cellIdentifierStringWithIndexPath:(NSIndexPath *)indexPath{
-    return @"RoutineNewsListCell";
+    return @"RoutineNewsListCellx";
 }
 
 -(Class)cellClassWithIndexPath:(NSIndexPath *)indexPath{
