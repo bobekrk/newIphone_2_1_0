@@ -53,8 +53,8 @@
     [_scrollPageView addGestureRecognizer:tapGes];
     [tapGes release];
     
-    [self.view addSubview:_scrollPageView];
-    [_scrollPageView release];
+    //[self.view addSubview:_scrollPageView];
+    //[_scrollPageView release];
     
     _deepFloattingTitleView = [[FSDeepFloatingTitleView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - FLOATTING_HEIGHT-20, self.view.frame.size.width, FLOATTING_HEIGHT)];
     //_deepFloattingTitleView.backgroundColor = [UIColor whiteColor];
@@ -62,15 +62,53 @@
     if (ISIPHONE5) {
         [self.view addSubview:_deepFloattingTitleView];
     }
+    
+    _myDeepListView = [[LygDeepListView alloc]initWithDeepListDao:_fs_GZF_DeepListDAO initDelegate:self];
+    float xxxx      = ISIPHONE5?(548 - 44 - 44):(460 - 44 - 44);
+    _myDeepListView.frame = CGRectMake(0, 44, 320, xxxx);
+    [self.view addSubview:_myDeepListView];
 
 }
 
 - (void)ownerNonPicture {
     
 }
+-(void)changeStyleOfDeepList
+{
+    if ([self.myNaviBar.topItem.rightBarButtonItem.title isEqualToString:@"封面"]) {
+        self.myNaviBar.topItem.rightBarButtonItem.title = @"列表";
+    }else{
+        self.myNaviBar.topItem.rightBarButtonItem.title = @"封面";
+    }
+    if (!self.isListStyle) {
+        [_scrollPageView         removeFromSuperview];
+        [_deepFloattingTitleView removeFromSuperview];
+        [self.view addSubview:_myDeepListView];
+        [_myDeepListView  reloadData];
+    }else
+    {
+        [_myDeepListView removeFromSuperview];
+        [self.view addSubview:_scrollPageView];
+        [self.view addSubview:_deepFloattingTitleView];
+    }
+    self.isListStyle = !self.isListStyle;
+}
 
 - (void)loadChildView {
 	[super loadChildView];
+    self.myNaviBar.topItem.leftBarButtonItem = nil;
+    self.myNaviBar.topItem.rightBarButtonItem = nil;
+    
+    //UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonItemStyleBordered target:self action:@selector(changeStyleOfDeepList)];
+    UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithTitle:@"列表" style:UIBarButtonItemStyleBordered target:self action:@selector(changeStyleOfDeepList)];
+    item.tintColor         = [UIColor whiteColor];
+    
+    NSDictionary * dication = [NSDictionary dictionaryWithObject:[UIColor grayColor] forKey:UITextAttributeTextColor];
+    [item setTitleTextAttributes:dication forState:UIControlStateNormal];
+    self.myNaviBar.topItem.rightBarButtonItem = item;
+    //[item setTitle:@"封面"];
+    [item release];
+    
     
     self.view.backgroundColor = COLOR_NEWSLIST_TITLE_WHITE;
 
@@ -107,14 +145,6 @@
 {
     [super viewWillAppear:NO];
    // [_fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
-    ASIHTTPRequest * reqquest = [[ASIHTTPRequest alloc]initWithURL:[NSURL URLWithString:@"http://mobile.app.people.com.cn:81/topic/topic.php?act=info_list&rt=xml&type=list&iswp=0"]];
-    [reqquest setCompletionBlock:^{
-        NSLog(@"%@",reqquest.responseString);
-    }];
-    [reqquest setFailedBlock:^{
-        
-    }];
-    //[reqquest startAsynchronous];
 }
 
 - (void)layoutControllerViewWithInterfaceOrientation:(UIInterfaceOrientation)willToOrientation {
@@ -172,6 +202,8 @@
     else{
          _scrollPageView.frame = CGRectMake(FSLEFT_RIGHT_SPACE, 10.0f + 44, rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f , (rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f)/2*3-18);
     }
+    float xxxx      = ISIPHONE5?(548 - 44 - 44):(460 - 44 - 44);
+    _myDeepListView.frame = CGRectMake(0, 44, 320, xxxx);
    
     //NSLog(@"layoutControllerViewWithRect:%f  h:%f",_scrollPageView.frame.size.width,rect.size.height);
     _deepFloattingTitleView.frame= CGRectMake(FSLEFT_RIGHT_SPACE+12, 18.0f + _scrollPageView.frame.size.height, rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f -24,rect.size.height- 18.0f - _scrollPageView.frame.size.height);
@@ -249,8 +281,13 @@
         NSLog(@"%d",_fs_GZF_DeepListDAO.objectList.count);
         if (status == FSBaseDAOCallBack_SuccessfulStatus || status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
             NSLog(@"_fs_GZF_DeepListDAO:%d",[_fs_GZF_DeepListDAO.objectList count]);
+            if (_isListStyle) {
+                [_myDeepListView reloadData];
+            }else
+            {
+                [_scrollPageView loadPageData];
+            }
             
-            [_scrollPageView loadPageData];
             
             if (status == FSBaseDAOCallBack_SuccessfulStatus) {
                 [_fs_GZF_DeepListDAO operateOldBufferData];

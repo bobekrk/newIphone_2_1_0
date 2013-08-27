@@ -51,8 +51,30 @@
         [self addSubview:_lab_pageIndex];
         [self addSubview:_lab_pageCount];
         
+        float xxxxx       = ISIPHONE5?460:548;
+        UIImage *image    = [UIImage imageNamed:@"goBack.png"];
+        UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(0, self.bounds.size.height - image.size.height * 0.8, image.size.width * 0.8, image.size.height * 0.8)];
+        [button setBackgroundImage:image forState:UIControlStateNormal];
+        button.tag        = 100;
+        [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:button];
+        [button release];
+        //[self bringSubviewToFront:button];
+        
+        
+        
+        UIButton * button2 = [[UIButton alloc]initWithFrame:CGRectMake(320 - image.size.width * 0.8, self.bounds.size.height - image.size.height * 0.8, image.size.width * 0.8, image.size.height * 0.8)];
+        [button2 setBackgroundImage:[UIImage imageNamed:@"newsDitail_shear_1.png"] forState:UIControlStateNormal];
+        button2.tag        = 200;
+        [button2 addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:button2];
+        [button2 release];
     }
     return self;
+}
+-(void)buttonClick:(UIButton*)sender
+{
+    [self.delegate  onButtonClick:sender.tag];
 }
 
 -(void)dealloc{

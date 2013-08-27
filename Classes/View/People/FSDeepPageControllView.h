@@ -28,7 +28,11 @@
 
 @property (nonatomic) NSInteger pageCount;
 @property (nonatomic) NSInteger pageIndex;
+@property (nonatomic,assign) id delegate;
 
 -(void)layoutImages;
 
+@end
+@protocol FSDeepPageControllViewDelegate <NSObject>
+-(void)onButtonClick:(int)index;
 @end

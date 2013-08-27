@@ -410,6 +410,8 @@
 		5850C1D4179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5850C1D2179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld */; };
 		5853053C17C4511F00A795EE /* 人民新闻有温度.png in Resources */ = {isa = PBXBuildFile; fileRef = 5853053A17C4511F00A795EE /* 人民新闻有温度.png */; };
 		5853053D17C4511F00A795EE /* 人民新闻有温度@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5853053B17C4511F00A795EE /* 人民新闻有温度@2x.png */; };
+		5882B5E417CC4EDD00B77388 /* LygDeepListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5882B5E317CC4EDD00B77388 /* LygDeepListView.m */; };
+		5882B5E717CC8EBB00B77388 /* LygDeepTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5882B5E617CC8EBB00B77388 /* LygDeepTableViewCell.m */; };
 		5889DB2F17B1EADB00ED76BA /* FSLoadingImageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889DB2E17B1EADB00ED76BA /* FSLoadingImageObject.m */; };
 		5893DB90179FD01C00068319 /* navigatorBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 5893DB8E179FD01400068319 /* navigatorBar.png */; };
 		5893DB91179FD01C00068319 /* navigatorBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5893DB8F179FD01800068319 /* navigatorBar@2x.png */; };
@@ -1298,6 +1300,10 @@
 		5850C1D3179D24720024218B /* PeopleNewsReaderPhone.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PeopleNewsReaderPhone.xcdatamodel; sourceTree = "<group>"; };
 		5853053A17C4511F00A795EE /* 人民新闻有温度.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人民新闻有温度.png"; sourceTree = "<group>"; };
 		5853053B17C4511F00A795EE /* 人民新闻有温度@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人民新闻有温度@2x.png"; sourceTree = "<group>"; };
+		5882B5E217CC4EDD00B77388 /* LygDeepListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LygDeepListView.h; sourceTree = "<group>"; };
+		5882B5E317CC4EDD00B77388 /* LygDeepListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LygDeepListView.m; sourceTree = "<group>"; };
+		5882B5E517CC8EBB00B77388 /* LygDeepTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LygDeepTableViewCell.h; sourceTree = "<group>"; };
+		5882B5E617CC8EBB00B77388 /* LygDeepTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LygDeepTableViewCell.m; sourceTree = "<group>"; };
 		5889DB2D17B1EADB00ED76BA /* FSLoadingImageObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSLoadingImageObject.h; sourceTree = "<group>"; };
 		5889DB2E17B1EADB00ED76BA /* FSLoadingImageObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSLoadingImageObject.m; sourceTree = "<group>"; };
 		5893DB8E179FD01400068319 /* navigatorBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigatorBar.png; sourceTree = "<group>"; };
@@ -2492,6 +2498,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				5882B5E117CC4E9B00B77388 /* 深度 */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -2622,6 +2629,17 @@
 				8203C16015CF58A80003B654 /* libbz2.dylib */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5882B5E117CC4E9B00B77388 /* 深度 */ = {
+			isa = PBXGroup;
+			children = (
+				5882B5E217CC4EDD00B77388 /* LygDeepListView.h */,
+				5882B5E317CC4EDD00B77388 /* LygDeepListView.m */,
+				5882B5E517CC8EBB00B77388 /* LygDeepTableViewCell.h */,
+				5882B5E617CC8EBB00B77388 /* LygDeepTableViewCell.m */,
+			);
+			name = "深度";
 			sourceTree = "<group>";
 		};
 		58AE68A317AF7F480007203C /* Tencent */ = {
@@ -4282,6 +4300,8 @@
 				0AE0769A17BB9A6A006B6358 /* MyNewsLIstView.m in Sources */,
 				581546D917C1965400EFEF20 /* FSOneDayNewsObject.m in Sources */,
 				58EE8B0617CB65AA00A8A935 /* FSTopicObject.m in Sources */,
+				5882B5E417CC4EDD00B77388 /* LygDeepListView.m in Sources */,
+				5882B5E717CC8EBB00B77388 /* LygDeepTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

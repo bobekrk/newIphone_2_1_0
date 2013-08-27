@@ -12,9 +12,9 @@
 #import "FSHorizontalScrollPageContainerView.h"
 
 #import "FSDeepPageControllView.h"
+#import "FSShareIconContainView.h"
 
-
-@interface FSPageControlViewController : FSBaseDataViewController <UIScrollViewDelegate> {
+@interface FSPageControlViewController : FSBaseDataViewController <FSDeepPageControllViewDelegate,UIScrollViewDelegate> {
 @private
     //FSPageControlView *_pageControlView;
     FSDeepPageControllView *_pageControlView;
@@ -22,7 +22,8 @@
     
     NSMutableDictionary *_buffers;
     NSMutableDictionary *_indexPaths;
-    
+    FSShareIconContainView         *_fsShareIconContainView;
+
     NSInteger _pageCount;
     NSInteger _pageNumber;
     UIBarButtonItem *_refreshButton;

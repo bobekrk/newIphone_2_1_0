@@ -14,7 +14,7 @@
 #import "GlobalConfig.h"
 #import "FSCommonFunction.h"
 #import "FSTableView.h"
-
+#import "LygDeepListView.h"
 @class FS_GZF_DeepListDAO;
 
 @interface FSTopicViewController : FSBasePeopleViewController <FSScrollPageViewPageDelegate>{
@@ -22,11 +22,13 @@
     
     //有图模式组件
     FSScrollPageView            *_scrollPageView;
+    
     FSDeepFloatingTitleView     *_deepFloattingTitleView;
     
     //无图模式
     
     NSTimeInterval _TimeInterval;
 }
-
+@property(nonatomic,retain)LygDeepListView * myDeepListView;
+@property(nonatomic,assign)BOOL              isListStyle;
 @end
