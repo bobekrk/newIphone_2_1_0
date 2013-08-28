@@ -17,7 +17,7 @@
 #import "LygDeepListView.h"
 @class FS_GZF_DeepListDAO;
 
-@interface FSTopicViewController : FSBasePeopleViewController <FSScrollPageViewPageDelegate>{
+@interface FSTopicViewController : FSBasePeopleViewController <FSScrollPageViewPageDelegate,LygDeepListViewDelegate>{
     FS_GZF_DeepListDAO          *_fs_GZF_DeepListDAO; 
     
     //有图模式组件

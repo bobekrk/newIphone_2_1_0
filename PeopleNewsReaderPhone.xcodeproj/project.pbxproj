@@ -407,7 +407,6 @@
 		581546D917C1965400EFEF20 /* FSOneDayNewsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 581546D817C1965400EFEF20 /* FSOneDayNewsObject.m */; };
 		581546DC17C1E77D00EFEF20 /* 右抽屉.png in Resources */ = {isa = PBXBuildFile; fileRef = 581546DA17C1E77D00EFEF20 /* 右抽屉.png */; };
 		581546DD17C1E77D00EFEF20 /* 右抽屉@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 581546DB17C1E77D00EFEF20 /* 右抽屉@2x.png */; };
-		581C8CEB17CD60FA00441ADB /* FSTopicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 581C8CEA17CD60FA00441ADB /* FSTopicObject.m */; };
 		5850C1D4179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5850C1D2179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld */; };
 		5853053C17C4511F00A795EE /* 人民新闻有温度.png in Resources */ = {isa = PBXBuildFile; fileRef = 5853053A17C4511F00A795EE /* 人民新闻有温度.png */; };
 		5853053D17C4511F00A795EE /* 人民新闻有温度@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5853053B17C4511F00A795EE /* 人民新闻有温度@2x.png */; };
@@ -418,6 +417,7 @@
 		5893DB91179FD01C00068319 /* navigatorBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5893DB8F179FD01800068319 /* navigatorBar@2x.png */; };
 		5893DB93179FDBCC00068319 /* 翻页.png in Resources */ = {isa = PBXBuildFile; fileRef = 5893DB92179FDB9300068319 /* 翻页.png */; };
 		5893DB95179FDC4000068319 /* 跳转.png in Resources */ = {isa = PBXBuildFile; fileRef = 5893DB94179FDC0200068319 /* 跳转.png */; };
+		58A6AD1217CD7FBA004C71BB /* FSTopicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A6AD1117CD7FBA004C71BB /* FSTopicObject.m */; };
 		58AE689A17ABD06C0007203C /* 朋友圈.png in Resources */ = {isa = PBXBuildFile; fileRef = 58AE689817ABD06C0007203C /* 朋友圈.png */; };
 		58AE689B17ABD06C0007203C /* 朋友圈@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58AE689917ABD06C0007203C /* 朋友圈@2x.png */; };
 		58AE689E17ABD7820007203C /* shareCancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 58AE689C17ABD7820007203C /* shareCancel.png */; };
@@ -1297,8 +1297,6 @@
 		581546D817C1965400EFEF20 /* FSOneDayNewsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSOneDayNewsObject.m; sourceTree = "<group>"; };
 		581546DA17C1E77D00EFEF20 /* 右抽屉.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "右抽屉.png"; sourceTree = "<group>"; };
 		581546DB17C1E77D00EFEF20 /* 右抽屉@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "右抽屉@2x.png"; sourceTree = "<group>"; };
-		581C8CE917CD60FA00441ADB /* FSTopicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSTopicObject.h; sourceTree = "<group>"; };
-		581C8CEA17CD60FA00441ADB /* FSTopicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSTopicObject.m; sourceTree = "<group>"; };
 		5850C1D3179D24720024218B /* PeopleNewsReaderPhone.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PeopleNewsReaderPhone.xcdatamodel; sourceTree = "<group>"; };
 		5853053A17C4511F00A795EE /* 人民新闻有温度.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人民新闻有温度.png"; sourceTree = "<group>"; };
 		5853053B17C4511F00A795EE /* 人民新闻有温度@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人民新闻有温度@2x.png"; sourceTree = "<group>"; };
@@ -1312,6 +1310,8 @@
 		5893DB8F179FD01800068319 /* navigatorBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigatorBar@2x.png"; sourceTree = "<group>"; };
 		5893DB92179FDB9300068319 /* 翻页.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "翻页.png"; sourceTree = "<group>"; };
 		5893DB94179FDC0200068319 /* 跳转.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "跳转.png"; sourceTree = "<group>"; };
+		58A6AD1017CD7FBA004C71BB /* FSTopicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSTopicObject.h; sourceTree = "<group>"; };
+		58A6AD1117CD7FBA004C71BB /* FSTopicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSTopicObject.m; sourceTree = "<group>"; };
 		58AE689817ABD06C0007203C /* 朋友圈.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "朋友圈.png"; sourceTree = "<group>"; };
 		58AE689917ABD06C0007203C /* 朋友圈@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "朋友圈@2x.png"; sourceTree = "<group>"; };
 		58AE689C17ABD7820007203C /* shareCancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareCancel.png; sourceTree = "<group>"; };
@@ -2517,8 +2517,8 @@
 			children = (
 				581546D717C1965400EFEF20 /* FSOneDayNewsObject.h */,
 				581546D817C1965400EFEF20 /* FSOneDayNewsObject.m */,
-				581C8CE917CD60FA00441ADB /* FSTopicObject.h */,
-				581C8CEA17CD60FA00441ADB /* FSTopicObject.m */,
+				58A6AD1017CD7FBA004C71BB /* FSTopicObject.h */,
+				58A6AD1117CD7FBA004C71BB /* FSTopicObject.m */,
 				5850C1D2179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld */,
 				5889DB2D17B1EADB00ED76BA /* FSLoadingImageObject.h */,
 				5889DB2E17B1EADB00ED76BA /* FSLoadingImageObject.m */,
@@ -4301,7 +4301,7 @@
 				581546D917C1965400EFEF20 /* FSOneDayNewsObject.m in Sources */,
 				5882B5E417CC4EDD00B77388 /* LygDeepListView.m in Sources */,
 				5882B5E717CC8EBB00B77388 /* LygDeepTableViewCell.m in Sources */,
-				581C8CEB17CD60FA00441ADB /* FSTopicObject.m in Sources */,
+				58A6AD1217CD7FBA004C71BB /* FSTopicObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

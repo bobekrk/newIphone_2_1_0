@@ -40,6 +40,8 @@
 - (void)dealloc {
     [_deepFloattingTitleView release];
     [_fs_GZF_DeepListDAO release];
+    [_scrollPageView release];
+    [_myDeepListView release];
     [super dealloc];
 }
 
@@ -53,8 +55,7 @@
     [_scrollPageView addGestureRecognizer:tapGes];
     [tapGes release];
     
-    //[self.view addSubview:_scrollPageView];
-    //[_scrollPageView release];
+    [self.view addSubview:_scrollPageView];
     if (ISIPHONE5) {
         _deepFloattingTitleView = [[FSDeepFloatingTitleView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - FLOATTING_HEIGHT-20, self.view.frame.size.width, FLOATTING_HEIGHT)];
          [self.view addSubview:_deepFloattingTitleView];
@@ -63,12 +64,9 @@
         _deepFloattingTitleView = nil;
     }
     
-    //_deepFloattingTitleView.backgroundColor = [UIColor whiteColor];
     _myDeepListView = [[LygDeepListView alloc]initWithDeepListDao:_fs_GZF_DeepListDAO initDelegate:self];
     float xxxx      = ISIPHONE5?(548 - 44 - 44):(460 - 44 - 44);
     _myDeepListView.frame = CGRectMake(0, 44, 320, xxxx);
-    [self.view addSubview:_myDeepListView];
-
 }
 
 - (void)ownerNonPicture {
@@ -100,22 +98,17 @@
     self.myNaviBar.topItem.leftBarButtonItem = nil;
     self.myNaviBar.topItem.rightBarButtonItem = nil;
     
-    //UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonItemStyleBordered target:self action:@selector(changeStyleOfDeepList)];
     UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithTitle:@"列表" style:UIBarButtonItemStyleBordered target:self action:@selector(changeStyleOfDeepList)];
     item.tintColor         = [UIColor whiteColor];
     
     NSDictionary * dication = [NSDictionary dictionaryWithObject:[UIColor grayColor] forKey:UITextAttributeTextColor];
     [item setTitleTextAttributes:dication forState:UIControlStateNormal];
     self.myNaviBar.topItem.rightBarButtonItem = item;
-    //[item setTitle:@"封面"];
     [item release];
     
     
     self.view.backgroundColor = COLOR_NEWSLIST_TITLE_WHITE;
 
-//    _ivBackground = [[UIImageView alloc] initWithFrame:CGRectZero];
-//    _ivBackground.image = [UIImage imageNamed:@"Deep_listbeijing2222.png"];
-//    [self.view addSubview:_ivBackground];
     
     
     BOOL hasPicture = [[GlobalConfig shareConfig] isDownloadPictureUseing2G_3G];
@@ -130,11 +123,19 @@
 }
 
 -(void)initDataModel{
-//    _topicListData = [[FSTopicListDAO alloc] init];
-//    _topicListData.parentDelegate = self;
-    
     _fs_GZF_DeepListDAO = [[FS_GZF_DeepListDAO alloc] init];
     _fs_GZF_DeepListDAO.parentDelegate = self;
+}
+
+-(void)LygDeepListViewCellTouched:(int)index
+{
+    FSTopicObject *topicObj = [_fs_GZF_DeepListDAO.objectList objectAtIndex:index];
+    FSDeepPageContainerController *pageContainerCtrl = [[FSDeepPageContainerController alloc] init];
+    pageContainerCtrl.deepid = topicObj.deepid;
+    pageContainerCtrl.Deep_title = topicObj.title;
+    [self.navigationController pushViewController:pageContainerCtrl animated:YES];
+    [pageContainerCtrl release];
+
 }
 
 -(void)doSomethingForViewFirstTimeShow{
@@ -145,7 +146,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:NO];
-   // [_fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
 }
 
 - (void)layoutControllerViewWithInterfaceOrientation:(UIInterfaceOrientation)willToOrientation {
@@ -171,14 +171,11 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [_fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
-}
+    if (!_fs_GZF_DeepListDAO.objectList.count > 0) {
+        [_fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+    }
 
--(void)viewDidDisappear:(BOOL)animated{
-   
-    
 }
-
 - (UIImage *)tabBarItemNormalImage {
 	return [UIImage imageNamed:@"deep.png"];
 }
@@ -194,10 +191,9 @@
 
 - (void)layoutControllerViewWithRect:(CGRect)rect {
     
-//    NSLog(@"layoutControllerViewWithRect11:%@",self);
-//    _ivBackground.frame = CGRectMake(0.0f, 0.0f, rect.size.width, rect.size.height);
+
     
-    if (rect.size.height>450) {
+    if (ISIPHONE5) {
          _scrollPageView.frame = CGRectMake(FSLEFT_RIGHT_SPACE, 25.0f + 44 , rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f , (rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f)/2*3-18);
     }
     else{
@@ -205,14 +201,9 @@
     }
     float xxxx      = ISIPHONE5?(548 - 44 - 44):(460 - 44 - 44);
     _myDeepListView.frame = CGRectMake(0, 44, 320, xxxx);
-   
-    //NSLog(@"layoutControllerViewWithRect:%f  h:%f",_scrollPageView.frame.size.width,rect.size.height);
     _deepFloattingTitleView.frame= CGRectMake(FSLEFT_RIGHT_SPACE+12, 18.0f + _scrollPageView.frame.size.height, rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f -24,rect.size.height- 18.0f - _scrollPageView.frame.size.height);
 }
 - (void)dataAccessObjectSync:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status{
-    
-    //self.currentDAOData = sender;
-	//self.currentDAOStatus = status;
 	NSLog(@"%u",status);
 	if (status == FSBaseDAOCallBack_WorkingStatus) {
 		if (1) {
@@ -266,30 +257,11 @@
 
 #pragma mark -
 -(void)doSomethingWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status{
-//    if ([sender isEqual:_topicListData]) {
-//        if (status == FSBaseDAOCallBack_SuccessfulStatus || status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
-//#ifdef MYDEBUG
-//            id <NSFetchedResultsSectionInfo> sectionInfo = [[_topicListData.fetchedResultsController sections] objectAtIndex:0];
-//            NSLog(@"Deep.section.count:%d", [sectionInfo numberOfObjects]);
-//            
-//#endif
-//            [_scrollPageView loadPageData];
-//        }
-//    }
-    
     if ([sender isEqual:_fs_GZF_DeepListDAO]) {
-        NSLog(@"%u",status);
-        NSLog(@"%d",_fs_GZF_DeepListDAO.objectList.count);
         if (status == FSBaseDAOCallBack_SuccessfulStatus || status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
             NSLog(@"_fs_GZF_DeepListDAO:%d",[_fs_GZF_DeepListDAO.objectList count]);
-            if (_isListStyle) {
-                [_myDeepListView reloadData];
-            }else
-            {
-                [_scrollPageView loadPageData];
-            }
-            
-            
+            [_myDeepListView reloadData];
+            [_scrollPageView loadPageData];
             if (status == FSBaseDAOCallBack_SuccessfulStatus) {
                 [_fs_GZF_DeepListDAO operateOldBufferData];
             }
@@ -304,25 +276,15 @@
         UIView *touchView = [_scrollPageView hitTest:pt withEvent:nil];
         if ([touchView isKindOfClass:[FSDeepView class]]) {
             FSDeepView *deepView = (FSDeepView *)touchView;
-
-            //FSTopicObject *topicObj = [_topicListData.fetchedResultsController objectAtIndexPath:deepView.indexPath];
             if ([_fs_GZF_DeepListDAO.objectList count]>[deepView.indexPath row]) {
                 FSTopicObject *topicObj = [_fs_GZF_DeepListDAO.objectList objectAtIndex:[deepView.indexPath row]];
-                //FSTopicListViewController *topicListCtrl = [[FSTopicListViewController alloc] init];
-#ifdef  MYDEBUG
-                //NSLog(@"indexPath.touch:%@", topicObj.deepid);
-                
-#endif
                 FSDeepPageContainerController *pageContainerCtrl = [[FSDeepPageContainerController alloc] init];
                 pageContainerCtrl.deepid = topicObj.deepid;
                 pageContainerCtrl.Deep_title = topicObj.title;
                 [self.navigationController pushViewController:pageContainerCtrl animated:YES];
                 [pageContainerCtrl release];
             }
-           
         }
-        //UIView *touchView = [gest ];
-        //[gest ];
     }
 }
 
@@ -330,16 +292,7 @@
 #pragma FSScrollPageViewDelegate
 //返回页数
 - (NSInteger)pageCountInScrollPageView:(FSScrollPageView *)sender {
-    NSInteger result = 0;
-//    NSArray *sections = [_topicListData.fetchedResultsController sections];
-//    if ([sections count] > 0) {
-//        id <NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:0];
-//        result = [sectionInfo numberOfObjects];
-//    }
-    
-    result = [_fs_GZF_DeepListDAO.objectList count];
-    
-    return result;
+    return  [_fs_GZF_DeepListDAO.objectList count];
 }
 //每页的视图元类
 - (Class)pageViewClassForScrollPageView:(FSScrollPageView *)sender {

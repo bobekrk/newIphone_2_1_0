@@ -208,7 +208,7 @@
                 }
                 if (mark == 0) {
                     [TopicObjectArray addObject:o];
-                    [idArray addObject:o.deepid];
+                   // [idArray addObject:o.deepid];
                 }
             }
             //NSLog(@"[resultSet count]:%d",[resultSet count]);

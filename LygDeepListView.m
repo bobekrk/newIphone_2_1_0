@@ -18,6 +18,7 @@
 #import "FSNewsContainerViewController.h"
 #import "FSWebViewForOpenURLViewController.h"
 #import <UIKit/UITableView.h>
+#import "FSTopicObject.h"
 #import "LygDeepTableViewCell.h"
 @implementation LygDeepListView
 - (id)initWithFrame:(CGRect)frame
@@ -26,6 +27,8 @@
     if (self) {
         // Initialization code
         _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_BOTTOM_BUTTON_VIEW | FSTABLEVIEW_ASSISTANT_TOP_VIEW;
+        _tvList.parentDelegate    = self;
+        _tvList.dataSource = self;
         _tvList.delegate = self;
         _oldCount = 0;
     }
@@ -35,6 +38,7 @@
 -(id)initWithDeepListDao:(FS_GZF_DeepListDAO*)aDao initDelegate:(id)aDeleagte
 {
     if (self = [super init]) {
+        self.parentDelegate    = self;
         _tvList.parentDelegate = self;
         _tvList.delegate     = self;
         _tvList.dataSource   = self;
@@ -43,7 +47,7 @@
         _myDeepListDao       = aDao;
         //_myDeepListDao.parentDelegate = self;
         self.delegte         = aDeleagte;
-        [_myDeepListDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+        //[_myDeepListDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
     }
     return self;
 }
@@ -153,6 +157,19 @@
 	
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    FSTopicObject * top = [_myDeepListDao.objectList objectAtIndex:indexPath.row];
+    CGSize size         = [top.news_abstract sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(295, 200) lineBreakMode:0];
+   
+    //CGSize size = [top.news_abstract sizeWithFont:[UIFont systemFontOfSize:14] forWidth:295 lineBreakMode:0];
+//    if(indexPath.row%3 == 0)
+//        size.height = 130;
+     NSLog(@"%d %@ %f",indexPath.row,top.news_abstract,size.height);
+    return 48 + 5 + size.height + 5 + 15;
+    
+}
+
 
 -(UITableViewStyle)initializeTableViewStyle{
     return UITableViewStylePlain;
@@ -194,25 +211,6 @@
     //_tvList.separatorStyle = YES;
 }
 
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100;
-    if ([indexPath row] == 0) {
-        return ROUTINE_NEWS_LIST_TOP_HEIGHT;
-    }
-    else{
-        _tvList.separatorStyle = YES;
-        
-        CGFloat height = [[self cellClassWithIndexPath:indexPath]
-                          computCellHeight:[self cellDataObjectWithIndexPath:indexPath]
-                          cellWidth:tableView.frame.size.width];
-        
-        return height;
-        
-        return ROUTINE_NEWS_LIST_HEIGHT;
-    }
-}
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	[_tvList bottomScrollViewDidScroll:scrollView];
     
@@ -224,37 +222,11 @@
 
 
 -(void)dealloc{
-    
+
     [super dealloc];
 }
 
 -(void)doSomethingWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status{
-    NSLog(@"doSomethingWithDAO：%@ :%d",sender,status);
-    NSLog(@"   ----------- %d",[NSThread currentThread] == [NSThread mainThread]);
-    
-    /*if ([sender isEqual:_myDeepListDao]) {
-        if (status == FSBaseDAOCallBack_SuccessfulStatus || status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
-            NSLog(@"FSNewsViewController:%d",[_fs_GZF_ForOnedayNewsFocusTopDAO.objectList count]);
-            //[self loadDataWithOutCompelet];
-            [self loadDataWithOutCompelet];
-            if (status == FSBaseDAOCallBack_SuccessfulStatus) {
-                [self loaddingComplete];
-                [_myDeepListDao operateOldBufferData];
-                
-            }
-        }else if(status ==FSBaseDAOCallBack_NetworkErrorStatus){
-            
-            //[_fs_GZF_ForNewsListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
-            [self loaddingComplete];
-        }
-        else if(status ==FSBaseDAOCallBack_ListWorkingStatus){
-            
-        }else
-        {
-            [self loaddingComplete];
-        }
-        return;
-    }*/
     if ([sender isEqual:_myDeepListDao]) {
         if (status == FSBaseDAOCallBack_SuccessfulStatus || status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
             //NSLog(@"_fs_GZF_ForNewsListDAO:%d",[_fs_GZF_ForNewsListDAO.objectList count]);
@@ -318,54 +290,7 @@
 }
 
 -(void)tableViewDataSourceDidSelected:(FSTableContainerView *)sender withIndexPath:(NSIndexPath *)indexPath{
-   /* NSInteger row = [indexPath row];
-    if ([_fs_GZF_ForOnedayNewsFocusTopDAO.objectList count]>0) {
-        if (row== 0) {
-            return;
-        }
-        FSNewsListCell * cell             = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:indexPath];
-        cell.leftView.backgroundColor     = [UIColor redColor];
-        cell.lab_NewsTitle.textColor      = [UIColor grayColor];
-        FSOneDayNewsObject *o = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
-        int i = 0;
-        for (FSOneDayNewsObject * obj in _fs_GZF_ForNewsListDAO.objectList) {
-            if ([obj.newsid isEqualToString:self.currentNewsId] && ![o.newsid isEqualToString:self.currentNewsId]) {
-                FSNewsListCell * cell = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i+1 inSection:0]];
-                cell.leftView.backgroundColor = [UIColor lightGrayColor];
-                
-            }
-            i++;
-        }
-        
-        _currentObject        = o;
-        FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
-        fsNewsContainerViewController.obj                            = o;
-        fsNewsContainerViewController.FCObj                          = nil;
-        fsNewsContainerViewController.newsSourceKind                 = NewsSourceKind_PuTongNews;
-        self.currentNewsId                                           = o.newsid;
-        [[NSUserDefaults standardUserDefaults]setValue:[NSNumber numberWithInt:1] forKey:o.newsid];
-        
-        NSLog(@"%@ %@",self.aViewController,self.aViewController.navigationController);
-        [self.aViewController.navigationController pushViewController:fsNewsContainerViewController animated:YES];
-        [fsNewsContainerViewController release];
-        [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    else{
-        FSOneDayNewsObject *o                                        = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
-        FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
-        fsNewsContainerViewController.obj                            = o;
-        fsNewsContainerViewController.FCObj                          = nil;
-        fsNewsContainerViewController.newsSourceKind                 = NewsSourceKind_PuTongNews;
-        [UIView commitAnimations];
-        [self.aViewController.navigationController pushViewController:fsNewsContainerViewController animated:YES];
-        [fsNewsContainerViewController release];
-        [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
-    }
-    
-    //[_fs_GZF_ForNewsListDAO.managedObjectContext save:nil];
-    //[FSBaseDB saveDB];*/
-    
+    [self.delegte LygDeepListViewCellTouched:indexPath.row];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -374,10 +299,10 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierString];
     
     //cell.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"CellBackground"]];
-    
+    bool isAlloc = NO;
 	if (cell == nil) {
 		cell = (UITableViewCell *)[[[self cellClassWithIndexPath:indexPath] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierString];
-        cell.backgroundColor  = [UIColor redColor];
+        isAlloc = YES;
 	}
 	
 	if ([cell isKindOfClass:[FSTableViewCell class]]) {
@@ -393,10 +318,30 @@
 	} else {
 		[self initializeCell:cell withData:[self cellDataObjectWithIndexPath:indexPath] withIndexPath:indexPath];
 	}
+    if (indexPath.row == 11) {
+        ; 
+    }
     LygDeepTableViewCell * xxcell = (LygDeepTableViewCell*)cell;
-    xxcell.kindsLabel.backgroundColor = [UIColor redColor];
+    FSTopicObject * ddddddddd          = (FSTopicObject*)[_myDeepListDao.objectList objectAtIndex:indexPath.row];
+    xxcell.nameLabel.text              = ddddddddd.title;
+    xxcell.dateLabel.text              = ddddddddd.pubDate;
+    xxcell.abstractLabel.text          = ddddddddd.news_abstract;
     
-    return cell;
+    FSTopicObject *obj    = (FSTopicObject *)[_myDeepListDao.objectList objectAtIndex:indexPath.row];
+    NSArray * arry        = [obj.title componentsSeparatedByString:@"】"];
+    if (arry.count > 1) {
+        NSString * string     = [[arry objectAtIndex:0] substringFromIndex:1];
+        xxcell.kindsLabel.text = string;
+        xxcell.nameLabel.text  = [arry objectAtIndex:1];
+    }else
+    {
+        xxcell.kindsLabel.text = nil;
+        xxcell.nameLabel.text  = obj.title;
+    }
+    xxcell.dateLabel.text  = [[[obj.pubDate componentsSeparatedByString:@" "] objectAtIndex:0] stringByAppendingString:@"----------------------------------------"];
+    xxcell.abstractLabel.text = obj.news_abstract;
+    
+    return (isAlloc?[cell autorelease]:cell);
 }
 -(NSObject *)tableViewCellData:(FSTableContainerView *)sender withIndexPath:(NSIndexPath *)indexPath{
 	NSInteger row = [indexPath row];
@@ -411,13 +356,7 @@
 #pragma FSTableContainerViewDelegate mark
 
 -(void)doSomethingForViewFirstTimeShow{
-    
-    NSLog(@"doSomethingForViewFirstTimeShowdoSomethingForViewFirstTimeShow");
-    
     self.reFreshDate = [[[NSDate alloc] initWithTimeIntervalSinceNow:0] autorelease];
-    
-    //[_fs_GZF_ChannelListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
-    //[self addKindsScrollView];
 }
 -(NSInteger)tableViewSectionNumber:(FSTableContainerView *)sender{
     return 1;

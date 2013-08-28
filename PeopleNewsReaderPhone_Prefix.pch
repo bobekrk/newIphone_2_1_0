@@ -14,7 +14,7 @@
     #import <CoreData/CoreData.h>
 #endif
 
-//#define RELEASE
+#define RELEASE
 #ifdef  RELEASE
 #define NSLog(...)
 #endif
