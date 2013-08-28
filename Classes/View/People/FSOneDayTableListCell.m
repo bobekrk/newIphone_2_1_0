@@ -290,6 +290,7 @@
      FSOneDayNewsObject *o = (FSOneDayNewsObject *)cellData;
     if (o!=nil) {
         if ([o.picture length]>0) {
+            
             return TODAYNEWSLIST_CELL_WITHEIMAGE_HEIGHT;
         }
         else{

@@ -29,35 +29,27 @@
 }
 
 -(void)doSomethingAtDealloc{
-    
-    [_lab_NewsTitle release];
-    [_lab_NewsDescription release];
-    [_lab_NewsType release];
- //   [_lab_VisitVolume release];
-    
- //   [_image_Footprint release];
-    [_image_Onright release];
-
 }
 
 -(void)doSomethingAtInit{
 
     _lab_NewsTitle = [[UILabel alloc] init];
-    _lab_NewsDescription = [[UILabel alloc] init];
-    _lab_NewsType = [[UILabel alloc] init];
- //   _lab_VisitVolume = [[UILabel alloc] init];
+    _lab_NewsDescription = [[UITextView alloc] init];
+    _lab_NewsDescription.userInteractionEnabled = NO;
+    //_lab_NewsDescription.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
     
-//    _image_Footprint = [[UIImageView alloc] init];
     _image_Onright = [[FSAsyncImageView alloc] init];
     _image_Onright.imageCuttingKind = ImageCuttingKind_fixrect;
     
     [self.contentView addSubview:_lab_NewsTitle];
     [self.contentView addSubview:_lab_NewsDescription];
-//    [self.contentView addSubview:_lab_VisitVolume];
     [self.contentView addSubview:_lab_NewsType];
     
-//    [self.contentView addSubview:_image_Footprint];
     [self.contentView addSubview:_image_Onright];
+    [_lab_NewsTitle release];
+    [_lab_NewsDescription release];
+    [_lab_NewsType release];
+    [_image_Onright release];
 
     
     _lab_NewsTitle.backgroundColor = COLOR_CLEAR;
@@ -69,14 +61,9 @@
     _lab_NewsDescription.backgroundColor = COLOR_CLEAR;
     _lab_NewsDescription.textColor = COLOR_NEWSLIST_DESCRIPTION;
     _lab_NewsDescription.textAlignment = UITextAlignmentLeft;
-    _lab_NewsDescription.numberOfLines = 3;
+    //_lab_NewsDescription.numberOfLines = 0;
     _lab_NewsDescription.font = [UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT];
     
-//    _lab_VisitVolume.backgroundColor = COLOR_CLEAR;
-//    _lab_VisitVolume.textColor = COLOR_NEWSLIST_DESCRIPTION;
-//    _lab_VisitVolume.textAlignment = UITextAlignmentLeft;
-//    _lab_VisitVolume.numberOfLines = 1;
-//    _lab_VisitVolume.font = [UIFont systemFontOfSize:LIST_BOTTOM_TEXT_FONT];
     
     _lab_NewsType.backgroundColor = COLOR_CLEAR;
     _lab_NewsType.textColor = COLOR_NEWSLIST_DESCRIPTION;
@@ -135,15 +122,16 @@
     }
     
     
+    _lab_NewsTitle.frame = CGRectMake(10, 4, 310, 25);
     
     if ([_image_Onright.urlString length]>0 && [self isDownloadPic]) {
-        _image_Onright.frame = CGRectMake(10, 30, 75, 52);
+        _image_Onright.frame = CGRectMake(self.frame.size.width - 85, 35, 75, 52);
         [_image_Onright updateAsyncImageView];
          _image_Onright.alpha = 1.0f;
        
         
-        _lab_NewsTitle.frame = CGRectMake(10, 4, self.frame.size.width- 68 - 10, 25);
-        _lab_NewsDescription.frame = CGRectMake(92, 30, self.frame.size.width- 92 - 10, 52);
+        //_lab_NewsTitle.frame = CGRectMake(10, 4, self.frame.size.width- 68 - 10, 25);
+        _lab_NewsDescription.frame = CGRectMake(3, 25, self.frame.size.width- 92 - 10, self.frame.size.height - 25);
         
         
 //        _image_Footprint.frame = CGRectMake(self.frame.size.width - 72, self.frame.size.height-15 - 12, 12, 12);
@@ -152,8 +140,8 @@
         
     }
     else{
-        _lab_NewsTitle.frame = CGRectMake(10, 4, self.frame.size.width- 68-10, 25);
-        _lab_NewsDescription.frame = CGRectMake(10, 30, self.frame.size.width-20, 54);
+        //_lab_NewsTitle.frame = CGRectMake(10, 4, self.frame.size.width- 68-10, 25);
+        _lab_NewsDescription.frame = CGRectMake(3, 25, self.frame.size.width-20, self.frame.size.height - 25);
         
         
         _image_Onright.alpha = 0.0f;
@@ -204,10 +192,16 @@
     FSOneDayNewsObject *o = (FSOneDayNewsObject *)cellData;
     if (o!=nil) {
         if ([o.picture length]>0) {
-            return ROUTINE_NEWS_LIST_WITHEIMAGE_HEIGHT;
+            CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake(218, 200) lineBreakMode:0];
+            
+            return (size.height > 52?size.height:52) + 50;
         }
         else{
-            return ROUTINE_NEWS_LIST_HEIGHT;
+            CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake(300, 200) lineBreakMode:0];
+            
+            return size.height + 50;
+
+
         }
     }
     return 44;

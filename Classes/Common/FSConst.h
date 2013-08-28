@@ -100,7 +100,7 @@
 
 //today news list text font
 #define TODAYNEWSLIST_TOP_TITLE_FONT 20.0f
-#define TODAYNEWSLIST_TITLE_FONT 16.0f
+#define TODAYNEWSLIST_TITLE_FONT 15.0f
 #define TODAYNEWSLIST_DESCRIPTION_FONT 12.0f
 
 //perfere news channel list cell 
