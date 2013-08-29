@@ -47,7 +47,6 @@
 } 
 
 - (void)dealloc {
-    [_fsMoreContainerView release];
     [_fs_GZF_AppRecommendDAO release];
     [_peopleAPPS removeAllObjects];
     [_peopleAPPS release];
@@ -63,6 +62,7 @@
     _fsMoreContainerView.parentDelegate = self;
     _fsMoreContainerView.flag = 0;
     [self.view addSubview:_fsMoreContainerView];
+    [_fsMoreContainerView release];
 	//self.view.backgroundColor = [UIColor blueColor];
 	
 	//标签栏设置

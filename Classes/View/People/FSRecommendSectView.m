@@ -36,12 +36,8 @@
 */
 
 -(void)doSomethingAtDealloc{
-    [_scrollView release];
-    [_lab_sectionTitle release];
-    [_sectionBGR release];
     [_lab_more release];
     [_MoreButton release];
-    [_fs_GZF_PageControllView release];
 }
 
 
@@ -61,7 +57,9 @@
     _sectionBGR.image = [UIImage imageNamed:@"more_section.png"];
     
     [self addSubview:_sectionBGR];
+    [_sectionBGR release];
     [self addSubview:_lab_sectionTitle];
+    [_lab_sectionTitle release];
     //[self addSubview:_lab_more];
     
     _scrollView = [[UIScrollView alloc] init];
@@ -69,6 +67,7 @@
     _scrollView.pagingEnabled = YES;
     _scrollView.showsHorizontalScrollIndicator = NO;
     [self addSubview:_scrollView];
+    [_scrollView release];
     
     
     _MoreButton = [[UIButton alloc] init];
@@ -83,6 +82,7 @@
     _fs_GZF_PageControllView.NonFocusColor = COLOR_NEWSLIST_DESCRIPTION;
     _fs_GZF_PageControllView.position_kind = Position_kind_middle;
     [self addSubview:_fs_GZF_PageControllView];
+    [_fs_GZF_PageControllView release];
     
     
 }
@@ -132,7 +132,7 @@
         [imageBackGR release];
         
         
-        FSAsyncCheckImageView *imageView = [[FSAsyncCheckImageView alloc] initWithFrame:CGRectMake( 36 + (MORE_LIST_PEOPLEAPP_ICON_HEIGHT+48) * i, 26, MORE_LIST_PEOPLEAPP_ICON_HEIGHT, MORE_LIST_PEOPLEAPP_ICON_HEIGHT)];
+        FSAsyncCheckImageView *imageView = [[FSAsyncCheckImageView alloc] initWithFrame:CGRectMake( 36 + (MORE_LIST_PEOPLEAPP_ICON_HEIGHT+46) * i, 26, MORE_LIST_PEOPLEAPP_ICON_HEIGHT, MORE_LIST_PEOPLEAPP_ICON_HEIGHT)];
         // NSString *defaultDBPath = [getDocumentPath() stringByAppendingPathComponent:[o.channel_normal lastPathComponent]];
         imageView.normalURLString = o.appLogo;
         imageView.heighlightURLString = o.appLogo;
