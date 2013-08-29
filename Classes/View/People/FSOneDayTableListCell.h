@@ -15,7 +15,7 @@
     
     
     //UILabel *_lab_title;
-    UILabel *_lab_description;
+    UITextView *_lab_description;
     //UILabel *_lab_VisitVolume;
     //UILabel *_lab_newsType;
     

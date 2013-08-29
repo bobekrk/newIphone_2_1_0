@@ -134,12 +134,13 @@
     [self.contentView addSubview:_lab_title];
     
     
-    _lab_description = [[UILabel alloc] init];
+    _lab_description = [[UITextView alloc] init];
+    _lab_description.editable = NO;
     _lab_description.backgroundColor = COLOR_CLEAR;
     _lab_description.textColor = COLOR_NEWSLIST_DESCRIPTION;
     _lab_description.font = [UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT];
     _lab_description.userInteractionEnabled = NO;
-    _lab_description.numberOfLines = 4;
+    //_lab_description.numberOfLines = 4;
     _lab_description.textAlignment = UITextAlignmentLeft;
     [self.contentView addSubview:_lab_description];
     
@@ -223,36 +224,18 @@
     _oneday_eastImage.frame = CGRectMake(self.frame.size.width - 20, 15, 6, 8);
     
     if ([_image_newsimage.urlString length]>0 && [self isDownloadPic]) {
-        
-//        _image_VisitIcon.frame = CGRectMake(128, self.frame.size.height - 19-13+move_down_space, 11, 11);
-//        _lab_VisitVolume.frame = CGRectMake(128+14, self.frame.size.height - 38+move_down_space, 60, 22);
-//        
-//        _lab_newsType.frame = CGRectMake(self.frame.size.width - 108, self.frame.size.height - 38+move_down_space, 180, 22);
-        
-        
-//        _labContainbackground.image = [UIImage imageNamed:@"box.png"];
-//        _labContainbackground.frame = CGRectMake(6, 0, self.frame.size.width - 12, self.frame.size.height-12);
         _image_newsimage.alpha = 1.0f;
-        _image_newsimage.frame = CGRectMake(46, 38+move_down_space, 75, 57);
+        _image_newsimage.frame = CGRectMake(46 + self.frame.size.width - 128 -25, 38+move_down_space, 75, 57);
         [_image_newsimage updateAsyncImageView];
         _lab_title.frame = CGRectMake(46, 6, self.frame.size.width - 46 - 25, 28);
-        _lab_description.numberOfLines = 4;
-        _lab_description.frame = CGRectMake(128, 34+move_down_space, self.frame.size.width - 128-25, 66);
-        
+        //_lab_description.frame = CGRectMake(128, 34+move_down_space, self.frame.size.width - 128-25, 66);
+        _lab_description.frame = CGRectMake(43, 28 + move_down_space, self.frame.size.width - 128 -25, self.frame.size.height -28);
     }
     else{
-//        _image_VisitIcon.frame = CGRectMake(50, self.frame.size.height - 13-13+move_down_space, 11, 11);
-//        _lab_VisitVolume.frame = CGRectMake(50+14, self.frame.size.height - 32+move_down_space, 60, 22);
-//        
-//        _lab_newsType.frame = CGRectMake(self.frame.size.width - 108, self.frame.size.height - 32+move_down_space, 180, 22);
-//        
-        
-//        _labContainbackground.image = [UIImage imageNamed:@"box2.png"];
-//        _labContainbackground.frame = CGRectMake(6, 0, self.frame.size.width - 12, self.frame.size.height-12);
         _image_newsimage.alpha = 0.0f;
         _lab_title.frame = CGRectMake(50, 4, self.frame.size.width - 50 - 25, 28);
-        _lab_description.numberOfLines = 3;
-        _lab_description.frame = CGRectMake(50, 28+move_down_space, self.frame.size.width - 50-25, 52);
+        //_lab_description.numberOfLines = 3;
+        _lab_description.frame = CGRectMake(43, 28 + move_down_space, self.frame.size.width - 50-25, self.frame.size.height -28);
         
     }
     
@@ -290,11 +273,12 @@
      FSOneDayNewsObject *o = (FSOneDayNewsObject *)cellData;
     if (o!=nil) {
         if ([o.picture length]>0) {
-            
-            return TODAYNEWSLIST_CELL_WITHEIMAGE_HEIGHT;
+            CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT] constrainedToSize:CGSizeMake(320 - 128- 25, 300) lineBreakMode:NSLineBreakByClipping];
+            return (size.height > 57?size.height:57) + 28 + 30;
         }
         else{
-            return TODAYNEWSLIST_CELL_HEIGHT;
+            CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT] constrainedToSize:CGSizeMake(320 - 50 - 25, 300) lineBreakMode:NSLineBreakByClipping];
+            return size.height + 28 + 30;
         }
     }
     return 44;
