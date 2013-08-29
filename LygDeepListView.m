@@ -268,24 +268,11 @@
         //[_fs_GZF_ForOnedayNewsFocusTopDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
         
         //_myDeepListDao.objectList = nil;
-        //[_myDeepListDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+        [_myDeepListDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
         
     }
     if (dataSource == tdsNextSection) {
-//        FSTopicObject *o = [_myDeepListDao.objectList lastObject];
-//        _myDeepListDao.lastid = o.de;
-//        
-//        
-//        if ([_fs_GZF_ForNewsListDAO.channelid isEqualToString:@"1_0"]) {
-//            _fs_GZF_ForNewsListDAO.getNextOnline = NO;
-//        }
-//        else{
-//            _fs_GZF_ForNewsListDAO.getNextOnline = YES;
-//        }
-//        
-//        [_fs_GZF_ForNewsListDAO HTTPGetDataWithKind:GET_DataKind_Next];
-       // _myDeepListDao.objectList = nil;
-       // [_myDeepListDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+        [_myDeepListDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
     }
 }
 

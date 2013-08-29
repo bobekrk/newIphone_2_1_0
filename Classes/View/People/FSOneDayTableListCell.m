@@ -13,9 +13,11 @@
 #import "FSOneDayNewsObject.h"
 #import "FSBaseDB.h"
 #import "FSChannelObject.h"
+//#import <UIStringDrawing.h>
+#import <UIKit/UIStringDrawing.h>
 
 
-#define move_down_space 5.0f
+#define move_down_space 13.0f
 
 
 @implementation FSOneDayTableListCell
@@ -38,86 +40,40 @@
 
 
 -(void)doSomethingAtDealloc{
-    //[_lab_newsType release];
-//    [_labContainbackground release];
+
     [_lab_title release];
-    [_lab_description release];
     [_image_Icon release];
     [_image_channelIcon release];
     [_image_newsimage release];
-//    [_cellbackground release];
-//    [_cellBOXtop release];
-//    [_cellBOXmidle release];
-//    [_cellBOXbottom release];
-    [_contenBGRView release];
+
     [_lineView release];
-    [_cellLeftLine release];
     [_oneday_eastImage release];
-   // [_image_VisitIcon release];
-    //[_lab_VisitVolume release];
 }
 
 -(void)doSomethingAtInit{
+    [self.contentView removeFromSuperview];
     self.contentView.backgroundColor = COLOR_NEWSLIST_TITLE_WHITE;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    _cellLeftLine = [[UIView alloc] init];
-    _cellLeftLine.backgroundColor = [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:0.9];
-    [self.contentView addSubview:_cellLeftLine];
-    
-//    _cellbackground = [[UIImageView alloc] init];
-//    _cellbackground.image = [UIImage imageNamed:@"oneday_timeline.png"];
-//    [self.contentView addSubview:_cellbackground];
-    
-//    _cellBOXtop = [[UIImageView alloc] init];
-//    _cellBOXtop.image = [UIImage imageNamed:@"newscard_01.png"];
-//    [self.contentView addSubview:_cellBOXtop];
-//    
-//    _cellBOXmidle = [[UIImageView alloc] init];
-//    _cellBOXmidle.image = [UIImage imageNamed:@"newscard_02.png"];
-//    [self.contentView addSubview:_cellBOXmidle];
-//    
-//    _cellBOXbottom = [[UIImageView alloc] init];
-//    _cellBOXbottom.image = [UIImage imageNamed:@"newscard_03.png"];
-//    [self.contentView addSubview:_cellBOXbottom];
-    
-    _contenBGRView = [[UIView alloc] init];
-    _contenBGRView.layer.borderWidth = 1;
-    _contenBGRView.backgroundColor = [UIColor whiteColor];
-    _contenBGRView.layer.borderColor = [UIColor colorWithRed:221.0f/255.0f green:152.0f/255.0f blue:152.0f/255.0f alpha:1.0].CGColor;
-    _contenBGRView.layer.cornerRadius = 4.0f;
-//    _contenBGRView.layer.shadowColor = [UIColor darkGrayColor].CGColor;
-//    _contenBGRView.layer.shadowOffset = CGSizeMake(1, 1);
-//    _contenBGRView.layer.shadowOpacity = 0.85f;
+
     
     _lineView = [[UIView alloc] init];
     _lineView.backgroundColor = [UIColor colorWithRed:199.0f/255.0f green:199.0f/255.0f blue:199.0f/255.0f alpha:1.0];
     
     _oneday_eastImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"oneday_east.png"]];
     
-    
-    [self.contentView addSubview:_contenBGRView];
-    [self.contentView addSubview:_lineView];
-    [self.contentView addSubview:_oneday_eastImage];
-    
-//    _labContainbackground = [[UIImageView alloc] init];
-//    _labContainbackground.alpha = 0.88;
-//    [self.contentView addSubview:_labContainbackground];
+    [self addSubview:_lineView];
+    [self addSubview:_oneday_eastImage];
     
 
-//    _lab_newsType = [[UILabel alloc] init];
-//    _lab_newsType.backgroundColor = COLOR_CLEAR;
-//    _lab_newsType.textColor = COLOR_NEWSLIST_DESCRIPTION;
-//    _lab_newsType.textAlignment = UITextAlignmentLeft;
-//    _lab_newsType.font = [UIFont systemFontOfSize:10];
 
     
     _image_channelIcon = [[FSAsyncImageView alloc] init];
     _image_channelIcon.borderColor = COLOR_CLEAR;
-    [self.contentView addSubview:_image_channelIcon];
+    [self addSubview:_image_channelIcon];
 
     _image_newsimage = [[FSAsyncImageView alloc] init];
-    [self.contentView addSubview:_image_newsimage];
+    [self addSubview:_image_newsimage];
     
     
     _image_Icon = [[UIImageView alloc] init];
@@ -131,32 +87,79 @@
     _lab_title.font = [UIFont systemFontOfSize:TODAYNEWSLIST_TITLE_FONT];
     _lab_title.textAlignment = UITextAlignmentLeft;
     _lab_title.userInteractionEnabled = NO;
-    [self.contentView addSubview:_lab_title];
+    [self addSubview:_lab_title];
+    
+}
+static void drawRoundCornerRect(CGContextRef context,CGRect aRect,CGFloat corneRadius,CGFloat lineWindth)
+{
+    CGContextMoveToPoint(context, aRect.origin.x + corneRadius, aRect.origin.y);
+    CGContextAddLineToPoint(context, aRect.origin.x - corneRadius + aRect.size.width , aRect.origin.y);
+    
+    CGContextAddArcToPoint(context, aRect.origin.x  + aRect.size.width , aRect.origin.y, aRect.origin.x + aRect.size.width, aRect.origin.y + corneRadius,corneRadius);
+    
+    CGContextAddArcToPoint(context,aRect.origin.x + aRect.size.width ,aRect.origin.y + aRect.size.height  ,aRect.origin.x  + aRect.size.width - corneRadius, aRect.origin.y + aRect.size.height,corneRadius);
     
     
-    _lab_description = [[UITextView alloc] init];
-    _lab_description.editable = NO;
-    _lab_description.backgroundColor = COLOR_CLEAR;
-    _lab_description.textColor = COLOR_NEWSLIST_DESCRIPTION;
-    _lab_description.font = [UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT];
-    _lab_description.userInteractionEnabled = NO;
-    //_lab_description.numberOfLines = 4;
-    _lab_description.textAlignment = UITextAlignmentLeft;
-    [self.contentView addSubview:_lab_description];
+
+     CGContextAddLineToPoint(context, aRect.origin.x + corneRadius , aRect.origin.y + aRect.size.height);
+    CGContextAddArcToPoint(context,aRect.origin.x ,aRect.origin.y + aRect.size.height  ,aRect.origin.x , aRect.origin.y + aRect.size.height -corneRadius,corneRadius);
+
+    CGContextAddLineToPoint(context, aRect.origin.x , aRect.origin.y + corneRadius);
+    CGContextAddArcToPoint(context,aRect.origin.x ,aRect.origin.y ,aRect.origin.x +corneRadius, aRect.origin.y ,corneRadius);
+    
+    CGContextStrokePath(context);
+
     
     
-//    _image_VisitIcon = [[UIImageView alloc] init];
-//    _image_VisitIcon.image = [UIImage imageNamed:@"xin.png"];
-//    [self.contentView addSubview:_image_VisitIcon];
-//    
-//    _lab_VisitVolume = [[UILabel alloc] init];
-//    _lab_VisitVolume.backgroundColor = COLOR_CLEAR;
-//    _lab_VisitVolume.textColor = COLOR_NEWSLIST_DESCRIPTION;
-//    _lab_VisitVolume.font = [UIFont systemFontOfSize:10];
-//    _lab_VisitVolume.textAlignment = UITextAlignmentLeft;
-//    
-//    [self.contentView addSubview:_lab_VisitVolume];
-//    [self.contentView addSubview:_lab_newsType];
+}
+-(void)drawRect:(CGRect)rect
+{
+    
+    CGRect tempRect      = CGRectMake(6, 4, self.frame.size.width - 12, self.frame.size.height - 8);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetRGBStrokeColor(context, 170.0/255, 170.0/255, 170.0/255, 1);
+    CGContextSetLineWidth(context, 2);
+    CGContextMoveToPoint(context, 27, 0);
+    CGContextAddLineToPoint(context, 27, self.frame.size.height);
+
+    CGContextStrokePath(context);
+    
+    
+    CGContextSetRGBFillColor(context, 1, 1.0, 1.0, 1.0);
+    //填充矩形
+    CGContextFillRect(context, tempRect);
+
+    
+    CGContextSetRGBStrokeColor(context, 1, 0, 0, 1);
+    CGContextSetLineWidth(context, 1);
+    drawRoundCornerRect(context, tempRect, 3, 2);
+    
+       //执行绘画
+    CGContextStrokePath(context);
+    
+
+    
+    
+    //_cellLeftLine.frame = CGRectMake(26.0f, 0, 2.0f, self.frame.size.height);
+    
+    CGRect tempRect2;
+    if ([_image_newsimage.urlString length]>0 && [self isDownloadPic]) {
+        tempRect2 = CGRectMake(43, 28 + move_down_space, self.frame.size.width - 128 + 5, self.frame.size.height -28);
+    }
+    else{
+        tempRect2 = CGRectMake(43, 28 + move_down_space, self.frame.size.width - 50-25, self.frame.size.height -28);
+        //[o.news_abstract drawInRect:_lab_description.frame withFont:[UIFont systemFontOfSize:14] lineBreakMode:UILineBreakModeWordWrap];
+        
+    }
+
+    
+    CGContextSetFillColorWithColor(context, [UIColor grayColor].CGColor);
+    FSOneDayNewsObject *o = (FSOneDayNewsObject *)_data;
+    [o.news_abstract drawInRect:tempRect2 withFont:[UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT] lineBreakMode:UILineBreakModeWordWrap];
+    
+    
+
     
 }
 
@@ -174,8 +177,6 @@
     if ([o.channalIcon length]>0) {
         _image_channelIcon.urlString = o.channalIcon;//@"http://mobile.app.people.com.cn:81/news2/images/channel/selected/1_18_2.png";
         _image_channelIcon.imageCuttingKind = ImageCuttingKind_fixrect;
-//        _image_Icon.image = [UIImage imageWithContentsOfFile: getFileNameWithURLString(_image_channelIcon.urlString, getCachesPath())];
-        
         _image_channelIcon.localStoreFileName = getFileNameWithURLString(o.channalIcon, getCachesPath());
     }
     else{
@@ -190,55 +191,35 @@
         _image_newsimage.urlString = @"";
     }
     
-//    _lab_VisitVolume.text = [NSString stringWithFormat:@"%d", [o.browserCount intValue]];
-//    _lab_newsType.text = [NSString stringWithFormat:@"来源:%@",o.source];
-    //NSLog(@"o.kind:%@",_lab_VisitVolume.text);
+
     _lab_title.text = o.title;
-    _lab_description.text = [NSString stringWithFormat:@"%@",o.news_abstract];
 
 }
 
 
 -(void)doSomethingAtLayoutSubviews{
     [self setContainer];
-    _cellLeftLine.frame = CGRectMake(26.0f, 0, 2.0f, self.frame.size.height);
+    //_cellLeftLine.frame = CGRectMake(26.0f, 0, 2.0f, self.frame.size.height);
     
     _image_channelIcon.frame = CGRectMake(13, 9, 30, 30);
     [_image_channelIcon updateAsyncImageView];
     
     
-//    _image_Icon.frame = CGRectMake(13, 9, 30, 30);
-//    if (_image_Icon.image == nil) {
-//        _image_Icon.image = [UIImage imageNamed:@"AsyncImage.png"]; 
-//    }
     
-    
-    
-//    _cellBOXtop.frame = CGRectMake(6, 4, self.frame.size.width - 12, _cellBOXtop.image.size.height);
-//    _cellBOXbottom.frame = CGRectMake(6, self.frame.size.height-_cellBOXbottom.image.size.height-4, self.frame.size.width - 12, _cellBOXbottom.image.size.height);
-//    _cellBOXmidle.frame = CGRectMake(6, _cellBOXtop.image.size.height+4, self.frame.size.width - 12, self.frame.size.height-_cellBOXtop.image.size.height-10);
-    
-    _contenBGRView.frame = CGRectMake(6, 4, self.frame.size.width - 12, self.frame.size.height - 8);
+
     _lineView.frame = CGRectMake(44, 34, self.frame.size.width - 56, 1);
     
     _oneday_eastImage.frame = CGRectMake(self.frame.size.width - 20, 15, 6, 8);
-    
     if ([_image_newsimage.urlString length]>0 && [self isDownloadPic]) {
         _image_newsimage.alpha = 1.0f;
-        _image_newsimage.frame = CGRectMake(46 + self.frame.size.width - 128 -25, 38+move_down_space, 75, 57);
+        _image_newsimage.frame = CGRectMake(46 + self.frame.size.width - 128 + 5, 38+move_down_space -8 , 57, 57);
         [_image_newsimage updateAsyncImageView];
         _lab_title.frame = CGRectMake(46, 6, self.frame.size.width - 46 - 25, 28);
-        //_lab_description.frame = CGRectMake(128, 34+move_down_space, self.frame.size.width - 128-25, 66);
-        _lab_description.frame = CGRectMake(43, 28 + move_down_space, self.frame.size.width - 128 -25, self.frame.size.height -28);
     }
     else{
         _image_newsimage.alpha = 0.0f;
         _lab_title.frame = CGRectMake(50, 4, self.frame.size.width - 50 - 25, 28);
-        //_lab_description.numberOfLines = 3;
-        _lab_description.frame = CGRectMake(43, 28 + move_down_space, self.frame.size.width - 50-25, self.frame.size.height -28);
-        
     }
-    
 }
 
 
@@ -273,12 +254,12 @@
      FSOneDayNewsObject *o = (FSOneDayNewsObject *)cellData;
     if (o!=nil) {
         if ([o.picture length]>0) {
-            CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT] constrainedToSize:CGSizeMake(320 - 128- 25, 300) lineBreakMode:NSLineBreakByClipping];
-            return (size.height > 57?size.height:57) + 28 + 30;
+            CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT] constrainedToSize:CGSizeMake(320 - 128 + 5, 300) lineBreakMode:UILineBreakModeWordWrap];
+            return (size.height > 57?size.height:57) + 60 ;
         }
         else{
-            CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT] constrainedToSize:CGSizeMake(320 - 50 - 25, 300) lineBreakMode:NSLineBreakByClipping];
-            return size.height + 28 + 30;
+            CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT] constrainedToSize:CGSizeMake(320 - 50 - 25, 300) lineBreakMode:UILineBreakModeWordWrap];
+            return size.height + 60 ;
         }
     }
     return 44;

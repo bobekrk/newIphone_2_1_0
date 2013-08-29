@@ -14,12 +14,10 @@
 
 @interface FSNewsListCell : FSTableViewCell{
 @protected
-    UILabel         *_lab_NewsTitle;
-    UITextView     *_lab_NewsDescription;
-    //UILabel *_lab_VisitVolume;
-    UILabel *_lab_NewsType;
+    UILabel          *_lab_NewsTitle;
+    UILabel          *_lab_NewsType;
     FSAsyncImageView *_image_Onright;
-    //UIImageView *_image_Footprint;
+
     
 }
 @property(nonatomic,retain)UILabel * lab_NewsTitle;

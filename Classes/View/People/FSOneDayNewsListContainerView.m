@@ -157,7 +157,9 @@
         return TODAYNEWSLIST_TOP_CELL_HEIGHT;
     }
     else{
-        
+        if (indexPath.row == 7) {
+            //<#statements#>
+        }
         CGFloat height = [[self cellClassWithIndexPath:indexPath]
                           computCellHeight:[self cellDataObjectWithIndexPath:indexPath]
                           cellWidth:tableView.frame.size.width];

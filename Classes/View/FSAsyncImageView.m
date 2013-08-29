@@ -54,7 +54,8 @@
 		self.imageCuttingKind = ImageCuttingKind_None;
 		
 		_imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        //_imageView.contentMode = UIViewContentModeScaleAspectFit;
+        _imageView.clipsToBounds = YES;
+        _imageView.contentMode = UIViewContentModeScaleAspectFill;
 		[self addSubview:_imageView];
         self.defaultFileName = @"AsyncImage.png";
 		

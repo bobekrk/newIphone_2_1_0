@@ -82,11 +82,13 @@
     if (!self.isListStyle) {
         [_scrollPageView         removeFromSuperview];
         [_deepFloattingTitleView removeFromSuperview];
+        _fs_GZF_DeepListDAO.parentDelegate = _myDeepListView;
         [self.view addSubview:_myDeepListView];
         [_myDeepListView  reloadData];
     }else
     {
         [_myDeepListView removeFromSuperview];
+        _fs_GZF_DeepListDAO.parentDelegate = self;
         [self.view addSubview:_scrollPageView];
         [self.view addSubview:_deepFloattingTitleView];
     }

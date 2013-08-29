@@ -27,27 +27,39 @@
     }
     return self;
 }
+-(void)drawRect:(CGRect)rect
+{
+    CGRect tempRect;
+    if ([_image_Onright.urlString length]>0 && [self isDownloadPic]) {
+        tempRect = CGRectMake(13, 30, self.frame.size.width- 72 - 10, self.frame.size.height - 25);
+    }
+    else{
+        tempRect = CGRectMake(13, 30, self.frame.size.width-20, self.frame.size.height - 25);
+    }
+
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [UIColor grayColor].CGColor);
+    FSOneDayNewsObject *obj   = (FSOneDayNewsObject *)self.data;
+    [obj.news_abstract drawInRect:tempRect withFont:[UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT] lineBreakMode:NSLineBreakByWordWrapping];
+    
+}
 
 -(void)doSomethingAtDealloc{
 }
 
 -(void)doSomethingAtInit{
-
+    [self.contentView removeFromSuperview];
     _lab_NewsTitle = [[UILabel alloc] init];
-    _lab_NewsDescription = [[UITextView alloc] init];
-    _lab_NewsDescription.userInteractionEnabled = NO;
-    //_lab_NewsDescription.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
     
     _image_Onright = [[FSAsyncImageView alloc] init];
     _image_Onright.imageCuttingKind = ImageCuttingKind_fixrect;
     
-    [self.contentView addSubview:_lab_NewsTitle];
-    [self.contentView addSubview:_lab_NewsDescription];
-    [self.contentView addSubview:_lab_NewsType];
+    [self addSubview:_lab_NewsTitle];
+    [self addSubview:_lab_NewsType];
     
-    [self.contentView addSubview:_image_Onright];
+    [self addSubview:_image_Onright];
     [_lab_NewsTitle release];
-    [_lab_NewsDescription release];
     [_lab_NewsType release];
     [_image_Onright release];
 
@@ -58,11 +70,6 @@
     _lab_NewsTitle.numberOfLines = 1;
     _lab_NewsTitle.font = [UIFont systemFontOfSize:TODAYNEWSLIST_TITLE_FONT];
     
-    _lab_NewsDescription.backgroundColor = COLOR_CLEAR;
-    _lab_NewsDescription.textColor = COLOR_NEWSLIST_DESCRIPTION;
-    _lab_NewsDescription.textAlignment = UITextAlignmentLeft;
-    //_lab_NewsDescription.numberOfLines = 0;
-    _lab_NewsDescription.font = [UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT];
     
     
     _lab_NewsType.backgroundColor = COLOR_CLEAR;
@@ -92,14 +99,11 @@
     
     _leftView.frame = CGRectMake(0, 0, 4, self.frame.size.height);
     
- //   _image_Footprint.image = [UIImage imageNamed:@"xin.png"];
     
     if ([self.data isKindOfClass:[FSMyFaverateObject class]]) {
         FSMyFaverateObject *obj = (FSMyFaverateObject *)self.data;
         _lab_NewsTitle.text = obj.title;
-        _lab_NewsDescription.text = obj.news_abstract;
-//        _lab_VisitVolume.text = [NSString stringWithFormat:@"%d",[obj.browserCount integerValue]];
-       //_lab_NewsType.text = [NSString stringWithFormat:@"%@",[self timeTostring:obj.timestamp]];
+
         
         NSString *defaultDBPath = obj.picture;
         NSString *loaclFile = getFileNameWithURLString(defaultDBPath, getCachesPath());
@@ -109,12 +113,7 @@
     else{
         FSOneDayNewsObject *obj   = (FSOneDayNewsObject *)self.data;
         _lab_NewsTitle.text       = obj.title;
-        _lab_NewsDescription.text = obj.news_abstract;
-        NSLog(@"%@",obj.isRedColor);
-        //        _lab_VisitVolume.text = [NSString stringWithFormat:@"%d",[obj.browserCount integerValue]];
-        //_lab_NewsType.text = [NSString stringWithFormat:@"%@",[self timeTostring:obj.timestamp]];
-        
-        
+
         NSString *defaultDBPath   = obj.picture;
         NSString *loaclFile       = getFileNameWithURLString(defaultDBPath, getCachesPath());
         _image_Onright.urlString  = defaultDBPath;
@@ -125,28 +124,14 @@
     _lab_NewsTitle.frame = CGRectMake(10, 4, 310, 25);
     
     if ([_image_Onright.urlString length]>0 && [self isDownloadPic]) {
-        _image_Onright.frame = CGRectMake(self.frame.size.width - 85, 35, 75, 52);
+        _image_Onright.frame = CGRectMake(self.frame.size.width - 65, 30, 57, 57);
         [_image_Onright updateAsyncImageView];
          _image_Onright.alpha = 1.0f;
-       
-        
-        //_lab_NewsTitle.frame = CGRectMake(10, 4, self.frame.size.width- 68 - 10, 25);
-        _lab_NewsDescription.frame = CGRectMake(3, 25, self.frame.size.width- 92 - 10, self.frame.size.height - 25);
-        
-        
-//        _image_Footprint.frame = CGRectMake(self.frame.size.width - 72, self.frame.size.height-15 - 12, 12, 12);
-//        _lab_VisitVolume.frame = CGRectMake(self.frame.size.width - 60, self.frame.size.height-15 - 12, 60, 12);
         _lab_NewsType.frame = CGRectMake(self.frame.size.width-50,4, 40, 22);
         
     }
     else{
-        //_lab_NewsTitle.frame = CGRectMake(10, 4, self.frame.size.width- 68-10, 25);
-        _lab_NewsDescription.frame = CGRectMake(3, 25, self.frame.size.width-20, self.frame.size.height - 25);
-        
-        
         _image_Onright.alpha = 0.0f;
-//        _image_Footprint.frame = CGRectMake(self.frame.size.width - 72, self.frame.size.height-15 - 12, 12, 12);
-//        _lab_VisitVolume.frame = CGRectMake(self.frame.size.width - 60, self.frame.size.height-15 - 12, 60, 12);
         _lab_NewsType.frame = CGRectMake(self.frame.size.width-50,4 , 40, 22);
     }
 
@@ -192,14 +177,14 @@
     FSOneDayNewsObject *o = (FSOneDayNewsObject *)cellData;
     if (o!=nil) {
         if ([o.picture length]>0) {
-            CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake(218, 200) lineBreakMode:0];
+            CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT] constrainedToSize:CGSizeMake(218, 200) lineBreakMode:0];
             
-            return (size.height > 52?size.height:52) + 50;
+            return (size.height > 52?size.height:52) + 40;
         }
         else{
-            CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake(300, 200) lineBreakMode:0];
+            CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT] constrainedToSize:CGSizeMake(300, 200) lineBreakMode:0];
             
-            return size.height + 50;
+            return size.height + 40;
 
 
         }
