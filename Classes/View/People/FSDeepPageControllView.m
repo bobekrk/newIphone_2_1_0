@@ -69,6 +69,12 @@
         [button2 addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button2];
         [button2 release];
+        
+        
+        _gradientLayer = [[CAGradientLayer alloc]init];
+        _gradientLayer.colors = [NSArray arrayWithObjects:(id)[UIColor colorWithRed:1 green:1 blue:1 alpha:0].CGColor,(id)[UIColor colorWithRed:1 green:1 blue:1 alpha:1].CGColor,nil];
+        [self.layer addSublayer:_gradientLayer];
+        
     }
     return self;
 }
@@ -161,6 +167,7 @@
     _lab_pageIndex.frame = CGRectMake(self.frame.size.width/2-80, 0, 80, self.frame.size.height);
     
     _midleImage.frame = CGRectMake(LEFT_RIGHT_SPACE*2, (self.frame.size.height - _midleImage.image.size.height)/2, _midleImage.image.size.width, _midleImage.image.size.height);
+    _gradientLayer.frame = CGRectMake(0, self.frame.size.height - 25 - 30 , 320, 25);
 }
 
 

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <QuartzCore/QuartzCore.h>
 @interface FSDeepPageControllView : UIView{
 @protected
     
@@ -29,6 +29,7 @@
 @property (nonatomic) NSInteger pageCount;
 @property (nonatomic) NSInteger pageIndex;
 @property (nonatomic,assign) id delegate;
+@property (nonatomic,retain)CAGradientLayer * gradientLayer;
 
 -(void)layoutImages;
 
