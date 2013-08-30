@@ -77,6 +77,10 @@
         _oldCount=arrayCount;
     }
 }
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
 	NSString *cellIdentifierString = [self cellIdentifierStringWithIndexPath:indexPath];
@@ -124,6 +128,7 @@
 
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell setNeedsDisplay];
     return cell;
 }
 
@@ -157,9 +162,6 @@
         return TODAYNEWSLIST_TOP_CELL_HEIGHT;
     }
     else{
-        if (indexPath.row == 7) {
-            //<#statements#>
-        }
         CGFloat height = [[self cellClassWithIndexPath:indexPath]
                           computCellHeight:[self cellDataObjectWithIndexPath:indexPath]
                           cellWidth:tableView.frame.size.width];

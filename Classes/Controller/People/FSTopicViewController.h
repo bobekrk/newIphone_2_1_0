@@ -17,8 +17,8 @@
 #import "LygDeepListView.h"
 @class FS_GZF_DeepListDAO;
 
-@interface FSTopicViewController : FSBasePeopleViewController <FSScrollPageViewPageDelegate,LygDeepListViewDelegate>{
-    FS_GZF_DeepListDAO          *_fs_GZF_DeepListDAO; 
+@interface FSTopicViewController : FSBasePeopleViewController <FSScrollPageViewPageDelegate,LygDeepListViewDelegate,UIScrollViewDelegate>{
+    //FS_GZF_DeepListDAO          *_fs_GZF_DeepListDAO;
     
     //有图模式组件
     FSScrollPageView            *_scrollPageView;
@@ -31,4 +31,5 @@
 }
 @property(nonatomic,retain)LygDeepListView * myDeepListView;
 @property(nonatomic,assign)BOOL              isListStyle;
+@property(nonatomic,retain)FS_GZF_DeepListDAO * fs_GZF_DeepListDAO;
 @end

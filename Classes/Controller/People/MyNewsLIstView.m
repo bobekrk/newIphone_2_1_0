@@ -473,6 +473,7 @@
         xxcell.lab_NewsTitle.textColor       = (num?[UIColor lightGrayColor]:[UIColor blackColor]);
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell setNeedsDisplay];
     return cell;
 }
 -(NSObject *)tableViewCellData:(FSTableContainerView *)sender withIndexPath:(NSIndexPath *)indexPath{

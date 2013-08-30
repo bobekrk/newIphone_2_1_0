@@ -13,7 +13,7 @@
 //－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
 
 #import "FSScrollPageView.h"
-
+#import "FSTopicViewController.h"
 #define MAX_CHILD_VIEW_COUNT 3
 
 @interface FSScrollPageView(PrivateMethod)
@@ -34,27 +34,86 @@
     self = [super initWithFrame:frame];
     if (self) {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		
-		_queue = dispatch_queue_create(NULL, NULL);
+		self.clipsToBounds      = NO;
+		_queue                  = dispatch_queue_create(NULL, NULL);
 		
 		[self setBackgroundColor:[UIColor clearColor]];
 		
-        _oldSize = CGSizeZero;
-		_pageCount = 0;
-		_pageNumber = -1;
-		_bufferPageCount = MAX_CHILD_VIEW_COUNT;
-		_initialized = NO;
-		self.pagingEnabled = YES;
-		self.delegate = self;
+        _oldSize                = CGSizeZero;
+		_pageCount              = 0;
+		_pageNumber             = -1;
+		_bufferPageCount        = MAX_CHILD_VIEW_COUNT;
+		_initialized            = NO;
+		self.pagingEnabled      = YES;
+		self.delegate           = self;
 		[self setShowsVerticalScrollIndicator:NO];
 		[self setShowsHorizontalScrollIndicator:NO];
 
-		_dicPages = [[NSMutableDictionary alloc] init];
-        _leftRightSpace = 0.0f;
+		_dicPages               = [[NSMutableDictionary alloc] init];
+        _leftRightSpace         = 0.0f;
+        
+        _leftRefreshView        = [[UIView alloc]initWithFrame:CGRectMake(-36, [UIScreen mainScreen].bounds.size.height/2 -75, 50, 50)];
+        //_leftRefreshView.backgroundColor = [UIColor redColor];
+        _leftRefreshView.hidden = NO;
+        [self addSubview:_leftRefreshView];
+        [_leftRefreshView release];
+        
+        
+        
+        UIImage * image           = [UIImage  imageNamed:@"刷新.png"];
+        UIImageView * imageView   = [[UIImageView alloc]initWithFrame:CGRectMake(13, 0, image.size.width,image.size.height)];
+        imageView.tag             = -100;
+        imageView.image           = image;
+        [_leftRefreshView addSubview:imageView];
+        //imageView.center          = _leftRefreshView.center;
+        [imageView release];
+        
+        UILabel * label           = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, 50, 30)];
+        label.backgroundColor     = [UIColor clearColor];
+        label.font                = [UIFont systemFontOfSize:12];
+        label.textColor           = [UIColor lightGrayColor];
+        label.text                = @"滑动刷新"; 
+        [_leftRefreshView addSubview:label];
+        [label release];
+        
+
+       
 		
 		[pool release];
     }
     return self;
+}
+-(void)showRefreshView
+{
+
+    if (_myTimer == nil) {
+        _myTimer    = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(roll) userInfo:nil repeats:YES];
+        [_myTimer fire];
+
+    }
+}
+-(void)roll
+{
+    NSLog(@"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^%d %p",_leftRefreshView.hidden,self);
+    UIView * view = [_leftRefreshView viewWithTag:-100];
+    view.transform = CGAffineTransformRotate(view.transform, -10*3.14156/180);
+}
+-(void)dissMissRefreshView
+{
+    if (_isRefreshing == NO) {
+        _leftRefreshView.hidden = YES;
+        return;
+    }else
+    {
+        _isRefreshing = NO;
+    }
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3];
+    [_myTimer invalidate];
+    _myTimer = nil;
+    _leftRefreshView.hidden = YES;
+    _isRefreshing           = NO;
+    [UIView commitAnimations];
 }
 
 - (void)dealloc {
@@ -98,6 +157,7 @@
 		
 		self.delegate = self;
 	}
+    //_leftRefreshView.frame = CGRectMake(-100, [UIScreen mainScreen].bounds.size.height /2,50, 50);
 }
 
 - (void)setFrame:(CGRect)value {
@@ -146,6 +206,9 @@
 //	UIScrollViewDelegate
 /////////////////////////////////////////////////////////////////
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    if (self.contentOffset.x < 0) {
+//        return;
+//    }
 	if (_pageCount <= 0) {
 		return;
 	}
@@ -251,9 +314,6 @@
 				});
 			}
 		}
-#ifdef MYDEBUG
-		//NSLog(@"_dicPages:%@", _dicPages);
-#endif
 	});
 }
 
@@ -264,6 +324,37 @@
 		[view removeFromSuperview];
 		[_dicPages removeObjectForKey:numberKey];
 	}
+}
+
+#pragma mark -------
+#pragma scrollviewdelegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+
+}
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"%f",scrollView.contentOffset.x);
+    if (_isRefreshing == NO && scrollView.contentOffset.x < - 70) {
+        [self showRefreshView];
+        [self.delegateController.fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+        _isRefreshing = YES;
+    }else
+    {
+        _leftRefreshView.hidden  = NO;
+        _isRefreshing = NO;
+    }
+    NSLog(@"WillBeginDecelerating");
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (_isRefreshing == NO) {
+        _leftRefreshView.hidden  = NO;
+    }
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    _leftRefreshView.hidden  = NO;
 }
 
 @end

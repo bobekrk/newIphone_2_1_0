@@ -13,7 +13,7 @@
 //－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
 
 #import <UIKit/UIKit.h>
-
+@class FSTopicViewController;
 @protocol FSScrollPageViewPageDelegate;
 
 
@@ -41,9 +41,13 @@
 @property (nonatomic) NSInteger pageNumber;
 @property (nonatomic, readonly) NSInteger pageCount;
 @property (nonatomic) CGFloat leftRightSpace;
-
+@property (nonatomic,retain) UIView * leftRefreshView;
+@property (nonatomic,retain) NSTimer * myTimer;
+@property (nonatomic,assign) BOOL    isRefreshing;
+@property (nonatomic,assign) FSTopicViewController * delegateController;
 - (void)loadPageData;
-
+-(void)dissMissRefreshView;
+-(void)showRefreshView;
 - (NSIndexPath *)indexPathWithPageNumber:(NSInteger)pageNum;
 
 @end

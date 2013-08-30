@@ -48,6 +48,8 @@
 - (void)ownerPicture {
     //有图模式
     _scrollPageView = [[FSScrollPageView alloc] initWithFrame:CGRectMake(FSLEFT_RIGHT_SPACE, 20.0f + 44, self.view.frame.size.width - FSLEFT_RIGHT_SPACE * 2.0f, self.view.frame.size.height-40)];
+    //_scrollPageView.backgroundColor = [UIColor lightGrayColor];
+    _scrollPageView.delegateController  = self;
     _scrollPageView.parentDelegate = self;
     _scrollPageView.clipsToBounds = NO;
     _scrollPageView.leftRightSpace = 10.0f;
@@ -208,13 +210,28 @@
 - (void)dataAccessObjectSync:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status{
 	NSLog(@"%u",status);
 	if (status == FSBaseDAOCallBack_WorkingStatus) {
-		if (1) {
+		if (0) {
 			FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:CGRectZero];
 			[indicatorMessageView showIndicatorMessageViewInView:self.view withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
 			[indicatorMessageView release];
-		}
+            //UIActivityIndicatorView
+            
+		}else
+        {
+        }
 	} else {
-		[FSIndicatorMessageView dismissIndicatorMessageViewInView:self.view];
+        if (1) {
+            [FSIndicatorMessageView dismissIndicatorMessageViewInView:self.view];
+            //[_scrollPageView dissMissRefreshView];
+        }else
+        {
+            if (status == FSBaseDAOCallBack_SuccessfulStatus) {
+                
+            }
+        
+
+        }
+		
 		
 		switch (status) {
 			case FSBaseDAOCallBack_HostErrorStatus:
@@ -269,6 +286,11 @@
             }
             
         }
+    }
+    if(status == FSBaseDAOCallBack_SuccessfulStatus)
+    {
+        [_scrollPageView performSelector:@selector(dissMissRefreshView) withObject:nil afterDelay:10];
+          // [_scrollPageView dissMissRefreshView];
     }
 }
 
@@ -340,5 +362,6 @@
 - (void)releasePageViewFromScrollPageView:(FSScrollPageView *)sender withPageView:(UIView *)pageView withCurrentPageNumber:(NSInteger)currentPageNumber {
     
 }
+
 
 @end
