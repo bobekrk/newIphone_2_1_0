@@ -42,9 +42,9 @@
 @property (nonatomic, readonly) NSInteger pageCount;
 @property (nonatomic) CGFloat leftRightSpace;
 @property (nonatomic,retain) UIView * leftRefreshView;
-@property (nonatomic,retain) NSTimer * myTimer;
 @property (nonatomic,assign) BOOL    isRefreshing;
 @property (nonatomic,assign) FSTopicViewController * delegateController;
+
 - (void)loadPageData;
 -(void)dissMissRefreshView;
 -(void)showRefreshView;

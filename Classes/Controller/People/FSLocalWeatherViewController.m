@@ -107,8 +107,8 @@
 -(void)getlocationManager{
     CLLocationManager *_locManager = [[CLLocationManager alloc] init];
     [_locManager setDelegate:self];
-    [_locManager setDesiredAccuracy:kCLLocationAccuracyBest];
-    [_locManager startUpdatingLocation];
+    [_locManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+    [_locManager startMonitoringSignificantLocationChanges];
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{

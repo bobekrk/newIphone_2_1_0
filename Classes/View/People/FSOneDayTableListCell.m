@@ -131,8 +131,8 @@ static void drawRoundCornerRect(CGContextRef context,CGRect aRect,CGFloat corneR
     CGContextFillRect(context, tempRect);
 
     
-    CGContextSetRGBStrokeColor(context, 1, 0, 0, 1);
-    CGContextSetLineWidth(context, 1);
+    CGContextSetRGBStrokeColor(context, 0.5, 0, 0, 1);
+    CGContextSetLineWidth(context, 0.5);
     drawRoundCornerRect(context, tempRect, 3, 2);
     
        //执行绘画

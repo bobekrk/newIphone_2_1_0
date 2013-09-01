@@ -14,6 +14,7 @@
 
 #import "FSScrollPageView.h"
 #import "FSTopicViewController.h"
+#import "MyIndicatorView.h"
 #define MAX_CHILD_VIEW_COUNT 3
 
 @interface FSScrollPageView(PrivateMethod)
@@ -54,24 +55,24 @@
         
         _leftRefreshView        = [[UIView alloc]initWithFrame:CGRectMake(-36, [UIScreen mainScreen].bounds.size.height/2 -75, 50, 50)];
         //_leftRefreshView.backgroundColor = [UIColor redColor];
-        _leftRefreshView.hidden = NO;
+        _leftRefreshView.hidden = YES;
         [self addSubview:_leftRefreshView];
         [_leftRefreshView release];
         
         
         
-        UIImage * image           = [UIImage  imageNamed:@"刷新.png"];
-        UIImageView * imageView   = [[UIImageView alloc]initWithFrame:CGRectMake(13, 0, image.size.width,image.size.height)];
+        //UIImage * image           = [UIImage  imageNamed:@"刷新.png"];
+        UIActivityIndicatorView * imageView   = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        imageView.frame           = CGRectMake(22, 0, 0, 0);
         imageView.tag             = -100;
-        imageView.image           = image;
         [_leftRefreshView addSubview:imageView];
         //imageView.center          = _leftRefreshView.center;
         [imageView release];
         
-        UILabel * label           = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, 50, 30)];
+        UILabel * label           = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, 50, 30)];
         label.backgroundColor     = [UIColor clearColor];
         label.font                = [UIFont systemFontOfSize:12];
-        label.textColor           = [UIColor lightGrayColor];
+        label.textColor           = [UIColor whiteColor];
         label.text                = @"滑动刷新"; 
         [_leftRefreshView addSubview:label];
         [label release];
@@ -85,35 +86,15 @@
 }
 -(void)showRefreshView
 {
-
-    if (_myTimer == nil) {
-        _myTimer    = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(roll) userInfo:nil repeats:YES];
-        [_myTimer fire];
-
-    }
-}
--(void)roll
-{
-    NSLog(@"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^%d %p",_leftRefreshView.hidden,self);
-    UIView * view = [_leftRefreshView viewWithTag:-100];
-    view.transform = CGAffineTransformRotate(view.transform, -10*3.14156/180);
+    _isRefreshing = YES;
+    UIActivityIndicatorView * view = (UIActivityIndicatorView*)[_leftRefreshView viewWithTag:-100];
+    [view startAnimating];
 }
 -(void)dissMissRefreshView
 {
-    if (_isRefreshing == NO) {
-        _leftRefreshView.hidden = YES;
-        return;
-    }else
-    {
-        _isRefreshing = NO;
-    }
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    [_myTimer invalidate];
-    _myTimer = nil;
-    _leftRefreshView.hidden = YES;
-    _isRefreshing           = NO;
-    [UIView commitAnimations];
+    UIActivityIndicatorView * view = (UIActivityIndicatorView*)[_leftRefreshView viewWithTag:-100];
+    [view stopAnimating];
+    _leftRefreshView.hidden        = YES;
 }
 
 - (void)dealloc {
@@ -330,7 +311,9 @@
 #pragma scrollviewdelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-
+    if (_isRefreshing == NO) {
+        _leftRefreshView.hidden = YES;
+    }
 }
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
 {

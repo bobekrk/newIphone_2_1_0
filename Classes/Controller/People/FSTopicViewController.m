@@ -30,6 +30,7 @@
 - (id)init {
 	self = [super init];
 	if (self) {
+        
         NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceNow:0];
         _TimeInterval = [date timeIntervalSince1970];
 		[date release];
@@ -175,6 +176,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    self.view.backgroundColor = [UIColor lightGrayColor];
     if (!_fs_GZF_DeepListDAO.objectList.count > 0) {
         [_fs_GZF_DeepListDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
     }
@@ -210,17 +212,15 @@
 - (void)dataAccessObjectSync:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status{
 	NSLog(@"%u",status);
 	if (status == FSBaseDAOCallBack_WorkingStatus) {
-		if (0) {
+		if (_isListStyle) {
 			FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:CGRectZero];
 			[indicatorMessageView showIndicatorMessageViewInView:self.view withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
 			[indicatorMessageView release];
-            //UIActivityIndicatorView
-            
 		}else
         {
         }
 	} else {
-        if (1) {
+        if (_isListStyle) {
             [FSIndicatorMessageView dismissIndicatorMessageViewInView:self.view];
             //[_scrollPageView dissMissRefreshView];
         }else
@@ -289,8 +289,8 @@
     }
     if(status == FSBaseDAOCallBack_SuccessfulStatus)
     {
-        [_scrollPageView performSelector:@selector(dissMissRefreshView) withObject:nil afterDelay:10];
-          // [_scrollPageView dissMissRefreshView];
+        //[_scrollPageView performSelector:@selector(dissMissRefreshView) withObject:nil afterDelay:10];
+        [_scrollPageView dissMissRefreshView];
     }
 }
 

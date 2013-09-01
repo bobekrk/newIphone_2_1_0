@@ -21,9 +21,7 @@ typedef enum _PushViewControllerKind {
 
 @interface FSSlideViewController : FSBaseViewController <UIGestureRecognizerDelegate>{
 @private
-	UIViewController *_rootViewController;
-	UIViewController *_leftViewController;
-	UIViewController *_rightViewController;
+
 	
 	
 	PushViewControllerKind _pushViewControllerKind;

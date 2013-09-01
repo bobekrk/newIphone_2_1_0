@@ -248,7 +248,7 @@
 		}
 
 		if (animated) {
-			[_rightViewController viewWillAppear:YES];
+			[_rightViewController viewWillAppear:NO];
 			
 			[self inner_PushAnimatinWithKey:RIGHT_SLIDE_CONTROLLER_ANIMATION_KEY 
 							withLayerOffset:CGSizeMake(_controllerViewOffset - _rootViewController.view.frame.size.width, 0.0f) 
@@ -284,7 +284,7 @@
 		
 		if (animated) {
 			[self inner_PushAnimatinWithKey:RESET_RIGHT_SLIDE_CONTROLLER_ANIMATION_KEY 
-							withLayerOffset:CGSizeMake(_rootViewController.view.frame.size.width - _controllerViewOffset, 0.0f) 
+							withLayerOffset:CGSizeMake(_rootViewController.view.frame.size.width - _controllerViewOffset, 0.0f)
 						   withShadowOffset:CGSizeMake(10.0f, 0.0f)];
 		} else {
 			[UIView beginAnimations:nil context:NULL];
@@ -392,35 +392,63 @@
 #pragma mark PrivateMethod
 - (void)inner_PushAnimatinWithKey:(NSString *)animationKey withLayerOffset:(CGSize)layerOffset withShadowOffset:(CGSize)shadowOffset {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position"];	
+//	
+//	CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"position"];	
+//	_rootViewController.view.layer.shadowOpacity = 0.6;
+//	_rootViewController.view.layer.shadowOffset = shadowOffset;
+//	_rootViewController.view.layer.shadowColor = _layerShadowColor.CGColor;
+//	
+//	animation.removedOnCompletion = NO;
+//	animation.fillMode = kCAFillModeForwards; 
+//	animation.calculationMode = kCAAnimationCubicPaced;
+//	
+//	CGPoint rootPosition = _rootViewController.view.layer.position;
+//	_layerPostion = CGPointMake(rootPosition.x + layerOffset.width, rootPosition.y + layerOffset.height);
+//	CGMutablePathRef path = CGPathCreateMutable();
+//	CGPathMoveToPoint(path, NULL, rootPosition.x, rootPosition.y);
+//	CGPathAddLineToPoint(path, NULL, _layerPostion.x, _layerPostion.y);
+//	
+//	animation.delegate = self;
+//	animation.path = path;
+//	animation.duration = 0.24;
+//	
+//	//_rootViewController.view.layer.position = _layerPostion;
+//	self.currentAnimationKey = animationKey;
+//	[_rootViewController.view.layer addAnimation:animation forKey:animationKey];
+//	CGPathRelease(path);
+    
 	_rootViewController.view.layer.shadowOpacity = 0.6;
 	_rootViewController.view.layer.shadowOffset = shadowOffset;
 	_rootViewController.view.layer.shadowColor = _layerShadowColor.CGColor;
-	
-	animation.removedOnCompletion = NO;  
-	animation.fillMode = kCAFillModeForwards; 
-	animation.calculationMode = kCAAnimationCubicPaced;
-	
-	CGPoint rootPosition = _rootViewController.view.layer.position;
-	_layerPostion = CGPointMake(rootPosition.x + layerOffset.width, rootPosition.y + layerOffset.height);
-#ifdef MYDEBUG
-	NSLog(@"animation.beofre.frame:%@", NSStringFromCGRect(_rootViewController.view.frame));
-#endif
-	CGMutablePathRef path = CGPathCreateMutable();
-	CGPathMoveToPoint(path, NULL, rootPosition.x, rootPosition.y);
-	CGPathAddLineToPoint(path, NULL, _layerPostion.x, _layerPostion.y);
-	
-	animation.delegate = self;
-	animation.path = path;
-	animation.duration = 0.24;
-	
-	//_rootViewController.view.layer.position = _layerPostion;
-	self.currentAnimationKey = animationKey;
-	[_rootViewController.view.layer addAnimation:animation forKey:animationKey];
-	CGPathRelease(path);
+    
+    [UIView beginAnimations:@"xxxxx" context:nil];
+    [UIView setAnimationDuration:0.24];
+    [UIView setAnimationDelegate:self];
+    CGRect rect = self.rootViewController.view.frame;
+    
+    if (rect.origin.x > -10) {
+        rect.origin.x -= (320-44);
+    }else
+    {
+        rect.origin.x += (320-44);
+    }
+    [UIView setAnimationDidStopSelector:@selector(xxxxxStop)];
+    self.rootViewController.view.frame = rect;
+    [UIView commitAnimations];
+    
 	
 	[pool release];
+}
+-(void)xxxxxStop
+{
+    CGRect rect = self.rootViewController.view.frame;
+    
+    if (rect.origin.x > -10) {
+        _rootViewController.view.layer.shadowOpacity = 0;
+        _rootViewController.view.layer.shadowOffset = CGSizeMake(0, 0);
+        _rootViewController.view.layer.shadowColor = nil;
+    }
+
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {	
@@ -447,20 +475,10 @@
 				_pushViewControllerKind = PushViewControllerKind_Normal;
 			}
 		} 
-#ifdef MYDEBUG
-		NSLog(@"animationKeys:%@", [_rootViewController.view.layer animationKeys]);
-#endif
 		if (self.currentAnimationKey != nil) {
 			[_rootViewController.view.layer removeAnimationForKey:self.currentAnimationKey];
 		}
 	}
-
-//#ifdef MYDEBUG
-//	NSLog(@"animation.after.frame:%@", NSStringFromCGRect(_rootViewController.view.frame));
-//	NSLog(@"animationKeys:%@", [_rootViewController.view.layer animationKeys]);
-//	NSLog(@"self.subviews:%@", [self.view subviews]);
-//#endif
-
 }
 
 
@@ -540,9 +558,6 @@
 	
 	[self.view bringSubviewToFront:_innerViewController.view];
 	_innerViewController.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-#ifdef MYDEBUG
-	NSLog(@"%@:presentModalViewController:%@", self, modalViewController);
-#endif
 	[(FSSlideInnerViewController *)_innerViewController setDelegate:self selector:@selector(inner_ReleaseInnerController)];
 	[_innerViewController presentModalViewController:modalViewController animated:animated];
 }
