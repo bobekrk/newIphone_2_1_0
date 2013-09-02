@@ -98,234 +98,12 @@ typedef enum PageControllerSlide {
 #pragma mark -
 #pragma mark FSBaseContainerViewDelegate
 
--(void)fsBaseContainerViewTouchEvent:(FSBaseContainerView *)sender{
-//    if ([sender isEqual:self.view]) {
-//        switch (_fsNewsContainerView.touchEvenKind) {
-//            case TouchEvenKind_FaverateSelect:
-//                [self fav];
-//                break;
-//            case TouchEvenKind_ShareSelect:
-//                _fsNewsContainerView.userInteractionEnabled = NO;
-//                [self share];
-//                break;
-//            case TouchEvenKind_Commentsend:
-//                [self commentUpdata:_fsNewsContainerView.comment_content];
-//                break;
-//            case TouchEvenKind_ScrollUp:
-//                [self swipeUpAction];
-//                break;
-//            case TouchEvenKind_ScrollDown:
-//                [self swipeDownAction];
-//                break;
-//            case TouchEvenKind_PopCommentList:
-//                [self swipeDownAction];
-//                [self showCommentList];
-//                break;
-//            default:
-//                break;
-//        }
-//        ;
-//    }
-    
-    if ([sender isEqual:_fsShareIconContainView]) {
-        switch (_fsShareIconContainView.shareSelectEvent) {
-            case ShareSelectEvent_return:
-                break;
-            case ShareSelectEvent_sina:
-                NSLog(@"分享到新浪微博");
-            {
-                FSSinaBlogShareViewController *fsSinaBlogShareViewController = [[FSSinaBlogShareViewController alloc] init];
-                
-                fsSinaBlogShareViewController.withnavTopBar                  = YES;
-                fsSinaBlogShareViewController.title                          = @"新浪微博分享";
-                fsSinaBlogShareViewController.shareContent = [self shareContent];
-                [self presentViewController:fsSinaBlogShareViewController animated:YES completion:nil];
-                [fsSinaBlogShareViewController release];
-            }
-                
-                break;
-            case ShareSelectEvent_netease:
-                NSLog(@"分享到网易微博");
-                FSNetEaseBlogShareViewController *fsNetEaseBlogShareViewController = [[FSNetEaseBlogShareViewController alloc] init];
-                fsNetEaseBlogShareViewController.withnavTopBar                     = YES;
-                fsNetEaseBlogShareViewController.shareContent                      = [self shareContent];
-                [self presentViewController:fsNetEaseBlogShareViewController animated:YES completion:nil];
-                [fsNetEaseBlogShareViewController release];
-                //}
-                
-                break;
-            case ShareSelectEvent_weixin:
-              //  [self sendShareWeiXin:0];
-                break;
-            case ShareSelectEvent_friend:
-            {
-                //[self sendShareWeiXin:1];
-            }
-                
-                break;
-            case ShareSelectEvent_peopleBlog:
-                NSLog(@"分享到人民微博");
-                FSPeopleBlogShareViewController *fsPeopleBlogShareViewController = [[FSPeopleBlogShareViewController alloc] init];
-                fsPeopleBlogShareViewController.withnavTopBar                    = YES;
-                fsPeopleBlogShareViewController.shareContent = [self shareContent];
-                //[self.navigationController pushViewController:fsPeopleBlogShareViewController animated:YES];
-                [self presentViewController:fsPeopleBlogShareViewController animated:YES completion:nil];
-                //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
-                [fsPeopleBlogShareViewController release];
-                //}
-                
-                break;
-            case ShareSelectEvent_mail:
-                NSLog(@"邮件分享");
-//                if ([MFMailComposeViewController canSendMail]) {
-//                    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
-//                    picker.mailComposeDelegate = self;
-//                    [picker setSubject:_fs_GZF_NewsContainerDAO.cobj.title];
-//                    
-//                    NSArray *toRecipients = [NSArray arrayWithObject:@"[email][/email]"];
-//                    [picker setToRecipients:toRecipients];
-//                    NSString *emailBody = [self shareContent];
-//                    [picker setMessageBody:emailBody isHTML:NO];
-//                    [self presentModalViewController:picker animated:YES];
-//                    [picker release];
-//                }
-//                else{
-//                    FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
-//                    informationMessageView.parentDelegate = self;
-//                    [informationMessageView showInformationMessageViewInView:self.view
-//                                                                 withMessage:@"请先设置您的邮箱再分享，谢谢！"
-//                                                            withDelaySeconds:2.0f
-//                                                            withPositionKind:PositionKind_Vertical_Horizontal_Center
-//                                                                  withOffset:0.0f];
-//                    
-//                    [self performSelector:@selector(shearWithMail) withObject:nil afterDelay:1.5];
-//                }
-                
-                break;
-            case ShareSelectEvent_message:
-                NSLog(@"短信分享");
-                [NTESNBSMSManager sharedSMSManager].smsBody = [self shareContent];
-                [NTESNBSMSManager sharedSMSManager].pushNavigation = self.navigationController;
-                [[NTESNBSMSManager sharedSMSManager] pushSMSComposer];
-                break;
-            case ShareSelectEvent_tencent:
-            {
-                LygTencentShareViewController *fsSinaBlogShareViewController = [[LygTencentShareViewController alloc] init];
-                fsSinaBlogShareViewController.withnavTopBar                  = YES;
-                fsSinaBlogShareViewController.title                          = @"腾讯微博分享";
-                fsSinaBlogShareViewController.shareContent                   = [self shareContent];
-                [self presentViewController:fsSinaBlogShareViewController animated:YES completion:nil];
-                [fsSinaBlogShareViewController release];
-            }
-                break;
-            default:
-                break;
-        }
-        NSLog(@"。。。。。。。。。");
-        //_fsNewsContainerView.userInteractionEnabled = YES;
-        _fsShareIconContainView.isShow = NO;
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.6];
-        _fsShareIconContainView.frame = CGRectMake(0, self.view.frame.size.height+44, self.view.frame.size.width, [_fsShareIconContainView getHeight]);
-        [UIView commitAnimations];
-        
-    }
-}
-
--(NSString *)shareContent{
-    NSString *newsContent;
-    NSString *resultStr;
-    
-    
-//    if (self.newsSourceKind == NewsSourceKind_ShiKeNews && _FCObj==nil) {
-//        
-//        if (self.obj!=nil) {
-//            if ([self.obj.news_abstract length]>90) {
-//                
-//                newsContent = [self.obj.news_abstract substringToIndex:90];
-//                newsContent = [newsContent stringByReplacingOccurrencesOfString:@"　　" withString:@""];
-//                newsContent = [newsContent stringByReplacingOccurrencesOfString:@" " withString:@""];
-//                newsContent = [newsContent stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-//                newsContent = [newsContent stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-//                newsContent = [NSString stringWithFormat:@"【%@】%@",_fs_GZF_NewsContainerDAO.cobj.title,newsContent];
-//            }
-//            else{
-//                newsContent = [NSString stringWithFormat:@"【%@】%@",_fs_GZF_NewsContainerDAO.cobj.title,self.obj.news_abstract];
-//            }
-//        }
-//        
-//        if (self.FavObj!=nil) {
-//            if ([self.FavObj.news_abstract length]>90) {
-//                newsContent = [self.FavObj.news_abstract substringToIndex:90];
-//                newsContent = [newsContent stringByReplacingOccurrencesOfString:@"　　" withString:@""];
-//                newsContent = [newsContent stringByReplacingOccurrencesOfString:@" " withString:@""];
-//                newsContent = [newsContent stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-//                newsContent = [newsContent stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-//                newsContent = [NSString stringWithFormat:@"【%@】%@",_fs_GZF_NewsContainerDAO.cobj.title,newsContent];
-//            }
-//            else{
-//                newsContent = [NSString stringWithFormat:@"【%@】%@",_fs_GZF_NewsContainerDAO.cobj.title,self.FavObj.news_abstract];
-//            }
-//        }
-//    }
-//    else{
-//        if ([_fs_GZF_NewsContainerDAO.cobj.content length]>90) {
-//            
-//            newsContent = [_fs_GZF_NewsContainerDAO.cobj.content substringToIndex:90];
-//            NSLog(@"newsContent:%@",newsContent);
-//            newsContent = [newsContent stringByReplacingOccurrencesOfString:@"　　" withString:@""];
-//            newsContent = [newsContent stringByReplacingOccurrencesOfString:@" " withString:@""];
-//            newsContent = [newsContent stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-//            newsContent = [newsContent stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-//            newsContent = [NSString stringWithFormat:@"【%@】%@",_fs_GZF_NewsContainerDAO.cobj.title,newsContent];
-//        }
-//        else{
-//            newsContent = [NSString stringWithFormat:@"【%@】%@",_fs_GZF_NewsContainerDAO.cobj.title,_fs_GZF_NewsContainerDAO.cobj.content];
-//        }
-//    }
-//    
-//    
-//    if ([_fs_GZF_NewsContainerDAO.cobj.shortUrl length]>0) {
-//        resultStr = [NSString stringWithFormat:@"%@-->详见：%@",newsContent,_fs_GZF_NewsContainerDAO.cobj.shortUrl];
-//    }
-//    else{
-//        resultStr = [NSString stringWithFormat:@"%@",newsContent];
-//    }
-    
-    return resultStr;
-}
-
--(void)onButtonClick:(int)index
-{
-    if (index == 100) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-
-}
 
 - (CGFloat)pageControlHeight {
     return FSPAGECONTROL_VIEW_HEIGHT;
 }
 
 - (void)loadChildView {
-    
-    
-//    UIButton *returnBT = [[UIButton alloc] init];
-//    [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
-//    //[returnBT setTitle:NSLocalizedString(@"返回", nil) forState:UIControlStateNormal];
-//    returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
-//    [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
-//    [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
-//    returnBT.frame = CGRectMake(0, 0, 55, 30);
-//    
-//    //self.navigationItem.leftBarButtonItem
-//    
-//    
-//    UIBarButtonItem *returnButton = [[UIBarButtonItem alloc] initWithCustomView:returnBT];
-//    self.navigationItem.leftBarButtonItem = returnButton;
-//    [returnButton release];
-//    [returnBT release];
-    
     _pageControlView = [[FSDeepPageControllView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - FSPAGECONTROL_VIEW_HEIGHT, self.view.frame.size.width, FSPAGECONTROL_VIEW_HEIGHT)];
     _pageControlView.delegate = self;
     //_pageControlView.backgroundColor = [UIColor greenColor];
@@ -358,7 +136,12 @@ typedef enum PageControllerSlide {
     
     _refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshCurrentPage:)];
     _refreshButton.tintColor = [UIColor blackColor];
+    
+    
+    
+    
 }
+
 
 -(void)returnBack:(id)sender{
     
@@ -519,14 +302,8 @@ typedef enum PageControllerSlide {
         if (pageIdx == _pageNumber) {
             continue;
         }
-        
-        //[self performSelector:@selector(afterDelayShowPagecontrollerWithPageNum:) withObject:[NSNumber numberWithInteger:pageIdx] afterDelay:0.5f];
         [self showPageControllerWithPageNum:pageIdx];
     }
-    
-    //_svContainer.contentSize = CGSizeMake(_pageCount * _svContainer.frame.size.width, _svContainer.frame.size.height);
-//    
-//    FSLog(@"scrollView.subviews:%@", [_svContainer subviews]);
     FSLog(@"controllers:%@", _buffers);  
 }
 
@@ -538,7 +315,6 @@ typedef enum PageControllerSlide {
 - (void)showPageControllerWithPageNum:(NSInteger)pageNum {
     NSNumber *pageKey = [[NSNumber alloc] initWithInt:pageNum];
     UIViewController *viewCtrl = [_buffers objectForKey:pageKey];
-    //NSLog(@"showPageControllerWithPageNum:%d",pageNum);
     if (!viewCtrl) {
         NSLog(@"viewCtrl:%@",viewCtrl);
         viewCtrl = [[[self pageControllerClassWithPageNum:pageNum] alloc] init];
@@ -558,12 +334,6 @@ typedef enum PageControllerSlide {
     }
     
     if (pageNum == _pageNumber) {
-//        if ([viewCtrl isKindOfClass:[FSDeepPictureVeiwController class]]) {
-//            _pageControlView.isBlackGround = YES;
-//        }
-//        else{
-//            _pageControlView.isBlackGround = NO;
-//        }
         _pageControlView.pageIndex = _pageNumber;
         [self focusViewController:viewCtrl withPageNum:_pageNumber];
     }

@@ -16,14 +16,11 @@
 
 @interface FSPageControlViewController : FSBaseDataViewController <FSDeepPageControllViewDelegate,UIScrollViewDelegate> {
 @private
-    //FSPageControlView *_pageControlView;
     FSDeepPageControllView *_pageControlView;
     UIScrollView *_svContainer;
     
     NSMutableDictionary *_buffers;
     NSMutableDictionary *_indexPaths;
-    FSShareIconContainView         *_fsShareIconContainView;
-
     NSInteger _pageCount;
     NSInteger _pageNumber;
     UIBarButtonItem *_refreshButton;

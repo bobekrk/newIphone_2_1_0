@@ -51,7 +51,7 @@
         [self addSubview:_lab_pageIndex];
         [self addSubview:_lab_pageCount];
         
-        float xxxxx       = ISIPHONE5?460:548;
+        //float xxxxx       = ISIPHONE5?460:548;
         UIImage *image    = [UIImage imageNamed:@"goBack.png"];
         UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(0, self.bounds.size.height - image.size.height * 0.8, image.size.width * 0.8, image.size.height * 0.8)];
         [button setBackgroundImage:image forState:UIControlStateNormal];
@@ -71,7 +71,7 @@
         [button2 release];
         
         
-        _gradientLayer = [[CAGradientLayer alloc]init];
+        _gradientLayer        = [[CAGradientLayer alloc]init];
         _gradientLayer.colors = [NSArray arrayWithObjects:(id)[UIColor colorWithRed:1 green:1 blue:1 alpha:0].CGColor,(id)[UIColor colorWithRed:1 green:1 blue:1 alpha:1].CGColor,nil];
         [self.layer addSublayer:_gradientLayer];
         
