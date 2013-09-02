@@ -10,7 +10,7 @@
 #import "FSAsyncImageView.h"
 #import "FSCommonFunction.h"
 #import "FSFocusTopObject.h"
-
+#import "FSLoadingImageObject.h"
 @implementation FSImagesScrInRowView
 
 @synthesize imageSize = _imageSize;
@@ -69,7 +69,6 @@
     _fs_GZF_PageControllView.FocusColor = COLOR_RED;
     _fs_GZF_PageControllView.NonFocusColor = COLOR_NEWSLIST_DESCRIPTION;
     [self addSubview:_fs_GZF_PageControllView];
-    //[self addSubview:_pageControl];
 }
 
 -(void)doSomethingAtLayoutSubviews{
@@ -84,15 +83,18 @@
     }
     CGPoint p = CGPointMake(0, 0);
     [_scrollView setContentOffset:p animated:NO];
-    //NSLog(@"_imageSize.height:%f",size.width);
-    for (FSFocusTopObject *o in _objectList) {
+    for (id  o in _objectList) {
+        NSString * usrlString;
+        if ([o  isKindOfClass:[FSFocusTopObject class]]) {
+            usrlString = ((FSFocusTopObject*)o).picture;
+        }else
+        {
+            usrlString = ((FSLoadingImageObject*)o).picUrl;
+        }
         FSAsyncImageView *imageView = [[FSAsyncImageView alloc] initWithFrame:CGRectMake(size.width*i + _spacing, _spacing, _imageSize.width, _imageSize.height)];
         
-        NSString *loaclFile = getFileNameWithURLString(o.picture, getCachesPath());
-//#ifdef MYDEBUG
-//        NSLog(@"size.width*i + _spacing:%f",size.width*i + _spacing);
-//#endif
-        imageView.urlString = o.picture;
+        NSString *loaclFile = getFileNameWithURLString(usrlString, getCachesPath());
+        imageView.urlString = usrlString;
         imageView.localStoreFileName = loaclFile;
         imageView.imageCuttingKind = ImageCuttingKind_None;
         imageView.tag = i;

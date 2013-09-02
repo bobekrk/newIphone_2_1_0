@@ -14,8 +14,10 @@
 
 @class FSLoadingImageObject;
 
-@interface FS_GZF_ForLoadingImageDAO : FS_GZF_BaseGETXMLDataListDAO{
+@interface LygAdsDao : FS_GZF_BaseGETXMLDataListDAO{
 @protected
     FSLoadingImageObject *_obj;
+    
 }
+@property (nonatomic,assign)int placeID;
 @end

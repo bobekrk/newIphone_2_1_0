@@ -9,14 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "FSShareIconContainView.h"
 #import <MessageUI/MessageUI.h>
-@class FS_GZF_ForLoadingImageDAO;
+#import "LygAdsDao.h"
+@class LygAdsDao;
 
 @interface FSLoadingImageView : UIView<MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate,MFMailComposeViewControllerDelegate>{
 @protected
     id                         _parentDelegate;
     NSTimer                   *_timer;
     BOOL                       firstTime;
-    FS_GZF_ForLoadingImageDAO *_fs_GZF_ForLoadingImageDAO;
+    LygAdsDao                 *_fs_GZF_ForLoadingImageDAO;
     
     BOOL                       _switch;
     FSShareIconContainView    *_fsShareIconContainView;

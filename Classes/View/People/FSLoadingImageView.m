@@ -9,7 +9,6 @@
 #import "FSLoadingImageView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "FSAsyncImageView.h"
-#import "FS_GZF_ForLoadingImageDAO.h"
 #import "FSLoadingImageObject.h"
 #import "FSShareIconContainView.h"
 #import "FSNewsContainerViewController.h"
@@ -22,6 +21,7 @@
 #import "NTESNBSMSManager.h"
 #import <MessageUI/MessageUI.h>
 #import "PeopleNewsReaderPhoneAppDelegate.h"
+#import "LygAdsDao.h"
 //#import "MFMailComposeViewController.h"
 #define FSLOADING_IMAGEVIEW_ANIMATION_KEY @"FSLOADING_IMAGEVIEW_ANIMATION_KEY_STRING"
 
@@ -77,8 +77,8 @@
     NSLog(@"xxxxxxxxxx");
 }
 -(NSString *)shareContent{
-    NSString *newsContent;
-    NSString *resultStr;
+//    NSString *newsContent;
+//    NSString *resultStr;
 
     FSLoadingImageObject * object = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
     NSMutableString * string = [[NSMutableString alloc]init];
@@ -458,7 +458,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LoadingXMLComplete:) name:LOADINGIMAGE_LOADING_XML_COMPELECT object:nil];
     
-    _fs_GZF_ForLoadingImageDAO = [[FS_GZF_ForLoadingImageDAO alloc] init];
+    _fs_GZF_ForLoadingImageDAO         = [[LygAdsDao alloc] init];
+    _fs_GZF_ForLoadingImageDAO.placeID = 44;
     
     UIImageView *defaultImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     //NSLog(@"11self.frame h:%f",[UIScreen mainScreen].bounds.size.height);

@@ -6,14 +6,14 @@
 //
 //
 
-#import "FS_GZF_ForLoadingImageDAO.h"
+#import "LygAdsDao.h"
 #import "FSLoadingImageObject.h"
 
 #define DEEPPICTURE_IMAGESIZE_4 @"640/940"
 #define DEEPPICTURE_IMAGESIZE_5 @"640/1136"
 
 
-#define FSLOADING_IMAGEVIEW_URL @"http://mobile.app.people.com.cn:81/paper_ipad/paper.php?act=ad&type=list&appid=6&place_id=44&resolution="
+#define FSLOADING_IMAGEVIEW_URL @"http://mobile.app.people.com.cn:81/paper_ipad/paper.php?act=ad&type=list&appid=6&place_id=%d&resolution=%@"
 
 
 
@@ -30,7 +30,7 @@
 #define Loading_flag         @"FLAG"
 
 
-@implementation FS_GZF_ForLoadingImageDAO
+@implementation LygAdsDao
 
 
 - (id)init {
@@ -64,7 +64,7 @@
 
 
 -(NSString *)readDataURLStringFromRemoteHostWithGETDataKind:(GET_DataKind)getDataKind{
-    return [FSLOADING_IMAGEVIEW_URL stringByAppendingString:(ISIPHONE5?@"640x1136&iswp=0":@"640x960&iswp=0")];
+    return [NSString stringWithFormat:FSLOADING_IMAGEVIEW_URL,self.placeID,(ISIPHONE5?@"640x1136&iswp=0":@"640x960&iswp=0")];
 }
 
 

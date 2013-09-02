@@ -212,7 +212,7 @@
 		04D6CC4616A797E100C72C30 /* FSNewsCommentListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D6CC4516A797E100C72C30 /* FSNewsCommentListView.m */; };
 		04D6CC4916A7BFEE00C72C30 /* content_comment.css in Resources */ = {isa = PBXBuildFile; fileRef = 04D6CC4716A7BFEE00C72C30 /* content_comment.css */; };
 		04D6CC4A16A7BFEE00C72C30 /* content_template_comment.html in Resources */ = {isa = PBXBuildFile; fileRef = 04D6CC4816A7BFEE00C72C30 /* content_template_comment.html */; };
-		04D738A316E575B700399C95 /* FS_GZF_ForLoadingImageDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D738A216E575B700399C95 /* FS_GZF_ForLoadingImageDAO.m */; };
+		04D738A316E575B700399C95 /* LygAdsDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D738A216E575B700399C95 /* LygAdsDao.m */; };
 		04D75AB416F9A9B000786920 /* chunbai.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D75AB316F9A9B000786920 /* chunbai.png */; };
 		04D75AB716F9ACA000786920 /* FSRecommendSectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D75AB616F9AC9F00786920 /* FSRecommendSectView.m */; };
 		04D7C2A6164A2C8800820010 /* FSChannelSelectedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D7C2A3164A2C8800820010 /* FSChannelSelectedObject.m */; };
@@ -1032,8 +1032,8 @@
 		04D6CC4516A797E100C72C30 /* FSNewsCommentListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSNewsCommentListView.m; sourceTree = "<group>"; };
 		04D6CC4716A7BFEE00C72C30 /* content_comment.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = content_comment.css; sourceTree = "<group>"; };
 		04D6CC4816A7BFEE00C72C30 /* content_template_comment.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = content_template_comment.html; sourceTree = "<group>"; };
-		04D738A116E575B700399C95 /* FS_GZF_ForLoadingImageDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FS_GZF_ForLoadingImageDAO.h; sourceTree = "<group>"; };
-		04D738A216E575B700399C95 /* FS_GZF_ForLoadingImageDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FS_GZF_ForLoadingImageDAO.m; sourceTree = "<group>"; };
+		04D738A116E575B700399C95 /* LygAdsDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LygAdsDao.h; sourceTree = "<group>"; };
+		04D738A216E575B700399C95 /* LygAdsDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LygAdsDao.m; sourceTree = "<group>"; };
 		04D75AB316F9A9B000786920 /* chunbai.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chunbai.png; sourceTree = "<group>"; };
 		04D75AB516F9AC9D00786920 /* FSRecommendSectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSRecommendSectView.h; sourceTree = "<group>"; };
 		04D75AB616F9AC9F00786920 /* FSRecommendSectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSRecommendSectView.m; sourceTree = "<group>"; };
@@ -2363,8 +2363,8 @@
 				27B5AA2716425F9C00F961C9 /* FS_GZF_CommentListDAO.m */,
 				270791B9163E14FE002E7D54 /* FS_GZF_ChannelListDAO.h */,
 				270791BA163E14FE002E7D54 /* FS_GZF_ChannelListDAO.m */,
-				04D738A116E575B700399C95 /* FS_GZF_ForLoadingImageDAO.h */,
-				04D738A216E575B700399C95 /* FS_GZF_ForLoadingImageDAO.m */,
+				04D738A116E575B700399C95 /* LygAdsDao.h */,
+				04D738A216E575B700399C95 /* LygAdsDao.m */,
 				27818A7D1636994600C9FAD2 /* FS_GZF_ForOnedayNewsFocusTopDAO.h */,
 				27818A7E1636994600C9FAD2 /* FS_GZF_ForOnedayNewsFocusTopDAO.m */,
 				27818A7F1636994600C9FAD2 /* FS_GZF_ForOneDayNewsListDAO.h */,
@@ -4292,7 +4292,7 @@
 				04BE2A6516BF613E0093A513 /* FSLocalNewsListCell.m in Sources */,
 				0459FB6316C0EE4800097C2D /* FS_GZF_DeepTextWebView.m in Sources */,
 				04DD970416E42C9F003D8123 /* FS_GZF_StatisticePOSTXMLDAO.m in Sources */,
-				04D738A316E575B700399C95 /* FS_GZF_ForLoadingImageDAO.m in Sources */,
+				04D738A316E575B700399C95 /* LygAdsDao.m in Sources */,
 				04DF505216F6BBE300BA3008 /* FSLocalWeatherMessageView.m in Sources */,
 				04DF505516F6BD6F00BA3008 /* FSLocalNextDayWeatherMessageView.m in Sources */,
 				04DF505816F6DEAE00BA3008 /* FSLocalWeatherViewController.m in Sources */,
