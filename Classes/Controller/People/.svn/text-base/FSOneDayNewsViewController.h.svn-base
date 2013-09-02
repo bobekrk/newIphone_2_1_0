@@ -15,17 +15,16 @@
 
 @interface FSOneDayNewsViewController : FSBasePeopleViewController <FSTableContainerViewDelegate,UIGestureRecognizerDelegate>{
 @protected
-    FSOneDayNewsListContainerView *_fsOneDayNewsListContainerView;
-	
-	FS_GZF_ForOneDayNewsListDAO *_newsListData;
-    FS_GZF_ForOnedayNewsFocusTopDAO *_fsForOneDayNewsListFocusTopData;
+    FSOneDayNewsListContainerView     *_fsOneDayNewsListContainerView;
+	FS_GZF_ForOneDayNewsListDAO       *_newsListData;
+    FS_GZF_ForOnedayNewsFocusTopDAO   *_fsForOneDayNewsListFocusTopData;
     
-    FS_GZF_GetWeatherMessageDAO *_fs_GZF_GetWeatherMessageDAO;
+    FS_GZF_GetWeatherMessageDAO       *_fs_GZF_GetWeatherMessageDAO;
     
-    NSMutableArray *_sectionMessage;
+    NSMutableArray                    *_sectionMessage;
     
-    NSDate *_reFreshDate;
-    NSTimeInterval _TimeInterval;
+    NSDate                            *_reFreshDate;
+    NSTimeInterval                     _TimeInterval;
 }
 
 -(void)reSetSectionMessage;

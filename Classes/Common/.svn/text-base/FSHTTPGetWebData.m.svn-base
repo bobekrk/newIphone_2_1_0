@@ -58,7 +58,6 @@
 	NSURL *url = [[NSURL alloc] initWithString:urlString];
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
 	[request setTimeoutInterval:15];
-	
 	NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 	self.URLConnection = connection;
 	

@@ -31,6 +31,8 @@
     //NSLog(@"view dealloc:%@",self);
     [_data release];
     [_objectList release];
+    _objectList = nil;
+    _parentDelegate = nil;
     [self doSomethingAtDealloc];
     [super dealloc];
 }

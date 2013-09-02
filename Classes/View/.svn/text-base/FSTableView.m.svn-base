@@ -301,10 +301,7 @@
 	
 	if (_bottomView != nil && !_bottomView.hidden) {
         //NSLog(@"获取更多数据吧.....:%f",scrollView.contentOffset.y);
-		if (scrollView.contentOffset.y + scrollView.frame.size.height >= _bottomView.frame.origin.y + _bottomView.frame.size.height && _bottomView.dragState == dsPulling) {
-#ifdef MYDEBUG
-			//NSLog(@"获取更多数据吧.....");
-#endif		
+		if (scrollView.contentOffset.y + scrollView.frame.size.height >= _bottomView.frame.origin.y + _bottomView.frame.size.height && _bottomView.dragState == dsPulling) {	
 			_bottomView.dragState = dsLoadding;
 			scrollView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, _bottomView.frame.size.height, 0.0f);
 			
