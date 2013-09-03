@@ -118,13 +118,18 @@
         }
     }
     _lygAdsDao.placeID = 44;
-   [_fs_GZF_ForNewsListDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
-   [_fs_GZF_ForOnedayNewsFocusTopDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
-   [_lygAdsDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+    //dispatch_queue_t queue = dispatch_get_global_queue(0, 0);
+//    dispatch_queue_t queue = dispatch_get_main_queue();
+//    dispatch_async(queue, ^{
+//        [_fs_GZF_ForNewsListDAO HTTPGetDataWithKind:GET_DataKind_OnlyBuffer];
+//        [_fs_GZF_ForOnedayNewsFocusTopDAO HTTPGetDataWithKind:GET_DataKind_OnlyBuffer];
+//        [_lygAdsDao HTTPGetDataWithKind:GET_DataKind_OnlyBuffer];
+//    });
 }
 
 -(void)initDataModel{
     NSLog(@"initDataModelinitDataModel");
+    [self refreshDataSource];
     _fs_GZF_ForOnedayNewsFocusTopDAO = [[FS_GZF_ForOnedayNewsFocusTopDAO alloc] init];
     _fs_GZF_ForOnedayNewsFocusTopDAO.group          = PUTONG_NEWS_LIST_KIND;
     _fs_GZF_ForOnedayNewsFocusTopDAO.type           = @"news";
@@ -244,6 +249,7 @@
     
     
 }
+
 
 
 

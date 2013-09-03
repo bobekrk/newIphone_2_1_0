@@ -15,6 +15,7 @@
     NSMutableArray * _views;
     int _lastPoint;
     int _count;
+    int _currentIndex;
 }
 -(UIView *)dequeueResuableCellWithIdentifier:(NSString *)iDentifier;
 - (id)initWithFrame:(CGRect)frame adMyDelegate:(id)mydelegate;

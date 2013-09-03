@@ -19,7 +19,8 @@ typedef enum _GET_DataKind {
 	GET_DataKind_Refresh,	//第一次从头取数据
 	GET_DataKind_Next,		//取一下阶段数据
     GET_DataKind_Unlimited,		//取一下阶段数据
-    GET_DataKind_ForceRefresh	//强制刷新
+    GET_DataKind_ForceRefresh,	//强制刷新
+    GET_DataKind_OnlyBuffer
 } GET_DataKind;
 
 typedef enum _Buffer_DataKind {

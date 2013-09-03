@@ -56,9 +56,21 @@
 
 #pragma mark -
 #pragma mark Application lifecycle
+/*typedef NS_ENUM(NSInteger, UIStatusBarStyle) {
+    UIStatusBarStyleDefault,
+    UIStatusBarStyleBlackTranslucent,
+    UIStatusBarStyleBlackOpaque
+};
 
+typedef NS_ENUM(NSInteger, UIStatusBarAnimation) {
+    UIStatusBarAnimationNone,
+#if __IPHONE_3_2 <= __IPHONE_OS_VERSION_MAX_ALLOWED
+    UIStatusBarAnimationFade,
+    UIStatusBarAnimationSlide,
+#endif
+};*/
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackTranslucent;
     _fsNewsContainerViewController_forPush = nil;
     //推送
     //如果在设置中开启 才注册推送
@@ -449,13 +461,6 @@
     //loadingView.parentDelegate = self;
     [self.window addSubview:loadingView];
     [loadingView release];
-//    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 320)];
-//    view.backgroundColor = [UIColor redColor];
-//    [self.window addSubview:view];
-//    UIButton * button = [UIButton buttonWithType: UIButtonTypeRoundedRect];
-//    button.frame = CGRectMake(0, 400, 100, 100);
-//    [loadingView addSubview:button];
-    
 }
 
 
@@ -518,10 +523,8 @@
 	
 
 	
-	//ROOT
 	_slideViewController.rootViewController = _rootViewController;
     self.window.rootViewController = navi;
-    //[_rootViewController select:0];
     [navi release];
     [self DidRecivePushMessage:pushInof];
     

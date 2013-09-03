@@ -132,9 +132,17 @@
 	
 	return result;
 }
-
+-(void)xxxxx
+{
+    [self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_SuccessfulStatus];
+}
+-(void)ooooo
+{
+    [self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_BufferSuccessfulStatus];
+}
 
 - (void)HTTPGetDataWithKind:(GET_DataKind)httpGetDataKind {
+    printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>%lu\n",time(NULL));
 	NSLog(@"%d  %@",httpGetDataKind,self.managedObjectContext);
     if (httpGetDataKind!=GET_DataKind_Next && self.managedObjectContext == nil) { //by zhiliang check self.managedobjectcontext not nil  
         NSLog(@"self.ManagedObjectContext:%@",self.managedObjectContext);
@@ -143,8 +151,8 @@
     
     
     _isRefreshToDeleteOldData = NO;
-    _isRefreshNewDataSuccess = NO;
-    _currentGetDataKind = httpGetDataKind;
+    _isRefreshNewDataSuccess  = NO;
+    _currentGetDataKind       = httpGetDataKind;
     
     [self getTimestampWithURL:TOPICLIST_TIMESTAMP_URL flag:[self timestampFlag] networkRequestInterval:60*30];
     
@@ -161,12 +169,14 @@
             //NSLog(@"读取缓存数据1");
             [self readDataFromBufferWithQueryDataKind:dataKind];
             //NSLog(@"读取缓存数据11");
-            [self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_SuccessfulStatus];
+            //[self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_SuccessfulStatus];
+            [self performSelectorOnMainThread:@selector(xxxxx) withObject:nil waitUntilDone:YES];
             //NSLog(@"读取缓存数据1111");
             if (!checkNetworkIsValid()) {
                 [self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_NetworkErrorStatus];
                 return;
             }
+            printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%lu\n",time(NULL));
             return;
         }
         
@@ -174,7 +184,9 @@
             
             //NSLog(@"读取缓存数据2");
             [self readDataFromBufferWithQueryDataKind:dataKind];
-            [self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_SuccessfulStatus];
+            [self performSelectorOnMainThread:@selector(xxxxx) withObject:nil waitUntilDone:YES];
+            //[self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_SuccessfulStatus];
+            printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%lu\n",time(NULL));
             return;
         }
         //NSLog(@"读取缓存数据3");
@@ -182,12 +194,16 @@
         if (httpGetDataKind != GET_DataKind_Next) {
             _isRefreshToDeleteOldData = YES;
             [self readDataFromBufferWithQueryDataKind:dataKind];
-            [self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_BufferSuccessfulStatus];
+            //[self performSelectorOnMainThread:@selector(xxxxx) withObject:nil waitUntilDone:nil];
+            [self performSelectorOnMainThread:@selector(ooooo) withObject:nil waitUntilDone:YES];
+            //[self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_BufferSuccessfulStatus];
             
         }
     }
-   
-    //Timestamp_DataKind tdkind = [self getTimestampWithURL:TOPICLIST_TIMESTAMP_URL flag:[self timestampFlag] networkRequestInterval:60*30];
+    if (httpGetDataKind == GET_DataKind_OnlyBuffer) {
+        return;
+    }
+    Timestamp_DataKind tdkind = [self getTimestampWithURL:TOPICLIST_TIMESTAMP_URL flag:[self timestampFlag] networkRequestInterval:60*30];
     
     
     if (httpGetDataKind == GET_DataKind_ForceRefresh) {
@@ -205,13 +221,13 @@
          */
     }
     
-    if (!checkNetworkIsValid()) {
+    /*if (!checkNetworkIsValid()) {
         //
         _isRefreshToDeleteOldData = NO;
         [self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_NetworkErrorStatus];
         [self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_SuccessfulStatus];
         return;
-    }
+    }*/
    
 	dispatch_queue_t queue = dispatch_queue_create(NULL, NULL);
 

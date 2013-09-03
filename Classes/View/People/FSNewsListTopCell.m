@@ -176,7 +176,6 @@
                 
                 NSDate *date = [NSDate dateWithTimeIntervalSince1970:[oo.adCtime doubleValue]];
                 _lab_time.text = dateToString_YMD(date);
-
             }
 
             

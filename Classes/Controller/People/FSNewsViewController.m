@@ -91,7 +91,7 @@
     
     
     
-    [self addNewsScrollView2];
+    [self addNewsScrollView];
     UIView * lineView           = [[UIView alloc]initWithFrame:CGRectMake(0, 42, 320, 2)];
     lineView.backgroundColor    = [UIColor redColor];
     [self.view addSubview:lineView];
@@ -118,6 +118,9 @@
     if (!view) {
         view = [[MyNewsLIstView alloc]initWithChanel:_fs_GZF_ChannelListDAO currentIndex:index parentViewController:self];
         view.parentDelegate = view;
+    }else
+    {
+        //view.currentIndex   = index;
     }
     return view;
 }
@@ -141,6 +144,7 @@
     for (int i = 0; i< _fs_GZF_ChannelListDAO.objectList.count; i++) {
         MyNewsLIstView * view1 = [[MyNewsLIstView alloc]initWithChanel:_fs_GZF_ChannelListDAO currentIndex:i parentViewController:self];
         view1.frame            = CGRectMake(i*320, 0, 320, xx);
+        //view1.tag              = 100 + i;
         view1.parentDelegate   = view1;
         [scroview addSubview:view1];
         [view1 release];
@@ -163,8 +167,9 @@
 }
 -(void)changeButtonColor:(int)index
 {
-    [UIView beginAnimations:nil context:nil];
+    [UIView beginAnimations:@"sdfsadfsafsa" context:nil];
     [UIView setAnimationDuration:0.1];
+     [UIView commitAnimations];
     if (index == _currentIndex) {
         return;
     }
@@ -177,7 +182,7 @@
 
     _topRedImageView.frame      = CGRectMake(56*index, 40, 56, 4);
     _currentIndex               = index;
-    [UIView commitAnimations];
+   
 }
 
 -(void)viewDidLoad
@@ -258,7 +263,9 @@
     {
         _myScroview.contentOffset = CGPointMake(index, 0);
     }
-    
+    //MyNewsLIstView * view2 =  (MyNewsLIstView*)[scrollView viewWithTag:(100+x)];
+    //[view2 refreshDataSource];
+
 }
 
 #pragma mark - 

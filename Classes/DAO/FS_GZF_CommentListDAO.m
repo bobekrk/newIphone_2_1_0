@@ -148,8 +148,15 @@
 		[content release];
 	} else if ([_currentElementName isEqualToString:comment_nickname]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
-		_obj.nickname = trimString(content);
-		[content release];
+        if ([content hasPrefix:@"iphone"]) {
+            [content release];
+            _obj.nickname = @"人民网网友";
+        }else
+        {
+            _obj.nickname = trimString(content);
+            [content release];
+        }
+		
 	}
     else if ([_currentElementName isEqualToString:comment_timestamp]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];

@@ -43,9 +43,7 @@
 	
 //	[_fsTabBarViewController release];
 //	[_fsSlideViewController release];
-#ifdef MYDEBUG
-	NSLog(@"%@.dealloc", self);
-#endif
+
 	[super dealloc];
 }
 
@@ -66,6 +64,9 @@
         _myNaviBar.userInteractionEnabled = YES;
         UINavigationItem *navItem = [[UINavigationItem alloc] init];
         [_myNaviBar setBackgroundImage:[UIImage imageNamed: @"navigatorBar.png"] forBarMetrics:UIBarMetricsDefault];
+        NSLog(@"%@",_myNaviBar.tintColor);
+        _myNaviBar.tintColor = [UIColor redColor];
+        NSLog(@"%@",_myNaviBar.tintColor);
         _myNaviBar.items = [NSArray arrayWithObject:navItem];
         [navItem release];
         [self.view addSubview:_myNaviBar];

@@ -73,7 +73,6 @@
     UIBarButtonItem *settingBarItem = [[UIBarButtonItem alloc] initWithCustomView:btnNaviOption];
 	btnNaviOption.frame = CGRectMake(0.0f, 0.0f, imageBG.size.width, imageBG.size.height);
 	self.myNaviBar.topItem.leftBarButtonItem = settingBarItem;
-    
 	[settingBarItem release];
 	[btnNaviOption release];
 
@@ -93,7 +92,7 @@
     UIBarButtonItem *settingBarItem = [[UIBarButtonItem alloc] initWithCustomView:btnNaviOption];
 	btnNaviOption.frame = CGRectMake(0.0f, 0.0f, imageBG.size.width, imageBG.size.height);
 	self.myNaviBar.topItem.rightBarButtonItem = settingBarItem;
-
+    
 	[settingBarItem release];
 	[btnNaviOption release];
     //[right release];

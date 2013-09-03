@@ -37,7 +37,6 @@
 }
 
 - (void)dealloc {
-	[_fsTabBar release];
     [[NSNotificationCenter defaultCenter]removeObject:self];
     [super dealloc];
 }
@@ -45,12 +44,14 @@
 - (void)loadChildView {
 	_fsTabBar = [[FSTabBar alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - FSTABBAR_HEIGHT, self.view.frame.size.width, FSTABBAR_HEIGHT)];
 	[_fsTabBar setParentDelegate:self];
+    _fsTabBar.fsSelectedIndex = 0;
 	[self.view addSubview:_fsTabBar];
+    [_fsTabBar release];
 	
 	self.view.backgroundColor = [UIColor blackColor];
 	
 	[self inner_initializeFSViewControllers];
-	_fsTabBar.fsSelectedIndex = 1;
+	
 }
 
 
@@ -104,9 +105,7 @@
 			
 			[self.view addSubview:fsViewController.view];
             [self.view bringSubviewToFront:_fsTabBar];
-//			[fsViewController viewWillAppear:NO];			
-//			[fsViewController viewDidAppear:NO];
-			
+
 			_fsSelectedViewController = fsViewController;
 		}
 	}
@@ -128,10 +127,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
-    //_fsTabBar.fsSelectedIndex = 1;
 	[_fsSelectedViewController viewDidAppear:animated];
-//    _fsTabBar.fsSelectedIndex = 0;
-//    _fsTabBar.fsSelectedIndex = 1;
 }
 
 #pragma mark -
