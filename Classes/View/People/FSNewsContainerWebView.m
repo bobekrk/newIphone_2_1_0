@@ -43,8 +43,12 @@
 "<span id='comment_title_desc'>网友热评</span>" \
 "</div>"
 
-#define CONTENTWEBVIEW_COMMENT_TITLE_NODESC @"<div id='comment_desc'>" \
+//#define CONTENTWEBVIEW_COMMENT_TITLE_NODESC @"<div id='comment_desc'>" \
 "<span id='comment_title_desc'>暂无评论</span>" \
+"</div>"
+
+#define CONTENTWEBVIEW_COMMENT_TITLE_NODESC @"<div id='comment_desc'>" \
+"<span id='comment_title_desc'></span>" \
 "</div>"
 
 //更多评论按钮
@@ -220,6 +224,7 @@
         }
         else{
             templateString = [self replayString:templateString oldString:@"{{commentList}}" newString:CONTENTWEBVIEW_COMMENT_TITLE_NODESC];
+            //templateString = [self replayString:templateString oldString:@"<div id=\"comment\">{{commentList}}</div>" newString:@""];
         }
         
     }
@@ -292,8 +297,14 @@
     
     if (templateString == nil) {
         //NSString *imageString = [NSString stringWithFormat:@"<div class=\"photo\" id=\"image_%d\"></div>",k + 1];
-        
-        NSString * imageString  = [NSString stringWithFormat:@"<img src=\"http://58.68.130.168/thumbs/640/320/data/newsimages/1_6_14_1/130312/F201303121363053500242313.jpg\" width=\"320\" height=\"75\">"];
+       /* <p>
+        您也可以把图像作为链接来使用：
+        <a href="/example/html/lastpage.html">
+        <img border="0" src="/i/eg_buttonnext.gif" />
+        </a>
+        </p>*/
+       // NSString * imageString  = [NSString stringWithFormat:@"<img src=\"http://58.68.130.168/thumbs/640/320/data/newsimages/1_6_14_1/130312/F201303121363053500242313.jpg\" width=\"320\" height=\"75\">"];
+        NSString * imageString  = [NSString stringWithFormat:@"<p><a href=\"http://www.baidu.com\"><img border=\"0\" src=\"http://58.68.130.168/thumbs/640/320/data/newsimages/1_6_14_1/130312/F201303121363053500242313.jpg\" width=\"320\" height=\"75\"></a></p>"];
         FSLog(@"imageString:%@",imageString);
        // templateString = [NSString stringWithFormat:@"%@%@",templateString,imageString];
         return  imageString;
