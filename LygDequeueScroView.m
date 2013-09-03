@@ -26,6 +26,7 @@
                 [self addSubview:view];
                 [_views addObject:view];
             }
+            _count = [_myDelegate  myTableView:self numberOfRowsInSection:0];
         }
     }
     return self;
