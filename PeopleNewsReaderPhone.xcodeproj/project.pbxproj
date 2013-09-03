@@ -404,6 +404,7 @@
 		28D801B40F44B63D00FB423F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D801B30F44B63D00FB423F /* CoreData.framework */; };
 		4CC14F7B16461E290007143D /* FSDeepContent_TextObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC14F7A16461E290007143D /* FSDeepContent_TextObject.m */; };
 		4CC14F7E16461E2A0007143D /* FSDeepContent_PicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC14F7D16461E2A0007143D /* FSDeepContent_PicObject.m */; };
+		5814919217D5424000CB58D7 /* LygDequeueScroView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5814919117D5424000CB58D7 /* LygDequeueScroView.m */; };
 		581546D917C1965400EFEF20 /* FSOneDayNewsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 581546D817C1965400EFEF20 /* FSOneDayNewsObject.m */; };
 		581546DC17C1E77D00EFEF20 /* 右抽屉.png in Resources */ = {isa = PBXBuildFile; fileRef = 581546DA17C1E77D00EFEF20 /* 右抽屉.png */; };
 		581546DD17C1E77D00EFEF20 /* 右抽屉@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 581546DB17C1E77D00EFEF20 /* 右抽屉@2x.png */; };
@@ -1297,6 +1298,8 @@
 		4CC14F7A16461E290007143D /* FSDeepContent_TextObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSDeepContent_TextObject.m; path = Classes/Objects/FSDeepContent_TextObject.m; sourceTree = "<group>"; };
 		4CC14F7C16461E2A0007143D /* FSDeepContent_PicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSDeepContent_PicObject.h; path = Classes/Objects/FSDeepContent_PicObject.h; sourceTree = "<group>"; };
 		4CC14F7D16461E2A0007143D /* FSDeepContent_PicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSDeepContent_PicObject.m; path = Classes/Objects/FSDeepContent_PicObject.m; sourceTree = "<group>"; };
+		5814919017D5424000CB58D7 /* LygDequeueScroView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LygDequeueScroView.h; sourceTree = "<group>"; };
+		5814919117D5424000CB58D7 /* LygDequeueScroView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LygDequeueScroView.m; sourceTree = "<group>"; };
 		581546D717C1965400EFEF20 /* FSOneDayNewsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSOneDayNewsObject.h; sourceTree = "<group>"; };
 		581546D817C1965400EFEF20 /* FSOneDayNewsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSOneDayNewsObject.m; sourceTree = "<group>"; };
 		581546DA17C1E77D00EFEF20 /* 右抽屉.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "右抽屉.png"; sourceTree = "<group>"; };
@@ -2508,6 +2511,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				5882B5E117CC4E9B00B77388 /* 深度 */,
+				5814918F17D541AA00CB58D7 /* 新闻 */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -2638,6 +2642,15 @@
 				8203C16015CF58A80003B654 /* libbz2.dylib */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5814918F17D541AA00CB58D7 /* 新闻 */ = {
+			isa = PBXGroup;
+			children = (
+				5814919017D5424000CB58D7 /* LygDequeueScroView.h */,
+				5814919117D5424000CB58D7 /* LygDequeueScroView.m */,
+			);
+			name = "新闻";
 			sourceTree = "<group>";
 		};
 		5882B5E117CC4E9B00B77388 /* 深度 */ = {
@@ -4320,6 +4333,7 @@
 				5882B5E717CC8EBB00B77388 /* LygDeepTableViewCell.m in Sources */,
 				58A6AD1217CD7FBA004C71BB /* FSTopicObject.m in Sources */,
 				589004E817D16F970001AE30 /* MyIndicatorView.m in Sources */,
+				5814919217D5424000CB58D7 /* LygDequeueScroView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

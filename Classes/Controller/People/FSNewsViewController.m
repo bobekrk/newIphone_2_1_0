@@ -27,7 +27,7 @@
 #import "FSNewsContainerViewController.h"
 #import "FSWebViewForOpenURLViewController.h"
 #import "MyNewsLIstView.h"
-
+#import "LygDequeueScroView.h"
 
 #define KIND_USERCHANNEL_SELECTED  @"YAOWENCHANNEL"
 
@@ -91,16 +91,41 @@
     
     
     
-    [self addNewsScrollView];
+    [self addNewsScrollView2];
     UIView * lineView           = [[UIView alloc]initWithFrame:CGRectMake(0, 42, 320, 2)];
     lineView.backgroundColor    = [UIColor redColor];
     [self.view addSubview:lineView];
     [lineView release];
 }
+-(void)addNewsScrollView2
+{
+    float xx = (ISIPHONE5?576:480)-44-49-20;
+    float offset = (_canBeHaveNaviBar?44:0);
+    //UIScrollView * scroview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, offset, 320, xx)];
+    LygDequeueScroView * view = [[LygDequeueScroView alloc]initWithFrame:CGRectMake(0, offset, 320, xx) adMyDelegate:self];
+    view.delegate             = view;
+    [self.view addSubview:view];
+}
+- (NSInteger)myTableView:(LygDequeueScroView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    tableView.contentSize = CGSizeMake(320*_fs_GZF_ChannelListDAO.objectList.count, tableView.frame.size.height);
+    return _fs_GZF_ChannelListDAO.objectList.count;
+}
+- (UIView *)myTableView:(LygDequeueScroView *)tableView cellForRowAtIndexPath:(int)index
+{
+    MyNewsLIstView * view = nil;
+    view = (MyNewsLIstView *)[tableView dequeueResuableCellWithIdentifier:@"xxxxxx"];
+    if (!view) {
+        view = [[MyNewsLIstView alloc]initWithChanel:_fs_GZF_ChannelListDAO currentIndex:index parentViewController:self];
+        view.parentDelegate = view;
+    }
+    return view;
+}
 
 
 -(void)addNewsScrollView
 {
+    
     float xx = (ISIPHONE5?576:480)-44-49-20;
     float offset = (_canBeHaveNaviBar?44:0);
     UIScrollView * scroview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, offset, 320, xx)];
