@@ -134,10 +134,11 @@
 
 -(void)LygDeepListViewCellTouched:(int)index
 {
-    FSTopicObject *topicObj = [_fs_GZF_DeepListDAO.objectList objectAtIndex:index];
+    FSTopicObject *topicObj                          = [_fs_GZF_DeepListDAO.objectList objectAtIndex:index];
     FSDeepPageContainerController *pageContainerCtrl = [[FSDeepPageContainerController alloc] init];
-    pageContainerCtrl.deepid = topicObj.deepid;
-    pageContainerCtrl.Deep_title = topicObj.title;
+    pageContainerCtrl.deepid                         = topicObj.deepid;
+    pageContainerCtrl.Deep_title                     = topicObj.title;
+    pageContainerCtrl.newsAbstract                   = topicObj.news_abstract;
     [self.navigationController pushViewController:pageContainerCtrl animated:YES];
     [pageContainerCtrl release];
 
@@ -301,10 +302,11 @@
         if ([touchView isKindOfClass:[FSDeepView class]]) {
             FSDeepView *deepView = (FSDeepView *)touchView;
             if ([_fs_GZF_DeepListDAO.objectList count]>[deepView.indexPath row]) {
-                FSTopicObject *topicObj = [_fs_GZF_DeepListDAO.objectList objectAtIndex:[deepView.indexPath row]];
+                FSTopicObject *topicObj                          = [_fs_GZF_DeepListDAO.objectList objectAtIndex:[deepView.indexPath row]];
                 FSDeepPageContainerController *pageContainerCtrl = [[FSDeepPageContainerController alloc] init];
-                pageContainerCtrl.deepid = topicObj.deepid;
-                pageContainerCtrl.Deep_title = topicObj.title;
+                pageContainerCtrl.deepid                         = topicObj.deepid;
+                pageContainerCtrl.Deep_title                     = topicObj.title;
+                pageContainerCtrl.newsAbstract                   = topicObj.news_abstract;
                 [self.navigationController pushViewController:pageContainerCtrl animated:YES];
                 [pageContainerCtrl release];
             }

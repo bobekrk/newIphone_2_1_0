@@ -19,9 +19,12 @@
 #import "FSDeepEndViewController.h"
 #import "FSDeepCommentViewController.h"
 #import "FSDeepPriorViewController.h"
-
-
-
+#import "FSSinaBlogShareViewController.h"
+#import "FSNetEaseBlogShareViewController.h"
+#import "FSPeopleBlogShareViewController.h"
+#import "NTESNBSMSManager.h"
+#import "LygTencentShareViewController.h"
+#import "PeopleNewsReaderPhoneAppDelegate.h"
 /*
  flag:1（导语页面）深度id
  flag:2（图片页面）图片id
@@ -62,14 +65,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    float xxxxx  = ISIPHONE5?460:548;
-//    UIImage *image = [UIImage imageNamed:@"goBack.png"];
-//    UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(0, 100, image.size.width, image.size.height)];
-//    [self.view addSubview:button];
-//    [button release];
-//    [self.view bringSubviewToFront:button];
-
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -88,51 +83,33 @@
     
     NSLog(@"%@.viewDidDisappear:%d",self,[self retainCount]);
 }
+-(void)loadChildView
+{
+    [super loadChildView];
+    _fsShareIconContainView = [[FSShareIconContainView alloc] initWithFrame:CGRectZero];
+    _fsShareIconContainView.parentDelegate = self;
+    [self.view addSubview:_fsShareIconContainView];
+    [_fsShareIconContainView release];
+}
 
 - (void)dealloc {
     [_deepid release];
-//    _deepPageListData.parentDelegate = nil;
-//    [_deepPageListData release];
     _fs_GZF_DeepPageListDAO.parentDelegate = NULL;
     [_fs_GZF_DeepPageListDAO release];
     [super dealloc];
 }
 
 - (void)initDataModel {
-//    _deepPageListData = [[FSDeepPageListDAO alloc] init];
-//    _deepPageListData.parentDelegate = self;
-    
     _fs_GZF_DeepPageListDAO = [[FS_GZF_DeepPageListDAO alloc] init];
     _fs_GZF_DeepPageListDAO.parentDelegate = self;
 }
 
 - (void)doSomethingForViewFirstTimeShow {
-//    _deepPageListData.deepid = self.deepid;
-    
     _fs_GZF_DeepPageListDAO.deepid = self.deepid;
     [_fs_GZF_DeepPageListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
-    
-    //[_deepPageListData GETData];
-    
 }
 
 - (void)doSomethingWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status {
-    NSLog(@"FSDeepPageContainerController doSomethingWithDAO:%@",_deepid);
-//    if ([_deepPageListData isEqual:sender]) {
-//        if (status == FSBaseDAOCallBack_BufferSuccessfulStatus ||
-//            status == FSBaseDAOCallBack_SuccessfulStatus) {
-//            NSArray *sections = [_deepPageListData.fetchedResultsController sections];
-//            NSLog(@"sections:%d",[sections count]);
-//            if ([sections count] > 0) {
-//                id <NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:0];
-//                FSLog(@"Deep.pageCount.count:%d", [sectionInfo numberOfObjects]);
-//                
-//                [self setPageControllerCount:[sectionInfo numberOfObjects]];
-//            }
-//
-//        }
-//    }
-    
     if ([sender isEqual:_fs_GZF_DeepPageListDAO]) {
         if (status == FSBaseDAOCallBack_BufferSuccessfulStatus || status == FSBaseDAOCallBack_SuccessfulStatus) {
             NSLog(@"_fs_GZF_DeepPageListDAO:%d",[_fs_GZF_DeepPageListDAO.objectList count]);
@@ -251,5 +228,229 @@
         }
     }
 }
+-(void)fsBaseContainerViewTouchEvent:(FSBaseContainerView *)sender{
+    if ([sender isEqual:_fsShareIconContainView]) {
+        switch (_fsShareIconContainView.shareSelectEvent) {
+            case ShareSelectEvent_return:
+                break;
+            case ShareSelectEvent_sina:
+                NSLog(@"分享到新浪微博");
+            {
+                FSSinaBlogShareViewController *fsSinaBlogShareViewController = [[FSSinaBlogShareViewController alloc] init];
+                
+                fsSinaBlogShareViewController.withnavTopBar                  = YES;
+                fsSinaBlogShareViewController.title                          = @"新浪微博分享";
+                fsSinaBlogShareViewController.shareContent = [self shareContent];
+                [self presentViewController:fsSinaBlogShareViewController animated:YES completion:nil];
+                [fsSinaBlogShareViewController release];
+            }
+                
+                break;
+            case ShareSelectEvent_netease:
+                NSLog(@"分享到网易微博");
+                FSNetEaseBlogShareViewController *fsNetEaseBlogShareViewController = [[FSNetEaseBlogShareViewController alloc] init];
+                fsNetEaseBlogShareViewController.withnavTopBar                     = YES;
+                fsNetEaseBlogShareViewController.shareContent                      = [self shareContent];
+                [self presentViewController:fsNetEaseBlogShareViewController animated:YES completion:nil];
+                [fsNetEaseBlogShareViewController release];
+                //}
+                
+                break;
+            case ShareSelectEvent_weixin:
+                [self sendShareWeiXin:0];
+                break;
+            case ShareSelectEvent_friend:
+            {
+                [self sendShareWeiXin:1];
+            }
+                
+                break;
+            case ShareSelectEvent_peopleBlog:
+                NSLog(@"分享到人民微博");
+                FSPeopleBlogShareViewController *fsPeopleBlogShareViewController = [[FSPeopleBlogShareViewController alloc] init];
+                fsPeopleBlogShareViewController.withnavTopBar                    = YES;
+                fsPeopleBlogShareViewController.shareContent = [self shareContent];
+                //[self.navigationController pushViewController:fsPeopleBlogShareViewController animated:YES];
+                [self presentViewController:fsPeopleBlogShareViewController animated:YES completion:nil];
+                //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
+                [fsPeopleBlogShareViewController release];
+                //}
+                
+                break;
+            case ShareSelectEvent_mail:
+                NSLog(@"邮件分享");
+                if ([MFMailComposeViewController canSendMail]) {
+                    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+                    picker.mailComposeDelegate = self;
+                    //[picker setSubject:[self shareContent]];
+
+                    NSArray *toRecipients = [NSArray arrayWithObject:@"[email][/email]"];
+                    [picker setToRecipients:toRecipients];
+                    NSString *emailBody = [self shareContent];
+                    [picker setMessageBody:emailBody isHTML:NO];
+                    [self presentModalViewController:picker animated:YES];
+                    [picker release];
+                }
+                else{
+                    FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
+                    informationMessageView.parentDelegate = self;
+                    [informationMessageView showInformationMessageViewInView:self.view
+                                                                 withMessage:@"请先设置您的邮箱再分享，谢谢！"
+                                                            withDelaySeconds:2.0f
+                                                            withPositionKind:PositionKind_Vertical_Horizontal_Center
+                                                                  withOffset:0.0f];
+
+                    [self performSelector:@selector(shearWithMail) withObject:nil afterDelay:1.5];
+                }
+                
+                break;
+            case ShareSelectEvent_message:
+                NSLog(@"短信分享");
+                [NTESNBSMSManager sharedSMSManager].smsBody = [self shareContent];
+                [NTESNBSMSManager sharedSMSManager].pushNavigation = self.navigationController;
+                [[NTESNBSMSManager sharedSMSManager] pushSMSComposer];
+                break;
+            case ShareSelectEvent_tencent:
+            {
+                LygTencentShareViewController *fsSinaBlogShareViewController = [[LygTencentShareViewController alloc] init];
+                fsSinaBlogShareViewController.withnavTopBar                  = YES;
+                fsSinaBlogShareViewController.title                          = @"腾讯微博分享";
+                fsSinaBlogShareViewController.shareContent                   = [self shareContent];
+                [self presentViewController:fsSinaBlogShareViewController animated:YES completion:nil];
+                [fsSinaBlogShareViewController release];
+            }
+                break;
+            default:
+                break;
+        }
+        NSLog(@"。。。。。。。。。");
+        //_fsNewsContainerView.userInteractionEnabled = YES;
+        _fsShareIconContainView.isShow = NO;
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.6];
+        _fsShareIconContainView.frame = CGRectMake(0, self.view.frame.size.height+44, self.view.frame.size.width, [_fsShareIconContainView getHeight]);
+        [UIView commitAnimations];
+        
+    }
+}
+-(void)sendShareWeiXin:(int)isSendToFriend{
+    if (1) {
+        NSString *newsContent = @"";
+        PeopleNewsReaderPhoneAppDelegate*appDelegate = (PeopleNewsReaderPhoneAppDelegate *)[UIApplication sharedApplication].delegate;
+        [self retain];
+        UIImage *image = [UIImage imageNamed:@"icon@2x.png"];
+        if (isSendToFriend == 0) {
+            if (![appDelegate sendWXMidiaMessage:[self shareContent] content:newsContent thumbImage:image webURL:@"https://itunes.apple.com/cn/app/id424180337"]) {
+                //[CommonFuncs showMessage:@"人民新闻" ContentMessage:@"不能分享到微信，请确认安装了最新版本的微信客户端"];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"人民新闻" message:@"不能分享到微信，请确认安装了最新版本的微信客户端" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+                [alert release];
+            }
+            else{
+                NSLog(@"sendShareWeiXin fail");
+            }
+        }else
+        {
+            if (![appDelegate sendWXMidiaMessagePYQ:[self shareContent] content:[self shareContent] thumbImage:image webURL:@"https://itunes.apple.com/cn/app/id424180337"]) {
+                //[CommonFuncs showMessage:@"人民新闻" ContentMessage:@"不能分享到微信，请确认安装了最新版本的微信客户端"];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"人民新闻" message:@"不能分享到微信，请确认安装了最新版本的微信客户端" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+                [alert release];
+            }
+            else{
+                NSLog(@"sendShareWeiXin fail");
+            }
+            
+        }
+        
+        
+	} else {
+        //[CommonFuncs showMessage:@"人民新闻" ContentMessage:@"正文内容不存在"];
+	}
+    
+}
+
+
+-(NSString *)shareContent{
+    NSArray * arry = [_Deep_title componentsSeparatedByString:@"】"];
+    NSString * string;
+    if (arry.count == 2) {
+        string = [arry objectAtIndex:1];
+    }else
+    {
+        string = _Deep_title;
+    }
+    return [NSString stringWithFormat:@"【%@】%@->下载人民新闻：http://3g.qglt.com/n/client",string,_newsAbstract];
+}
+-(void)share{
+    _fsShareIconContainView.frame  = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, [_fsShareIconContainView getHeight]);
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.6];
+    _fsShareIconContainView.frame  = CGRectMake(0, self.view.frame.size.height-[_fsShareIconContainView getHeight], self.view.frame.size.width, [_fsShareIconContainView getHeight]);
+    _fsShareIconContainView.isShow = YES;
+    [UIView commitAnimations];
+}
+
+-(void)onButtonClick:(int)index
+{
+    if (index == 100) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else if (index == 200)
+    {
+        [self share];
+    }
+    
+}
+
+-(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
+    NSLog(@"result:%d",result);
+    
+    
+    if (result == MFMailComposeResultCancelled) {
+        FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
+        informationMessageView.parentDelegate = self;
+        [informationMessageView showInformationMessageViewInView:self.view
+                                                     withMessage:@"取消分享"
+                                                withDelaySeconds:2.0f
+                                                withPositionKind:PositionKind_Vertical_Horizontal_Center
+                                                      withOffset:0.0f];
+        [informationMessageView release];
+    }else if(result == MFMailComposeResultFailed){
+        FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
+        informationMessageView.parentDelegate = self;
+        [informationMessageView showInformationMessageViewInView:self.view
+                                                     withMessage:@"分享邮件发送失败！"
+                                                withDelaySeconds:2.0f
+                                                withPositionKind:PositionKind_Vertical_Horizontal_Center
+                                                      withOffset:0.0f];
+    }else if(result == MFMailComposeResultSaved){
+        FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
+        informationMessageView.parentDelegate = self;
+        [informationMessageView showInformationMessageViewInView:self.view
+                                                     withMessage:@"分享邮件已保存到草稿箱！"
+                                                withDelaySeconds:2.0f
+                                                withPositionKind:PositionKind_Vertical_Horizontal_Center
+                                                      withOffset:0.0f];
+    }
+    else if(result == MFMailComposeResultSent){
+        FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
+        informationMessageView.parentDelegate = self;
+        [informationMessageView showInformationMessageViewInView:self.view
+                                                     withMessage:@"分享邮件已发送！"
+                                                withDelaySeconds:2.0f
+                                                withPositionKind:PositionKind_Vertical_Horizontal_Center
+                                                      withOffset:0.0f];
+    }
+    
+    
+    if (self.navigationController) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    }else if(self.presentingViewController)
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+
 
 @end

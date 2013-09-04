@@ -21,8 +21,6 @@
     
     NSMutableDictionary *_buffers;
     NSMutableDictionary *_indexPaths;
-    FSShareIconContainView         *_fsShareIconContainView;
-
     NSInteger _pageCount;
     NSInteger _pageNumber;
     UIBarButtonItem *_refreshButton;

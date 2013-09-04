@@ -28,6 +28,8 @@
     self = [super initWithRootViewController:rootViewController];
     NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:18], UITextAttributeFont,[UIColor blackColor],UITextAttributeTextColor,nil];
     self.navigationBar.titleTextAttributes = dict;
+    self.navigationBar.tintColor = [UIColor blackColor];
+    self.navigationBarHidden = YES;
 
     if (self) {
 #ifdef __IPHONE_5_0

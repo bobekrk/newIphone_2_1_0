@@ -10,7 +10,7 @@
 #import "FSNewsListTopCellTextFloatView.h"
 #import "FSFocusTopObject.h"
 #import "FSCommonFunction.h"
-
+#import "FSLoadingImageObject.h"
 #define VISITICON_BEGIN_X 220.0f
 
 @implementation FSNewsListTopCell
@@ -32,18 +32,13 @@
     [_fsNewsListTopCellTextFloatView release];
     [_fsImagesScrInRowView release];
     [_lab_NewsType release];
-//    [_lab_VisitVolume release];
-//    [_image_Footprint release];
     [_lab_VVBackground release];
 
 }
 
 
 -(void)doSomethingAtInit{
-//    UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ChannelSettingViewBGR.png"]];
-//    self.backgroundView = image;
-//    [image release];
-    //self.contentView.backgroundColor = COLOR_TABLE_BACKGROUND;
+
     _typeMark = 0;
     
     _lab_VVBackground = [[UILabel alloc] init];
@@ -55,14 +50,11 @@
     _fsImagesScrInRowView.parentDelegate = self;
     
     _lab_NewsType = [[UILabel alloc] init];
-//    _lab_VisitVolume = [[UILabel alloc] init];
-//    _image_Footprint = [[UIImageView alloc] init];
+
     
     [self.contentView addSubview:_fsImagesScrInRowView];
     [self.contentView addSubview:_lab_VVBackground];
-//    [self.contentView addSubview:_lab_VisitVolume];
     [self.contentView addSubview:_lab_NewsType];
-//    [self.contentView addSubview:_image_Footprint];
 
     
     
@@ -72,21 +64,11 @@
     _lab_NewsType.numberOfLines = 1;
     _lab_NewsType.font = [UIFont systemFontOfSize:14];
     
-//    _lab_VisitVolume.backgroundColor = COLOR_CLEAR;
-//    _lab_VisitVolume.textColor = COLOR_NEWSLIST_TITLE_WHITE;
-//    _lab_VisitVolume.textAlignment = UITextAlignmentLeft;
-//    _lab_VisitVolume.numberOfLines = 1;
-//    _lab_VisitVolume.font = [UIFont systemFontOfSize:LIST_BOTTOM_TEXT_FONT];
-//    
-//    _image_Footprint.image = [UIImage imageNamed:@"xin.png"];
-//    _image_Footprint.alpha = 0.0;
-    
+
     _lab_time = [[UILabel alloc] init];
     _lab_time.alpha = 0.0f;
     _fsNewsListTopCellTextFloatView = [[FSNewsListTopCellTextFloatView alloc] init];
     
-    //[self.contentView addSubview:_lab_time];
-    //[self.contentView addSubview:_fsNewsListTopCellTextFloatView];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
@@ -164,20 +146,38 @@
     FSImagesScrInRowView *o = (FSImagesScrInRowView *)sender;
     if (o.isMove) {
         if ([_fsImagesScrInRowView.objectList count]>o.imageIndex) {
-            
-            FSFocusTopObject *oo = [_fsImagesScrInRowView.objectList objectAtIndex:o.imageIndex];
-            _fsNewsListTopCellTextFloatView.data = oo;
-            
-//            _lab_VisitVolume.text = [NSString stringWithFormat:@"%d",[oo.browserCount integerValue]];
-            if ([oo.title length]>16) {
-                _lab_NewsType.text = [oo.title substringToIndex:16];
+            if (o.imageIndex != 1) {
+                FSFocusTopObject *oo = [_fsImagesScrInRowView.objectList objectAtIndex:o.imageIndex];
+                _fsNewsListTopCellTextFloatView.data = oo;
+                
+                //            _lab_VisitVolume.text = [NSString stringWithFormat:@"%d",[oo.browserCount integerValue]];
+                if ([oo.title length]>16) {
+                    _lab_NewsType.text = [oo.title substringToIndex:16];
+                }
+                else{
+                    _lab_NewsType.text = oo.title;
+                }
+                
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[oo.timestamp doubleValue]];
+                _lab_time.text = dateToString_YMD(date);
             }
-            else{
-                _lab_NewsType.text = oo.title;
+            else
+            {
+                FSLoadingImageObject *oo = [_fsImagesScrInRowView.objectList objectAtIndex:o.imageIndex];
+                _fsNewsListTopCellTextFloatView.data = oo;
+                
+                //            _lab_VisitVolume.text = [NSString stringWithFormat:@"%d",[oo.browserCount integerValue]];
+                if ([oo.adTitle length]>16) {
+                    _lab_NewsType.text = [oo.adTitle substringToIndex:16];
+                }
+                else{
+                    _lab_NewsType.text = oo.adTitle;
+                }
+                
+                NSDate *date = [NSDate dateWithTimeIntervalSince1970:[oo.adCtime doubleValue]];
+                _lab_time.text = dateToString_YMD(date);
             }
-            
-            NSDate *date = [NSDate dateWithTimeIntervalSince1970:[oo.timestamp doubleValue]];
-            _lab_time.text = dateToString_YMD(date);
+
             
         }
     }
