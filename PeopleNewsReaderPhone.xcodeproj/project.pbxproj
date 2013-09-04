@@ -414,6 +414,8 @@
 		5850C1D4179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5850C1D2179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld */; };
 		5853053C17C4511F00A795EE /* 人民新闻有温度.png in Resources */ = {isa = PBXBuildFile; fileRef = 5853053A17C4511F00A795EE /* 人民新闻有温度.png */; };
 		5853053D17C4511F00A795EE /* 人民新闻有温度@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5853053B17C4511F00A795EE /* 人民新闻有温度@2x.png */; };
+		586AA1FD17D72D46000D356F /* PeopleNewsStati.m in Sources */ = {isa = PBXBuildFile; fileRef = 586AA1FC17D72D46000D356F /* PeopleNewsStati.m */; };
+		586AA25717D75783000D356F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 586AA25617D75783000D356F /* CoreTelephony.framework */; };
 		586EDF3917D5BF1B00429F58 /* LygNewViewControllerDataMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 586EDF3817D5BF1B00429F58 /* LygNewViewControllerDataMember.m */; };
 		5882B5E417CC4EDD00B77388 /* LygDeepListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5882B5E317CC4EDD00B77388 /* LygDeepListView.m */; };
 		5882B5E717CC8EBB00B77388 /* LygDeepTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5882B5E617CC8EBB00B77388 /* LygDeepTableViewCell.m */; };
@@ -1311,6 +1313,9 @@
 		5850C1D3179D24720024218B /* PeopleNewsReaderPhone.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PeopleNewsReaderPhone.xcdatamodel; sourceTree = "<group>"; };
 		5853053A17C4511F00A795EE /* 人民新闻有温度.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人民新闻有温度.png"; sourceTree = "<group>"; };
 		5853053B17C4511F00A795EE /* 人民新闻有温度@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人民新闻有温度@2x.png"; sourceTree = "<group>"; };
+		586AA1FB17D72D46000D356F /* PeopleNewsStati.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleNewsStati.h; sourceTree = "<group>"; };
+		586AA1FC17D72D46000D356F /* PeopleNewsStati.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeopleNewsStati.m; sourceTree = "<group>"; };
+		586AA25617D75783000D356F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		586EDF3717D5BF1B00429F58 /* LygNewViewControllerDataMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LygNewViewControllerDataMember.h; sourceTree = "<group>"; };
 		586EDF3817D5BF1B00429F58 /* LygNewViewControllerDataMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LygNewViewControllerDataMember.m; sourceTree = "<group>"; };
 		5882B5E217CC4EDD00B77388 /* LygDeepListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LygDeepListView.h; sourceTree = "<group>"; };
@@ -1920,6 +1925,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				586AA25717D75783000D356F /* CoreTelephony.framework in Frameworks */,
 				04D2A6B016DB32D100782B40 /* MapKit.framework in Frameworks */,
 				04E94BA316B60F3F00AD38A7 /* CoreLocation.framework in Frameworks */,
 				2728CD111680400C00F8942F /* StoreKit.framework in Frameworks */,
@@ -2501,6 +2507,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				586AA25617D75783000D356F /* CoreTelephony.framework */,
 				58CDA27A17BA30E100984B06 /* FSOneDayNewsObjectx.h */,
 				58CDA27B17BA30E200984B06 /* FSOneDayNewsObjectx.m */,
 				58AE68A317AF7F480007203C /* Tencent */,
@@ -2514,6 +2521,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				5882B5E117CC4E9B00B77388 /* 深度 */,
+				586AA1FA17D72C7D000D356F /* 统计 */,
 				5814918F17D541AA00CB58D7 /* 新闻 */,
 			);
 			name = CustomTemplate;
@@ -2656,6 +2664,15 @@
 				586EDF3817D5BF1B00429F58 /* LygNewViewControllerDataMember.m */,
 			);
 			name = "新闻";
+			sourceTree = "<group>";
+		};
+		586AA1FA17D72C7D000D356F /* 统计 */ = {
+			isa = PBXGroup;
+			children = (
+				586AA1FB17D72D46000D356F /* PeopleNewsStati.h */,
+				586AA1FC17D72D46000D356F /* PeopleNewsStati.m */,
+			);
+			name = "统计";
 			sourceTree = "<group>";
 		};
 		5882B5E117CC4E9B00B77388 /* 深度 */ = {
@@ -4340,6 +4357,7 @@
 				589004E817D16F970001AE30 /* MyIndicatorView.m in Sources */,
 				5814919217D5424000CB58D7 /* LygDequeueScroView.m in Sources */,
 				586EDF3917D5BF1B00429F58 /* LygNewViewControllerDataMember.m in Sources */,
+				586AA1FD17D72D46000D356F /* PeopleNewsStati.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

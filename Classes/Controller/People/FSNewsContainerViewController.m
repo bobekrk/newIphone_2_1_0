@@ -77,6 +77,7 @@ NSString                       *_newsID;
 {
     [super viewWillAppear:NO];
     self.navigationController.navigationBarHidden = YES;
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 
@@ -136,9 +137,8 @@ NSString                       *_newsID;
     _fsNewsContainerView = [[FSNewsContainerView alloc] init];
     _fsNewsContainerView.parentDelegate = self;
     [self.view addSubview:_fsNewsContainerView];
-    //_fsNewsContainerView.backgroundColor = [UIColor darkGrayColor];
+    _fsNewsContainerView.backgroundColor = [UIColor whiteColor];
     [_fsNewsContainerView release];
-    
     _fsShareIconContainView = [[FSShareIconContainView alloc] initWithFrame:CGRectZero];
     _fsShareIconContainView.parentDelegate = self;
     [self.view addSubview:_fsShareIconContainView];
@@ -655,7 +655,7 @@ NSString                       *_newsID;
         _fs_GZF_NewsCommentPOSTXMLDAO.newsid = self.FCObj.newsid;
         _fs_GZF_NewsCommentPOSTXMLDAO.channelid = self.FCObj.channelid;
     }
-    _fs_GZF_NewsCommentPOSTXMLDAO.username = @"iphone 网友";
+    _fs_GZF_NewsCommentPOSTXMLDAO.username = @"人民网网友";
     _fs_GZF_NewsCommentPOSTXMLDAO.content = content;
     
     if ([_fs_GZF_NewsCommentPOSTXMLDAO.newsid length]==0) {

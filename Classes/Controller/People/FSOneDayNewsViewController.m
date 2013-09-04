@@ -29,7 +29,7 @@
 #import "FSNewsContainerViewController.h"
 #import "FSWebViewForOpenURLViewController.h"
 #import "FSOneDayTableListCell.h"
-
+#import "FSLoadingImageObject.h"
 
 @implementation FSOneDayNewsViewController
 
@@ -76,6 +76,13 @@
     _fs_GZF_GetWeatherMessageDAO.group = @"";
     _fs_GZF_GetWeatherMessageDAO.parentDelegate = self;
     _fs_GZF_GetWeatherMessageDAO.isGettingList = YES;
+    
+    
+    
+    _lygAdsDao                                      = [[LygAdsDao alloc]init];
+    _lygAdsDao.placeID                              = 44;
+    _lygAdsDao.parentDelegate                       = self;
+    _lygAdsDao.isGettingList                        = NO;
     
 }
 
@@ -232,7 +239,12 @@
         if ([_fsForOneDayNewsListFocusTopData.objectList count]==0) {
             return nil;
         }
-        return _fsForOneDayNewsListFocusTopData.objectList;
+        NSMutableArray * mutabale = [[NSMutableArray alloc] initWithArray:_fsForOneDayNewsListFocusTopData.objectList copyItems:NO];
+        _myArry                   = mutabale;
+        if (_lygAdsDao.objectList >0) {
+            [mutabale insertObject:[_lygAdsDao.objectList objectAtIndex:0] atIndex:1];
+        }
+        return [mutabale autorelease];
     }
     if (section <= [_sectionMessage count]) {
         FSSectionObject *Obj = [_sectionMessage objectAtIndex:section-1];
@@ -285,38 +297,74 @@
 
 -(void)tableViewTouchPicture:(FSTableContainerView *)sender index:(NSInteger)index{
     NSLog(@"channel did selected!%d",index);
-    if (index<[_fsForOneDayNewsListFocusTopData.objectList count]) {
-        FSFocusTopObject *o = [_fsForOneDayNewsListFocusTopData.objectList objectAtIndex:index];
-        
-        if ([o.flag isEqualToString:@"1"]) {
-            FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
+    if (index<[_myArry count]) {
+        id  oo = [_myArry objectAtIndex:index];
+        if ([oo isKindOfClass:[FSFocusTopObject class]]) {
+            FSFocusTopObject * o = oo;
+            if ([o.flag isEqualToString:@"1"]) {
+                FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
+                
+                fsNewsContainerViewController.obj = nil;
+                fsNewsContainerViewController.FCObj = o;
+                fsNewsContainerViewController.newsSourceKind = NewsSourceKind_ShiKeNews;
+                
+                [self.navigationController pushViewController:fsNewsContainerViewController animated:YES];
+                //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
+                
+                [fsNewsContainerViewController release];
+                [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
+            }
+            else if ([o.flag isEqualToString:@"2"]){
+                
+                NSURL *url = [[NSURL alloc] initWithString:o.link];
+                [[UIApplication sharedApplication] openURL:url];
+                [url release];
+            }
+            else if ([o.flag isEqualToString:@"3"]){//内嵌浏览器
+                FSWebViewForOpenURLViewController *fsWebViewForOpenURLViewController = [[FSWebViewForOpenURLViewController alloc] init];
+                
+                fsWebViewForOpenURLViewController.urlString = o.link;
+                fsWebViewForOpenURLViewController.withOutToolbar = YES;
+                [self.navigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
+                //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
+                [fsWebViewForOpenURLViewController release];
+            }
+
+        }else
+        {
+            FSLoadingImageObject * xx = oo;
+            if ([xx.adLinkFlag isEqualToString:@"1"]) {
+//                FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
+//                
+//                fsNewsContainerViewController.obj = nil;
+//                fsNewsContainerViewController.FCObj = o;
+//                fsNewsContainerViewController.newsSourceKind = NewsSourceKind_ShiKeNews;
+//                
+//                [self.navigationController pushViewController:fsNewsContainerViewController animated:YES];
+//                //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
+//                
+//                [fsNewsContainerViewController release];
+//                [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
+            }
+            else if ([xx.adLinkFlag isEqualToString:@"2"]){
+                
+                NSURL *url = [[NSURL alloc] initWithString:xx.adLink];
+                [[UIApplication sharedApplication] openURL:url];
+                [url release];
+            }
+            else if ([xx.adLinkFlag isEqualToString:@"3"]){//内嵌浏览器
+                FSWebViewForOpenURLViewController *fsWebViewForOpenURLViewController = [[FSWebViewForOpenURLViewController alloc] init];
+                
+                fsWebViewForOpenURLViewController.urlString = xx.adLink;
+                fsWebViewForOpenURLViewController.withOutToolbar = YES;
+                [self.navigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
+                //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
+                [fsWebViewForOpenURLViewController release];
+            }
+
             
-            fsNewsContainerViewController.obj = nil;
-            fsNewsContainerViewController.FCObj = o;
-            fsNewsContainerViewController.newsSourceKind = NewsSourceKind_ShiKeNews;
-            
-            [self.navigationController pushViewController:fsNewsContainerViewController animated:YES];
-            //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
-            
-            [fsNewsContainerViewController release];
-            [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
         }
-        else if ([o.flag isEqualToString:@"2"]){
             
-            NSURL *url = [[NSURL alloc] initWithString:o.link];
-            [[UIApplication sharedApplication] openURL:url];
-            [url release];
-        }
-        else if ([o.flag isEqualToString:@"3"]){//内嵌浏览器
-            FSWebViewForOpenURLViewController *fsWebViewForOpenURLViewController = [[FSWebViewForOpenURLViewController alloc] init];
-            
-            fsWebViewForOpenURLViewController.urlString = o.link;
-            fsWebViewForOpenURLViewController.withOutToolbar = YES;
-            [self.navigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
-            //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
-            [fsWebViewForOpenURLViewController release];
-        }
-        
     }
     
 }
@@ -343,6 +391,8 @@
         [_newsListData HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
         [[GlobalConfig shareConfig] setOnedayChannalMark:NO];
         [_fsForOneDayNewsListFocusTopData HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+        _lygAdsDao.objectList = nil;
+        [_lygAdsDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
         
     }
     if (dataSource == tdsNextSection) {
@@ -413,24 +463,45 @@
     
     
     if ([sender isEqual:_fs_GZF_GetWeatherMessageDAO]) {
-		if (status == FSBaseDAOCallBack_SuccessfulStatus ||
-			status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
-            //NSLog(@"_fs_GZF_GetWeatherMessageDAO");
-            if ([_fs_GZF_GetWeatherMessageDAO.objectList count]>0) {
-                
-                _fsWeatherView.data = [_fs_GZF_GetWeatherMessageDAO.objectList objectAtIndex:0];
-                //NSLog(@"%@",_fsWeatherView.data);
-                
-                if (status == FSBaseDAOCallBack_SuccessfulStatus) {
-                    [_fs_GZF_GetWeatherMessageDAO operateOldBufferData];
-                    //[_fsOneDayNewsListContainerView loaddingComplete];
-                    [_fsWeatherView doSomethingAtLayoutSubviews];
-                    
-                }
-            }
-            
-        }
+//		if (status == FSBaseDAOCallBack_SuccessfulStatus ||
+//			status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
+//            //NSLog(@"_fs_GZF_GetWeatherMessageDAO");
+//            if ([_fs_GZF_GetWeatherMessageDAO.objectList count]>0) {
+//                
+//                _fsWeatherView.data = [_fs_GZF_GetWeatherMessageDAO.objectList objectAtIndex:0];
+//                //NSLog(@"%@",_fsWeatherView.data);
+//                
+//                if (status == FSBaseDAOCallBack_SuccessfulStatus) {
+//                    [_fs_GZF_GetWeatherMessageDAO operateOldBufferData];
+//                    //[_fsOneDayNewsListContainerView loaddingComplete];
+//                    [_fsWeatherView doSomethingAtLayoutSubviews];
+//                    
+//                }
+//            }
+//            
+//        }
 	}
+    
+    if ([sender isEqual:_lygAdsDao]) {
+        NSLog(@"%d",_lygAdsDao.objectList.count);
+        if (status == FSBaseDAOCallBack_SuccessfulStatus || status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
+            
+            [_fsOneDayNewsListContainerView loadDataWithOutCompelet];//
+            
+            NSLog(@"_fsForOneDayNewsListFocusTopData:%d",[_fsForOneDayNewsListFocusTopData.objectList count]);
+            if (status == FSBaseDAOCallBack_SuccessfulStatus) {
+                [_lygAdsDao operateOldBufferData];
+
+            }
+            return;
+        }else if(status == FSBaseDAOCallBack_NetworkErrorStatus){
+            
+            [_fsOneDayNewsListContainerView loaddingComplete];
+        }
+        else if(status ==FSBaseDAOCallBack_HostErrorStatus){
+        }
+    }
+
 }
 
 -(void)doSomethingWithLoadingListDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status{

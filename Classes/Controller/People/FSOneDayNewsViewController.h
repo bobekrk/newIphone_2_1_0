@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FSBasePeopleViewController.h"
 #import "FSOneDayNewsListContainerView.h"
-
+#import "LygAdsDao.h"
 
 @class FS_GZF_ForOnedayNewsFocusTopDAO,FS_GZF_ForOneDayNewsListDAO,FS_GZF_GetWeatherMessageDAO;
 
@@ -18,13 +18,14 @@
     FSOneDayNewsListContainerView     *_fsOneDayNewsListContainerView;
 	FS_GZF_ForOneDayNewsListDAO       *_newsListData;
     FS_GZF_ForOnedayNewsFocusTopDAO   *_fsForOneDayNewsListFocusTopData;
-    
+    LygAdsDao                         *_lygAdsDao;
     FS_GZF_GetWeatherMessageDAO       *_fs_GZF_GetWeatherMessageDAO;
     
     NSMutableArray                    *_sectionMessage;
     
     NSDate                            *_reFreshDate;
     NSTimeInterval                     _TimeInterval;
+    NSArray                           *_myArry;
 }
 
 -(void)reSetSectionMessage;

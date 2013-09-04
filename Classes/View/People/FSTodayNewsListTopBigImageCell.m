@@ -9,7 +9,7 @@
 #import "FSTodayNewsListTopBigImageCell.h"
 #import "FSCommonFunction.h"
 #import "FSOneNewsListTopCellTextFloatView.h"
-
+#import "FSLoadingImageObject.h"
 #import "FSFocusTopObject.h"
 
 #define VISITICON_BEGIN_X 220.0f
@@ -170,19 +170,28 @@
     if (o.isMove) {
         //NSLog(@"FSTodayNewsListTopBigImageCell:%d",o.imageIndex);
         if ([_fsImagesScrInRowView.objectList count]>o.imageIndex) {
-            FSFocusTopObject *o1 =[(NSArray *)_data objectAtIndex:o.imageIndex];
-            
-            //_fsOneNewsListTopCellTextFloatView.data = [_fsImagesScrInRowView.objectList objectAtIndex:o.imageIndex];
-            
-            //_fsOneNewsListTopCellTextFloatView.data = o1;
-            
-            //_lab_VisitVolume.text = [NSString stringWithFormat:@"%d",[o1.browserCount integerValue]];
-            if ([o1.title length]>16) {
-                _lab_NewsType.text = [o1.title substringToIndex:16];
+            id  o1 =[(NSArray *)_data objectAtIndex:o.imageIndex];
+            if ([o1 isKindOfClass:[FSFocusTopObject class]]) {
+                FSFocusTopObject * oooo = o1;
+                if ([oooo.title length]>16) {
+                    _lab_NewsType.text = [oooo.title substringToIndex:16];
+                }
+                else{
+                    _lab_NewsType.text = oooo.title;
+                }
+
+            }else
+            {
+                FSLoadingImageObject * image = o1;
+                if ([image.adTitle length]>16) {
+                    _lab_NewsType.text = [image.adTitle substringToIndex:16];
+                }
+                else{
+                    _lab_NewsType.text = image.adTitle;
+                }
+
             }
-            else{
-                _lab_NewsType.text = o1.title;
-            }
+            
         }
     }
     else{

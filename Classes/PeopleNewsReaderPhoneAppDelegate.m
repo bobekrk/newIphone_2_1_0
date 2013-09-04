@@ -69,6 +69,7 @@ typedef NS_ENUM(NSInteger, UIStatusBarAnimation) {
     UIStatusBarAnimationSlide,
 #endif
 };*/
+extern NSString * CTSettingCopyMyPhoneNumber();
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackTranslucent;
     _fsNewsContainerViewController_forPush = nil;
@@ -136,6 +137,7 @@ typedef NS_ENUM(NSInteger, UIStatusBarAnimation) {
     _TimeForeground = [date timeIntervalSince1970];
     [date release];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    NSLog(@"%@",CTSettingCopyMyPhoneNumber());
     return YES;
 }
 

@@ -58,9 +58,10 @@
     
     _isFullScream = NO;
     
-
+    self.backgroundColor = [UIColor whiteColor];
 
     _fsNewsContainerWebView = [[FSNewsContainerWebView alloc] init];
+    _fsNewsContainerWebView.backgroundColor = [UIColor whiteColor];
     _fsNewsContainerWebView.parentDelegate = self;
     [self addSubview:_fsNewsContainerWebView];
     [_fsNewsContainerWebView release];
@@ -68,7 +69,6 @@
     _fsNewsDitailToolBar = [[FSNewsDitailToolBar alloc] init];
     _fsNewsDitailToolBar.clipsToBounds = YES;
     _fsNewsDitailToolBar.parentDelegate = self;
-    //_fsNewsDitailToolBar.backgroundColor  = [UIColor redColor];
     [self addSubview:_fsNewsDitailToolBar];
     [_fsNewsDitailToolBar release];
     
@@ -104,7 +104,7 @@
     
     
     _fsNewsContainerWebView.data = self.data;
-    _fsNewsContainerWebView.backgroundColor = [UIColor darkGrayColor];
+    //_fsNewsContainerWebView.backgroundColor = [UIColor darkGrayColor];
 
     
 

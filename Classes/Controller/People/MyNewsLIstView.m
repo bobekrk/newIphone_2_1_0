@@ -558,7 +558,7 @@
     }
     else{
         FSOneDayNewsObject *o                                        = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
-               FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
+        FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
         fsNewsContainerViewController.obj                            = o;
         fsNewsContainerViewController.FCObj                          = nil;
         fsNewsContainerViewController.newsSourceKind                 = NewsSourceKind_PuTongNews;

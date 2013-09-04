@@ -115,14 +115,21 @@
     _isSizeChange = NO;
     _hasebeenLoad = NO;
     _webContent = [[UIWebView alloc] initWithFrame:CGRectZero];
+    _webContent.backgroundColor = [UIColor whiteColor];
+    for (UIView * vi in _webContent.subviews) {
+        for (UIView * xxxx in vi.subviews) {
+            if ([xxxx isKindOfClass:[UIImageView class]]) {
+                [xxxx removeFromSuperview];
+            }
+        }
+    }
+
 	[self addSubview:_webContent];
 
     _webContent.scrollView.delegate = self;
     
     
 	_webContent.delegate = self;
-    //webContent.userInteractionEnabled = YES;
-	//_webContent.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 	_webContent.dataDetectorTypes = UIDataDetectorTypeNone;
     
     _adImageUrl = @"http://58.68.130.168/thumbs/640/320/data/newsimages/1_6_14_1/130312/F201303121363053500242313.jpg";
@@ -133,7 +140,7 @@
 
 -(void)doSomethingAtLayoutSubviews{
     
-    _webContent.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _webContent.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height -  40);
     //NSLog(@":::%@",NSStringFromCGRect(_webContent.frame));
     if (!_hasebeenLoad) {
         [self loadWebPageWithContent:nil];
@@ -304,7 +311,7 @@
         </a>
         </p>*/
        // NSString * imageString  = [NSString stringWithFormat:@"<img src=\"http://58.68.130.168/thumbs/640/320/data/newsimages/1_6_14_1/130312/F201303121363053500242313.jpg\" width=\"320\" height=\"75\">"];
-        NSString * imageString  = [NSString stringWithFormat:@"<p><a href=\"http://www.baidu.com\"><img border=\"0\" src=\"http://58.68.130.168/thumbs/640/320/data/newsimages/1_6_14_1/130312/F201303121363053500242313.jpg\" width=\"320\" height=\"75\"></a></p>"];
+        NSString * imageString  = [NSString stringWithFormat:@"<p><a href=\"http://www.baidu.com\"><img border=\"0\" src=\"http://58.68.130.168/thumbs/640/320/data/newsimages/1_6_14_1/130312/F201303121363053500242313.jpg\" width=\"300\" height=\"75\"></a></p>"];
         FSLog(@"imageString:%@",imageString);
        // templateString = [NSString stringWithFormat:@"%@%@",templateString,imageString];
         return  imageString;

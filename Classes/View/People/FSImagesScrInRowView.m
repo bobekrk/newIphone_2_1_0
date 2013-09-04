@@ -84,6 +84,7 @@
     CGPoint p = CGPointMake(0, 0);
     [_scrollView setContentOffset:p animated:NO];
     for (id  o in _objectList) {
+        NSLog(@"%@",[o class]);
         NSString * usrlString;
         if ([o  isKindOfClass:[FSFocusTopObject class]]) {
             usrlString = ((FSFocusTopObject*)o).picture;
