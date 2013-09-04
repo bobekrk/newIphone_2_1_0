@@ -67,10 +67,39 @@
 	}
 	[self inner_layoutSubviews];
 }
-
+-(void)tabButtonClickStati:(NSNumber*)sender
+{
+    NSString * string = nil;
+    switch (sender.intValue) {
+        case 0:
+        {
+            string = WODETOUTIAO;
+        }
+            break;
+        case 1:
+        {
+            string = NEWS;
+        }
+            break;
+        case 2:
+        {
+            string = SHENDU;
+        }
+            break;
+        case 3:
+        {
+            string = GENGDUO;
+        }
+            break;
+        default:
+            break;
+    }
+    [PeopleNewsStati insertNewEventLabel:string];
+}
 - (void)setFsSelectedIndex:(NSInteger)value {
 	_fsSelectedIndex = value;
-	//
+	
+   
 	for (FSTabBarItem *fsItem in _fsItems) {
 		if (fsItem.tag == _fsSelectedIndex) {
 			[fsItem sendActionsForControlEvents:UIControlEventTouchUpInside];
@@ -97,7 +126,7 @@
 			
 			_currentSelectedItem = fsItem;
 			_fsSelectedIndex = fsItem.tag;
-			
+            [self performSelectorInBackground:@selector(tabButtonClickStati:) withObject:[NSNumber numberWithInt:_fsSelectedIndex]];
 			if ([_parentDelegate respondsToSelector:@selector(fsTabBarDidSelected:withFsTabIndex:)]) {
 				[_parentDelegate fsTabBarDidSelected:self withFsTabIndex:_fsSelectedIndex];
 			}

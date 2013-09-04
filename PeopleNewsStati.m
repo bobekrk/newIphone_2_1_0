@@ -8,17 +8,87 @@
 
 #import "PeopleNewsStati.h"
 #import "ASIHTTPRequest.h"
-#define URLPrefix @"http://mobile.app.people.com.cn:81/total/total.php?act=event_button&rt=xml&event_name=%@&appkey=rmw_t0vzf1&token=%@&count=%d&type=get"
 
-#include <sys/socket.h> // Per msqr
 
-#include <sys/sysctl.h>
-
-#include <net/if.h>
-
-#include <net/if_dl.h>
+@implementation PeopleNewsStati
++(PeopleNewsStati*)sharedStati
+{
+    static PeopleNewsStati * myStatic = nil;
+    if (myStatic == nil) {
+        if (myStatic == nil) {
+            myStatic = [[PeopleNewsStati alloc]init];
+        }
+    }
+    return myStatic;
+}
+-(id)init
+{
+    if(self = [super init]) {
+        _resultOfStatic = [[NSUserDefaults standardUserDefaults]objectForKey:@"static.data"];
+        NSLog(@"%@",_resultOfStatic.class);
+        if (_resultOfStatic == nil) {
+            _resultOfStatic = [[NSMutableDictionary alloc]init];
+        }
+    }
+    return self;
+}
++(id)alloc
+{
+    @synchronized(self)
+    {
+        static  PeopleNewsStati * myStatic = nil;
+        if (myStatic == nil) {
+            myStatic = [super alloc];
+        }
+        return myStatic;
+    }
+}
++(BOOL)insertNewEventLabel:(NSString *)aString
+{
+    PeopleNewsStati * xxxxx = [PeopleNewsStati sharedStati];
+    NSNumber * num = [xxxxx.resultOfStatic  objectForKey:aString];
+    int  x = -1;
+    if (num == nil) {
+        x = 1;
+    }else
+    {
+        x = [num intValue] + 1;
+    }
+    if (x > 5) {
+        NSString * string = [NSString stringWithFormat:URLPrefix,aString,getLocalMacAddress(),x];
+        NSLog(@"%@",string);
+        ASIHTTPRequest * request = [[ASIHTTPRequest alloc]initWithURL:[NSURL URLWithString:[string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+        NSLog(@"%@",request.url.absoluteString);
+        [request setCompletionBlock:^{
+            NSLog(@"%@",request.responseString);
+            NSRange range = [request.responseString rangeOfString:@"<errorCode>0</errorCode>"];
+            if (range.length > 0) {
+                [xxxxx.resultOfStatic removeObjectForKey:aString];
+            }else
+            {
+                [xxxxx.resultOfStatic setObject:[NSNumber numberWithInt:x] forKey:aString];
+            }
+            [request release];
+        }];
+        [request setFailedBlock:^{
+            
+            [request release];
+        }];
+        [request startAsynchronous];
+    }else
+    {
+        [xxxxx.resultOfStatic setObject:[NSNumber numberWithInt:x] forKey:aString];
+    }
+    return YES;
+}
++(void)saveDataOfStatic
+{
+    NSMutableDictionary * dict  = [PeopleNewsStati sharedStati].resultOfStatic;
+    [[NSUserDefaults standardUserDefaults]setObject:dict forKey:@"static.data"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+@end
 NSString * getLocalMacAddress()
-
 {
     
     int                    mib[6];
@@ -90,51 +160,4 @@ NSString * getLocalMacAddress()
     return [outstring uppercaseString];
     
 }
-@implementation PeopleNewsStati
-+(PeopleNewsStati*)sharedStati
-{
-    static PeopleNewsStati * myStatic = nil;
-    if (myStatic == nil) {
-        myStatic = [[PeopleNewsStati alloc]init];
-    }
-    return myStatic;
-}
--(id)init
-{
-    if (self = [super init]) {
-        _resultOfStatic = [[NSMutableDictionary alloc]init];
-    }
-    return self;
-}
-+(id)alloc
-{
-    @synchronized(self)
-    {
-        static  PeopleNewsStati * myStatic = nil;
-        if (myStatic == nil) {
-            myStatic = [super alloc];
-        }
-        return myStatic;
-    }
-}
-+(BOOL)insertNewEventLabel:(NSString *)aString
-{
-    PeopleNewsStati * xxxxx = [PeopleNewsStati sharedStati];
-    NSNumber * num = [xxxxx.resultOfStatic  objectForKey:aString];
-    int  x = -1;
-    if (num == nil) {
-        x = 1;
-    }else
-    {
-        x = [num intValue] + 1;
-    }
-    if (x > 100) {
-     //   ASIHTTPRequest * request = [ASIHTTPRequest alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:URLPrefix,]]
-    }else
-    {
-       //  [xxxxx.resultOfStatic setObject:[NSNumber numberWithInt:x] forKey:aString];
-    }
-    
 
-}
-@end

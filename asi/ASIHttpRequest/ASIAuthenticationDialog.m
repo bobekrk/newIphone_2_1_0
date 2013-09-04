@@ -26,7 +26,7 @@ static const NSUInteger kDomainSection = 1;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-	return NO;
+	return YES;
 }
 
 @end
@@ -133,7 +133,7 @@ static const NSUInteger kDomainSection = 1;
 {
 	[self showTitle];
 	
-	UIDeviceOrientation o = [[UIApplication sharedApplication] statusBarOrientation];
+	UIInterfaceOrientation o = (UIInterfaceOrientation)[[UIApplication sharedApplication] statusBarOrientation];
 	CGFloat angle = 0;
 	switch (o) {
 		case UIDeviceOrientationLandscapeLeft: angle = 90; break;
@@ -216,7 +216,14 @@ static const NSUInteger kDomainSection = 1;
 
 + (void)dismiss
 {
-	[[sharedDialog parentViewController] dismissModalViewControllerAnimated:YES];
+	if ([sharedDialog respondsToSelector:@selector(presentingViewController)])
+		//[[sharedDialog presentingViewController] dismissModalViewControllerAnimated:YES];
+
+        [[sharedDialog presentingController]dismissViewControllerAnimated:YES completion:nil];
+	else 
+		//[[sharedDialog parentViewController] dismissModalViewControllerAnimated:YES];
+        [[sharedDialog presentingController]dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -233,7 +240,12 @@ static const NSUInteger kDomainSection = 1;
 	if (self == sharedDialog) {
 		[[self class] dismiss];
 	} else {
-		[[self parentViewController] dismissModalViewControllerAnimated:YES];
+		if ([self respondsToSelector:@selector(presentingViewController)])
+			//[[self presentingViewController] dismissModalViewControllerAnimated:YES];
+            [[self presentingController]dismissViewControllerAnimated:YES completion:nil];
+		else
+			//[[self parentViewController] dismissModalViewControllerAnimated:YES];
+            [[self presentingController]dismissViewControllerAnimated:YES completion:nil];
 	}
 }
 
@@ -309,7 +321,8 @@ static const NSUInteger kDomainSection = 1;
 	}
 #endif
 
-	[[self presentingController] presentModalViewController:self animated:YES];
+	//[[self presentingController] presentModalViewController:self animated:YES];
+    [[self presentingController] presentViewController:self animated:YES completion:nil];
 }
 
 #pragma mark button callbacks
@@ -350,7 +363,7 @@ static const NSUInteger kDomainSection = 1;
 - (void)loginWithCredentialsFromDialog:(id)sender
 {
 	for (ASIHTTPRequest *theRequest in [self requestsRequiringTheseCredentials]) {
-
+        
 		NSString *username = [[self usernameField] text];
 		NSString *password = [[self passwordField] text];
 
@@ -442,14 +455,14 @@ static const NSUInteger kDomainSection = 1;
 	NSUInteger r = [indexPath row];
 
 	if (s == kUsernameSection && r == kUsernameRow) {
-		[textField setPlaceholder:@"User"];
+		//[textField setPlaceholder:@"User"];
 	} else if (s == kPasswordSection && r == kPasswordRow) {
-		[textField setPlaceholder:@"Password"];
-		[textField setSecureTextEntry:YES];
+		//[textField setPlaceholder:@"Password"];
+		//[textField setSecureTextEntry:YES];
 	} else if (s == kDomainSection && r == kDomainRow) {
-		[textField setPlaceholder:@"Domain"];
+		//[textField setPlaceholder:@"Domain"];
 	}
-	[cell.contentView addSubview:textField];
+	//[cell.contentView addSubview:textField];
 
 	return cell;
 }

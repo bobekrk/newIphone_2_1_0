@@ -137,7 +137,7 @@ extern NSString * CTSettingCopyMyPhoneNumber();
     _TimeForeground = [date timeIntervalSince1970];
     [date release];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    NSLog(@"%@",CTSettingCopyMyPhoneNumber());
+    //NSLog(@"%@",CTSettingCopyMyPhoneNumber());
     return YES;
 }
 
@@ -259,6 +259,7 @@ extern NSString * CTSettingCopyMyPhoneNumber();
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
+    [PeopleNewsStati saveDataOfStatic];
 }
 
 
@@ -299,6 +300,7 @@ extern NSString * CTSettingCopyMyPhoneNumber();
  */
 - (void)applicationWillTerminate:(UIApplication *)application {
     [self saveContext];
+    [PeopleNewsStati  saveDataOfStatic];
 }
 
 
@@ -518,7 +520,7 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 		[navMoreCtrl release];
 		[moreCtrl release];
 //
-		_rootViewController.fsViewControllers = fsViewCtrls;
+        _rootViewController.fsViewControllers = fsViewCtrls;
 		[fsViewCtrls release];
         
 	}
@@ -712,66 +714,38 @@ extern NSString * CTSettingCopyMyPhoneNumber();
     
     
     mib[0] = CTL_NET;
-    
     mib[1] = AF_ROUTE;
-    
     mib[2] = 0;
-    
     mib[3] = AF_LINK;
-    
     mib[4] = NET_RT_IFLIST;
-    
-    
-    
     if ((mib[5] = if_nametoindex("en0")) == 0) {
-        
         printf("Error: if_nametoindex error\n");
-        
         return NULL;
-        
     }
-    
     
     if (sysctl(mib, 6, NULL, &len, NULL, 0) < 0) {
-        
         printf("Error: sysctl, take 1\n");
-        
         return NULL;
-        
     }
     
-    
     if ((buf = malloc(len)) == NULL) {
-        
         printf("Could not allocate memory. error!\n");
-        
         return NULL;
-        
     }
     
     
     if (sysctl(mib, 6, buf, &len, NULL, 0) < 0) {
-        
         printf("Error: sysctl, take 2");
-        
         free(buf);
-        
         return NULL;
-        
     }
-    
     ifm = (struct if_msghdr *)buf;
-    
     sdl = (struct sockaddr_dl *)(ifm + 1);
-    
     ptr = (unsigned char *)LLADDR(sdl);
-    
     NSString *macString = [NSString stringWithFormat:@"%02X:%02X:%02X:%02X:%02X:%02X",
                            
                            *ptr, *(ptr+1), *(ptr+2), *(ptr+3), *(ptr+4), *(ptr+5)];
-    
     free(buf);
-    
     return macString;
 }
 

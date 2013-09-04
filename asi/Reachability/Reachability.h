@@ -106,6 +106,7 @@
 #import <Foundation/Foundation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <netinet/in.h>
+
 #define USE_DDG_EXTENSIONS 1 // Use DDG's Extensions to test network criteria.
 // Since NSAssert and NSCAssert are used in this code, 
 // I recommend you set NS_BLOCK_ASSERTIONS=1 in the release versions of your projects.
@@ -139,6 +140,7 @@ extern NSString *const kReachabilityChangedNotification;
 @private
 	NSString                *key_;
 	SCNetworkReachabilityRef reachabilityRef;
+
 }
 
 @property (copy) NSString *key; // Atomic because network operations are asynchronous.
