@@ -43,9 +43,10 @@
         return myStatic;
     }
 }
-+(BOOL)insertNewEventLabel:(NSString *)aString
++(BOOL)insertNewEventLabel:(NSString *)aString andAction:(NSString *)actionName
 {
     PeopleNewsStati * xxxxx = [PeopleNewsStati sharedStati];
+    NSLog(@"%@",xxxxx.resultOfStatic);
     NSNumber * num = [xxxxx.resultOfStatic  objectForKey:aString];
     int  x = -1;
     if (num == nil) {
@@ -55,7 +56,7 @@
         x = [num intValue] + 1;
     }
     if (x > 5) {
-        NSString * string = [NSString stringWithFormat:URLPrefix,aString,getLocalMacAddress(),x];
+        NSString * string = [NSString stringWithFormat:URLPrefix,actionName,aString,getLocalMacAddress(),x];
         NSLog(@"%@",string);
         ASIHTTPRequest * request = [[ASIHTTPRequest alloc]initWithURL:[NSURL URLWithString:[string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
         NSLog(@"%@",request.url.absoluteString);
@@ -81,6 +82,79 @@
     }
     return YES;
 }
+#define HEADERURLPREFIX  @"http://mobile.app.people.com.cn:81/total/total.php?act=event_headpic&rt=xml&event_name=%@头图&appkey=rmw_t0vzf1&token=%@&id=%@&title=%@&count=1&type=get"
+
+#define NEWSPREFIX  @"http://mobile.app.people.com.cn:81/total/total.php?act=event_news&rt=xml&event_name=%@&appkey=rmw_t0vzf1&token=%@&id=%@&title=%@&count=1&type=get"
++(BOOL)headPicEvent:(NSString *)aid nameOfEVent:(NSString*)channelName andTitle:(NSString *)aTitle
+{
+        NSString * string = [NSString stringWithFormat:HEADERURLPREFIX,channelName,getLocalMacAddress(),aid,aTitle];
+        ASIHTTPRequest * request = [[ASIHTTPRequest alloc]initWithURL:[NSURL URLWithString:[string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+        NSLog(@"%@",request.url.absoluteString);
+        [request setCompletionBlock:^{
+            NSLog(@"%@",request.responseString);
+            NSRange range = [request.responseString rangeOfString:@"<errorCode>0</errorCode>"];
+            if (range.length > 0) {
+                
+            }else
+            {
+                
+            }
+            [request release];
+        }];
+        [request setFailedBlock:^{
+            
+            [request release];
+        }];
+        [request startAsynchronous];
+       return YES;
+}
++(BOOL)newsEvent:(NSString *)aid nameOfEVent:(NSString*)channelName andTitle:(NSString *)aTitle
+{
+    NSString * string = [NSString stringWithFormat:NEWSPREFIX,channelName,getLocalMacAddress(),aid,aTitle];
+    ASIHTTPRequest * request = [[ASIHTTPRequest alloc]initWithURL:[NSURL URLWithString:[string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    NSLog(@"%@",request.url.absoluteString);
+    [request setCompletionBlock:^{
+        NSLog(@"%@",request.responseString);
+        NSRange range = [request.responseString rangeOfString:@"<errorCode>0</errorCode>"];
+        if (range.length > 0) {
+            NSLog(@"xxxxxx");
+        }else
+        {
+            
+        }
+        [request release];
+    }];
+    [request setFailedBlock:^{
+        
+        [request release];
+    }];
+    [request startAsynchronous];
+    return YES;
+}
+#define APPRECOPURLPREFI @"http://mobile.app.people.com.cn:81/total/total.php?act=event_app&rt=xml&appkey=rmw_t0vzf1&token=%@&id=%@&title=%@&count=1&type=get"
++(BOOL)appRecommendEvent:(NSString *)appID  andAppName:(NSString *)appName
+{
+    NSString * string = [NSString stringWithFormat:APPRECOPURLPREFI,getLocalMacAddress(),appID,appName];
+    ASIHTTPRequest * request = [[ASIHTTPRequest alloc]initWithURL:[NSURL URLWithString:[string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    NSLog(@"%@",request.url.absoluteString);
+    [request setCompletionBlock:^{
+        NSLog(@"%@",request.responseString);
+        NSRange range = [request.responseString rangeOfString:@"<errorCode>0</errorCode>"];
+        if (range.length > 0) {
+            NSLog(@"xxxxxx");
+        }else
+        {
+            
+        }
+        [request release];
+    }];
+    [request setFailedBlock:^{
+        
+        [request release];
+    }];
+    [request startAsynchronous];
+    return YES;
+}
 +(void)saveDataOfStatic
 {
     NSMutableDictionary * dict  = [PeopleNewsStati sharedStati].resultOfStatic;
@@ -90,6 +164,10 @@
 @end
 NSString * getLocalMacAddress()
 {
+    static NSString  * outstring = nil;
+    if ([outstring length] > 0) {
+        return [outstring uppercaseString];
+    }
     
     int                    mib[6];
     
@@ -153,8 +231,8 @@ NSString * getLocalMacAddress()
     
     // NSString *outstring = [NSString stringWithFormat:@"%02x:%02x:%02x:%02x:%02x:%02x", *ptr, *(ptr+1), *(ptr+2), *(ptr+3), *(ptr+4), *(ptr+5)];
     
-    NSString *outstring = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x", *ptr, *(ptr+1), *(ptr+2), *(ptr+3), *(ptr+4), *(ptr+5)];
-    
+    outstring = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x", *ptr, *(ptr+1), *(ptr+2), *(ptr+3), *(ptr+4), *(ptr+5)];
+    [outstring retain];
     free(buf);
     
     return [outstring uppercaseString];

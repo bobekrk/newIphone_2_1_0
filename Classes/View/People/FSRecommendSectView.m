@@ -154,6 +154,7 @@
         //lab_title.frame = CGRectMake(space+(MORE_LIST_PEOPLEAPP_ICON_HEIGHT+space)*i+3, MORE_LIST_PEOPLEAPP_ICON_HEIGHT+5, MORE_LIST_PEOPLEAPP_ICON_HEIGHT, 20);
         lab_title.frame = CGRectMake( left_right + (space+Mspace) * i, 28+MORE_LIST_PEOPLEAPP_ICON_HEIGHT, space, 18);
         [_scrollView addSubview:lab_title];
+        [lab_title setAdjustsFontSizeToFitWidth:YES];
         [lab_title release];
         
         //set the button under the image

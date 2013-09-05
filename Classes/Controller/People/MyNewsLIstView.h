@@ -23,6 +23,7 @@
     BOOL                             _isfirstShow;
     int                              _currentIndex;
     FSOneDayNewsObject              *_currentObject;
+    NSString                        *_channelName;
 }
 -(id)initWithChanel:(FS_GZF_ChannelListDAO*)aDao currentIndex:(int)index parentViewController:(UIViewController*)aController;
 @property(nonatomic,assign)int currentIndex;

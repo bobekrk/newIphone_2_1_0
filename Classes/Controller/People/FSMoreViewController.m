@@ -345,6 +345,7 @@
     if (obj.currentIndex>=0 && obj.currentIndex < [_fs_GZF_AppRecommendDAO.objectList count]) {
         NSLog(@"1111");
         FSRecommentAPPObject *objc = [_fs_GZF_AppRecommendDAO.objectList objectAtIndex:obj.currentIndex];
+        [PeopleNewsStati appRecommendEvent:objc.appid andAppName:objc.appName];
         [self addMyWebView:objc];
     }
     

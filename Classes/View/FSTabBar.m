@@ -94,7 +94,7 @@
         default:
             break;
     }
-    [PeopleNewsStati insertNewEventLabel:string];
+    [PeopleNewsStati insertNewEventLabel:string andAction:TABBARCLICK];
 }
 - (void)setFsSelectedIndex:(NSInteger)value {
 	_fsSelectedIndex = value;

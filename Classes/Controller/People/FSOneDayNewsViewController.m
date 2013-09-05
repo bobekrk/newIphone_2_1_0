@@ -270,6 +270,7 @@
     if (section <= [_sectionMessage count]) {
         FSSectionObject *Obj = [_sectionMessage objectAtIndex:section-1];
         FSOneDayNewsObject *o = [_newsListData.objectList objectAtIndex:Obj.sectionBeginIndex+row];
+        [PeopleNewsStati newsEvent:o.newsid nameOfEVent:@"头条" andTitle:o.title];
         [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:o.newsid];
         [[NSUserDefaults standardUserDefaults]synchronize];
         FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
@@ -301,6 +302,7 @@
         id  oo = [_myArry objectAtIndex:index];
         if ([oo isKindOfClass:[FSFocusTopObject class]]) {
             FSFocusTopObject * o = oo;
+            [PeopleNewsStati  headPicEvent:o.newsid nameOfEVent:@"头条" andTitle:o.title];
             if ([o.flag isEqualToString:@"1"]) {
                 FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
                 

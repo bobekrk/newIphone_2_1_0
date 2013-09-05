@@ -165,8 +165,15 @@
     [self changeButtonColor:x];
     _currentIndex = x;
 }
+-(void)addStatic:(NSString*)channelName
+{
+    NSLog(@"%@",channelName);
+    [PeopleNewsStati insertNewEventLabel:channelName andAction:CHANNELSELECT];
+}
 -(void)changeButtonColor:(int)index
 {
+    FSChannelObject *aObject = [_fs_GZF_ChannelListDAO.objectList objectAtIndex:index];
+    [self performSelectorInBackground:@selector(addStatic:) withObject:aObject.channelname];
     [UIView beginAnimations:@"sdfsadfsafsa" context:nil];
     [UIView setAnimationDuration:0.1];
      [UIView commitAnimations];

@@ -55,6 +55,7 @@
         _fs_GZF_ForNewsListDAO.channelid           = xxx.channelid;
         _fs_GZF_ForNewsListDAO.lastid              = nil;
         _isfirstShow                               = NO;
+        _channelName                               = xxx.channelname;
         NSLog(@"%@",xxx.channelid);
         int x = [[[xxx.channelid componentsSeparatedByString:@"_"] objectAtIndex:1] intValue];
         switch (x) {
@@ -489,6 +490,7 @@
             }
         }
         FSFocusTopObject *o = [_fs_GZF_ForOnedayNewsFocusTopDAO.objectList objectAtIndex:index];
+        [PeopleNewsStati  headPicEvent:o.newsid nameOfEVent:_channelName andTitle:o.title];
         if ([o.flag isEqualToString:@"1"]) {
             FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
             
@@ -532,6 +534,7 @@
         cell.leftView.backgroundColor     = [UIColor redColor];
         cell.lab_NewsTitle.textColor      = [UIColor grayColor];
         FSOneDayNewsObject *o = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
+        [PeopleNewsStati newsEvent:o.newsid nameOfEVent:_channelName andTitle:o.title];
         int i = 0;
         for (FSOneDayNewsObject * obj in _fs_GZF_ForNewsListDAO.objectList) {
             if ([obj.newsid isEqualToString:self.currentNewsId] && ![o.newsid isEqualToString:self.currentNewsId]) {
@@ -558,6 +561,7 @@
     }
     else{
         FSOneDayNewsObject *o                                        = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
+        
         FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
         fsNewsContainerViewController.obj                            = o;
         fsNewsContainerViewController.FCObj                          = nil;

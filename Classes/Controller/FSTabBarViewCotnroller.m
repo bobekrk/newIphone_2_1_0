@@ -27,6 +27,7 @@
 	self = [super init];
 	if (self) {
 		self.hideWhenNavigation = YES;
+        _fsTabBar.fsSelectedIndex = 0;
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheTabBarIndex) name:@"changeTheTabBarIndex" object:nil];
 	}
 	return self;
@@ -51,6 +52,7 @@
 	self.view.backgroundColor = [UIColor blackColor];
 	
 	[self inner_initializeFSViewControllers];
+    _fsTabBar.fsSelectedIndex = 0;
 	
 }
 

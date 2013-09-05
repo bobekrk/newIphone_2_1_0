@@ -146,8 +146,10 @@
     FSImagesScrInRowView *o = (FSImagesScrInRowView *)sender;
     if (o.isMove) {
         if ([_fsImagesScrInRowView.objectList count]>o.imageIndex) {
-            if (o.imageIndex != 1) {
-                FSFocusTopObject *oo = [_fsImagesScrInRowView.objectList objectAtIndex:o.imageIndex];
+            id ooo = [_fsImagesScrInRowView.objectList objectAtIndex:o.imageIndex];
+            if ([ooo isKindOfClass:[FSFocusTopObject class]]) {
+            
+                FSFocusTopObject *oo = ooo;
                 _fsNewsListTopCellTextFloatView.data = oo;
                 
                 //            _lab_VisitVolume.text = [NSString stringWithFormat:@"%d",[oo.browserCount integerValue]];
@@ -163,7 +165,7 @@
             }
             else
             {
-                FSLoadingImageObject *oo = [_fsImagesScrInRowView.objectList objectAtIndex:o.imageIndex];
+                FSLoadingImageObject *oo = ooo;
                 _fsNewsListTopCellTextFloatView.data = oo;
                 
                 //            _lab_VisitVolume.text = [NSString stringWithFormat:@"%d",[oo.browserCount integerValue]];

@@ -457,9 +457,13 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 
 #pragma mark -
 #pragma mark PrivateMethod
-
+-(void)loading
+{
+    [PeopleNewsStati insertNewEventLabel:LOADING andAction:TABBARCLICK];
+}
 -(void)showLoadingView{
     float xxx = ISIPHONE5?548:460;
+    [self performSelectorInBackground:@selector(loading) withObject:nil];
     FSLoadingImageView *loadingView = [[FSLoadingImageView alloc] initWithFrame:CGRectMake(0, 0, 320, xxx)];
     loadingView.userInteractionEnabled = YES;
     //loadingView.parentDelegate = self;
@@ -481,7 +485,6 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 	if (_rootViewController == nil) {
 		NSMutableArray *fsViewCtrls = [[NSMutableArray alloc] init];
 		_rootViewController = [[FSTabBarViewCotnroller alloc] init];
-        
         
 		//1.
 		FSOneDayNewsViewController *oneDayNewsCtrl = [[FSOneDayNewsViewController alloc] init];
@@ -547,10 +550,6 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 }
 
 - (void)fsChannelSettingForOneDayViewControllerDidDisapper:(FSChannelSettingForOneDayViewController *)sender {
-//	self.window.rootViewController = _slideViewController;
-//	[_navChannelSettingController.view removeFromSuperview];
-//	[_navChannelSettingController release];
-//	_navChannelSettingController = nil;
     [self showMainUserInterface];
 }
 -(void)showFirstLoad

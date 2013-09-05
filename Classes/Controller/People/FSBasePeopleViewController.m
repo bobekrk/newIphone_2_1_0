@@ -32,8 +32,13 @@
     [_fsWeatherView release];
     [super dealloc];
 }
+-(void)xxxxxxxxxxx
+{
+    [PeopleNewsStati insertNewEventLabel:LOADING andAction:TABBARCLICK];
+}
 -(void)showLoadingView{
     float xxx = ISIPHONE5?548:460;
+    [self performSelectorInBackground:@selector(xxxxxxxxxxx) withObject:nil];
     UIWindow * window = [UIApplication sharedApplication].keyWindow;
     
     FSLoadingImageView *loadingView = [[FSLoadingImageView alloc] initWithFrame:CGRectMake(-320, 0, 320, xxx)];
