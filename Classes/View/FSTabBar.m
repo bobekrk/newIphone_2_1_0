@@ -26,7 +26,7 @@
     
     self = [super initWithFrame:frame];
     if (self) {
-        _fsSelectedIndex = -1;
+        _fsSelectedIndex = 0;
 		_currentSelectedItem = nil;
 		
         UIColor *colorBG = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"tabBarBG.png"]];
