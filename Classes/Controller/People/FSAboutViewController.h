@@ -8,14 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "FSBaseDataViewController.h"
-
+#import "FSBasePeopleViewController.h"
+#import "FSBaseSettingViewController.h"
 @class FSAboutContaierView;
  
-
-@interface FSAboutViewController : FSBaseDataViewController{
+@interface FSAboutViewController : FSBaseSettingViewController{
 @protected
     FSAboutContaierView *_fsAboutContaierView;
-    //UINavigationBar *_navTopBar;
 }
 
 @end
