@@ -97,6 +97,7 @@
 
 - (void)layoutControllerViewWithRect:(CGRect)rect {
     rect.origin.y = self.canBeHaveNaviBar?44:0;
+    rect.size.height -= (self.canBeHaveNaviBar?44:0);
     _fsMoreContainerView.frame = rect;
 }
 
@@ -314,6 +315,8 @@
         
         if (row == 2) {
             FSAboutViewController *fsAboutViewController = [[FSAboutViewController alloc] init];
+            fsAboutViewController.isnavTopBar            = YES;
+            fsAboutViewController.title                  = NSLocalizedString(@"关于我们", nil);
             [self.navigationController pushViewController:fsAboutViewController animated:YES];
             [fsAboutViewController release];
         }
