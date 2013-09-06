@@ -96,7 +96,7 @@
     }
     [PeopleNewsStati insertNewEventLabel:string andAction:TABBARCLICK];
     BaiduMobStat* statTracker = [BaiduMobStat defaultStat];
-    [statTracker logEvent:TABBARCLICK eventLabel:[NSString stringWithFormat: @"Tab%@", string]];
+    [statTracker logEvent:TABBARCLICK eventLabel:string];
 }
 - (void)setFsSelectedIndex:(NSInteger)value {
 	_fsSelectedIndex = value;
