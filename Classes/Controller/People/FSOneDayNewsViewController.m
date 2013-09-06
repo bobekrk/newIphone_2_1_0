@@ -35,6 +35,7 @@
 
 - (id)init {
 	self = [super init];
+        self.wantsFullScreenLayout = YES;
 	if (self) {
 		
 	}
