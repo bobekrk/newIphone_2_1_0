@@ -13,6 +13,7 @@
     #import <UIKit/UIKit.h>
     #import <CoreData/CoreData.h>
     #import "PeopleNewsStati.h"
+    #import "BaiduMobStat.h"
 #endif
 
 //#define RELEASE
@@ -37,3 +38,6 @@
 //#define QQSECRET  @"ac84e250295bbbfa85b6d0784b0ffb02"
 //#define REDIRECTURL @"http://weibo.com/u/1160145827"
 #define QQREDIRECTURL @"http://mobile.app.people.com.cn/soft/peopleclient.apk"
+
+
+#define BAIDUAPPKEY   @"0e2f90a612"

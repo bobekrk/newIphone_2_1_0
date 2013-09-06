@@ -138,7 +138,26 @@ extern NSString * CTSettingCopyMyPhoneNumber();
     [date release];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     //NSLog(@"%@",CTSettingCopyMyPhoneNumber());
+    [PeopleNewsStati sharedStati].timeOfAppOpen = time(NULL);
+    if (launchOptions == nil) {
+        [self performSelectorInBackground:@selector(xxxxx) withObject:nil];
+    }
+    
+    
+    BaiduMobStat* statTracker = [BaiduMobStat defaultStat];
+    statTracker.enableExceptionLog = YES; // 是否允许截获并发送崩溃信息，请设置YES或者NO
+    statTracker.channelId = @"AppStore";//设置您的app的发布渠道
+    statTracker.logStrategy = BaiduMobStatLogStrategyCustom;//根据开发者设定的时间间隔接口发送 也可以使用启动时发送策略
+    statTracker.logSendInterval = 1;  //为1时表示发送日志的时间间隔为1小时
+    statTracker.logSendWifiOnly = YES; //是否仅在WIfi情况下发送日志数据
+    statTracker.sessionResumeInterval = 60;//设置应用进入后台再回到前台为同一次session的间隔时间[0~600s],超过600s则设为600s，默认为30s
+    //statTracker.shortAppVersion  =]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
+    [statTracker startWithAppId:BAIDUAPPKEY];//设置您在mtj网站上添加的app的appkey
     return YES;
+}
+-(void)xxxxx
+{
+    [PeopleNewsStati appOpenStatic];
 }
 
 
@@ -255,6 +274,7 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+    
     /*
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -264,6 +284,7 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    [PeopleNewsStati  appExitStatic];
     /*
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
@@ -273,6 +294,8 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [PeopleNewsStati sharedStati].timeOfAppOpen = time(NULL);
+    [self performSelectorInBackground:@selector(xxxxx) withObject:nil];
     /*
      Called as part of the transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
      */
@@ -299,8 +322,9 @@ extern NSString * CTSettingCopyMyPhoneNumber();
  applicationWillTerminate: saves changes in the application's managed object context before the application terminates.
  */
 - (void)applicationWillTerminate:(UIApplication *)application {
-    [self saveContext];
-    [PeopleNewsStati  saveDataOfStatic];
+    //[self saveContext];
+    //[PeopleNewsStati  saveDataOfStatic];
+    [PeopleNewsStati  appExitStatic];
 }
 
 
