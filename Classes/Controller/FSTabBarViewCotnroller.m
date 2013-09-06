@@ -27,14 +27,17 @@
 	self = [super init];
 	if (self) {
 		self.hideWhenNavigation = YES;
-        _fsTabBar.fsSelectedIndex = 0;
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheTabBarIndex) name:@"changeTheTabBarIndex" object:nil];
+        //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTheTabBarIndex) name:@"changeTheTabBarIndex" object:nil];
 	}
 	return self;
 }
--(void)changeTheTabBarIndex
+//-(void)changeTheTabBarIndex
+//{
+//    _fsTabBar.fsSelectedIndex = 0;
+//}
+-(void)viewDidLoad
 {
-    _fsTabBar.fsSelectedIndex = 0;
+    //[self fsTabBarDidSelected:_fsTabBar withFsTabIndex:0];
 }
 
 - (void)dealloc {
@@ -43,17 +46,18 @@
 }
 
 - (void)loadChildView {
+    self.view.backgroundColor = [UIColor whiteColor];
 	_fsTabBar = [[FSTabBar alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - FSTABBAR_HEIGHT, self.view.frame.size.width, FSTABBAR_HEIGHT)];
+    
 	[_fsTabBar setParentDelegate:self];
-    _fsTabBar.fsSelectedIndex = 0;
-	[self.view addSubview:_fsTabBar];
+   	[self.view addSubview:_fsTabBar];
     [_fsTabBar release];
-	
-	self.view.backgroundColor = [UIColor blackColor];
-	
+		self.view.backgroundColor = [UIColor blackColor];
 	[self inner_initializeFSViewControllers];
+    
     _fsTabBar.fsSelectedIndex = 0;
-	
+    
+
 }
 
 
@@ -64,16 +68,17 @@
 	
 	_fsViewControllers = [value retain];
 	
-	[self inner_initializeFSViewControllers];
+	//[self inner_initializeFSViewControllers];
 }
 
 - (void)layoutControllerViewWithRect:(CGRect)rect {
 	_fsTabBar.frame = CGRectMake(0.0f, rect.size.height - FSTABBAR_HEIGHT, rect.size.width, FSTABBAR_HEIGHT);
 	
-	CGRect rClient = CGRectMake(0.0f, 0.0f, rect.size.width, rect.size.height - FSTABBAR_HEIGHT);
-	if (!CGRectEqualToRect(rClient, _fsSelectedViewController.view.frame)) {
-		_fsSelectedViewController.view.frame = rClient;
-	}
+	//CGRect rClient = CGRectMake(0.0f, 0.0f, rect.size.width, rect.size.height - FSTABBAR_HEIGHT);
+//	if (!CGRectEqualToRect(rClient, _fsSelectedViewController.view.frame)) {
+//		_fsSelectedViewController.view.frame = rClient;
+//	}
+    _fsSelectedViewController.view.frame = rect;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -98,13 +103,13 @@
 			
 			//新选择的
 			
-			if ([fsViewController isKindOfClass:[UINavigationController class]]) {
-				fsViewController.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height - FSTABBAR_HEIGHT);
-			}
+//			if ([fsViewController isKindOfClass:[UINavigationController class]]) {
+//				fsViewController.view.frame = CGRectMake(0.0f, 50, self.view.frame.size.width, self.view.frame.size.height - FSTABBAR_HEIGHT);
+//			}
 			
-			
+
 			//继承触发
-			
+
 			[self.view addSubview:fsViewController.view];
             [self.view bringSubviewToFront:_fsTabBar];
 
