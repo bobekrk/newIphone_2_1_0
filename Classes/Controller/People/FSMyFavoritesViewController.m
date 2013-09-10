@@ -27,21 +27,25 @@
     [super dealloc];
 }
 
+-(NSString *)setTitle{
+    return @"我的收藏";
+}
+
 - (void)loadChildView {
-    
+    [super loadChildView];
     self.title = NSLocalizedString(@"我的收藏", nil);
-    UIButton *returnBT = [[UIButton alloc] init];
-    [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
-    //[returnBT setTitle:NSLocalizedString(@"返回", nil) forState:UIControlStateNormal];
-    returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
-    [returnBT addTarget:self action:@selector(backItemAction:) forControlEvents:UIControlEventTouchUpInside];
-    [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
-    returnBT.frame = CGRectMake(0, 0, 55, 30);
-    
-	UIBarButtonItem *leftBackItem = [[UIBarButtonItem alloc] initWithCustomView:returnBT];
-	self.navigationItem.leftBarButtonItem =leftBackItem;
-	[leftBackItem release];
-    [returnBT release];
+//    UIButton *returnBT = [[UIButton alloc] init];
+//    [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
+//    //[returnBT setTitle:NSLocalizedString(@"返回", nil) forState:UIControlStateNormal];
+//    returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
+//    [returnBT addTarget:self action:@selector(backItemAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
+//    returnBT.frame = CGRectMake(0, 0, 55, 30);
+//    
+//	UIBarButtonItem *leftBackItem = [[UIBarButtonItem alloc] initWithCustomView:returnBT];
+//	self.navigationItem.leftBarButtonItem =leftBackItem;
+//	[leftBackItem release];
+//    [returnBT release];
 	
 	_fsMyFaverateContainView = [[FSMyFaverateContainView alloc] init];
     _fsMyFaverateContainView.parentDelegate = self;
@@ -61,7 +65,7 @@
 
 -(void)layoutControllerViewWithRect:(CGRect)rect{
     
-    _fsMyFaverateContainView.frame = rect;
+    _fsMyFaverateContainView.frame = CGRectMake(0, 44, 320, self.view.frame.size.height - 44);
     
      
 }

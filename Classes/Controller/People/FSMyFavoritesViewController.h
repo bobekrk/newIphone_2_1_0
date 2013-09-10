@@ -9,12 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "FSBaseDataViewController.h"
 #import "FSMyFaverateContainView.h"
+#import "FSBaseSettingViewController.h"
 
-
-@interface FSMyFavoritesViewController : FSBaseDataViewController <FSTableContainerViewDelegate>{
+@interface FSMyFavoritesViewController : FSBaseSettingViewController <FSTableContainerViewDelegate>{
 @protected
     FSMyFaverateContainView *_fsMyFaverateContainView;
     NSArray *_array;
 }
-
 @end
