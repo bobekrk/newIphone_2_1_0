@@ -30,7 +30,7 @@
 - (id)init {
 	self = [super init];
 	if (self) {
-        
+        self.isListStyle = YES;
         NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceNow:0];
         _TimeInterval = [date timeIntervalSince1970];
 		[date release];
@@ -58,7 +58,7 @@
     [_scrollPageView addGestureRecognizer:tapGes];
     [tapGes release];
     
-    [self.view addSubview:_scrollPageView];
+    //[self.view addSubview:_scrollPageView];
     if (ISIPHONE5) {
         _deepFloattingTitleView = [[FSDeepFloatingTitleView alloc] initWithFrame:CGRectMake(0.0f, self.view.frame.size.height - FLOATTING_HEIGHT-20, self.view.frame.size.width, FLOATTING_HEIGHT)];
          [self.view addSubview:_deepFloattingTitleView];
@@ -70,6 +70,7 @@
     _myDeepListView = [[LygDeepListView alloc]initWithDeepListDao:_fs_GZF_DeepListDAO initDelegate:self];
     float xxxx      = ISIPHONE5?(548 - 44 - 44):(460 - 44 - 44);
     _myDeepListView.frame = CGRectMake(0, 44, 320, xxxx);
+    [self.view addSubview:_myDeepListView];
 }
 
 - (void)ownerNonPicture {
@@ -103,11 +104,12 @@
     self.myNaviBar.topItem.leftBarButtonItem = nil;
     self.myNaviBar.topItem.rightBarButtonItem = nil;
     
-    UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithTitle:@"列表" style:UIBarButtonItemStyleBordered target:self action:@selector(changeStyleOfDeepList)];
+    UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithTitle:@"封面" style:UIBarButtonItemStyleBordered target:self action:@selector(changeStyleOfDeepList)];
     item.tintColor         = [UIColor whiteColor];
-    
-    NSDictionary * dication = [NSDictionary dictionaryWithObject:[UIColor grayColor] forKey:UITextAttributeTextColor];
+    NSDictionary * dication            = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor darkGrayColor],UITextAttributeTextColor,[NSValue valueWithUIOffset:UIOffsetMake(0, 0)],UITextAttributeTextShadowOffset,nil];
+    //NSDictionary * dication = [NSDictionary dictionaryWithObject:[UIColor grayColor] forKey:UITextAttributeTextColor];
     [item setTitleTextAttributes:dication forState:UIControlStateNormal];
+    [item setTitleTextAttributes:dication forState:UIControlStateHighlighted];
     self.myNaviBar.topItem.rightBarButtonItem = item;
     [item release];
     
@@ -294,6 +296,7 @@
         //[_scrollPageView performSelector:@selector(dissMissRefreshView) withObject:nil afterDelay:10];
         [_scrollPageView dissMissRefreshView];
     }
+    [_myDeepListView loaddingComplete];
 }
 
 - (void)handleGesture:(UIGestureRecognizer *)gest {
