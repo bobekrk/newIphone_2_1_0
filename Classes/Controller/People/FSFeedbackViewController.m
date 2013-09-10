@@ -55,7 +55,7 @@
 //
 //    UIBarButtonItem * rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonItemStylePlain target:self action:@selector(sendFeedBackMessage:)];
     UIBarButtonItem * rightButton = [[UIBarButtonItem alloc]initWithTitle:@"发送" style:UIBarButtonItemStyleBordered target:self action:@selector(sendFeedBackMessage:)];
-    NSDictionary * dict2            = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor darkGrayColor],UITextAttributeTextColor,nil];
+    NSDictionary * dict2            = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor darkGrayColor],UITextAttributeTextColor,[NSValue valueWithUIOffset:UIOffsetMake(0, 0)],UITextAttributeTextShadowOffset,nil];
     [rightButton setTitleTextAttributes:dict2 forState:UIControlStateNormal];
     rightButton.tintColor         = [UIColor whiteColor];
     _navTopBar.topItem.rightBarButtonItem = rightButton;
