@@ -208,7 +208,11 @@
 {
     //[self performSelectorInBackground:@selector(xxxxx) withObject:nil];
     UIViewController * temp = (UIViewController *)(((FSNewsContainerView*)(self.parentDelegate)).parentDelegate);
-    [temp.navigationController popViewControllerAnimated:YES];
+    BOOL canReturn = [((FSNewsContainerView*)(self.parentDelegate))  goBackToBeforePage];
+    if (canReturn) {
+        [temp.navigationController popViewControllerAnimated:YES];
+    }
+
 }
 
 -(void)faverate:(id)sender{

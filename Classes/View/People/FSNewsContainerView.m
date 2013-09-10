@@ -42,6 +42,22 @@
     // Drawing code
 }
 */
+-(BOOL)goBackToBeforePage
+{
+
+    if (self.fsNewsContainerWebView.hasebeenLoad == 100) {
+        if ([self.fsNewsContainerWebView.webContent canGoBack]) {
+            [self.fsNewsContainerWebView.webContent goBack];
+        }else
+        {
+            [self.fsNewsContainerWebView loadWebPageWithContent:nil];
+        }
+        return NO;
+    }else
+    {
+        return YES;
+    }
+}
 
 -(void)doSomethingAtDealloc{
     
@@ -58,10 +74,10 @@
     
     _isFullScream = NO;
     
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor redColor];
 
     _fsNewsContainerWebView = [[FSNewsContainerWebView alloc] init];
-    _fsNewsContainerWebView.backgroundColor = [UIColor whiteColor];
+    _fsNewsContainerWebView.backgroundColor = [UIColor colorWithRed:239.0/255 green:239.0/255 blue:240.0/255 alpha:1];
     _fsNewsContainerWebView.parentDelegate = self;
     [self addSubview:_fsNewsContainerWebView];
     [_fsNewsContainerWebView release];

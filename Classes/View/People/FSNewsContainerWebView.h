@@ -33,6 +33,7 @@
 @property (nonatomic,assign) BOOL hasebeenLoad;
 @property (nonatomic,assign) TouchEvenKind touchEvenKind;
 @property (nonatomic,retain) UIWebView * webContent;
+@property (nonatomic,assign) int hasLoaded;
 -(void)loadWebPageWithContent:(NSString *)contentFile;
 
 -(NSString *)processBodyImages:(NSString *)templateString;

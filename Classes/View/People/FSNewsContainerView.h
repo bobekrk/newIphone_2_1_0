@@ -41,11 +41,10 @@
 @property (nonatomic,assign) BOOL                 isFirstShow;
 @property (nonatomic,assign) BOOL                 isFullScream;
 @property (nonatomic,retain) FSNewsContainerWebView    *fsNewsContainerWebView;
-
 -(CGFloat)getCommentListHeight;
 
 -(void)showViewDelate;
-
+-(BOOL)goBackToBeforePage;
 -(void)didReciveComment:(NSArray *)CommentArray;
 
 @end
