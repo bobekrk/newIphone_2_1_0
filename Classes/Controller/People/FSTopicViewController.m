@@ -140,9 +140,9 @@
     pageContainerCtrl.Deep_title                     = topicObj.title;
     pageContainerCtrl.newsAbstract                   = topicObj.news_abstract;
     [PeopleNewsStati deepStatideepID:pageContainerCtrl.deepid deepTitle:pageContainerCtrl.Deep_title];
-    [self.navigationController pushViewController:pageContainerCtrl animated:YES];
+    [self.parentNavigationController pushViewController:pageContainerCtrl animated:YES];
+    //[self.navigationController pushViewController:pageContainerCtrl animated:YES];
     [pageContainerCtrl release];
-
 }
 
 -(void)doSomethingForViewFirstTimeShow{
@@ -309,7 +309,8 @@
                 pageContainerCtrl.Deep_title                     = topicObj.title;
                 pageContainerCtrl.newsAbstract                   = topicObj.news_abstract;
                 [PeopleNewsStati deepStatideepID:pageContainerCtrl.deepid deepTitle:pageContainerCtrl.Deep_title];
-                [self.navigationController pushViewController:pageContainerCtrl animated:YES];
+                [self.parentNavigationController pushViewController:pageContainerCtrl animated:YES];
+                //[self.navigationController pushViewController:pageContainerCtrl animated:YES];
                 [pageContainerCtrl release];
             }
         }

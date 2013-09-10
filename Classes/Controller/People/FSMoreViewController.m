@@ -273,7 +273,8 @@
             FSNewsTextFontSettingController *fsSettingViewController = [[FSNewsTextFontSettingController alloc] init];
             fsSettingViewController.isnavTopBar                      = YES;
             //[self.navigationController presentModalViewController:fsSettingViewController animated:YES];
-            [self.navigationController pushViewController:fsSettingViewController animated:YES];
+            [self.parentNavigationController pushViewController:fsSettingViewController animated:YES];
+           // [self.navigationController pushViewController:fsSettingViewController animated:YES];
             fsSettingViewController.navigationController.navigationBarHidden = YES;
             [fsSettingViewController release];
             
@@ -284,7 +285,8 @@
             FSChannelSettingForOneDayViewController *fsChannelSettingForOneDayViewController = [[FSChannelSettingForOneDayViewController alloc] init];
             [self.fsTabBarViewController setTabBarHided:YES withAnimation:NO];
             fsChannelSettingForOneDayViewController.isReSetting = YES;
-            [self.navigationController presentModalViewController:fsChannelSettingForOneDayViewController animated:YES];
+            //[self.parentNavigationController presentModalViewController:fsChannelSettingForOneDayViewController animated:YES];
+            [self.parentNavigationController pushViewController:fsChannelSettingForOneDayViewController animated:YES];
             //[self.navigationController pushViewController:fsChannelSettingForOneDayViewController animated:YES];
             [fsChannelSettingForOneDayViewController release];
             
@@ -294,7 +296,8 @@
             FSAuthorizationViewController *fsAuthorizationViewController = [[FSAuthorizationViewController alloc] init];
             fsAuthorizationViewController.isnavTopBar                    = YES;
             //[self.navigationController presentModalViewController:fsAuthorizationViewController animated:YES];
-            [self.navigationController pushViewController:fsAuthorizationViewController animated:YES];
+            //[self.parentNavigationController presentModalViewController:fsAuthorizationViewController animated:YES];
+            [self.parentNavigationController pushViewController:fsAuthorizationViewController animated:YES];
             [fsAuthorizationViewController release];
         }
     }
@@ -302,7 +305,10 @@
     if (section == 2) {
         if (row == 0) {
             FSFeedbackViewController *fsFeedbackViewController = [[FSFeedbackViewController alloc] init];
-            [self.navigationController presentModalViewController:fsFeedbackViewController animated:YES];
+            fsFeedbackViewController.isnavTopBar               = YES;
+            fsFeedbackViewController.title                     = NSLocalizedString(@"意见反馈", nil);
+            //[self.navigationController presentModalViewController:fsFeedbackViewController animated:YES];
+            [self.parentNavigationController pushViewController:fsFeedbackViewController animated:YES];
             [fsFeedbackViewController release];
             
         }
@@ -317,7 +323,8 @@
             FSAboutViewController *fsAboutViewController = [[FSAboutViewController alloc] init];
             fsAboutViewController.isnavTopBar            = YES;
             fsAboutViewController.title                  = NSLocalizedString(@"关于我们", nil);
-            [self.navigationController pushViewController:fsAboutViewController animated:YES];
+            //[self.navigationController pushViewController:fsAboutViewController animated:YES];
+            [self.parentNavigationController pushViewController:fsAboutViewController animated:YES];
             [fsAboutViewController release];
         }
     }
@@ -383,7 +390,8 @@
         FSAppStoreViewController *fsAppStoreViewController = [[FSAppStoreViewController alloc]init];
         fsAppStoreViewController.url = obj.applinkid;
         NSLog(@"fsAppStoreViewController.url  :%@",fsAppStoreViewController.url);
-        [self.navigationController pushViewController:fsAppStoreViewController animated:YES];
+        //[self.navigationController pushViewController:fsAppStoreViewController animated:YES];
+        [self.parentNavigationController pushViewController:fsAppStoreViewController animated:YES];
         [fsAppStoreViewController release];
         
     }else{

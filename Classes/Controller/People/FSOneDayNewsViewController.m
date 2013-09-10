@@ -35,7 +35,6 @@
 
 - (id)init {
 	self = [super init];
-        self.wantsFullScreenLayout = YES;
 	if (self) {
 		
 	}
@@ -281,7 +280,8 @@
         fsNewsContainerViewController.newsSourceKind = NewsSourceKind_ShiKeNews;
         NSLog(@"fsNewsContainerViewController2:%d",[fsNewsContainerViewController retainCount]);
         
-        [self.navigationController pushViewController:fsNewsContainerViewController animated:YES];
+        //[self.navigationController pushViewController:fsNewsContainerViewController animated:YES];
+        [self.parentNavigationController pushViewController:fsNewsContainerViewController animated:YES];
         [fsNewsContainerViewController release];
         [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
     }
@@ -327,8 +327,8 @@
                 FSWebViewForOpenURLViewController *fsWebViewForOpenURLViewController = [[FSWebViewForOpenURLViewController alloc] init];
                 
                 fsWebViewForOpenURLViewController.urlString = o.link;
-                fsWebViewForOpenURLViewController.withOutToolbar = YES;
-                [self.navigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
+                fsWebViewForOpenURLViewController.withOutToolbar = NO;
+                [self.parentNavigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
                 //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
                 [fsWebViewForOpenURLViewController release];
             }

@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "FSBaseDataViewController.h"
 #import "FSFeedbackContainerView.h"
+#import "FSBaseSettingViewController.h"
 
 @class FS_GZF_FeedbackPOSTXMLDAO;
 
-@interface FSFeedbackViewController : FSBaseDataViewController<FSBaseContainerViewDelegate>{
+@interface FSFeedbackViewController : FSBaseSettingViewController<FSBaseContainerViewDelegate>{
 @protected
-    UINavigationBar *_navTopBar; 
+    //UINavigationBar *_navTopBar;
     FSFeedbackContainerView *_fsFeedbackContainerView;
     FS_GZF_FeedbackPOSTXMLDAO *_fs_GZF_FeedbackPOSTXMLDAO;
 }

@@ -143,6 +143,7 @@
     
     for (int i = 0; i< _fs_GZF_ChannelListDAO.objectList.count; i++) {
         MyNewsLIstView * view1 = [[MyNewsLIstView alloc]initWithChanel:_fs_GZF_ChannelListDAO currentIndex:i parentViewController:self];
+        view1.parentNavigationController = self.parentNavigationController;
         view1.frame            = CGRectMake(i*320, 0, 320, xx);
         //view1.tag              = 100 + i;
         view1.parentDelegate   = view1;

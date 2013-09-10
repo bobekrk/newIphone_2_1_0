@@ -25,6 +25,7 @@
     FSOneDayNewsObject              *_currentObject;
     NSString                        *_channelName;
 }
+@property(nonatomic,assign)UINavigationController * parentNavigationController;
 -(id)initWithChanel:(FS_GZF_ChannelListDAO*)aDao currentIndex:(int)index parentViewController:(UIViewController*)aController;
 @property(nonatomic,assign)int currentIndex;
 @property(nonatomic,retain)FS_GZF_ChannelListDAO              *aChannelListDAO;

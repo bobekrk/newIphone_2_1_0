@@ -49,7 +49,6 @@
     [_fsChannelSettingForOneDayView release];
     _fs_GZF_ForOnedayNewsFocusTopDAO.parentDelegate = NULL;
     [_fs_GZF_ForOnedayNewsFocusTopDAO release];
-    [_fsNewbieGuideView release];
     [super dealloc];
 }
 
@@ -77,7 +76,7 @@
     [self.view addSubview:_fsChannelSettingForOneDayView];
     
     
-    if (self.isReSetting) {
+    //if (self.isReSetting) {
         
          _navTopBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
          #ifdef __IPHONE_5_0
@@ -108,30 +107,34 @@
         _navTopBar.topItem.leftBarButtonItem = returnButton;
         [returnButton release];
         [returnBT release];
-    }
-    else{
-        UIButton *returnBT = [[UIButton alloc] init];
-        [returnBT setBackgroundImage:[UIImage imageNamed:@"返回.png"] forState:UIControlStateNormal];
-       // [returnBT setTitle:NSLocalizedString(@"完成", nil) forState:UIControlStateNormal];
-        returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
-        
-        [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
-        [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
-        returnBT.frame = CGRectMake(0, 0, 55, 30);
-        returnBT.contentHorizontalAlignment =UIControlContentHorizontalAlignmentCenter;
-        
-        UIBarButtonItem *returnButton = [[UIBarButtonItem alloc] initWithCustomView:returnBT];
-        self.navigationItem.leftBarButtonItem = returnButton;
-        [returnButton release];
-        [returnBT release];
-    }
+    //}
+//    else{
+//        UIButton *returnBT = [[UIButton alloc] init];
+//        [returnBT setBackgroundImage:[UIImage imageNamed:@"返回.png"] forState:UIControlStateNormal];
+//       // [returnBT setTitle:NSLocalizedString(@"完成", nil) forState:UIControlStateNormal];
+//        returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
+//        
+//        [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
+//        [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
+//        returnBT.frame = CGRectMake(0, 0, 55, 30);
+//        returnBT.contentHorizontalAlignment =UIControlContentHorizontalAlignmentCenter;
+//        
+//        UIBarButtonItem *returnButton = [[UIBarButtonItem alloc] initWithCustomView:returnBT];
+//        self.navigationItem.leftBarButtonItem = returnButton;
+//        [returnButton release];
+//        [returnBT release];
+//    }
     
     _fsChannelSettingForOneDayView.isReSetting = self.isReSetting;
+    if (_isReSetting == NO) {
+        _fsNewbieGuideView = [[FSNewbieGuideView alloc] init];
+        _fsNewbieGuideView.parentDelegate = self;
+        _fsNewbieGuideView.alpha = 0.0f;
+        [self.view addSubview:_fsNewbieGuideView];
+        [_fsNewbieGuideView release];
+    }
     
-    _fsNewbieGuideView = [[FSNewbieGuideView alloc] init];
-    _fsNewbieGuideView.parentDelegate = self;
-    _fsNewbieGuideView.alpha = 0.0f;
-    [self.view addSubview:_fsNewbieGuideView];
+    
     
 }
 
@@ -158,7 +161,7 @@
         if (self.presentingViewController) {
             [self dismissModalViewControllerAnimated:YES];
         }else if(self.navigationController){
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self.navigationController popViewControllerAnimated:YES];
         }else
         {
             if ([_parentDelegate respondsToSelector:@selector(fsChannelSettingForOneDayViewControllerWillDisapear:)]) {
@@ -201,15 +204,16 @@
     else{
         _fsChannelSettingForOneDayView.layoutWithLocalData = YES;
         _fsChannelSettingForOneDayView.data = @"11";
-        _fsChannelSettingForOneDayView.frame = CGRectMake(0.0f, 0.0f, rect.size.width, rect.size.height);
+        _fsChannelSettingForOneDayView.frame = CGRectMake(0.0f, 44.0f, rect.size.width, rect.size.height-44.0f);
     }
-    _fsNewbieGuideView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height+44);
+    
     
     if (!self.isReSetting) {
+        _fsNewbieGuideView.frame = CGRectMake(0, 0, rect.size.width, rect.size.height+44);
         _fsNewbieGuideView.alpha = 1.0f;
         [self.view bringSubviewToFront:_fsNewbieGuideView];
         [_fsNewbieGuideView doSomethingAtLayoutSubviews];
-        self.navigationController.navigationBarHidden = YES;
+        //self.navigationController.navigationBarHidden = YES;
     }
     
 }
@@ -321,7 +325,7 @@
                     [self presentModalViewController:fsWebViewForOpenURLViewController animated:YES];
                 }
                 else{
-                    fsWebViewForOpenURLViewController.withOutToolbar = YES;
+                    fsWebViewForOpenURLViewController.withOutToolbar = NO;
                     [self.navigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
                 }
                 [fsWebViewForOpenURLViewController release];

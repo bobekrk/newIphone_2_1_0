@@ -188,12 +188,23 @@
 }
 
 - (void)setHideTabBar:(BOOL)hide withAnimation:(BOOL)animation {
+    [self.view bringSubviewToFront:_fsTabBar];
+    return;
     _fsTabBar.alpha = 1.0f;
+    animation = YES;
 	if (animation) {
 		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-		[UIView setAnimationDuration:0.3];
-        [UIView commitAnimations];
+		//[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+		[UIView setAnimationDuration:0.4];
+    }
+    
+	//}
+    NSLog(@"%f",_fsSelectedViewController.view.frame.size.height);
+    NSLog(@"%f",self.view.frame.size.height);
+    if (hide) {
+		_fsSelectedViewController.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
+	} else {
+		_fsSelectedViewController.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height - _fsTabBar.frame.size.height);
 	}
 	if (hide) {
 		_fsTabBar.frame = CGRectMake(0.0 - _fsTabBar.frame.size.width, _fsTabBar.frame.origin.y, _fsTabBar.frame.size.width, _fsTabBar.frame.size.height);
@@ -204,15 +215,15 @@
 	}
 	
 	
-	if (hide) {
-		_fsSelectedViewController.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
-	} else {
-		_fsSelectedViewController.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height - _fsTabBar.frame.size.height);
-	}
-}
+	
+    if (animation) {
+        [UIView commitAnimations];
+
+    }
+    }
 
 -(void)setTabBarHided:(BOOL)hide withAnimation:(BOOL)animation{
-    
+    return;
     if (hide) {
         _fsTabBar.alpha = 0.0f;
 		_fsSelectedViewController.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);

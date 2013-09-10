@@ -19,7 +19,7 @@
     BOOL _right_lock;
     BOOL _left_lock;
 }
-
+@property(nonatomic,assign)UINavigationController * parentNavigationController;
 -(void)updataWeatherMessage;
 -(void)showLoadingView;
 

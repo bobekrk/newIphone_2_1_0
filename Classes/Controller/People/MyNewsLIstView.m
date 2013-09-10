@@ -477,10 +477,9 @@
         }
         else if (flag == 2){//内嵌浏览器
             FSWebViewForOpenURLViewController *fsWebViewForOpenURLViewController = [[FSWebViewForOpenURLViewController alloc] init];
-            
+            fsWebViewForOpenURLViewController.withOutToolbar                     = NO;
             fsWebViewForOpenURLViewController.urlString = o.adLink;
-            fsWebViewForOpenURLViewController.withOutToolbar = NO;
-            [_aViewController.navigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
+            [self.parentNavigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
         }
     }else
     {
@@ -498,7 +497,7 @@
             fsNewsContainerViewController.FCObj = o;
             fsNewsContainerViewController.newsSourceKind = NewsSourceKind_PuTongNews;
             
-            [self.aViewController.navigationController pushViewController:fsNewsContainerViewController animated:YES];
+            [self.parentNavigationController pushViewController:fsNewsContainerViewController animated:YES];
             //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
             [fsNewsContainerViewController release];
             [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
@@ -515,8 +514,8 @@
             FSWebViewForOpenURLViewController *fsWebViewForOpenURLViewController = [[FSWebViewForOpenURLViewController alloc] init];
             
             fsWebViewForOpenURLViewController.urlString = o.link;
-            fsWebViewForOpenURLViewController.withOutToolbar = YES;
-            [self.aViewController.navigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
+            fsWebViewForOpenURLViewController.withOutToolbar = NO;
+            [self.parentNavigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
             [fsWebViewForOpenURLViewController release];
         }
 
@@ -554,7 +553,7 @@
         [[NSUserDefaults standardUserDefaults]setValue:[NSNumber numberWithInt:1] forKey:o.newsid];
 
         NSLog(@"%@ %@",self.aViewController,self.aViewController.navigationController);
-        [self.aViewController.navigationController pushViewController:fsNewsContainerViewController animated:YES];
+        [self.parentNavigationController pushViewController:fsNewsContainerViewController animated:YES];
         [fsNewsContainerViewController release];
         [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -567,7 +566,7 @@
         fsNewsContainerViewController.FCObj                          = nil;
         fsNewsContainerViewController.newsSourceKind                 = NewsSourceKind_PuTongNews;
         [UIView commitAnimations];
-        [self.aViewController.navigationController pushViewController:fsNewsContainerViewController animated:YES];
+        [self.parentNavigationController pushViewController:fsNewsContainerViewController animated:YES];
         [fsNewsContainerViewController release];
         [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
     }

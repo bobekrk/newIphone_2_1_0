@@ -22,6 +22,7 @@
 - (id)init {
 	self = [super init];
 	if (self) {
+        self.wantsFullScreenLayout = YES;
 		_left_lock = NO;
         _right_lock = NO;
 	}

@@ -108,7 +108,6 @@ extern NSString * CTSettingCopyMyPhoneNumber();
     NSString * deviceName = [[[UIDevice currentDevice] name] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
    NSString * mac = [self macString];
-    
     NSString * urlString = [NSString stringWithFormat:@"http://log.umtrack.com/ping/%@/?devicename=%@&udid=%@", appKey,deviceName,mac];
     
     [NSURLConnection connectionWithRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:urlString]] delegate:nil];
@@ -513,6 +512,7 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 		//1.
 		FSOneDayNewsViewController *oneDayNewsCtrl = [[FSOneDayNewsViewController alloc] init];
         oneDayNewsCtrl.canBeHaveNaviBar            = YES;
+        oneDayNewsCtrl.parentNavigationController  = navi;
 		FSUINavigationController *navOneDayNewsCtrl = [[FSUINavigationController alloc] initWithRootViewController:oneDayNewsCtrl];
         navOneDayNewsCtrl.navigationBarHidden      = YES;
         //[navOneDayNewsCtrl setViewControllers:[NSArray arrayWithObject:oneDayNewsCtrl]];
@@ -523,6 +523,7 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 		//2.
 		FSNewsViewController *newsCtrl = [[FSNewsViewController alloc] init];
         newsCtrl.canBeHaveNaviBar      = YES;
+        newsCtrl.parentNavigationController  = navi;
 		FSUINavigationController *navNewsCtrl = [[FSUINavigationController alloc] initWithRootViewController:newsCtrl];
         navNewsCtrl.navigationBarHidden = YES;
 		[fsViewCtrls addObject:navNewsCtrl];
@@ -532,6 +533,7 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 		//3.
 		FSTopicViewController *topicCtrl = [[FSTopicViewController alloc] init];
         topicCtrl.canBeHaveNaviBar       = YES;
+        topicCtrl.parentNavigationController = navi;
 		FSUINavigationController *navTopicCtrl = [[FSUINavigationController alloc] initWithRootViewController:topicCtrl];
         navTopicCtrl.navigationBarHidden = YES;
 		[fsViewCtrls addObject:navTopicCtrl];
@@ -541,6 +543,7 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 		//4.
 		FSMoreViewController *moreCtrl = [[FSMoreViewController alloc] init];
         moreCtrl.canBeHaveNaviBar      = YES;
+        moreCtrl.parentNavigationController = navi;
 		FSUINavigationController *navMoreCtrl = [[FSUINavigationController alloc] initWithRootViewController:moreCtrl];
         navMoreCtrl.navigationBarHidden = YES;
 		[fsViewCtrls addObject:navMoreCtrl];
@@ -563,7 +566,7 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 
 - (void)showChannelSettingForOneDay {
 	FSChannelSettingForOneDayViewController *channelSettingCtrl = [[FSChannelSettingForOneDayViewController alloc] init];
-    channelSettingCtrl.isReSetting                              = YES;
+    channelSettingCtrl.isReSetting                              = NO;
 	channelSettingCtrl.parentDelegate                           = self;
     self.window.rootViewController                              = channelSettingCtrl;
     [channelSettingCtrl release];

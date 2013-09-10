@@ -34,54 +34,42 @@
 #pragma mark - View lifecycle
 
 -(void)dealloc{
-    [_navTopBar release];
-    [_fsFeedbackContainerView release];
     [_fs_GZF_FeedbackPOSTXMLDAO release];
     [super dealloc];
 }
 
 -(void)loadChildView{
-    _navTopBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, FSSETTING_VIEW_NAVBAR_HEIGHT)];
-#ifdef __IPHONE_5_0
-    [_navTopBar setBackgroundImage:[UIImage imageNamed: @"navigatorBar.png"] forBarMetrics:UIBarMetricsDefault];
-#endif
-	UINavigationItem *topItem = [[UINavigationItem alloc] init];
-	NSArray *items = [[NSArray alloc] initWithObjects:topItem, nil];
-	_navTopBar.items = items;
-	_navTopBar.topItem.title = NSLocalizedString(@"意见反馈", nil);
-	[topItem release];
-	[items release];
-	[self.view addSubview:_navTopBar];
+    [super loadChildView];
     
-
-       
-    UIButton *returnBT = [[UIButton alloc] init];
-    [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
-    [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
-    [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
-    returnBT.frame = CGRectMake(0, (FSSETTING_VIEW_NAVBAR_HEIGHT-34)/2, 65, 34);
-    
-    [_navTopBar addSubview:returnBT];
-    [returnBT release];
-    
-    UIButton *sendBT = [[UIButton alloc] init];
-    [sendBT setBackgroundImage:[UIImage imageNamed:@"top_2.png"] forState:UIControlStateNormal];
-    [sendBT setTitle:@"发送" forState:UIControlStateNormal];
-    sendBT.titleLabel.font = [UIFont systemFontOfSize:12];
-    [sendBT addTarget:self action:@selector(sendFeedBackMessage:) forControlEvents:UIControlEventTouchUpInside];
-    [sendBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
-    sendBT.frame = CGRectMake(self.view.frame.size.width-55, (FSSETTING_VIEW_NAVBAR_HEIGHT-34)/2, 55, 34);
-    
-    
-    [_navTopBar addSubview:sendBT];
-    [sendBT release];
-    
+//    UIButton *sendBT = [[UIButton alloc] init];
+//    [sendBT setBackgroundImage:[UIImage imageNamed:@"top_2.png"] forState:UIControlStateNormal];
+//    [sendBT setTitle:@"发送" forState:UIControlStateNormal];
+//    sendBT.titleLabel.font = [UIFont systemFontOfSize:12];
+//    [sendBT addTarget:self action:@selector(sendFeedBackMessage:) forControlEvents:UIControlEventTouchUpInside];
+//    [sendBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
+//    sendBT.frame = CGRectMake(self.view.frame.size.width-55, (FSSETTING_VIEW_NAVBAR_HEIGHT-34)/2, 55, 34);
+//    
+//    
+//    [_navTopBar addSubview:sendBT];
+//    [sendBT release];
+//
+//    UIBarButtonItem * rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonItemStylePlain target:self action:@selector(sendFeedBackMessage:)];
+    UIBarButtonItem * rightButton = [[UIBarButtonItem alloc]initWithTitle:@"发送" style:UIBarButtonItemStyleBordered target:self action:@selector(sendFeedBackMessage:)];
+    NSDictionary * dict2            = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor darkGrayColor],UITextAttributeTextColor,nil];
+    [rightButton setTitleTextAttributes:dict2 forState:UIControlStateNormal];
+    rightButton.tintColor         = [UIColor whiteColor];
+    _navTopBar.topItem.rightBarButtonItem = rightButton;
+    [rightButton release];
     _fsFeedbackContainerView = [[FSFeedbackContainerView alloc] init];
     [self.view addSubview:_fsFeedbackContainerView];
+    [_fsFeedbackContainerView release];
 }
 
--(void)returnBack:(id)sender{
-    [self dismissModalViewControllerAnimated:YES];
+//-(void)returnBack:(id)sender{
+//    [self dismissModalViewControllerAnimated:YES];
+//}
+-(NSString *)setTitle{
+    return @"意见反馈";
 }
 
 -(void)sendFeedBackMessage:(id)sender{
