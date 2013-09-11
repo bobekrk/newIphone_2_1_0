@@ -9,7 +9,7 @@
 #import "FSALLSettingContainerView.h"
 #import "FSSettingWithSwitchButtonCell.h"
 #import "FSAuthorizationTableListCell.h"
-
+#import "FSWithSwitchButtonCell.h"
 @implementation FSALLSettingContainerView
 
 @synthesize flag = _flag;
@@ -45,7 +45,7 @@
 -(Class)cellClassWithIndexPath:(NSIndexPath *)indexPath{
     if ([indexPath section]==1) {
         //set the switch button
-        return [FSSettingWithSwitchButtonCell class];
+        return [FSWithSwitchButtonCell class];
     }
     if (_flag == 3) {
         return [FSAuthorizationTableListCell class];
@@ -61,13 +61,9 @@
     
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.backgroundColor = COLOR_NEWSLIST_TITLE_WHITE;
+    cell.textLabel.textColor = COLOR_NEWSLIST_TITLE;
     
     if (_flag == 0) {
-        
-//        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CellBackground"]];
-//        cell.backgroundView =imgView;
-//        [imgView release];
-
         if (section == 0) {
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -99,9 +95,6 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryNone;
         
-//        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CellBackgroundMark.png"]];
-//        cell.backgroundView =imgView;
-//        [imgView release];
         
         NSNumber *n = [[GlobalConfig shareConfig] readFontSize];
         if (row == [n integerValue]) {
@@ -131,35 +124,6 @@
         }
 
     }
-    
-//    if (_flag == 2){
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.accessoryType = UITableViewCellAccessoryNone;
-//        
-//        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CellBackgroundMark"]];
-//        cell.backgroundView =imgView;
-//        [imgView release];
-//        
-//        switch (row) {
-//            case 0:
-//                oldIndexPath = [indexPath retain];
-//                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-//                cell.textLabel.text = @"中文简体";
-//                cell.textLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
-//                break;
-//            case 1:
-//                cell.textLabel.text = @"中文繁體";
-//                cell.textLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
-//                break;
-//            case 2:
-//                cell.textLabel.text = @"English";
-//                cell.textLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
-//                break;
-//            default:
-//                break;
-//        }
-//        
-//    }
     
 }
 

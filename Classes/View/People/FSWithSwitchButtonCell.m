@@ -25,42 +25,24 @@
 
 -(void)doSomethingAtDealloc{
     [_swichButton release];
-    [_lab_title release];
 }
 
 -(void)doSomethingAtInit{
-    
-    
-//    UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CellBackground.png"]];
-//    self.backgroundView = image;
-//    [image release];
-    
     self.backgroundColor = COLOR_NEWSLIST_TITLE_WHITE;
-    
     _swichButton = [[UISwitch alloc] init];
-    
+    self.textLabel.textColor = COLOR_NEWSLIST_TITLE;
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0) {
         _swichButton.onTintColor = [UIColor colorWithRed:204.0/255.0 green:102.0/255 blue:102.0/255.0 alpha:1];
     }
     
     [_swichButton addTarget:self action:@selector(ButtonSelect:) forControlEvents:UIControlEventTouchUpInside];
-    _lab_title = [[UILabel alloc] init];
-    _lab_title.backgroundColor = COLOR_CLEAR;
-    _lab_title.textColor = COLOR_NEWSLIST_TITLE;//[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
-    
-    
-    
-    
-    //[self.contentView addSubview:_lab_title];
+
     [self.contentView addSubview:_swichButton];
 }
 
 -(void)doSomethingAtLayoutSubviews{
-    
-    _lab_title.text = (NSString *)_data;
     self.textLabel.text = (NSString *)_data;
     self.textLabel.backgroundColor = COLOR_CLEAR;
-    _lab_title.frame = CGRectMake(10, 0, self.frame.size.width - 50, self.frame.size.height);
     _swichButton.frame = CGRectMake(self.frame.size.width - 105, 5, 20, 30);
     [self setButtonState];
 }

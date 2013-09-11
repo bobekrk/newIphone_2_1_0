@@ -12,9 +12,7 @@
 @interface FSWithSwitchButtonCell : FSTableViewCell{
 @protected
     UISwitch *_swichButton; 
-    UILabel *_lab_title;
-  }
-
+}
 -(void)setYes:(NSInteger)row;
 -(void)setNO:(NSInteger)row;
 

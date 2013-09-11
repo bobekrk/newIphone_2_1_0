@@ -68,10 +68,7 @@
 -(Class)cellClassWithIndexPath:(NSIndexPath *)indexPath{
     NSInteger section = [indexPath section];
     
-//    if (section == 0) {
-//        return [FSMoreTablePeopleAPPCell class];
-//        
-//    }
+
     if (section==1) {
         //set the switch button
         return [FSWithSwitchButtonCell class];
@@ -93,10 +90,6 @@
     cell.backgroundColor = [UIColor clearColor];
     
     if (_flag == 0) {
-        
-//        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CellBackground"]];
-//        cell.backgroundView =imgView;
-//        [imgView release];
         
         if (section == 0) {
             
@@ -122,9 +115,33 @@
                 default:
                     break;
             }
-        }
-        
-        if (section == 2) {
+        }else if (section == 1) {
+            return;
+            FSWithSwitchButtonCell * xxx = (FSWithSwitchButtonCell*)cell;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            switch (row) {
+                case 0:
+                    xxx.textLabel.text = @"新闻推送";
+                    xxx.textLabel.textColor = COLOR_NEWSLIST_TITLE;//[UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
+                    break;
+                    //                case 1:
+                    //                    cell.textLabel.text = @"环境语言";
+                    //                    cell.textLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
+                    //                    break;
+                case 1:
+                    xxx.textLabel.text = @"正文全屏功能";
+                    xxx.textLabel.textColor = COLOR_NEWSLIST_TITLE;//[UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
+                    break;
+                case 2:
+                    xxx.textLabel.text = @"只WIFI网络加载图片";
+                    xxx.textLabel.textColor = COLOR_NEWSLIST_TITLE;//[UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
+                    break;
+                    
+                default:
+                    break;
+            }
+
+        }else if (section == 2) {
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             switch (row) {
@@ -149,16 +166,10 @@
                     break;
             }
         }
-    }
-    
-    if (_flag == 1){
+    }else if (_flag == 1){
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryNone;
-        
-//        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CellBackgroundMark.png"]];
-//        cell.backgroundView =imgView;
-//        [imgView release];
         
         NSNumber *n = [[GlobalConfig shareConfig] readFontSize];
         if (row == [n integerValue]) {
@@ -188,36 +199,6 @@
         }
         
     }
-    
-    //    if (_flag == 2){
-    //        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    //        cell.accessoryType = UITableViewCellAccessoryNone;
-    //
-    //        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CellBackgroundMark"]];
-    //        cell.backgroundView =imgView;
-    //        [imgView release];
-    //
-    //        switch (row) {
-    //            case 0:
-    //                oldIndexPath = [indexPath retain];
-    //                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    //                cell.textLabel.text = @"中文简体";
-    //                cell.textLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
-    //                break;
-    //            case 1:
-    //                cell.textLabel.text = @"中文繁體";
-    //                cell.textLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
-    //                break;
-    //            case 2:
-    //                cell.textLabel.text = @"English";
-    //                cell.textLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
-    //                break;
-    //            default:
-    //                break;
-    //        }
-    //        
-    //    }
-    
 }
 
 
@@ -242,15 +223,6 @@
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    NSInteger section = [indexPath section];
-//    NSInteger row = [indexPath row];
-//    if (section == 0 && row == 0){
-//        return MORE_LIST_PEOPLEAPP_CELL_HEIGHT;
-//        //return MORE_LIST_TOP_CELL_HEIGHT;
-//    }
-////    if (section == 1 && row == 0) {
-////        return MORE_LIST_PEOPLEAPP_CELL_HEIGHT;
-////    }
     return 40.0f;
 }  
 
@@ -272,13 +244,6 @@
         }
         
         return [sectionView autorelease];
-        
-//        FSMoreTableListSectionView *sectionView = [[FSMoreTableListSectionView alloc] init];
-//        sectionView.frame = CGRectMake(0, 0, 32, 320);
-//        if (section == 0) {
-//            sectionView.data = @"应用推荐";
-//        }
-//        return [sectionView autorelease];
     }
     return nil;
 }
