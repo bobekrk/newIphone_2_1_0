@@ -67,7 +67,7 @@
         [backButton release];
         
         
-        NSDictionary * dict2            = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor lightGrayColor],UITextAttributeTextColor,nil];
+        NSDictionary * dict2            = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor grayColor],UITextAttributeTextColor,[NSValue valueWithCGSize:CGSizeMake(0, 0)],UITextAttributeTextShadowOffset,nil];
         UIBarButtonItem * sharbutton = [[UIBarButtonItem alloc]initWithTitle:@"分享" style:UIBarButtonItemStyleBordered target:self action:@selector(senderBt:)];
         [sharbutton setTitleTextAttributes:dict2 forState:UIControlStateNormal];
         sharbutton.tintColor         = [UIColor whiteColor];
