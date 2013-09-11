@@ -115,19 +115,7 @@
 }
 
 -(void)swipeLeftAction:(id)sender{
-//    if ([self.fsSlideViewController.leftViewController isKindOfClass:[FSLocalWeatherViewController class]]) {
-//        //NSLog(@"swipeLeftAction 111111");
-//        [self.fsSlideViewController slideViewController:self.fsSlideViewController.leftViewController withKind:PushViewControllerKind_Left withAnimation:YES];
-//    }
-//    else{
-//        //NSLog(@"swipeLeftAction 222222");
-//        FSLocalWeatherViewController *weatherCtrl = [[FSLocalWeatherViewController alloc] init];
-//        weatherCtrl.canBeHaveNaviBar              = YES;
-//        [self.fsSlideViewController slideViewController:weatherCtrl withKind:PushViewControllerKind_Left withAnimation:YES];
-//        [weatherCtrl release];
-//    }
     [self  showLoadingView];
-	
 }
 
 -(void)swipeRightAction:(id)sender{
@@ -229,13 +217,6 @@
     NSInteger section = [indexPath section];
     NSInteger row = [indexPath row];
     
-//    if (section==0) {
-//        NSLog(@"[_peopleAPPS count] :%d",[_peopleAPPS count]);
-//        if ([_peopleAPPS count]==0) {
-//            return nil;
-//        }
-//        return _peopleAPPS;
-//    }
     
     if (section==1) {
         switch (row) {
@@ -302,6 +283,7 @@
         }
     }
     
+    
     if (section == 2) {
         if (row == 0) {
             FSFeedbackViewController *fsFeedbackViewController = [[FSFeedbackViewController alloc] init];
@@ -365,33 +347,21 @@
 
 - (void) addMyWebView:(FSRecommentAPPObject *)obj{
     
-    
+    NSLog(@"%@ %@ %@",obj.appid,obj.appLink,obj.applinkid);
     double version = [[UIDevice currentDevice].systemVersion doubleValue];
     
     if (version >= 6.0 && [obj.applinkid length]>1) {
         
-        //
-        
-//        SKStoreProductViewController *storeViewController =
-//        [[SKStoreProductViewController alloc] init];
-//        
-//        storeViewController.delegate = self;
-//        
-//        NSDictionary *parameters =
-//        @{SKStoreProductParameterITunesItemIdentifier:
-//              [NSNumber numberWithInteger:424180337]};
-//        
-//        [storeViewController loadProductWithParameters:parameters
-//                                       completionBlock:^(BOOL result, NSError *error) {
-//                                           if (result)
-//                                               [self presentViewController:storeViewController animated:YES completion:nil];
-//                                       }];
         
         FSAppStoreViewController *fsAppStoreViewController = [[FSAppStoreViewController alloc]init];
+        fsAppStoreViewController.canBeHaveNaviBar          = YES;
         fsAppStoreViewController.url = obj.applinkid;
+        
+        
         NSLog(@"fsAppStoreViewController.url  :%@",fsAppStoreViewController.url);
         //[self.navigationController pushViewController:fsAppStoreViewController animated:YES];
         [self.parentNavigationController pushViewController:fsAppStoreViewController animated:YES];
+        fsAppStoreViewController.view.backgroundColor      = [UIColor blackColor];
         [fsAppStoreViewController release];
         
     }else{

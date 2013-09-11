@@ -8,9 +8,9 @@
 
 #import "FSBaseDataViewController.h"
 #import <StoreKit/StoreKit.h>
+#import "FSBaseSettingViewController.h"
 
-
-@interface FSAppStoreViewController : FSBaseDataViewController<SKStoreProductViewControllerDelegate>{
+@interface FSAppStoreViewController : FSBaseSettingViewController<SKStoreProductViewControllerDelegate>{
 @private
 //FSAppStoreContainerView * _fsAppStoreContainerView;
     
@@ -20,6 +20,6 @@
 
 @property (nonatomic,assign) BOOL isprsend;
 
-@property (nonatomic, retain) NSString *url;
+@property (nonatomic, copy) NSString *url;
 
 @end

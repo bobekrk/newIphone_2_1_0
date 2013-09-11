@@ -22,7 +22,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        url = [[NSString alloc]init];
         self.isprsend = NO;
     }
     return self;
@@ -50,7 +49,7 @@
 #pragma mark - view life cycle
 
 -(void)loadChildView{
-    
+    [super loadChildView];
     /*
     self.title = NSLocalizedString(@"App Store", nil);
     
@@ -76,16 +75,16 @@
     //NSLog(@"self.url %@",self.url);
      */
    
-    UIButton *returnBT = [[UIButton alloc] init];
-    [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
-    //[returnBT setTitle:NSLocalizedString(@"返回", nil) forState:UIControlStateNormal];
-    returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
-    [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
-    [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
-    returnBT.frame = CGRectMake(0, 0, 55, 30);
-    
-    UIBarButtonItem *returnButton = [[UIBarButtonItem alloc] initWithCustomView:returnBT];
-    self.navigationItem.leftBarButtonItem = returnButton;
+//    UIButton *returnBT = [[UIButton alloc] init];
+//    [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
+//    //[returnBT setTitle:NSLocalizedString(@"返回", nil) forState:UIControlStateNormal];
+//    returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
+//    [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
+//    [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
+//    returnBT.frame = CGRectMake(0, 0, 55, 30);
+//    
+//    UIBarButtonItem *returnButton = [[UIBarButtonItem alloc] initWithCustomView:returnBT];
+//    self.navigationItem.leftBarButtonItem = returnButton;
     
     
     
@@ -108,9 +107,12 @@
     storeViewController.delegate = self;
     
     
-    NSDictionary *parameters =
-    @{SKStoreProductParameterITunesItemIdentifier:
-    [NSNumber numberWithInteger:number]};
+//    NSDictionary *parameters =
+//    @{SKStoreProductParameterITunesItemIdentifier:
+//    [NSNumber numberWithInteger:number]};
+    NSLog(@"%@",self.url);
+    NSDictionary * parameters = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:number], SKStoreProductParameterITunesItemIdentifier,nil];
+    NSLog(@"%@",parameters);
     
     [storeViewController loadProductWithParameters:parameters
                                    completionBlock:^(BOOL result, NSError *error) {
@@ -118,8 +120,8 @@
                                            [self presentViewController:storeViewController animated:NO completion:nil];
                                    }];
     
-    [returnButton release];
-    [returnBT release];
+//    [returnButton release];
+//    [returnBT release];
 
 }
 
