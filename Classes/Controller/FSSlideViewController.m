@@ -68,10 +68,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-#ifdef MYDEBUG
-	NSLog(@"%@:%@", self, self.modalViewController);
-#endif
-	if (_presentModal) {
+    if (_presentModal) {
 		[_parentDelegate performSelector:_selector withObject:nil afterDelay:0.1];
 	}
 }
@@ -114,6 +111,7 @@
 }
 
 - (void)dealloc {
+    [_coverButton release];
 	[_rootViewController release];
 	[_leftViewController release];
 	[_rightViewController release];
@@ -133,6 +131,15 @@
 	
 	_rootViewController.view.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height);
 	_layerShadowColor = [[UIColor alloc] initWithRed:0.1372 green:0.1372 blue:0.1372 alpha:0.8];
+    _coverButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    _coverButton.alpha = 0.1;
+    [_coverButton addTarget:self action:@selector(xxxx) forControlEvents:UIControlEventTouchUpInside];
+}
+-(void)xxxx
+{
+    [self inner_PushAnimatinWithKey:LEFT_SILDE_CONTROLLER_ANIMATION_KEY
+                    withLayerOffset:CGSizeMake(_rootViewController.view.frame.size.width - _controllerViewOffset, 0.0f)
+                   withShadowOffset:CGSizeMake(-10.0f, 0.0f)];
 }
 
 - (void)inner_SetSlideViewController:(UIViewController *)viewController {
@@ -170,11 +177,14 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    NSLog(@"%f",_rootViewController.view.frame.origin.x);
 	[super viewWillAppear:animated];
+    NSLog(@"%f",_rootViewController.view.frame.origin.x);
 	[_rootViewController viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    NSLog(@"%f",_rootViewController.view.frame.origin.x);
 	[super viewDidAppear:animated];
 	[_rootViewController viewDidAppear:animated];
 }
@@ -234,31 +244,31 @@
 			_rightViewController.view.alpha = 1.0f;
             _leftViewController.view.alpha = 0.0f;
 		} else {
-			[_rightViewController.view removeFromSuperview];
-			[_rightViewController release];
-			_rightViewController = nil;
+//			[_rightViewController.view removeFromSuperview];
+//			[_rightViewController release];
+//			_rightViewController = nil;
 			
-			_rightViewController = [viewController retain];
+			self.rightViewController = viewController;
 			[self.view addSubview:_rightViewController.view];
 			[self.view sendSubviewToBack:_rightViewController.view];
 			[self inner_SetSlideViewController:_rightViewController];
 			
-			_leftViewController.view.alpha = 0.0f;
+			//_leftViewController.view.alpha = 0.0f;
 			_rightViewController.view.alpha = 1.0f;
 		}
 
 		if (animated) {
 			[_rightViewController viewWillAppear:NO];
 			
-			[self inner_PushAnimatinWithKey:RIGHT_SLIDE_CONTROLLER_ANIMATION_KEY 
+			[self inner_PushAnimatinWithKey:RIGHT_SLIDE_CONTROLLER_ANIMATION_KEY
 							withLayerOffset:CGSizeMake(_controllerViewOffset - _rootViewController.view.frame.size.width, 0.0f) 
 						   withShadowOffset:CGSizeMake(10.0f, 0.0f)];
 		} else {
 			[_rightViewController viewWillAppear:NO];
-			_rootViewController.view.frame = CGRectMake(_controllerViewOffset - _rootViewController.view.frame.size.width, 
+			/*_rootViewController.view.frame = CGRectMake(_controllerViewOffset - _rootViewController.view.frame.size.width,
 														_rootViewController.view.frame.origin.y, 
 														_rootViewController.view.frame.size.width, 
-														_rootViewController.view.frame.size.height);
+														_rootViewController.view.frame.size.height);*/
 			[_rightViewController viewDidAppear:NO];
 		}
 	}
@@ -270,7 +280,7 @@
 		[self inner_CoverOffsetViewWithKind:PushViewControllerKind_Normal];
 		
 		if (animated) {
-			[self inner_PushAnimatinWithKey:RESET_LEFT_SILDE_CONTROLLER_ANIMATION_KEY 
+			[self inner_PushAnimatinWithKey:RESET_LEFT_SILDE_CONTROLLER_ANIMATION_KEY
 							withLayerOffset:CGSizeMake(_controllerViewOffset - _rootViewController.view.frame.size.width, 0.0f) 
 						   withShadowOffset:CGSizeMake(-10.0f, 0.0f)];
 		} else {
@@ -421,19 +431,23 @@
 	_rootViewController.view.layer.shadowOffset = shadowOffset;
 	_rootViewController.view.layer.shadowColor = _layerShadowColor.CGColor;
     
-    [UIView beginAnimations:@"xxxxx" context:nil];
-    [UIView setAnimationDuration:0.24];
-    [UIView setAnimationDelegate:self];
     CGRect rect = self.rootViewController.view.frame;
     
     if (rect.origin.x > -10) {
         rect.origin.x -= (320-44);
+        [self.rootViewController.view addSubview:_coverButton];
     }else
     {
         rect.origin.x += (320-44);
+        [_coverButton removeFromSuperview];
     }
+    [UIView beginAnimations:@"xxxxx" context:nil];
+    [UIView setAnimationDuration:0.24];
+    [UIView setAnimationDelegate:self];
+    
     [UIView setAnimationDidStopSelector:@selector(xxxxxStop)];
     self.rootViewController.view.frame = rect;
+    
     [UIView commitAnimations];
     
 	
@@ -447,6 +461,10 @@
         _rootViewController.view.layer.shadowOpacity = 0;
         _rootViewController.view.layer.shadowOffset = CGSizeMake(0, 0);
         _rootViewController.view.layer.shadowColor = nil;
+        [self.rightViewController.view removeFromSuperview];
+        self.rightViewController                   = nil;
+        _pushViewControllerKind   = PushViewControllerKind_Normal;
+        [self resetViewControllerWithAnimated:NO];
     }
 
 }

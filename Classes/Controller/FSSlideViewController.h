@@ -35,12 +35,13 @@ typedef enum _PushViewControllerKind {
 }
 
 @property (nonatomic, retain) UIViewController *rootViewController;
-@property (nonatomic, retain, readonly) UIViewController *leftViewController;
-@property (nonatomic, retain, readonly) UIViewController *rightViewController;
+@property (nonatomic, retain) UIViewController *leftViewController;
+@property (nonatomic, retain) UIViewController *rightViewController;
 
 @property (nonatomic, readonly) PushViewControllerKind pushViewControllerKind;
 @property (nonatomic, readonly) CGFloat controllerViewOffset;
 @property (nonatomic, retain) NSString *currentAnimationKey;
+@property (nonatomic, retain) UIButton *coverButton;
 
 - (void)resetViewControllerWithAnimated:(BOOL)animated;
 - (void)resetViewControllerWithpiot:(CGPoint)poit;
