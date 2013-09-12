@@ -16,7 +16,7 @@
     #import "BaiduMobStat.h"
 #endif
 
-//#define RELEASE
+#define RELEASE
 #ifdef  RELEASE
 #define NSLog(...)
 #endif

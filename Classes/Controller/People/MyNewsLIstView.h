@@ -24,9 +24,12 @@
     int                              _currentIndex;
     FSOneDayNewsObject              *_currentObject;
     NSString                        *_channelName;
+    time_t                           _refreshTimer;
 }
 @property(nonatomic,assign)UINavigationController * parentNavigationController;
+@property(nonatomic,assign)BOOL                     isHaveLoad;
 -(id)initWithChanel:(FS_GZF_ChannelListDAO*)aDao currentIndex:(int)index parentViewController:(UIViewController*)aController;
+-(BOOL)isNeedRefresh;
 @property(nonatomic,assign)int currentIndex;
 @property(nonatomic,retain)FS_GZF_ChannelListDAO              *aChannelListDAO;
 @property(nonatomic,assign)UIViewController                   *aViewController;

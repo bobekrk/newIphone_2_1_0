@@ -140,7 +140,7 @@
 
 -(void)doSomethingAtLayoutSubviews{
     
-    _webContent.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height -  40);
+    _webContent.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     //NSLog(@":::%@",NSStringFromCGRect(_webContent.frame));
     if (!_hasebeenLoad) {
         [self loadWebPageWithContent:nil];
@@ -232,6 +232,7 @@
         else{
             templateString = [self replayString:templateString oldString:@"{{commentList}}" newString:CONTENTWEBVIEW_COMMENT_TITLE_NODESC];
             //templateString = [self replayString:templateString oldString:@"<div id=\"comment\">{{commentList}}</div>" newString:@""];
+            //templateString = [self replayString:templateString oldString:@"<div id=\"comment\">{{commentList}}</div>" newString:@""];
         }
         
     }
@@ -241,6 +242,7 @@
     
     
 }
+
 -(BOOL)isDownloadPic{
     
     BOOL rest = NO;
@@ -545,7 +547,13 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
 	//NSLog(@"should start load ");
-	
+    if ([request.URL.absoluteString hasPrefix:@"file"]) {
+        self.hasebeenLoad = 50;
+    }else{
+        self.hasebeenLoad = 100;
+        return YES;
+    }
+
         NSString* urlString = [[request URL] absoluteString];
         //NSLog(@"urlString:%@",urlString);
         
@@ -565,7 +573,7 @@
                     //浮动显示大图
                     if ([_imageList count]>0) {
                         CGRect rect = CGRectZero;
-                        [self expandImagefrom:rect withImageUrl:urlString];
+                        [self expandImagefrom:rect withImageUrl:urlString]; 
                     }
                 }
                 return NO;

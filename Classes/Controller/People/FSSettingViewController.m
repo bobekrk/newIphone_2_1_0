@@ -145,6 +145,8 @@
 {
     NSLog(@"MY CLOLLECTION");
     FSMyFavoritesViewController *myFavoritesCtrl = [[FSMyFavoritesViewController alloc] init];
+    myFavoritesCtrl.isnavTopBar                  = YES;
+    myFavoritesCtrl.title                        = @"我的收藏";
     NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:18], UITextAttributeFont,[UIColor blackColor],UITextAttributeTextColor,nil];
     myFavoritesCtrl.navigationController.navigationBar.titleTextAttributes = dict;
     FSUINavigationController *navMyFavoritesCtrl = [[FSUINavigationController alloc] initWithRootViewController:myFavoritesCtrl];

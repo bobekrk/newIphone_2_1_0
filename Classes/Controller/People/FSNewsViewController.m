@@ -145,9 +145,15 @@
         MyNewsLIstView * view1 = [[MyNewsLIstView alloc]initWithChanel:_fs_GZF_ChannelListDAO currentIndex:i parentViewController:self];
         view1.parentNavigationController = self.parentNavigationController;
         view1.frame            = CGRectMake(i*320, 0, 320, xx);
-        //view1.tag              = 100 + i;
+        view1.tag              = 100 + i;
         view1.parentDelegate   = view1;
         [scroview addSubview:view1];
+        if (i < 1) {
+            [view1 refreshDataSource];
+        }else
+        {
+            [view1 loaddingComplete];
+        }
         [view1 release];
     }
 }
@@ -190,6 +196,9 @@
 
     _topRedImageView.frame      = CGRectMake(56*index, 40, 56, 4);
     _currentIndex               = index;
+    
+    MyNewsLIstView * view2 =  (MyNewsLIstView*)[[self.view viewWithTag:2000] viewWithTag:(100+index)];
+    [view2 isNeedRefresh]?[view2 refreshDataSource]:1;
    
 }
 
@@ -271,9 +280,15 @@
     {
         _myScroview.contentOffset = CGPointMake(index, 0);
     }
-    //MyNewsLIstView * view2 =  (MyNewsLIstView*)[scrollView viewWithTag:(100+x)];
-    //[view2 refreshDataSource];
-
+    if (index == _currentIndex) {
+        return;
+    }
+    MyNewsLIstView * view2 =  (MyNewsLIstView*)[scrollView viewWithTag:(100+x)];
+    [view2 isNeedRefresh]?[view2 refreshDataSource]:1;
+//    if (x > 0) {
+//        MyNewsLIstView * view-1 =  (MyNewsLIstView*)[scrollView viewWithTag:(100+x)];
+//        
+//    }
 }
 
 #pragma mark - 

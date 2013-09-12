@@ -59,7 +59,7 @@
     _nameLabel.textColor   = [UIColor blackColor];
     
     
-    _dateLabel             = [[UILabel alloc] initWithFrame:CGRectMake(8, 27, 302, 21)];
+    _dateLabel             = [[UILabel alloc] initWithFrame:CGRectMake(280, 27, 40, 21)];
     _dateLabel.font        = [UIFont systemFontOfSize:14];
     _dateLabel.textColor   = [UIColor lightGrayColor];
     

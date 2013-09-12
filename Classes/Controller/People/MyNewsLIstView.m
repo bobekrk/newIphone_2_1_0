@@ -39,11 +39,13 @@
         _tvList.dataSource   = self;
         _oldCount            = 0;
         _isfirstShow         = YES;
+        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_BOTTOM_BUTTON_VIEW | FSTABLEVIEW_ASSISTANT_TOP_VIEW | FSTABLEVIEW_ASSISTANT_BOTTOM_VIEW;
         [self initDataModel];
         self.aChannelListDAO = aDao;
         self.aViewController = aController;
     }
     self.currentIndex        = index;
+    self.currentNewsId       = @"";
     return self;
 }
 -(void)setCurrentIndex:(int)currentIndex
@@ -55,7 +57,7 @@
         _fs_GZF_ForNewsListDAO.channelid           = xxx.channelid;
         _fs_GZF_ForNewsListDAO.lastid              = nil;
         _isfirstShow                               = NO;
-        _channelName                               = xxx.channelname;
+        _channelName                               = [xxx.channelname copy];
         NSLog(@"%@",xxx.channelid);
         int x = [[[xxx.channelid componentsSeparatedByString:@"_"] objectAtIndex:1] intValue];
         switch (x) {
@@ -127,10 +129,15 @@
 //        [_lygAdsDao HTTPGetDataWithKind:GET_DataKind_OnlyBuffer];
 //    });
 }
+-(void)refreshDataSource
+{
+    [super refreshDataSource];
+    _refreshTimer = time(NULL);
+}
 
 -(void)initDataModel{
     NSLog(@"initDataModelinitDataModel");
-    [self refreshDataSource];
+    //[self refreshDataSource];
     _fs_GZF_ForOnedayNewsFocusTopDAO = [[FS_GZF_ForOnedayNewsFocusTopDAO alloc] init];
     _fs_GZF_ForOnedayNewsFocusTopDAO.group          = PUTONG_NEWS_LIST_KIND;
     _fs_GZF_ForOnedayNewsFocusTopDAO.type           = @"news";
@@ -148,6 +155,18 @@
     _lygAdsDao                                      = [[LygAdsDao alloc]init];
     _lygAdsDao.parentDelegate                       = self;
     _lygAdsDao.isGettingList                        = NO;
+    _refreshTimer                                   = 0;
+}
+-(BOOL)isNeedRefresh
+{
+    time_t timeInterver = time(NULL) - _refreshTimer;
+    if (timeInterver > 60) {
+        return YES;
+    }else
+    {
+        return NO;
+    }
+    
 }
 
 - (NSString *)indicatorMessageTextWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status {
@@ -259,7 +278,6 @@
 }
 
 -(void)reSetAssistantViewFlag:(NSInteger)arrayCount{
-    return;
     if (_oldCount==arrayCount && arrayCount!=0) {
         _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_TOP_VIEW;
     }
@@ -295,7 +313,7 @@
 	if (!CGSizeEqualToSize(_tvSize, _tvList.frame.size)) {
 		_tvSize = _tvList.frame.size;
 		//防止不重新装载数据
-		[_tvList reloadData];
+		//[_tvList reloadData];
 	}
     //_tvList.separatorStyle = YES;
 }
@@ -318,16 +336,47 @@
     }
 }
 
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//	[_tvList bottomScrollViewDidScroll:scrollView];
+//    
+//}
+
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+//	[_tvList bottomScrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+//}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	[_tvList bottomScrollViewDidScroll:scrollView];
+    
+    if (!_tvList.isRefreshing) {
+        return;
+    }
+    
+    CGFloat sectionHeaderHeight;
+    if (scrollView.contentOffset.y<=0) {
+        sectionHeaderHeight= 0;
+    }
+    else{
+        sectionHeaderHeight= 37;
+        
+    }
+    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+        if (_tvList.isRefreshing) {
+            scrollView.contentInset = UIEdgeInsetsMake(64.0f, 0, 0, 0);
+        }
+        else{
+            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+        }
+        
+    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+    }
     
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
 	[_tvList bottomScrollViewDidEndDragging:scrollView willDecelerate:decelerate];
 }
-
-
 -(void)dealloc{
     
     [super dealloc];
@@ -488,6 +537,7 @@
                 index -= 1;
             }
         }
+        NSLog(@"%@",_channelName);
         FSFocusTopObject *o = [_fs_GZF_ForOnedayNewsFocusTopDAO.objectList objectAtIndex:index];
         [PeopleNewsStati  headPicEvent:o.newsid nameOfEVent:_channelName andTitle:o.title];
         if ([o.flag isEqualToString:@"1"]) {
@@ -522,7 +572,10 @@
     }
     
 }
-
+-(void)newsSlecterStati:(FSOneDayNewsObject*)oo
+{
+    [PeopleNewsStati newsEvent:oo.newsid nameOfEVent:_channelName andTitle:oo.title];
+}
 -(void)tableViewDataSourceDidSelected:(FSTableContainerView *)sender withIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = [indexPath row];
     if ([_fs_GZF_ForOnedayNewsFocusTopDAO.objectList count]>0) {
@@ -533,13 +586,15 @@
         cell.leftView.backgroundColor     = [UIColor redColor];
         cell.lab_NewsTitle.textColor      = [UIColor grayColor];
         FSOneDayNewsObject *o = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
-        [PeopleNewsStati newsEvent:o.newsid nameOfEVent:_channelName andTitle:o.title];
+        NSLog(@"%@",o);
+        //[self newsSlecterStati:o];
+        //[self performSelectorInBackground:@selector(newsSlecterStati:) withObject:o];
         int i = 0;
         for (FSOneDayNewsObject * obj in _fs_GZF_ForNewsListDAO.objectList) {
             if ([obj.newsid isEqualToString:self.currentNewsId] && ![o.newsid isEqualToString:self.currentNewsId]) {
                 FSNewsListCell * cell = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i+1 inSection:0]];
                 cell.leftView.backgroundColor = [UIColor lightGrayColor];
-                
+                break;
             }
             i++;
         }

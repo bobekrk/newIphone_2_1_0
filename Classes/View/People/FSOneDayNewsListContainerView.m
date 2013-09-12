@@ -82,7 +82,7 @@
     
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    int isAlloc = NO;
 	NSString *cellIdentifierString = [self cellIdentifierStringWithIndexPath:indexPath];
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierString];
@@ -90,6 +90,7 @@
     
 	if (cell == nil) {
 		cell = (UITableViewCell *)[[[self cellClassWithIndexPath:indexPath] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierString];
+        isAlloc = YES;
 	}
 	
 	if ([cell isKindOfClass:[FSTableViewCell class]]) {
@@ -129,7 +130,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell setNeedsDisplay];
-    return cell;
+    return (isAlloc?[cell autorelease]:cell);
 }
 
 

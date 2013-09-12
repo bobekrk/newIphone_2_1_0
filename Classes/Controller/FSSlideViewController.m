@@ -7,7 +7,7 @@
 //
 
 #import "FSSlideViewController.h"
-
+#import "FSTabBarViewCotnroller.h"
 
 @interface FSSlideInnerViewController : UIViewController {
 @private	
@@ -564,6 +564,16 @@
         
 		_offsetView.alpha = 0.0f;
 	}
+}
+- (void)didReceiveMemoryWarning
+{
+    printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+    FSTabBarViewCotnroller * controller = (FSTabBarViewCotnroller*)self.rootViewController;
+    for (UIViewController * vi in controller.fsViewControllers) {
+        if (vi != controller.fsSelectedViewController) {
+            vi.view = nil;
+        }
+    }
 }
 
 - (void)presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated {

@@ -120,7 +120,13 @@
     
     NSMutableArray *array = (NSMutableArray *)self.data;
     
-    //NSLog(@"array:%d",[array count]);
+    NSLog(@"array:%d",[array count]);
+    if (array == nil || array.count == 0) {
+        UIAlertView* view = [[UIAlertView alloc]initWithTitle:@"safssfd" message:@"sdsfdg" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [view show];
+        [view release];
+        return;
+    }
     
     for (FSRecommentAPPObject *o in array) {
         

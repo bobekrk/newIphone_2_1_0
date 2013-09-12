@@ -47,6 +47,7 @@
         _myDeepListDao       = aDao;
         //_myDeepListDao.parentDelegate = self;
         self.delegte         = aDeleagte;
+        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_TOP_VIEW;
         //[_myDeepListDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
     }
     return self;
@@ -181,8 +182,9 @@
         _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_TOP_VIEW;
     }
     else{
-        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_BOTTOM_BUTTON_VIEW | FSTABLEVIEW_ASSISTANT_TOP_VIEW | FSTABLEVIEW_ASSISTANT_BOTTOM_VIEW;
-        _oldCount=arrayCount;
+        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_TOP_VIEW;
+//        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_BOTTOM_BUTTON_VIEW | FSTABLEVIEW_ASSISTANT_TOP_VIEW | FSTABLEVIEW_ASSISTANT_BOTTOM_VIEW;
+//        _oldCount=arrayCount;
     }
 }
 
@@ -232,7 +234,7 @@
             //NSLog(@"_fs_GZF_ForNewsListDAO:%d",[_fs_GZF_ForNewsListDAO.objectList count]);
             if (status == FSBaseDAOCallBack_SuccessfulStatus) {
                 [self reSetAssistantViewFlag:[_myDeepListDao.objectList count]];
-                [self loadData];
+                [self loaddingComplete];
                 [_myDeepListDao operateOldBufferData];
             }else{
                 //[self loadData];
@@ -313,19 +315,22 @@
     xxcell.nameLabel.text              = ddddddddd.title;
     xxcell.dateLabel.text              = ddddddddd.pubDate;
     xxcell.abstractLabel.text          = ddddddddd.news_abstract;
-    
     FSTopicObject *obj    = (FSTopicObject *)[_myDeepListDao.objectList objectAtIndex:indexPath.row];
     NSArray * arry        = [obj.title componentsSeparatedByString:@"】"];
     if (arry.count > 1) {
         NSString * string     = [[arry objectAtIndex:0] substringFromIndex:1];
         xxcell.kindsLabel.text = string;
+        xxcell.kindsLabel.hidden = NO;
+        xxcell.dateLabel.hidden  = NO;
         xxcell.nameLabel.text  = [arry objectAtIndex:1];
     }else
     {
         xxcell.kindsLabel.text = nil;
+        xxcell.kindsLabel.hidden = YES;
+        xxcell.dateLabel.hidden  = YES;
         xxcell.nameLabel.text  = obj.title;
     }
-    xxcell.dateLabel.text  = [[[obj.pubDate componentsSeparatedByString:@" "] objectAtIndex:0] stringByAppendingString:@"----------------------------------------"];
+    xxcell.dateLabel.text  = [[[obj.pubDate componentsSeparatedByString:@" "] objectAtIndex:0] stringByAppendingString:@""];
     xxcell.abstractLabel.text = obj.news_abstract;
     
     return (isAlloc?[cell autorelease]:cell);

@@ -294,6 +294,10 @@
     }
     
 }
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+}
 
 
 
@@ -311,7 +315,7 @@
                 fsNewsContainerViewController.FCObj = o;
                 fsNewsContainerViewController.newsSourceKind = NewsSourceKind_ShiKeNews;
                 
-                [self.navigationController pushViewController:fsNewsContainerViewController animated:YES];
+                [self.parentNavigationController pushViewController:fsNewsContainerViewController animated:YES];
                 //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
                 
                 [fsNewsContainerViewController release];
@@ -360,7 +364,7 @@
                 
                 fsWebViewForOpenURLViewController.urlString = xx.adLink;
                 fsWebViewForOpenURLViewController.withOutToolbar = YES;
-                [self.navigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
+                [self.parentNavigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
                 //[self.fsSlideViewController pres:fsNewsContainerViewController animated:YES];
                 [fsWebViewForOpenURLViewController release];
             }
@@ -559,7 +563,7 @@
         NSInteger j=0;
         for (FSOneDayNewsObject *o in _newsListData.objectList) {
             //NSLog(@"%@",o);
-            FSSectionObject *lastObj;
+            FSSectionObject *lastObj = nil;
             if ([_sectionMessage count]>0) {
                 lastObj = [_sectionMessage lastObject];
             }

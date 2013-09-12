@@ -142,7 +142,6 @@
 }
 
 - (void)HTTPGetDataWithKind:(GET_DataKind)httpGetDataKind {
-    printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>%lu\n",time(NULL));
 	NSLog(@"%d  %@",httpGetDataKind,self.managedObjectContext);
     if (httpGetDataKind!=GET_DataKind_Next && self.managedObjectContext == nil) { //by zhiliang check self.managedobjectcontext not nil  
         NSLog(@"self.ManagedObjectContext:%@",self.managedObjectContext);
@@ -176,7 +175,6 @@
                 [self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_NetworkErrorStatus];
                 return;
             }
-            printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%lu\n",time(NULL));
             return;
         }
         
@@ -186,7 +184,6 @@
             [self readDataFromBufferWithQueryDataKind:dataKind];
             [self performSelectorOnMainThread:@selector(xxxxx) withObject:nil waitUntilDone:YES];
             //[self executeCallBackDelegateWithStatus:FSBaseDAOCallBack_SuccessfulStatus];
-            printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<%lu\n",time(NULL));
             return;
         }
         //NSLog(@"读取缓存数据3");
