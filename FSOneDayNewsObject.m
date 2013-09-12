@@ -30,5 +30,8 @@
 @dynamic kind;
 @dynamic UPDATE_DATE;
 @dynamic isRedColor;
-
+-(NSString*)description
+{
+    return [NSString  stringWithFormat:@"%@ %@ %@",self.newsid,self.news_abstract,self.title];
+}
 @end
