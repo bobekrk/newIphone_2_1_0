@@ -19,6 +19,7 @@
 #import <UIKit/UITableView.h>
 #import "LygAdsDao.h"
 #import "FSLoadingImageObject.h"
+#import "FSNewsViewController.h"
 @implementation MyNewsLIstView
 - (id)initWithFrame:(CGRect)frame
 {
@@ -601,10 +602,22 @@
 
         _currentObject        = o;
         FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
+        
         fsNewsContainerViewController.obj                            = o;
         fsNewsContainerViewController.FCObj                          = nil;
         fsNewsContainerViewController.newsSourceKind                 = NewsSourceKind_PuTongNews;
         self.currentNewsId                                           = o.newsid;
+        __block FSNewsListCell * blockCell = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]];
+        FSNewsViewController * tempViewController = (FSNewsViewController*)self.aViewController;
+        tempViewController.fpChangeTitleColor = ^(){
+            blockCell.lab_NewsTitle.textColor = [UIColor lightGrayColor];
+        };
+        //cell.leftView.backgroundColor = [UIColor lightGrayColor];
+
+        fsNewsContainerViewController.fpChangeTitleClor              = ^(UITableViewCell*cell)
+        {
+            blockCell.lab_NewsTitle.textColor  = [UIColor lightGrayColor];
+        };
         [[NSUserDefaults standardUserDefaults]setValue:[NSNumber numberWithInt:1] forKey:o.newsid];
 
         NSLog(@"%@ %@",self.aViewController,self.aViewController.navigationController);

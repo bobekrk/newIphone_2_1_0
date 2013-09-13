@@ -40,6 +40,17 @@
 	}
 	return self;
 }
+//-(void)viewDidAppear:(BOOL)animated
+//{
+//    if (self.fpChangeTitleColor) {
+//        [self performSelector:@selector(xxxxxx) withObject:self afterDelay:0.3];
+//        
+//    }
+//}
+-(void)xxxxxx
+{
+    self.fpChangeTitleColor();
+}
 
 - (void)dealloc {
 

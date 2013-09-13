@@ -47,9 +47,7 @@
 "<span id='comment_title_desc'>暂无评论</span>" \
 "</div>"
 
-#define CONTENTWEBVIEW_COMMENT_TITLE_NODESC @"<div id='comment_desc'>" \
-"<span id='comment_title_desc'></span>" \
-"</div>"
+#define CONTENTWEBVIEW_COMMENT_TITLE_NODESC @"<div></div>"
 
 //更多评论按钮
 #define CONTENTWEBVIEW_COMMENT_MORE @"<div id='comment_more_list'>" \

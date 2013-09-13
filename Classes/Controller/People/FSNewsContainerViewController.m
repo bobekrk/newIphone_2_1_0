@@ -116,7 +116,9 @@ NSString                       *_newsID;
         UIPanGestureRecognizer * pan = (UIPanGestureRecognizer*)gestureRecognizer;
         CGPoint po = [pan translationInView:self.view];
         NSLog(@"%f %f",po.x,po.y);
-        if (po.x > 0 ) {
+        [pan setTranslation:CGPointMake(0, 0) inView:self.view];
+        NSLog(@"------%d",pan.state);
+        if (po.x > 5 ) {
             if (self.isNewNavigation){
                 [self dismissModalViewControllerAnimated:YES];
                 return YES;
@@ -124,6 +126,7 @@ NSString                       *_newsID;
             
             [self.navigationController popViewControllerAnimated:YES];
         }
+        
     }
     return YES;
 }
@@ -275,6 +278,9 @@ NSString                       *_newsID;
     }
         
     [self.navigationController popViewControllerAnimated:YES];
+//    if (_fs_GZF_NewsContainerDAO.objectList > 0) {
+//        self.fpChangeTitleClor(nil);
+//    }
 }
 
 #pragma mark -
@@ -377,6 +383,10 @@ NSString                       *_newsID;
             if (status == FSBaseDAOCallBack_SuccessfulStatus) {
                 [_fs_GZF_NewsContainerDAO operateOldBufferData];
             }
+            if (_obj) {
+                [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:_obj.newsid];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+            }
             
             [_fs_GZF_CommentListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
         }
@@ -385,12 +395,12 @@ NSString                       *_newsID;
     if ([sender isEqual:_fs_GZF_CommentListDAO]) {
         if (status == FSBaseDAOCallBack_SuccessfulStatus) {
             FSLog(@"_fs_GZF_CommentListDAO:%d",[_fs_GZF_CommentListDAO.objectList count]);
-            if ([_fs_GZF_CommentListDAO.objectList count]>0) {
+            //if ([_fs_GZF_CommentListDAO.objectList count] >= 0) {
                 [_fsNewsContainerView didReciveComment:_fs_GZF_CommentListDAO.objectList];
-            }
-            else{
+           // }
+           // else{
                 ;
-            }
+           // }
             
 //            NSMutableDictionary *array = [[NSMutableDictionary alloc] init];
 //            if (_fs_GZF_NewsContainerDAO.cobj!=nil) {
@@ -429,6 +439,9 @@ NSString                       *_newsID;
             _fsShareNoticView.alpha = 0.0f;
             [UIView commitAnimations];
         }
+    }
+    if (_fs_GZF_NewsContainerDAO.cobj) {
+        _obj.isReaded = [NSNumber numberWithBool:YES];
     }
     
 }

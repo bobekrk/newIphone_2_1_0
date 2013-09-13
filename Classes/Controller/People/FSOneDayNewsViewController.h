@@ -27,7 +27,7 @@
     NSTimeInterval                     _TimeInterval;
     NSArray                           *_myArry;
 }
-
+@property(nonatomic,copy)void (^changeTitleColor)(UITableViewCell * cell);
 -(void)reSetSectionMessage;
 
 @end

@@ -54,6 +54,7 @@
 @property (nonatomic, retain) NSString           *newsID;
 @property (nonatomic,assign)  BOOL                isNewNavigation;
 @property (nonatomic,assign) NewsSourceKind       newsSourceKind;
+@property (nonatomic,copy)   void (^fpChangeTitleClor)(UITableViewCell*);
 
 
 -(void)share;

@@ -2,7 +2,7 @@
 //  FSOneDayNewsObject.m
 //  PeopleNewsReaderPhone
 //
-//  Created by lygn128 on 13-8-19.
+//  Created by lygn128 on 13-9-13.
 //
 //
 
@@ -30,8 +30,5 @@
 @dynamic kind;
 @dynamic UPDATE_DATE;
 @dynamic isRedColor;
--(NSString*)description
-{
-    return [NSString  stringWithFormat:@"%@ %@ %@",self.newsid,self.news_abstract,self.title];
-}
+
 @end

@@ -24,6 +24,7 @@
     
 }
 @property(nonatomic,retain)UIImageView * topRedImageView;
+@property(nonatomic,copy)void (^fpChangeTitleColor)(void);
 -(FSUserSelectObject *)getUserChannelSelectedObject;
 
 -(BOOL)channleISexp:(FSUserSelectObject *)obj;

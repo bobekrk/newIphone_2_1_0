@@ -54,11 +54,11 @@
     NSString *key = [obj valueForKey:@"key"];
     
     if ([key isEqualToString:@"1"]) {
-        _bt_SwichSelect.text = @"解除";
+        _bt_SwichSelect.text = @"解除绑定";
         _isSelect = YES;
     }
     else{
-        _bt_SwichSelect.text = @"绑定";
+        _bt_SwichSelect.text = @"暂未绑定";
         _isSelect = NO;
     }
     
@@ -68,7 +68,7 @@
     _lab_title.text = title;
     _lab_title.backgroundColor = COLOR_CLEAR;
     
-    _bt_SwichSelect.frame = CGRectMake(self.frame.size.width - 85, 7, 45, self.frame.size.height - 16);
+    _bt_SwichSelect.frame = CGRectMake(self.frame.size.width - 120, 7, 80, self.frame.size.height - 16);
     _bt_SwichSelect.backgroundColor = COLOR_CLEAR;
     //_bt_SwichSelect = COLOR_CLEAR;
 }

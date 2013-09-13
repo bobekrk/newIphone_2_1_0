@@ -206,13 +206,12 @@
 
 -(void)onGoBackButtonClicked
 {
-    //[self performSelectorInBackground:@selector(xxxxx) withObject:nil];
     UIViewController * temp = (UIViewController *)(((FSNewsContainerView*)(self.parentDelegate)).parentDelegate);
     BOOL canReturn = [((FSNewsContainerView*)(self.parentDelegate))  goBackToBeforePage];
     if (canReturn) {
         [temp.navigationController popViewControllerAnimated:YES];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:@"changeTitleColor" object:nil];
     }
-
 }
 
 -(void)faverate:(id)sender{

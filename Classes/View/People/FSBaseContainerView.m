@@ -82,9 +82,6 @@
 
 
 -(void)sendTouchEvent{
-//#ifndef MYDEBUG
-    //NSLog(@"FSBaseView sendTouchEvent");
-//#endif 
     if ([_parentDelegate respondsToSelector:@selector(fsBaseContainerViewTouchEvent:)]) {
         [_parentDelegate fsBaseContainerViewTouchEvent:self];
     }

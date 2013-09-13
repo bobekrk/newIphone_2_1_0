@@ -396,7 +396,6 @@
 		4CC14F7B16461E290007143D /* FSDeepContent_TextObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC14F7A16461E290007143D /* FSDeepContent_TextObject.m */; };
 		4CC14F7E16461E2A0007143D /* FSDeepContent_PicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC14F7D16461E2A0007143D /* FSDeepContent_PicObject.m */; };
 		5814919217D5424000CB58D7 /* LygDequeueScroView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5814919117D5424000CB58D7 /* LygDequeueScroView.m */; };
-		581546D917C1965400EFEF20 /* FSOneDayNewsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 581546D817C1965400EFEF20 /* FSOneDayNewsObject.m */; };
 		581546DC17C1E77D00EFEF20 /* 右抽屉.png in Resources */ = {isa = PBXBuildFile; fileRef = 581546DA17C1E77D00EFEF20 /* 右抽屉.png */; };
 		581546DD17C1E77D00EFEF20 /* 右抽屉@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 581546DB17C1E77D00EFEF20 /* 右抽屉@2x.png */; };
 		583509DC17CE1C4C00738DCC /* temp.xib in Resources */ = {isa = PBXBuildFile; fileRef = 583509DB17CE1C4C00738DCC /* temp.xib */; };
@@ -455,6 +454,7 @@
 		58AF708617D7F1AD0028832E /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 58AF706817D7F1AD0028832E /* Reachability.m */; };
 		58AF708B17D7F2050028832E /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 58AF708917D7F2050028832E /* libxml2.2.dylib */; };
 		58AF708C17D7F2050028832E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 58AF708A17D7F2050028832E /* libxml2.dylib */; };
+		58CC789C17E28B52001F011F /* FSOneDayNewsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 58CC789B17E28B52001F011F /* FSOneDayNewsObject.m */; };
 		58CDA27C17BA30E300984B06 /* FSOneDayNewsObjectx.m in Sources */ = {isa = PBXBuildFile; fileRef = 58CDA27B17BA30E200984B06 /* FSOneDayNewsObjectx.m */; };
 		58D8B0FF17A745EF00816844 /* 返回.png in Resources */ = {isa = PBXBuildFile; fileRef = 58D8B0FD17A745EE00816844 /* 返回.png */; };
 		58D8B10017A745EF00816844 /* 返回@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58D8B0FE17A745EE00816844 /* 返回@2x.png */; };
@@ -1312,8 +1312,6 @@
 		4CC14F7D16461E2A0007143D /* FSDeepContent_PicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSDeepContent_PicObject.m; path = Classes/Objects/FSDeepContent_PicObject.m; sourceTree = "<group>"; };
 		5814919017D5424000CB58D7 /* LygDequeueScroView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LygDequeueScroView.h; sourceTree = "<group>"; };
 		5814919117D5424000CB58D7 /* LygDequeueScroView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LygDequeueScroView.m; sourceTree = "<group>"; };
-		581546D717C1965400EFEF20 /* FSOneDayNewsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSOneDayNewsObject.h; sourceTree = "<group>"; };
-		581546D817C1965400EFEF20 /* FSOneDayNewsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSOneDayNewsObject.m; sourceTree = "<group>"; };
 		581546DA17C1E77D00EFEF20 /* 右抽屉.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "右抽屉.png"; sourceTree = "<group>"; };
 		581546DB17C1E77D00EFEF20 /* 右抽屉@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "右抽屉@2x.png"; sourceTree = "<group>"; };
 		583509DB17CE1C4C00738DCC /* temp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = temp.xib; sourceTree = "<group>"; };
@@ -1418,6 +1416,8 @@
 		58AF706817D7F1AD0028832E /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		58AF708917D7F2050028832E /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		58AF708A17D7F2050028832E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		58CC789A17E28B52001F011F /* FSOneDayNewsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSOneDayNewsObject.h; sourceTree = "<group>"; };
+		58CC789B17E28B52001F011F /* FSOneDayNewsObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSOneDayNewsObject.m; sourceTree = "<group>"; };
 		58CDA27A17BA30E100984B06 /* FSOneDayNewsObjectx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSOneDayNewsObjectx.h; sourceTree = "<group>"; };
 		58CDA27B17BA30E200984B06 /* FSOneDayNewsObjectx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSOneDayNewsObjectx.m; sourceTree = "<group>"; };
 		58D8B0FD17A745EE00816844 /* 返回.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回.png"; sourceTree = "<group>"; };
@@ -2614,11 +2614,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				581546D717C1965400EFEF20 /* FSOneDayNewsObject.h */,
-				581546D817C1965400EFEF20 /* FSOneDayNewsObject.m */,
 				58A6AD1017CD7FBA004C71BB /* FSTopicObject.h */,
 				58A6AD1117CD7FBA004C71BB /* FSTopicObject.m */,
 				5850C1D2179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld */,
+				58CC789A17E28B52001F011F /* FSOneDayNewsObject.h */,
+				58CC789B17E28B52001F011F /* FSOneDayNewsObject.m */,
 				5889DB2D17B1EADB00ED76BA /* FSLoadingImageObject.h */,
 				5889DB2E17B1EADB00ED76BA /* FSLoadingImageObject.m */,
 				8212197115C677CF00B713FB /* Content */,
@@ -4589,7 +4589,6 @@
 				5889DB2F17B1EADB00ED76BA /* FSLoadingImageObject.m in Sources */,
 				58CDA27C17BA30E300984B06 /* FSOneDayNewsObjectx.m in Sources */,
 				0AE0769A17BB9A6A006B6358 /* MyNewsLIstView.m in Sources */,
-				581546D917C1965400EFEF20 /* FSOneDayNewsObject.m in Sources */,
 				5882B5E417CC4EDD00B77388 /* LygDeepListView.m in Sources */,
 				5882B5E717CC8EBB00B77388 /* LygDeepTableViewCell.m in Sources */,
 				58A6AD1217CD7FBA004C71BB /* FSTopicObject.m in Sources */,
@@ -4632,6 +4631,7 @@
 				58EBDBE917DA099400EEF141 /* CJSONDeserializer.m in Sources */,
 				58EBDBEA17DA099400EEF141 /* CJSONScanner.m in Sources */,
 				58EBDBEB17DA099400EEF141 /* CJSONSerializer.m in Sources */,
+				58CC789C17E28B52001F011F /* FSOneDayNewsObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

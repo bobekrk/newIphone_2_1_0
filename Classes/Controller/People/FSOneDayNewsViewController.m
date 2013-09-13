@@ -228,7 +228,17 @@
     return 0;
 }
 
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:NO];
+    [self performSelector:@selector(xxxxxx) withObject:self afterDelay:0.4];
+}
+-(void)xxxxxx
+{
+    if (self.changeTitleColor) {
+        self.changeTitleColor(nil);
+    }
+}
 
 
 - (NSObject *)tableViewCellData:(FSTableContainerView *)sender withIndexPath:(NSIndexPath *)indexPath {
@@ -271,13 +281,34 @@
         FSSectionObject *Obj = [_sectionMessage objectAtIndex:section-1];
         FSOneDayNewsObject *o = [_newsListData.objectList objectAtIndex:Obj.sectionBeginIndex+row];
         [PeopleNewsStati newsEvent:o.newsid nameOfEVent:@"头条" andTitle:o.title];
-        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:o.newsid];
-        [[NSUserDefaults standardUserDefaults]synchronize];
         FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
+        
         NSLog(@"fsNewsContainerViewController1:%d",[fsNewsContainerViewController retainCount]);
         fsNewsContainerViewController.obj = o;
         fsNewsContainerViewController.FCObj = nil;
         fsNewsContainerViewController.newsSourceKind = NewsSourceKind_ShiKeNews;
+        
+        if (section > 0) {
+            UITableViewCell * cell = [sender.tvList cellForRowAtIndexPath:indexPath];
+            if ([cell isKindOfClass:[FSOneDayTableListCell class]]) {
+                __block FSOneDayTableListCell * xxcell = (FSOneDayTableListCell*)cell;
+                __block FSOneDayNewsObject    * oo     = o;
+                self.changeTitleColor = ^(UITableViewCell * temp)
+                {
+//                    [UIView beginAnimations:@"chagneColor" context:nil];
+//                    [UIView setAnimationDuration:1];
+//                    [UIView commitAnimations];
+                    if (oo) {
+                        if (![oo.isReaded isEqualToNumber:[NSNumber numberWithBool:YES]] ) {
+                            return;
+                        }
+                    }
+                    xxcell.lab_title.textColor     = [UIColor lightGrayColor];
+                };
+//                [o setValue:o.isReaded forKey:@"isReaded"];
+//                [o addObserver:self forKeyPath:@"isReaded" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:o];
+            }
+        }
         NSLog(@"fsNewsContainerViewController2:%d",[fsNewsContainerViewController retainCount]);
         
         //[self.navigationController pushViewController:fsNewsContainerViewController animated:YES];
@@ -286,14 +317,24 @@
         [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
     }
     if (section > 0) {
-        UITableViewCell * cell = [sender.tvList cellForRowAtIndexPath:indexPath];
-        if ([cell isKindOfClass:[FSOneDayTableListCell class]]) {
-            FSOneDayTableListCell * xxcell = (FSOneDayTableListCell*)cell;
-            xxcell.lab_title.textColor     = [UIColor lightGrayColor];
-        }
+//        UITableViewCell * cell = [sender.tvList cellForRowAtIndexPath:indexPath];
+//        if ([cell isKindOfClass:[FSOneDayTableListCell class]]) {
+//            FSOneDayTableListCell * xxcell = (FSOneDayTableListCell*)cell;
+//            xxcell.lab_title.textColor     = [UIColor lightGrayColor];
+//        }
     }
     
 }
+//-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+//{
+//    if ([keyPath isEqualToString:@"isReaded"]) {
+//        FSOneDayNewsObject *o = context;
+//        if (![o.isReaded isEqualToNumber:[NSNumber numberWithBool:YES]] ) {
+//            self.changeTitleColor = nil;
+//        }
+//        
+//    }
+//}
 -(void)viewDidLoad
 {
     [super viewDidLoad];
