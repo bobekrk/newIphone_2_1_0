@@ -105,7 +105,7 @@
     _kindsLabel            = [[UILabel alloc] initWithFrame:CGRectMake(8, 6, 42, 21)];
     _kindsLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
     _kindsLabel.layer.borderWidth = 1;
-    _kindsLabel.font       = [UIFont systemFontOfSize:14];
+    _kindsLabel.font       = [UIFont systemFontOfSize:17];
     _kindsLabel.textColor  = [UIColor redColor];
     
     
@@ -124,7 +124,7 @@
     _abstractLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
     _abstractLabel.font          = [UIFont systemFontOfSize:16];
     _abstractLabel.numberOfLines = 0;
-    _abstractLabel.textColor   = [UIColor lightGrayColor];
+    _abstractLabel.textColor   = [UIColor grayColor];
     
     
     
@@ -155,9 +155,9 @@
     self.clipsToBounds = YES;
     self.contentView.clipsToBounds = YES;
     _kindsLabel.textAlignment = NSTextAlignmentCenter;
-    _kindsLabel.Frame = CGRectMake(8, 6, 60, 21);
-    _nameLabel.Frame = CGRectMake(70,0, 240, 34);
-    _dateLabel.Frame = CGRectMake(222, 27, 302, 21);
+    _kindsLabel.Frame = CGRectMake(8, 6, 70, 21);
+    _nameLabel.Frame = CGRectMake(80,0, 240, 34);
+    _dateLabel.Frame = CGRectMake(222, 27, 300 - 222, 21);
     _abstractLabel.Frame = CGRectMake(8, 45, 295, view.frame.size.height - 48);
 }
 
