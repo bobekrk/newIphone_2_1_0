@@ -63,21 +63,7 @@
          [self.view addSubview:_navTopBar];
         [_navTopBar release];
         
-        
-       
 
-        
-//        UIButton *returnBT = [[UIButton alloc] init];
-//        [returnBT setBackgroundImage:[UIImage imageNamed:@"返回.png"] forState:UIControlStateNormal];
-//        //[returnBT setTitle:NSLocalizedString(@"返回", nil) forState:UIControlStateNormal];
-//        returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
-//        [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
-//        [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
-//        returnBT.frame = CGRectMake(0, 0, 55, 30);
-//        
-//        returnBT.frame = CGRectMake(3, 7, 55, 30);
-//        [_navTopBar addSubview:returnBT];
-//        [returnBT release];
         
         
     }

@@ -36,80 +36,108 @@
     }
     
     [_swichButton addTarget:self action:@selector(ButtonSelect:) forControlEvents:UIControlEventTouchUpInside];
+    //[_swichButton addObserver:self forKeyPath:@"on" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
 
     [self.contentView addSubview:_swichButton];
+}
+//-(void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context
+//{
+//    if ([keyPath isEqualToString:@"seton"]) {
+//        [self performSelector:@selector(xxxx) withObject:nil afterDelay:0.1 inModes:nil];
+//    }
+//}
+-(void)xxxx
+{
+    
 }
 
 -(void)doSomethingAtLayoutSubviews{
     self.textLabel.text = (NSString *)_data;
     self.textLabel.backgroundColor = COLOR_CLEAR;
+    self.textLabel.font = [UIFont boldSystemFontOfSize:16];
+    self.textLabel.autoresizingMask = UIViewAutoresizingNone;
     _swichButton.frame = CGRectMake(self.frame.size.width - 105, 5, 20, 30);
     [self setButtonState];
 }
 
 -(void)setButtonState{
-    switch (self.rowIndex) {
-        case 0:
-            [_swichButton setOn:[[GlobalConfig shareConfig] readImportantNewsPush]];
-            break;
-        case 1:
-            [_swichButton setOn:[[GlobalConfig shareConfig] readContentFullScreen]];
-            break;
-        case 2:
-            [_swichButton setOn:![[GlobalConfig shareConfig] isDownloadPictureUseing2G_3G]];
-            break;
-        default:
-            break;
+
+    NSString * string = self.textLabel.text;
+    if ([string isEqualToString:@"新闻推送"]) {
+        [_swichButton setOn:[[GlobalConfig shareConfig] readImportantNewsPush]];
+
+        
+    }else if ([string isEqualToString:@"正文全屏功能"])
+    {
+        [_swichButton setOn:[[GlobalConfig shareConfig] readContentFullScreen]];
+
+    }else if ([string hasPrefix:@"只"])
+    {
+         [_swichButton setOn:![[GlobalConfig shareConfig] isDownloadPictureUseing2G_3G]];
     }
 }
 
 -(void)ButtonSelect:(id)sender{
     UISwitch *b = (UISwitch *)sender;
-    if (b.on == YES) {
-        [self setYes:self.rowIndex];
-        NSLog(@"ButtonSelect yes:%d",self.rowIndex);
-    }
-    else{
-        [self setNO:self.rowIndex];
-        NSLog(@"ButtonSelect OFF:%d",self.rowIndex);
+    [self setSetting:b.on];
+}
+-(void)setSetting:(BOOL)isOn
+{
+    NSString * string = self.textLabel.text;
+    if ([string isEqualToString:@"新闻推送"]) {
+        [[GlobalConfig shareConfig] setImportantNewsPush:isOn];
+        if (!isOn) {
+             [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+        }
+    
+    }else if ([string isEqualToString:@"正文全屏功能"])
+    {
+        [[GlobalConfig shareConfig] setContentFullScreen:isOn];
+    }else if ([string hasPrefix:@"只"])
+    {
+        [[GlobalConfig shareConfig] setDownloadPictureUseing2G_3G:!isOn];
     }
 }
 
--(void)setYes:(NSInteger)row{
-    switch (row) {
-        case 0:
-            [[GlobalConfig shareConfig] setImportantNewsPush:YES];
-            //注册推送
-            [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-            break;
-        case 1:
-            [[GlobalConfig shareConfig] setContentFullScreen:YES];
-            break;
-        case 2:
-            [[GlobalConfig shareConfig] setDownloadPictureUseing2G_3G:NO];
-            break;
-        default:
-            break;
-    }
-}
-
--(void)setNO:(NSInteger)row{
-    switch (row) {
-        case 0:
-            [[GlobalConfig shareConfig] setImportantNewsPush:NO];
-            //注销推送
-            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
-            break;
-        case 1:
-            [[GlobalConfig shareConfig] setContentFullScreen:NO];
-            break;
-        case 2:
-            [[GlobalConfig shareConfig] setDownloadPictureUseing2G_3G:YES];
-            break;
-        default:
-            break;
-    }
-}
+//-(void)setYes:(NSInteger)row{
+//    switch (row) {
+//        case 0:
+//            [[GlobalConfig shareConfig] setImportantNewsPush:YES];
+//            //注册推送
+//            [[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+//            break;
+//        case 1:
+//            [[GlobalConfig shareConfig] setContentFullScreen:YES];
+//            break;
+//        case 2:
+//            [[GlobalConfig shareConfig] setDownloadPictureUseing2G_3G:NO];
+//            break;
+//        default:
+//            break;
+//    }
+//}
+//
+//-(void)setNO:(NSInteger)row{
+////    switch (row) {
+////        case 0:
+////            [[GlobalConfig shareConfig] setImportantNewsPush:NO];
+////            //注销推送
+////            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+////            break;
+////        case 1:
+////            [[GlobalConfig shareConfig] setContentFullScreen:NO];
+////            break;
+////        case 2:
+////            [[GlobalConfig shareConfig] setDownloadPictureUseing2G_3G:YES];
+////            break;
+////        default:
+////            break;
+////    }
+//    NSString * string = self.textLabel.text;
+//    if ([string isEqualToString:@"新闻推送"]) {
+//        <#statements#>
+//    }
+//}
 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

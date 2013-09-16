@@ -33,6 +33,10 @@
     }
     return self;
 }
+-(void)reloadTableData
+{
+    [self.tvList reloadData];
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -82,7 +86,7 @@
 
 -(void)initializeCell:(UITableViewCell *)cell withData:(NSObject *)data withIndexPath:(NSIndexPath *)indexPath{
     
-    //NSLog(@"MoreListCell");
+    NSLog(@"%@",cell.class);
     NSInteger section = [indexPath section];
     NSInteger row = [indexPath row];
     
@@ -96,21 +100,26 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             switch (row) {
                 case 0:
+                {
                     cell.textLabel.text = @"正文字号";
                     cell.textLabel.textColor = COLOR_NEWSLIST_TITLE;//[UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
+                }
+
                     break;
-                    //                case 1:
-                    //                    cell.textLabel.text = @"环境语言";
-                    //                    cell.textLabel.textColor = [UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
-                    //                    break;
                 case 1:
+                {
                     cell.textLabel.text = @"订阅我的头条";
                     cell.textLabel.textColor = COLOR_NEWSLIST_TITLE;//[UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
+                }
+ 
                     break;
                 case 2:
+                {
                     cell.textLabel.text = @"账号绑定";
                     cell.textLabel.textColor = COLOR_NEWSLIST_TITLE;//[UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
                     break;
+                }
+                   
                     
                 default:
                     break;

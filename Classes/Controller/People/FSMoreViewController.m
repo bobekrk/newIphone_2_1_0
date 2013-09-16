@@ -35,18 +35,28 @@
 
 
 @implementation FSMoreViewController
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+}
 - (id)init {
 	self = [super init];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadData) name:@"refreshSetting" object:nil];
 	if (self) {
 		NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceNow:0];
         _TimeInterval = [date timeIntervalSince1970];
 		[date release];
 	}
 	return self;
-} 
+}
+-(void)reloadData
+{
+    [_fsMoreContainerView reloadTableData];
+}
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObject:self];
     [_fs_GZF_AppRecommendDAO release];
     [_peopleAPPS removeAllObjects];
     [_peopleAPPS release];

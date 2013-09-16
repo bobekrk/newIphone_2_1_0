@@ -39,7 +39,7 @@
 
 -(void)returnBack:(id)sender{
     FSLog(@"returnBack");
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshSetting" object:nil];
     if (self.isnavTopBar){
         [self dismissModalViewControllerAnimated:YES];
         return;
@@ -80,7 +80,7 @@
     if ([indexPath section] == 1) {
         //sender.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"CellBackground"]];
         switch ([indexPath row]) {
-            case 4:
+            case 3:
                 return @"要闻推送";
                 break;
             case 0:
@@ -89,7 +89,7 @@
             case 1:
                 return @"只WiFi网络加载图片";
                 break;
-            case 3:
+            case 32:
                 return @"账号管理";
             default:
                 break;
