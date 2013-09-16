@@ -616,11 +616,11 @@
             }
             blockCell.lab_NewsTitle.textColor  = [UIColor lightGrayColor];
         };
-        [[NSUserDefaults standardUserDefaults]setValue:[NSNumber numberWithInt:1] forKey:o.newsid];
+        //[[NSUserDefaults standardUserDefaults]setValue:[NSNumber numberWithInt:1] forKey:o.newsid];
         [self.parentNavigationController pushViewController:fsNewsContainerViewController animated:YES];
         [fsNewsContainerViewController release];
         [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        //[[NSUserDefaults standardUserDefaults] synchronize];
     }
     else{
         FSOneDayNewsObject *o                                        = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
