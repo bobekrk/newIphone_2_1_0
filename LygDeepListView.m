@@ -20,6 +20,7 @@
 #import <UIKit/UITableView.h>
 #import "FSTopicObject.h"
 #import "LygDeepTableViewCell.h"
+#define DEEPABSTRACTFONTSIZE 16.0f
 @implementation LygDeepListView
 - (id)initWithFrame:(CGRect)frame
 {
@@ -161,7 +162,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FSTopicObject * top = [_myDeepListDao.objectList objectAtIndex:indexPath.row];
-    CGSize size         = [top.news_abstract sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(295, 200) lineBreakMode:0];
+    CGSize size         = [top.news_abstract sizeWithFont:[UIFont systemFontOfSize:DEEPABSTRACTFONTSIZE] constrainedToSize:CGSizeMake(295, 200) lineBreakMode:0];
    
     //CGSize size = [top.news_abstract sizeWithFont:[UIFont systemFontOfSize:14] forWidth:295 lineBreakMode:0];
 //    if(indexPath.row%3 == 0)

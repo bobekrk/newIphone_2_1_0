@@ -55,7 +55,7 @@
     
     
     _nameLabel             = [[UILabel alloc] initWithFrame:CGRectMake(58,0, 232, 34)];
-    _nameLabel.font        = [UIFont systemFontOfSize:19];
+    _nameLabel.font        = [UIFont systemFontOfSize:17];
     _nameLabel.textColor   = [UIColor blackColor];
     
     
@@ -66,7 +66,7 @@
     
     _abstractLabel               = [[UILabel alloc] initWithFrame:CGRectMake(8, 48, 295, 61)];
     _abstractLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
-    _abstractLabel.font          = [UIFont systemFontOfSize:14];
+    _abstractLabel.font          = [UIFont systemFontOfSize:16];
     _abstractLabel.numberOfLines = 0;
     _dateLabel.textColor   = [UIColor lightGrayColor];
     
@@ -111,18 +111,18 @@
     
     
     _nameLabel             = [[UILabel alloc] initWithFrame:CGRectMake(58,0, 232, 34)];
-    _nameLabel.font        = [UIFont systemFontOfSize:16];
+    _nameLabel.font        = [UIFont systemFontOfSize:17];
     _nameLabel.textColor   = [UIColor blackColor];
     
     
-    _dateLabel             = [[UILabel alloc] initWithFrame:CGRectMake(8, 27, 302, 21)];
+    _dateLabel             = [[UILabel alloc] initWithFrame:CGRectMake(280, 27, 40, 21)];
     _dateLabel.font        = [UIFont systemFontOfSize:14];
     _dateLabel.textColor   = [UIColor lightGrayColor];
     
     
     _abstractLabel               = [[UILabel alloc] initWithFrame:CGRectMake(8, 48, 295, 61)];
     _abstractLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
-    _abstractLabel.font          = [UIFont systemFontOfSize:14];
+    _abstractLabel.font          = [UIFont systemFontOfSize:16];
     _abstractLabel.numberOfLines = 0;
     _abstractLabel.textColor   = [UIColor lightGrayColor];
     
@@ -157,7 +157,7 @@
     _kindsLabel.textAlignment = NSTextAlignmentCenter;
     _kindsLabel.Frame = CGRectMake(8, 6, 60, 21);
     _nameLabel.Frame = CGRectMake(70,0, 240, 34);
-    _dateLabel.Frame = CGRectMake(8, 27, 302, 21);
+    _dateLabel.Frame = CGRectMake(222, 27, 302, 21);
     _abstractLabel.Frame = CGRectMake(8, 45, 295, view.frame.size.height - 48);
 }
 

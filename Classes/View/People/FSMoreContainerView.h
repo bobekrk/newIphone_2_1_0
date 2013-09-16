@@ -27,5 +27,5 @@
 @property (nonatomic, assign) NSInteger currentIndex;
 
 -(void)tableCellselect:(NSIndexPath *)indexPath;
-
+-(void)reloadTableData;
 @end

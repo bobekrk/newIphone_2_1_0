@@ -181,6 +181,8 @@
     
 	if (cell == nil) {
 		cell = (UITableViewCell *)[[[self cellClassWithIndexPath:indexPath] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierString];
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
+        cell.textLabel.autoresizingMask = UIViewAutoresizingNone;
 	}
 	
 	if ([cell isKindOfClass:[FSTableViewCell class]]) {

@@ -41,3 +41,5 @@
 
 
 #define BAIDUAPPKEY   @"0e2f90a612"
+#define FONTSIZEOFABSTRACT    12.0f
+#define ABSTRACTTITLECOLOR    [UIColor grayColor]
