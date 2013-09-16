@@ -40,13 +40,22 @@
 	}
 	return self;
 }
-//-(void)viewDidAppear:(BOOL)animated
-//{
-//    if (self.fpChangeTitleColor) {
-//        [self performSelector:@selector(xxxxxx) withObject:self afterDelay:0.3];
-//        
-//    }
-//}
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (self.fpChangeTitleColor) {
+        [self performSelector:@selector(xxxxxx) withObject:self afterDelay:0.3];
+        
+    }
+    if (_fs_GZF_ChannelListDAO.objectList.count > 0) {
+        [self addKindsScrollView];
+    }
+
+}
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self.myNaviBar removeFromSuperview];
+}
 -(void)xxxxxx
 {
     self.fpChangeTitleColor();
@@ -92,7 +101,7 @@
             label.textColor      = [UIColor lightGrayColor];
         }
     }
-    [self.myNaviBar removeFromSuperview];
+    
     [self.view addSubview:_myScroview];
     [_myScroview release];
     _topRedImageView            = [[UIImageView alloc]initWithFrame:CGRectMake(0, 40, 56, 4)];
@@ -213,10 +222,6 @@
    
 }
 
--(void)viewDidLoad
-{
-    [super viewDidLoad];
-}
 
 - (void)loadChildView {
     [super loadChildView];
@@ -247,12 +252,7 @@
     }
 
 }
--(void)viewDidAppear:(BOOL)animated
-{
-    if (_fs_GZF_ChannelListDAO.objectList.count > 0) {
-        [self addKindsScrollView];
-    }
-}
+
 
 -(void)doSomethingForViewFirstTimeShow{
     NSLog(@"doSomethingForViewFirstTimeShowdoSomethingForViewFirstTimeShow");

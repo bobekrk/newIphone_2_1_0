@@ -585,7 +585,6 @@
         }
         FSNewsListCell * cell             = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:indexPath];
         cell.leftView.backgroundColor     = [UIColor redColor];
-        cell.lab_NewsTitle.textColor      = [UIColor grayColor];
         FSOneDayNewsObject *o = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
         NSLog(@"%@",o);
         //[self newsSlecterStati:o];
@@ -604,23 +603,20 @@
         FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
         
         fsNewsContainerViewController.obj                            = o;
+        __block FSOneDayNewsObject * xxx                             = o;
         fsNewsContainerViewController.FCObj                          = nil;
         fsNewsContainerViewController.newsSourceKind                 = NewsSourceKind_PuTongNews;
         self.currentNewsId                                           = o.newsid;
-        __block FSNewsListCell * blockCell = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]];
+        __block FSNewsListCell * blockCell = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
         FSNewsViewController * tempViewController = (FSNewsViewController*)self.aViewController;
-        tempViewController.fpChangeTitleColor = ^(){
-            blockCell.lab_NewsTitle.textColor = [UIColor lightGrayColor];
-        };
-        //cell.leftView.backgroundColor = [UIColor lightGrayColor];
-
-        fsNewsContainerViewController.fpChangeTitleClor              = ^(UITableViewCell*cell)
+        tempViewController.fpChangeTitleColor              = ^()
         {
+            if (![xxx.isReaded isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+                return;
+            }
             blockCell.lab_NewsTitle.textColor  = [UIColor lightGrayColor];
         };
         [[NSUserDefaults standardUserDefaults]setValue:[NSNumber numberWithInt:1] forKey:o.newsid];
-
-        NSLog(@"%@ %@",self.aViewController,self.aViewController.navigationController);
         [self.parentNavigationController pushViewController:fsNewsContainerViewController animated:YES];
         [fsNewsContainerViewController release];
         [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
