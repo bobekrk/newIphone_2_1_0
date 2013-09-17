@@ -110,11 +110,15 @@
     
     NSString *strUnion = nil;
     if ([self.currentElementName isEqualToString:COMMENT_POST_RESULT_ERROR]) {
-        strUnion = stringCat(self.result, trimString(string));
-        self.result = strUnion;
+        strUnion = stringCat(NULL, trimString(string));
+        if (strUnion.length > 0) {
+            self.result = strUnion;
+        }
+        
     }else {
 		NSLog(@"Unknow elementName Value = %@", string);
 	}
+    NSLog(@"%@",self.result);
 }
 
 - (void)baseXMLParserComplete:(FSBaseDAO *)sender {
