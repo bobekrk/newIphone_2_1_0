@@ -245,6 +245,7 @@
     self.touchEvenKind = TouchEvenKind_CommentSelect;
     [self sendTouchEvent];
     [_growingText becomeFirstResponder];
+    [_growingText clearContent];
 }
 
 -(void)share:(id)sender{
