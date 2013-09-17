@@ -213,7 +213,8 @@
             imageString = [self processBodyImages:imageString];
             NSLog(@"%@",imageString);
         }
-        NSString *content = [cobj.content stringByReplacingOccurrencesOfString:@"\n\n" withString:@"<p>"];
+         NSString *content = [cobj.content stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"\n"]];
+        content           = [content stringByReplacingOccurrencesOfString:@"\n\n" withString:@"<p>"];
         content           = [content stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         content           = [content stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<p>"]];
         content           = [content stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
