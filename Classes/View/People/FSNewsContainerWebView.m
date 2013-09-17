@@ -214,6 +214,8 @@
             NSLog(@"%@",imageString);
         }
         NSString *content = [cobj.content stringByReplacingOccurrencesOfString:@"\n\n" withString:@"<p>"];
+        //content           = [content stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        content           = [content stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<p>"]];
         imageString = [NSString stringWithFormat:@"%@%@",imageString,content];
         if ([_adImageUrl length]>0) {
             //添加广告图片
@@ -229,8 +231,6 @@
         }
         else{
             templateString = [self replayString:templateString oldString:@"{{commentList}}" newString:CONTENTWEBVIEW_COMMENT_TITLE_NODESC];
-            //templateString = [self replayString:templateString oldString:@"<div id=\"comment\">{{commentList}}</div>" newString:@""];
-            //templateString = [self replayString:templateString oldString:@"<div id=\"comment\">{{commentList}}</div>" newString:@""];
         }
         
     }
