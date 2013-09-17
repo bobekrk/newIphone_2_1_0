@@ -109,7 +109,9 @@ NSString                       *_newsID;
     if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.2];
-        _fsNewsContainerView.fsNewsDitailToolBar.alpha = (_fsNewsContainerView.fsNewsDitailToolBar.alpha > 0.9?0:1);
+        if ([GlobalConfig shareConfig].readContentFullScreen) {
+            _fsNewsContainerView.fsNewsDitailToolBar.alpha = (_fsNewsContainerView.fsNewsDitailToolBar.alpha > 0.9?0:1);
+        }
         [UIView commitAnimations];
     }else
     {
