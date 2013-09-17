@@ -71,7 +71,7 @@ typedef NS_ENUM(NSInteger, UIStatusBarAnimation) {
 };*/
 extern NSString * CTSettingCopyMyPhoneNumber();
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackTranslucent;
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackOpaque;
     _fsNewsContainerViewController_forPush = nil;
     //推送
     //如果在设置中开启 才注册推送
