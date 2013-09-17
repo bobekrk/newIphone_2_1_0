@@ -217,7 +217,8 @@
         content           = [content stringByReplacingOccurrencesOfString:@"\n\n" withString:@"<p>"];
         content           = [content stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         content           = [content stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<p>"]];
-        content           = [content stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+        content           = [content stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        content           = [NSString stringWithFormat:@"%@%@",@"　　",content];
         imageString = [NSString stringWithFormat:@"%@%@",imageString,content];
         if ([_adImageUrl length]>0) {
             //添加广告图片
