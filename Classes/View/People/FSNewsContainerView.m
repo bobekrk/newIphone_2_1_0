@@ -167,16 +167,16 @@
                 [self sendTouchEvent];
                 break;
             case TouchEvenKind_ScrollUp:
-                if (_fsNewsDitailToolBar.fontToolBarIsShow) {
-                    return;
-                }
-                [self sendTouchEvent];
+//                if (_fsNewsDitailToolBar.fontToolBarIsShow) {
+//                    return;
+//                }
+//                [self sendTouchEvent];
                 break;
             case TouchEvenKind_ScrollDown:
-                if (_fsNewsDitailToolBar.fontToolBarIsShow) {
-                    return;
-                }
-                [self sendTouchEvent];
+//                if (_fsNewsDitailToolBar.fontToolBarIsShow) {
+//                    return;
+//                }
+//                [self sendTouchEvent];
                 break;
             default:
                 break;
