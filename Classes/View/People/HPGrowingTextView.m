@@ -26,7 +26,10 @@
 @synthesize animateHeightChange;
 @synthesize returnKeyType;
 
-
+- (void)clearContent
+{
+    self.internalTextView.text = @"";
+}
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
         // Initialization code
