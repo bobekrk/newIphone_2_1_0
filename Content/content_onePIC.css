@@ -4,7 +4,7 @@ p{margin-top:14pt;margin-bottom:8pt}
 #title{color:#464646;font-weight:bold;text-align:center;font-size:14pt;padding:0;}
 #subtitle{color:#8e8e8e;font-size:8pt;text-align:center;padding-top:8pt;padding-bottom:8pt}
 hr{display: block;position: relative;padding:0;margin: 0px auto;width: 100%;clear: both;border: none;border-top: 1px solid #AAA;border-bottom: 1px solid #FFF;font-size: 1px;line-height: 0;overflow: visible;}
-#body_section{text-align:justify; text-justify:distribute-all-lines;padding-left:8pt;padding-right:8pt;padding-top:8pt;padding-bottom:50px;color:#333;font-size:12pt;line-height:12pt}
+#body_section{text-align:justify; text-justify:distribute-all-lines;padding-left:8pt;padding-right:8pt;padding-top:8pt;padding-bottom:20px;color:#333;font-size:12pt;line-height:12pt}
 #body_section.font_largeb{font-size:14pt;line-height:28pt;}
 #body_section.font_large{font-size:14pt;line-height:24pt;}
 #body_section.font_small{font-size:11pt;line-height:20pt;}
