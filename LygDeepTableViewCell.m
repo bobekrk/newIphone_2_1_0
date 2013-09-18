@@ -156,7 +156,7 @@
     self.contentView.clipsToBounds = YES;
     _kindsLabel.textAlignment = NSTextAlignmentCenter;
     _kindsLabel.Frame = CGRectMake(8, 6, 70, 21);
-    _nameLabel.Frame = CGRectMake(80,0, 240, 34);
+    _nameLabel.Frame = CGRectMake(80,0, 220, 34);
     _dateLabel.Frame = CGRectMake(222, 27, 300 - 222, 21);
     _abstractLabel.Frame = CGRectMake(8, 45, 295, view.frame.size.height - 48);
 }
