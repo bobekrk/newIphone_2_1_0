@@ -80,14 +80,11 @@
         settingDataObject * one2 = [[settingDataObject alloc]initWithString:@"collect" titleString:@"我的收藏"];
         settingDataObject * one3 = [[settingDataObject alloc]initWithString:@"clear"   titleString:@"清理缓存"];
         settingDataObject * one4 = [[settingDataObject alloc]initWithString:@"update"  titleString:@"检查更新"];
-        settingDataObject * one5 = [[settingDataObject alloc]initWithString:@"setting" titleString:@"设     置"];
-        //_dataObjectArry = [NSArray arrayWithObjects:one1,one2,one3,one4,one5, nil];
-        _dataObjectArry = [[NSArray alloc]initWithObjects:one1,one2,one3,one4,one5,nil];
+        _dataObjectArry = [[NSArray alloc]initWithObjects:one1,one2,one3,one4,nil];
         [one1 release];
         [one2 release];
         [one3 release];
         [one4 release];
-        [one5 release];
         
         
 //        CGFloat top = 30;
