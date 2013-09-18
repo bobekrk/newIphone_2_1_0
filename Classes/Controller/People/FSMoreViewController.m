@@ -215,6 +215,9 @@
 }
 
 -(NSInteger)tableViewNumberInSection:(FSTableContainerView *)sender section:(NSInteger)section{
+    if (section == 0) {
+        return 2;
+    }
     return 3;
 }
 
@@ -271,18 +274,6 @@
             
         }
         if (row == 1){
-            
-            //偏好设置
-            FSChannelSettingForOneDayViewController *fsChannelSettingForOneDayViewController = [[FSChannelSettingForOneDayViewController alloc] init];
-            [self.fsTabBarViewController setTabBarHided:YES withAnimation:NO];
-            fsChannelSettingForOneDayViewController.isReSetting = YES;
-            //[self.parentNavigationController presentModalViewController:fsChannelSettingForOneDayViewController animated:YES];
-            [self.parentNavigationController pushViewController:fsChannelSettingForOneDayViewController animated:YES];
-            //[self.navigationController pushViewController:fsChannelSettingForOneDayViewController animated:YES];
-            [fsChannelSettingForOneDayViewController release];
-            
-        }
-        if (row == 2){
             //账号绑定
             FSAuthorizationViewController *fsAuthorizationViewController = [[FSAuthorizationViewController alloc] init];
             fsAuthorizationViewController.isnavTopBar                    = YES;

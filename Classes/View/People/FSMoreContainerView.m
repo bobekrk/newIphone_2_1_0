@@ -108,18 +108,10 @@
                     break;
                 case 1:
                 {
-                    cell.textLabel.text = @"订阅我的头条";
+                    cell.textLabel.text = @"账号绑定";
                     cell.textLabel.textColor = COLOR_NEWSLIST_TITLE;//[UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
                 }
  
-                    break;
-                case 2:
-                {
-                    cell.textLabel.text = @"账号绑定";
-                    cell.textLabel.textColor = COLOR_NEWSLIST_TITLE;//[UIColor colorWithRed:204.0/255.0 green:204/255.0 blue:204.0/255.0 alpha:1];
-                    break;
-                }
-                   
                     
                 default:
                     break;
