@@ -86,6 +86,10 @@
     _fsNewsDitailToolBar.clipsToBounds = YES;
     _fsNewsDitailToolBar.parentDelegate = self;
     [self addSubview:_fsNewsDitailToolBar];
+    if ([GlobalConfig shareConfig].readContentFullScreen) {
+        _fsNewsDitailToolBar.alpha = 0;
+    }
+    //_fsNewsDitailToolBar.hidden = [GlobalConfig shareConfig].readContentFullScreen;
     [_fsNewsDitailToolBar release];
     
     _oldContentOfset = 0;
