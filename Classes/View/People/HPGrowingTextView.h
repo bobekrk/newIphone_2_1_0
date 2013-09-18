@@ -77,5 +77,6 @@
 //uitextview methods
 - (BOOL)hasText;
 - (void)scrollRangeToVisible:(NSRange)range;
+- (void)clearContent;
 
 @end

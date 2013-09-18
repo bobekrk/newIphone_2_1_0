@@ -287,7 +287,14 @@
         //NSLog(@"content:%@",content);
         _obj.newsid = trimString(content);
 		[content release];
-	} else if ([_currentElementName isEqualToString:Onedaynews_title]) {
+	}else if ([_currentElementName isEqualToString:@"importantid"])
+    {
+        NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
+        //NSLog(@"content:%@",content);
+        _obj.newsid = trimString(content);
+		[content release];
+    }
+    else if ([_currentElementName isEqualToString:Onedaynews_title]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
 		_obj.title = trimString(content);
 		[content release];

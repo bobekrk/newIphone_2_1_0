@@ -33,7 +33,7 @@
 #define NEWSCONTAINER_DIFANG_URL @"http://mobile.app.people.com.cn:81/news2/news.php?act=onenews&rt=xml&newsid=%@&fromid=df"
 
 #define NEWSCONTAINER_SHIKE_URL  @"http://mobile.app.people.com.cn:81/news2/news.php?act=realtimecontent&newsid=%@"
-
+                        
 
 
 #define newscontainer_item @"item"
@@ -100,6 +100,10 @@
 
 
 -(NSString *)readDataURLStringFromRemoteHostWithGETDataKind:(GET_DataKind)getDataKind{
+    NSString * tempString = NEWSCONTAINER_URL;
+    if (self.isImportNews) {
+        tempString = @"http://mobile.app.people.com.cn:81/news2/news.php?act=realtimecontent&importantid=%@";
+    }
     
     if (self.newsSourceKind == NewsSourceKind_ShiKeNews) {
         NSString *url = [NSString stringWithFormat:NEWSCONTAINER_SHIKE_URL,[self getnewsid]];
@@ -114,7 +118,7 @@
     }
     
     if (self.newsSourceKind == NewsSourceKind_PuTongNews) {
-        NSString *url = [NSString stringWithFormat:NEWSCONTAINER_URL,[self getnewsid]];
+        NSString *url = [NSString stringWithFormat:tempString,[self getnewsid]];
         NSLog(@"NEWSCONTAINER_URL:%@",url);
         return url;
     }

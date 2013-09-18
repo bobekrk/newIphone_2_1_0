@@ -57,6 +57,8 @@
         _fs_GZF_ForOnedayNewsFocusTopDAO.channelid = xxx.channelid;
         _fs_GZF_ForNewsListDAO.channelid           = xxx.channelid;
         _fs_GZF_ForNewsListDAO.lastid              = nil;
+        currentIndex == 0?(_fs_GZF_ForNewsListDAO.isImportNews = YES):(_fs_GZF_ForNewsListDAO.isImportNews = NO);
+        currentIndex == 0?(_fs_GZF_ForOnedayNewsFocusTopDAO.isImportentNews = YES):(_fs_GZF_ForOnedayNewsFocusTopDAO.isImportentNews = NO);
         _isfirstShow                               = NO;
         _channelName                               = [xxx.channelname copy];
         NSLog(@"%@",xxx.channelid);
@@ -606,6 +608,7 @@
         __block FSOneDayNewsObject * xxx                             = o;
         fsNewsContainerViewController.FCObj                          = nil;
         fsNewsContainerViewController.newsSourceKind                 = NewsSourceKind_PuTongNews;
+        fsNewsContainerViewController.isImportant                    = _fs_GZF_ForNewsListDAO.isImportNews;
         self.currentNewsId                                           = o.newsid;
         __block FSNewsListCell * blockCell = (FSNewsListCell*)[sender.tvList cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
         FSNewsViewController * tempViewController = (FSNewsViewController*)self.aViewController;

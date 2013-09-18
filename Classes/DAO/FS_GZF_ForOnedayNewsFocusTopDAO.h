@@ -21,7 +21,7 @@
     NSInteger _count;
     
 }
-
+@property(nonatomic,assign)BOOL        isImportentNews;
 @property (nonatomic,retain) NSString *group;
 @property (nonatomic,retain) NSString *type;
 @property (nonatomic,retain) NSString *channelid;

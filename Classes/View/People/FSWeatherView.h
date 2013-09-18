@@ -17,6 +17,7 @@
     UIImageView *_image_WeatherIcon;
     UILabel *_lab_CityName;
     UILabel *_lab_Temperature;
+    UILabel *_dateLabel;
 }
 
 @property (nonatomic,assign) id parentDelegate;

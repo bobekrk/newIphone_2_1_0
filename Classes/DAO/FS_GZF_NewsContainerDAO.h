@@ -33,5 +33,5 @@ typedef enum _NewsSourceKind{
 @property (nonatomic,retain) FSNewsDitailPicObject *pobj;
 @property (nonatomic,retain) NSString *newsid;
 @property (nonatomic,assign) NewsSourceKind newsSourceKind;
-
+@property (nonatomic,assign) BOOL           isImportNews;
 @end

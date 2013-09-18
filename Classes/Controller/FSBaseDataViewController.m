@@ -16,6 +16,7 @@
 - (id)init {
 	self = [super init];
 	if (self) {
+        [self initDataModel];
 		//NSLog(@"FSBaseDataViewController:%@  :%d",self,[self retainCount]);
 	}
 	return self;
@@ -28,7 +29,6 @@
 }
 
 - (void)loadView {
-	[self initDataModel];
 	[super loadView];
 	self.monitorApplicationState = YES;
 }

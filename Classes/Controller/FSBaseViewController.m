@@ -59,7 +59,7 @@
 
 - (void)loadChildView {
     if (_canBeHaveNaviBar) {
-        self.myNaviBar = [[[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
+        _myNaviBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
         [_myNaviBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
         _myNaviBar.userInteractionEnabled = YES;
         UINavigationItem *navItem = [[UINavigationItem alloc] init];
@@ -77,6 +77,7 @@
 }
 
 - (void)loadView {
+    [super loadView];
 	UIView *contentView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
 	self.view = contentView;
 	[contentView release];

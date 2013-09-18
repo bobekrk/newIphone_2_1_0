@@ -40,6 +40,15 @@
 	}
 	return self;
 }
+-(void)loadView
+{
+    [super loadView];
+}
+-(void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    self.view = nil;
+}
 
 - (void)dealloc {
     
@@ -89,7 +98,8 @@
 - (void)loadChildView {
 	[super loadChildView];
 	self.view.backgroundColor = COLOR_NEWSLIST_TITLE_WHITE;
-    _fsOneDayNewsListContainerView = [[FSOneDayNewsListContainerView alloc] init];
+    _fsOneDayNewsListContainerView = [[FSOneDayNewsListContainerView alloc] initWithFrame:CGRectMake(0.0f, self.canBeHaveNaviBar?44:0, self.view.frame.size.width, self.view.frame.size.height - (self.canBeHaveNaviBar?44:0))];
+    _fsOneDayNewsListContainerView.backgroundColor = [UIColor redColor];
     _fsOneDayNewsListContainerView.parentDelegate = self;
     [self.view addSubview:_fsOneDayNewsListContainerView];
 	//标签栏设置

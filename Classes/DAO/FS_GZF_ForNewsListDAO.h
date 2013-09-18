@@ -18,6 +18,7 @@
 
 
 @property (nonatomic,retain) NSString *channelid;
+@property (nonatomic,assign) BOOL     isImportNews;
 
 
 

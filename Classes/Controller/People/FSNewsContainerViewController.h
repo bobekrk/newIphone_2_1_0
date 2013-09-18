@@ -53,8 +53,9 @@
 @property (nonatomic, retain) FSFocusTopObject   *FCObj;
 @property (nonatomic, retain) NSString           *newsID;
 @property (nonatomic,assign)  BOOL                isNewNavigation;
-@property (nonatomic,assign) NewsSourceKind       newsSourceKind;
-@property (nonatomic,copy)   void (^fpChangeTitleClor)(UITableViewCell*);
+@property (nonatomic,assign)  NewsSourceKind       newsSourceKind;
+@property (nonatomic,copy)    void (^fpChangeTitleClor)(UITableViewCell*);
+@property (nonatomic,assign)  BOOL isImportant;
 
 
 -(void)share;

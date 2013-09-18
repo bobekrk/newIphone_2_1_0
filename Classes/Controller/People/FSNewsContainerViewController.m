@@ -79,6 +79,11 @@ NSString                       *_newsID;
     self.navigationController.navigationBarHidden = YES;
     self.view.backgroundColor = [UIColor whiteColor];
 }
+-(void)setIsImportant:(BOOL)isImportant
+{
+    _isImportant = isImportant;
+    _fs_GZF_NewsContainerDAO.isImportNews = isImportant;
+}
 
 
 - (void)dealloc {

@@ -38,7 +38,7 @@
     [PeopleNewsStati insertNewEventLabel:LOADING andAction:TABBARCLICK];
 }
 -(void)showLoadingView{
-    float xxx = ISIPHONE5?548:460;
+    float xxx = ISIPHONE5?568:480;
     [self performSelectorInBackground:@selector(xxxxxxxxxxx) withObject:nil];
     UIWindow * window = [UIApplication sharedApplication].keyWindow;
     
@@ -46,7 +46,6 @@
     loadingView.parentDelegate = self;
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.5];
-    //[UIView setAnimationTransition:<#(UIViewAnimationTransition)#> forView:<#(UIView *)#> cache:<#(BOOL)#>]
     [window addSubview:loadingView];
     loadingView.frame = CGRectMake(0, 0, 320, xxx);
     [UIView commitAnimations];
