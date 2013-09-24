@@ -21,6 +21,7 @@
 @property(nonatomic,assign)FS_GZF_DeepListDAO * myDeepListDao;
 @property(nonatomic,retain)NSDate             * reFreshDate;
 @property(nonatomic,assign)BOOL                 isfirstShow;
+@property(nonatomic,assign)int                  currentCount;
 -(id)initWithDeepListDao:(FS_GZF_DeepListDAO*)aDao initDelegate:(id)aDeleagte;
 -(void)reloadData;
 @end

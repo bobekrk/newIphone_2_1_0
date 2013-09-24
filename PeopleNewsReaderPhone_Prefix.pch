@@ -14,9 +14,10 @@
     #import <CoreData/CoreData.h>
     #import "PeopleNewsStati.h"
     #import "BaiduMobStat.h"
+    #import "UIImage+customer.h"
 #endif
 
-//#define RELEASE
+#define RELEASE
 #ifdef  RELEASE
 #define NSLog(...)
 #endif
@@ -29,7 +30,7 @@
 #endif
 
 #define ISIPHONE5   ([UIScreen mainScreen].bounds.size.height - 480 > 10?1:0)
-
+#define GETVERSION  ([UIDevice currentDevice].systemVersion.floatValue)
 
 
 #define QQAPPKEY  @"801359590"
@@ -43,3 +44,4 @@
 #define BAIDUAPPKEY   @"0e2f90a612"
 #define FONTSIZEOFABSTRACT    12.0f
 #define ABSTRACTTITLECOLOR    [UIColor grayColor]
+

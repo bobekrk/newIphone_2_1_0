@@ -14,6 +14,7 @@
 @interface FS_GZF_DeepListDAO : FS_GZF_BaseGETXMLDataListDAO{
 @protected
     FSTopicObject *_obj;
+    int            _count;
 }
 
 @end
