@@ -32,37 +32,55 @@
 
 @implementation FSIndicatorMessageView
 
-
+-(void)drawRect:(CGRect)rect
+{
+    
+}
+-(id)initWithFrame:(CGRect)frame andBool:(BOOL)isNewsView
+{
+    _isNewsView  = isNewsView;
+    [self initWithFrame:frame];
+    return self;
+}
 - (id)initWithFrame:(CGRect)frame {
     
     self = [super initWithFrame:frame];
     if (self) {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
-//		_backgroundLayer = [[CALayer alloc] init];
-//		[self.layer addSublayer:_backgroundLayer];
+        if (_isNewsView) {
+            UIImageView * view = [[UIImageView alloc]initWithFrame:CGRectMake(97/2 - 7, -20, 97, 92)];
+            [self addSubview:view];
+            view.image         = [UIImage imageNamed:@"图层-3.png"];
+            UIImageView * view2 = [[UIImageView alloc]initWithFrame:CGRectMake(97/2 - 15, 92 - 15, 106, 47)];
+            [self addSubview:view2];
+            view2.image         = [UIImage imageNamed:@"PEOPLE--NEWS.png"];
+        }else
+        {
+             _lblMessage = [[UILabel alloc] initWithFrame:CGRectZero];
+            [_lblMessage setBackgroundColor:[UIColor clearColor]];
+            [_lblMessage setFont:[UIFont boldSystemFontOfSize:FS_INDICATOR_MESSAGE_VIEW__FONTSIZE]];
+            [_lblMessage setTextAlignment:UITextAlignmentCenter];
+            [_lblMessage setTextColor:[UIColor darkGrayColor]];
+            [_lblMessage setNumberOfLines:10];
+            [self addSubview:_lblMessage];
+            self.layer.shadowOffset = CGSizeZero;
+            self.layer.shadowColor = [UIColor blackColor].CGColor;
+            
+            self.layer.cornerRadius = FS_INDICATOR_MESSAGE_VIEW__RADIUS;
+            self.layer.shadowOpacity = 0.6;
+            self.layer.shadowRadius = FS_INDICATOR_MESSAGE_VIEW__RADIUS;
+        }
 		
 		self.backgroundColor = [UIColor clearColor];//[UIColor colorWithRed:75.0f / 255.0f green:75.0f / 255.0f blue:75.0f / 255.0f alpha:0.80f];
 		
-		_lblMessage = [[UILabel alloc] initWithFrame:CGRectZero];
-		[_lblMessage setBackgroundColor:[UIColor clearColor]];
-		[_lblMessage setFont:[UIFont boldSystemFontOfSize:FS_INDICATOR_MESSAGE_VIEW__FONTSIZE]];
-		[_lblMessage setTextAlignment:UITextAlignmentCenter];
-		[_lblMessage setTextColor:[UIColor darkGrayColor]];
-		[_lblMessage setNumberOfLines:10];
-		[self addSubview:_lblMessage];
-		
+				
 		_indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 		[self addSubview:_indicator];
 		
 		self.alpha = 0.0f;
 		self.tag = FS_INDICATOR_MESSAGE_VIEW__TAG;
-		self.layer.shadowOffset = CGSizeZero;
-		self.layer.shadowColor = [UIColor blackColor].CGColor;
 		
-		self.layer.cornerRadius = FS_INDICATOR_MESSAGE_VIEW__RADIUS;
-		self.layer.shadowOpacity = 0.6;
-		self.layer.shadowRadius = FS_INDICATOR_MESSAGE_VIEW__RADIUS;
 		
 		[pool release];
     }
@@ -196,8 +214,11 @@
 
 - (void)inner_layoutSubviews {	
 	//优化这块
+
+    
+    
+    
 	CGFloat clientHeight = FS_INDICATOR_MESSAGE_VIEW__HEIGHT - _indicator.frame.size.height - FS_INDICATOR_MESSAGE_VIEW__ROUND_SPACE * 2.0f - FS_INDICATOR_MESSAGE_VIEW__ROW_SPACE - FS_INDICATOR_MESSAGE_VIEW__TOP_BOTTOM_SAPCE * 2.0f;
-//	CGFloat clientHeight = _indicator.frame.size.height 
 	
 	CGFloat clientWith = FS_INDICATOR_MESSAGE_VIEW__WIDTH - FS_INDICATOR_MESSAGE_VIEW__ROUND_SPACE * 2.0f - FS_INDICATOR_MESSAGE_VIEW__LEFT_RIGHT_SPACE * 2.0f;
 	

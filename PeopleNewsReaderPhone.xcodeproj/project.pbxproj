@@ -401,6 +401,14 @@
 		5850C1D4179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5850C1D2179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld */; };
 		58519A0517E003930055B764 /* 返回12x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58519A0317E003930055B764 /* 返回12x.png */; };
 		58519A0617E003930055B764 /* 返回1.png in Resources */ = {isa = PBXBuildFile; fileRef = 58519A0417E003930055B764 /* 返回1.png */; };
+		5851F12117F11B5C0022659C /* PEOPLE--NEWS.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851F11F17F11B5C0022659C /* PEOPLE--NEWS.png */; };
+		5851F12217F11B5C0022659C /* PEOPLE--NEWS@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851F12017F11B5C0022659C /* PEOPLE--NEWS@2x.png */; };
+		5851F12517F1244A0022659C /* 图层-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851F12317F1244A0022659C /* 图层-3.png */; };
+		5851F12617F1244A0022659C /* 图层-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851F12417F1244A0022659C /* 图层-3@2x.png */; };
+		5851F12B17F12A570022659C /* 箭头右.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851F12717F12A570022659C /* 箭头右.png */; };
+		5851F12C17F12A570022659C /* 箭头右@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851F12817F12A570022659C /* 箭头右@2x.png */; };
+		5851F12D17F12A570022659C /* 箭头左.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851F12917F12A570022659C /* 箭头左.png */; };
+		5851F12E17F12A570022659C /* 箭头左@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5851F12A17F12A570022659C /* 箭头左@2x.png */; };
 		5853053C17C4511F00A795EE /* 人民新闻有温度.png in Resources */ = {isa = PBXBuildFile; fileRef = 5853053A17C4511F00A795EE /* 人民新闻有温度.png */; };
 		5853053D17C4511F00A795EE /* 人民新闻有温度@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5853053B17C4511F00A795EE /* 人民新闻有温度@2x.png */; };
 		586AA1FD17D72D46000D356F /* PeopleNewsStati.m in Sources */ = {isa = PBXBuildFile; fileRef = 586AA1FC17D72D46000D356F /* PeopleNewsStati.m */; };
@@ -1315,6 +1323,14 @@
 		5850C1D3179D24720024218B /* PeopleNewsReaderPhone.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PeopleNewsReaderPhone.xcdatamodel; sourceTree = "<group>"; };
 		58519A0317E003930055B764 /* 返回12x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回12x.png"; sourceTree = "<group>"; };
 		58519A0417E003930055B764 /* 返回1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "返回1.png"; sourceTree = "<group>"; };
+		5851F11F17F11B5C0022659C /* PEOPLE--NEWS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PEOPLE--NEWS.png"; sourceTree = "<group>"; };
+		5851F12017F11B5C0022659C /* PEOPLE--NEWS@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PEOPLE--NEWS@2x.png"; sourceTree = "<group>"; };
+		5851F12317F1244A0022659C /* 图层-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "图层-3.png"; sourceTree = "<group>"; };
+		5851F12417F1244A0022659C /* 图层-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "图层-3@2x.png"; sourceTree = "<group>"; };
+		5851F12717F12A570022659C /* 箭头右.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "箭头右.png"; sourceTree = "<group>"; };
+		5851F12817F12A570022659C /* 箭头右@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "箭头右@2x.png"; sourceTree = "<group>"; };
+		5851F12917F12A570022659C /* 箭头左.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "箭头左.png"; sourceTree = "<group>"; };
+		5851F12A17F12A570022659C /* 箭头左@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "箭头左@2x.png"; sourceTree = "<group>"; };
 		5853053A17C4511F00A795EE /* 人民新闻有温度.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人民新闻有温度.png"; sourceTree = "<group>"; };
 		5853053B17C4511F00A795EE /* 人民新闻有温度@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人民新闻有温度@2x.png"; sourceTree = "<group>"; };
 		586AA1FB17D72D46000D356F /* PeopleNewsStati.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeopleNewsStati.h; sourceTree = "<group>"; };
@@ -2734,6 +2750,14 @@
 				5814919117D5424000CB58D7 /* LygDequeueScroView.m */,
 				586EDF3717D5BF1B00429F58 /* LygNewViewControllerDataMember.h */,
 				586EDF3817D5BF1B00429F58 /* LygNewViewControllerDataMember.m */,
+				5851F11F17F11B5C0022659C /* PEOPLE--NEWS.png */,
+				5851F12017F11B5C0022659C /* PEOPLE--NEWS@2x.png */,
+				5851F12317F1244A0022659C /* 图层-3.png */,
+				5851F12417F1244A0022659C /* 图层-3@2x.png */,
+				5851F12717F12A570022659C /* 箭头右.png */,
+				5851F12817F12A570022659C /* 箭头右@2x.png */,
+				5851F12917F12A570022659C /* 箭头左.png */,
+				5851F12A17F12A570022659C /* 箭头左@2x.png */,
 			);
 			name = "新闻";
 			sourceTree = "<group>";
@@ -3856,9 +3880,11 @@
 				8212194115C6774C00B713FB /* close@2x.png in Resources */,
 				8212194215C6774C00B713FB /* close_btn.png in Resources */,
 				8212194315C6774C00B713FB /* close_btn@2x.png in Resources */,
+				5851F12C17F12A570022659C /* 箭头右@2x.png in Resources */,
 				8212194415C6774C00B713FB /* delete.png in Resources */,
 				8212194515C6774C00B713FB /* delete@2x.png in Resources */,
 				8212194615C6774C00B713FB /* logo.png in Resources */,
+				5851F12617F1244A0022659C /* 图层-3@2x.png in Resources */,
 				8212194715C6774C00B713FB /* logo@2x.png in Resources */,
 				A6A22E1D15D8988100E48EB8 /* Default.png in Resources */,
 				A6A22E1E15D8988100E48EB8 /* Default@2x.png in Resources */,
@@ -4056,6 +4082,7 @@
 				042D744816A91F44003AB075 /* oneday_time@2x.png in Resources */,
 				042D745816A9203F003AB075 /* oneday_timeline.png in Resources */,
 				042D745916A9203F003AB075 /* oneday_timeline@2x.png in Resources */,
+				5851F12517F1244A0022659C /* 图层-3.png in Resources */,
 				042D746016A9305D003AB075 /* newscard_01.png in Resources */,
 				042D746116A9305D003AB075 /* newscard_01@2x.png in Resources */,
 				042D746216A9305D003AB075 /* newscard_02.png in Resources */,
@@ -4101,12 +4128,14 @@
 				0415EA6416AFF38B00A3B588 /* Bottom_download.png in Resources */,
 				0415EA6516AFF38B00A3B588 /* Bottom_download@2x.png in Resources */,
 				04DF332216B0BB250043FC94 /* xin.png in Resources */,
+				5851F12B17F12A570022659C /* 箭头右.png in Resources */,
 				04DF332316B0BB250043FC94 /* xin@2x.png in Resources */,
 				04DF333316B0C78E0043FC94 /* 150logo.png in Resources */,
 				04DF333416B0C78E0043FC94 /* 150logo@2x.png in Resources */,
 				04DF333516B0C78E0043FC94 /* tools_line.png in Resources */,
 				04DF333616B0C78E0043FC94 /* tools_line@2x.png in Resources */,
 				04DF333916B0C78E0043FC94 /* 检查更新.png in Resources */,
+				5851F12E17F12A570022659C /* 箭头左@2x.png in Resources */,
 				04DF333A16B0C78E0043FC94 /* 检查更新@2x.png in Resources */,
 				04DF333B16B0C78E0043FC94 /* 清理缓存.png in Resources */,
 				04DF333C16B0C78E0043FC94 /* 清理缓存@2x.png in Resources */,
@@ -4118,6 +4147,7 @@
 				04DF334416B112260043FC94 /* returnbackBT_1.png in Resources */,
 				04DF334716B112580043FC94 /* returnbackBT.png in Resources */,
 				04DF334816B112580043FC94 /* returnbackBT@2x.png in Resources */,
+				5851F12117F11B5C0022659C /* PEOPLE--NEWS.png in Resources */,
 				041A456316B2232700D8DF5B /* feedBack_line.png in Resources */,
 				041A456416B2232700D8DF5B /* feedBack_line@2x.png in Resources */,
 				04957DAD16BB57FF00AE3515 /* moresubj_sel@2x.png in Resources */,
@@ -4137,6 +4167,7 @@
 				04E3011316E08F4D009019EC /* 观点_n.png in Resources */,
 				04E3011416E08F4D009019EC /* 军事_s.png in Resources */,
 				04E3011516E08F4D009019EC /* 历史_s.png in Resources */,
+				5851F12D17F12A570022659C /* 箭头左.png in Resources */,
 				04E3011616E08F4D009019EC /* 国际_s.png in Resources */,
 				04E3011716E08F4D009019EC /* 头条_s.png in Resources */,
 				04E3011816E08F4D009019EC /* 娱乐_s.png in Resources */,
@@ -4146,6 +4177,7 @@
 				04E3011C16E08F4D009019EC /* 经济_s.png in Resources */,
 				04E3011D16E08F4D009019EC /* 观点_s.png in Resources */,
 				04DF505A16F6F20F00BA3008 /* 人.png in Resources */,
+				5851F12217F11B5C0022659C /* PEOPLE--NEWS@2x.png in Resources */,
 				04DF505D16F6F97B00BA3008 /* weather_BG.png in Resources */,
 				04DF505E16F6F97B00BA3008 /* weather_BG@2x.png in Resources */,
 				04D75AB416F9A9B000786920 /* chunbai.png in Resources */,
@@ -4663,7 +4695,7 @@
 				PRODUCT_NAME = PeopleNewsReaderPhone;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos6.1;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -4689,7 +4721,7 @@
 				PRODUCT_NAME = PeopleNewsReaderPhone;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos6.1;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4734,7 +4766,7 @@
 				PRODUCT_NAME = PeopleNewsReaderPhone;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos6.1;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};

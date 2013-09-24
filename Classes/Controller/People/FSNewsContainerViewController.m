@@ -304,6 +304,10 @@ NSString                       *_newsID;
     
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (BOOL)canShowIndicatorMessageViewWithDAO:(FSBaseDAO *)sender
+{
+    return NO;
+}
 
 
 -(void)swipeLeftAction:(id)sender{
@@ -371,6 +375,13 @@ NSString                       *_newsID;
 
 -(void)doSomethingWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status{
     NSLog(@"doSomethingWithDAO sender:%@ :%d",sender,status);
+    if ([sender isEqual:_fs_GZF_NewsContainerDAO]) {
+        if (status == FSBaseDAOCallBack_WorkingStatus) {
+            FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:CGRectZero andBool:YES];
+			[indicatorMessageView showIndicatorMessageViewInView:self.view withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
+			[indicatorMessageView release];
+        }
+    }
     if ([sender isEqual:_fs_GZF_NewsContainerDAO]) {
         if (status == FSBaseDAOCallBack_SuccessfulStatus ||
 			status == FSBaseDAOCallBack_BufferSuccessfulStatus) {

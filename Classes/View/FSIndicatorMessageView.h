@@ -16,6 +16,7 @@
 	
 	UILabel *_lblMessage;
 	UIActivityIndicatorView *_indicator;
+    BOOL    *_isNewsView;
 	
 }
 
@@ -23,5 +24,7 @@
 + (FSIndicatorMessageView *)getIndicatorMessageViewInView:(UIView *)parentView;
 + (BOOL)dismissIndicatorMessageViewInView:(UIView *)parentView;
 + (void)layoutIndicatorMessageViewInView:(UIView *)parentView;
+-(id)initWithFrame:(CGRect)frame andBool:(BOOL)isNewsView;
+
 
 @end
