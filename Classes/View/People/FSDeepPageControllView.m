@@ -63,12 +63,12 @@
         
         
         
-        UIButton * button2 = [[UIButton alloc]initWithFrame:CGRectMake(320 - image.size.width * 0.8, self.bounds.size.height - image.size.height * 0.8, image.size.width * 0.8, image.size.height * 0.8)];
-        [button2 setBackgroundImage:[UIImage imageNamed:@"newsDitail_shear_1.png"] forState:UIControlStateNormal];
-        button2.tag        = 200;
-        [button2 addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:button2];
-        [button2 release];
+//        UIButton * button2 = [[UIButton alloc]initWithFrame:CGRectMake(320 - image.size.width * 0.8, self.bounds.size.height - image.size.height * 0.8, image.size.width * 0.8, image.size.height * 0.8)];
+//        [button2 setBackgroundImage:[UIImage imageNamed:@"newsDitail_shear_1.png"] forState:UIControlStateNormal];
+//        button2.tag        = 200;
+//        [button2 addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [self addSubview:button2];
+//        [button2 release];
         
         
         _gradientLayer        = [[CAGradientLayer alloc]init];

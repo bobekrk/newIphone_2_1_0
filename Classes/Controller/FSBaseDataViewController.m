@@ -16,7 +16,7 @@
 - (id)init {
 	self = [super init];
 	if (self) {
-        [self initDataModel];
+        //[self initDataModel];
 		//NSLog(@"FSBaseDataViewController:%@  :%d",self,[self retainCount]);
 	}
 	return self;
@@ -27,8 +27,17 @@
     NSLog(@"FSBaseDataViewController.dealloc:%@",self);
 	[super dealloc];
 }
+-(void)unLoadDataModel
+{
+    
+}
+-(void)myDidReceiveMemoryWarning
+{
+    
+}
 
 - (void)loadView {
+    [self initDataModel];
 	[super loadView];
 	self.monitorApplicationState = YES;
 }

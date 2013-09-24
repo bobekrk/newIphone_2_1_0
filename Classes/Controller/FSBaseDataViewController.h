@@ -30,10 +30,10 @@
 
 - (void)initDataModel;
 - (void)doSomethingWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status;
-
+-(void)unLoadDataModel;
 - (void)doSomethingWithLoadingListDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status;
 
 - (BOOL)canShowIndicatorMessageViewWithDAO:(FSBaseDAO *)sender;
 - (NSString *)indicatorMessageTextWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status;
-
+-(void)myDidReceiveMemoryWarning;
 @end

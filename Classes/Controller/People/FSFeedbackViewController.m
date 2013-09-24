@@ -61,13 +61,15 @@
     _navTopBar.topItem.rightBarButtonItem = rightButton;
     [rightButton release];
     _fsFeedbackContainerView = [[FSFeedbackContainerView alloc] init];
+    _fsFeedbackContainerView.delegate      = self;
     [self.view addSubview:_fsFeedbackContainerView];
     [_fsFeedbackContainerView release];
 }
+-(void)changSendHide
+{
+    [_navTopBar.topItem.rightBarButtonItem setEnabled:!_navTopBar.topItem.rightBarButtonItem.isEnabled];
+}
 
-//-(void)returnBack:(id)sender{
-//    [self dismissModalViewControllerAnimated:YES];
-//}
 -(NSString *)setTitle{
     return @"意见反馈";
 }

@@ -46,8 +46,23 @@
 }
 -(void)didReceiveMemoryWarning
 {
+//    [super didReceiveMemoryWarning];
+//    self.view = nil;
+}
+-(void)myDidReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     self.view = nil;
+    [self unLoadDataModel];
+}
+-(void)unLoadDataModel
+{
+    self.fs_GZF_GetWeatherMessageDAO     = nil;
+    self.fsForOneDayNewsListFocusTopData = nil;
+    self.newsListData                    = nil;
+    self.lygAdsDao                       = nil;
+    self.view                            = nil;
+    self.isFirstTimeShow                 = NO;
 }
 
 - (void)dealloc {
@@ -138,6 +153,7 @@
     _fsOneDayNewsListContainerView.frame = CGRectMake(0.0f, self.canBeHaveNaviBar?44:0, rect.size.width, rect.size.height - (self.canBeHaveNaviBar?44:0));
     
 }
+
 
 - (void)doSomethingForViewFirstTimeShow {
 	//[_fsOneDayNewsListContainerView loadData];

@@ -7,7 +7,7 @@
 //
 
 #import "FSTabBarViewCotnroller.h"
-
+#import "FSBasePeopleViewController.h"
 #define FSTABBAR_HEIGHT 49.0f
 
 @interface FSTabBarViewCotnroller(PrivateMethod)
@@ -84,6 +84,16 @@
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
+    
+    for (UINavigationController * navi in self.fsViewControllers) {
+        if ([navi.topViewController isKindOfClass:[FSBasePeopleViewController class]]) {
+            FSBasePeopleViewController * xxx = (FSBasePeopleViewController*)navi.topViewController;
+            if (_fsSelectedViewController != navi) {
+                [xxx  myDidReceiveMemoryWarning];
+            }
+            
+        }
+    }
     
     // Release any cached data, images, etc. that aren't in use.
 }

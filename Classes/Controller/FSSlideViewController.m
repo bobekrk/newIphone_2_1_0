@@ -569,12 +569,6 @@
 {
     [super didReceiveMemoryWarning];
     printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-//    FSTabBarViewCotnroller * controller = (FSTabBarViewCotnroller*)self.rootViewController;
-//    for (UIViewController * vi in controller.fsViewControllers) {
-//        if (vi != controller.fsSelectedViewController) {
-//            vi.view = nil;
-//        }
-//    }
 }
 
 - (void)presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated {
