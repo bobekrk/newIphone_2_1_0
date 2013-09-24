@@ -31,7 +31,7 @@ typedef enum _FSControllerViewState {
 @private
 	FSControllerViewState  _controllerViewState;
 	BOOL                   _monitorApplicationState;
-	BOOL                   _isFirstTimeShow;
+	//BOOL                   _isFirstTimeShow;
 	CGRect                 _clientRect;
 	
 	FSTabBarItem          *_fsTabBarItem;
@@ -51,6 +51,7 @@ typedef enum _FSControllerViewState {
 @property (nonatomic, assign) FSSlideViewController *fsSlideViewController;
 @property (nonatomic, assign) BOOL canBeHaveNaviBar;
 @property (nonatomic, retain) UINavigationBar * myNaviBar;
+@property (nonatomic, assign) BOOL isFirstTimeShow;
 
 - (void)loadChildView;
 

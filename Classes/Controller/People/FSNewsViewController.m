@@ -30,7 +30,6 @@
 #import "LygDequeueScroView.h"
 
 #define KIND_USERCHANNEL_SELECTED  @"YAOWENCHANNEL"
-
 @implementation FSNewsViewController
 
 - (id)init {
@@ -50,6 +49,23 @@
         [self addKindsScrollView];
     }
 
+}
+-(void)myDidReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    [self unLoadDataModel];
+    self.view   = nil;
+    _myScroview = nil;
+    _topRedImageView = nil;
+}
+-(void)unLoadDataModel
+{
+//    self.fs_GZF_GetWeatherMessageDAO     = nil;
+//    self.fsForOneDayNewsListFocusTopData = nil;
+//    self.newsListData                    = nil;
+//    self.lygAdsDao                       = nil;
+//    self.view                            = nil;
+//    self.isFirstTimeShow                 = NO;
 }
 -(void)viewDidLoad
 {
@@ -73,9 +89,26 @@
     if (_myScroview) {
         return;
     }
-    _myScroview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 15, 8, 13)];
+    imageView.image         = [UIImage imageWithNameString:@"箭头左"];
+    imageView.alpha         = 0.1;
+    [self.view  addSubview:imageView];
+    [imageView release];
+    imageView.tag           = 10000;
+    
+    
+    UIImageView * imageView2 = [[UIImageView alloc]initWithFrame:CGRectMake(307, 15, 8, 13)];
+    imageView2.image         = [UIImage imageWithNameString:@"箭头右"];
+    [self.view  addSubview:imageView2];
+    imageView2.tag           = 30000;
+    [imageView2 release];
+    
+    
+    
+    _myScroview = [[UIScrollView alloc]initWithFrame:CGRectMake(15, 0, 290, 44)];
     _myScroview.showsHorizontalScrollIndicator  = NO;
     _myScroview.tag            = 1000;
+    [_myScroview addObserver:self forKeyPath:@"contentoffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     //_myScroview.delegate       = self;
     _myScroview.contentSize    = CGSizeMake(56*[_fs_GZF_ChannelListDAO.objectList count], 44);
     
@@ -116,6 +149,42 @@
     lineView.backgroundColor    = [UIColor redColor];
     [self.view addSubview:lineView];
     [lineView release];
+    
+    [self userGuideView];
+}
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    
+}
+-(void)userGuideView
+{
+    NSString * isHaveGuided = [[NSUserDefaults standardUserDefaults]objectForKey:@"userGuideView"];
+    if (isHaveGuided) {
+        return;
+    }
+    
+    UIButton * button      = [[UIButton alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    button.tag             = 10000;
+    button.backgroundColor = [UIColor blackColor];
+    button.alpha           = 0.5;
+    [[UIApplication sharedApplication].keyWindow addSubview:button];
+    
+    UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake((320-192)/2, 30, 192, 140)];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"左右滑动切换主题" ofType:@"png"];
+    //myImage = [UIImage imageWithContentsOfFile:path];
+    imageView.image         = [UIImage imageWithContentsOfFile:path];
+    [button addSubview:imageView];
+    [button release];
+    [button addTarget:self action:@selector(removeGuide) forControlEvents:UIControlEventTouchUpInside];
+    [[NSUserDefaults standardUserDefaults]setValue:@"userGuideView" forKey:@"userGuideView"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    [self performSelector:@selector(removeGuide) withObject:nil afterDelay:5];
+}
+-(void)removeGuide
+{
+
+        UIButton * button = (UIButton*)[[UIApplication sharedApplication].keyWindow viewWithTag:10000];
+        [button removeFromSuperview];
 }
 -(void)addNewsScrollView2
 {
@@ -210,16 +279,19 @@
     UILabel * Label             = (UILabel*)[[[self.view viewWithTag:1000] viewWithTag:_currentIndex] viewWithTag:100];
     Label.textColor             = [UIColor lightGrayColor];
     
-    Label             = (UILabel*)[[[self.view viewWithTag:1000] viewWithTag:index] viewWithTag:100];
+    Label                       = (UILabel*)[[[self.view viewWithTag:1000] viewWithTag:index] viewWithTag:100];
     Label.textColor             = [UIColor redColor];
 
 
     _topRedImageView.frame      = CGRectMake(56*index, 40, 56, 4);
     _currentIndex               = index;
+    UIView * view               = [self.view viewWithTag:10000];
+    UIView * view3               = [self.view viewWithTag:30000];
+    _currentIndex == 0?(view.alpha = 0.1):(view.alpha = 1);
+    _currentIndex == _fs_GZF_ChannelListDAO.objectList.count -1?(view3.alpha = 0.1):(view3.alpha = 1);
     
     MyNewsLIstView * view2 =  (MyNewsLIstView*)[[self.view viewWithTag:2000] viewWithTag:(100+index)];
     [view2 isNeedRefresh]?[view2 refreshDataSource]:1;
-   
 }
 
 
@@ -285,8 +357,8 @@
     UIView * view = [_myScroview viewWithTag:x];
     int index = view.frame.origin.x;
     int yyy   = _myScroview.contentOffset.x;
-    if (index - yyy > 320) {
-        _myScroview.contentOffset = CGPointMake(index - 320+ 50, 0);
+    if (index - yyy > 290) {
+        _myScroview.contentOffset = CGPointMake(index - 290+ 50, 0);
     }else if(yyy > index)
     {
         _myScroview.contentOffset = CGPointMake(index, 0);

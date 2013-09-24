@@ -60,6 +60,7 @@
 - (void)loadChildView {
     if (_canBeHaveNaviBar) {
         _myNaviBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        _myNaviBar.tintColor = [UIColor whiteColor];
         [_myNaviBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
         _myNaviBar.userInteractionEnabled = YES;
         UINavigationItem *navItem = [[UINavigationItem alloc] init];

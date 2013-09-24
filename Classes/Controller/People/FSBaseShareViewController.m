@@ -53,6 +53,7 @@
 -(void)loadChildView{
     
     _navTopBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+    _navTopBar.tintColor = [UIColor whiteColor];
 #ifdef __IPHONE_5_0
     [_navTopBar setBackgroundImage:[UIImage imageNamed: @"navigatorBar.png"] forBarMetrics:UIBarMetricsDefault];
 #endif

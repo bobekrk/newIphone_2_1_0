@@ -9,7 +9,7 @@
 #import "FSFeedbackContainerView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "FSFeedBackNomalQContentView.h"
-
+#import "FSFeedbackViewController.h"
 
 @implementation FSFeedbackContainerView
 
@@ -99,10 +99,7 @@
     _lab_fb.text = @"反馈内容";
     _lab_fb.textColor = [UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
     
-//    _btn_submit = [[UIButton alloc] init];
-//    _btn_submit.backgroundColor = COLOR_CLEAR;
-//    [_btn_submit setTitle:@"提交" forState:UIControlStateNormal];
-//    [_btn_submit setBackgroundImage:[UIImage imageNamed:@"tabItemBG_Sel"] forState:UIControlStateNormal];
+
     
     
     [self addSubview:_background2];
@@ -169,6 +166,24 @@
     _fsFeedBackNomalQContentView.alpha = 0.0f;
     _isFirstShow = YES;
     [_communication becomeFirstResponder];
+    FSFeedbackViewController * vi = (FSFeedbackViewController*)self.delegate;
+    
+    
+    
+    if (vi.navTopBar.topItem.rightBarButtonItem) {
+        return;
+    }
+    UIBarButtonItem * rightButton = [[UIBarButtonItem alloc]initWithTitle:@"发送" style:UIBarButtonItemStyleBordered target:self.delegate action:@selector(sendFeedBackMessage:)];
+    NSDictionary * dict2            = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor darkGrayColor],UITextAttributeTextColor,[NSValue valueWithUIOffset:UIOffsetMake(0, 0)],UITextAttributeTextShadowOffset,nil];
+    [rightButton setTitleTextAttributes:dict2 forState:UIControlStateNormal];
+    rightButton.tintColor         = [UIColor whiteColor];
+    vi.navTopBar.topItem.rightBarButtonItem = rightButton;
+    [rightButton release];
+    
+    
+
+
+    
 }
 
 -(void)nomalQSelect:(id)sender{
@@ -182,6 +197,8 @@
     [_fsFeedBackNomalQContentView doSomethingAtLayoutSubviews];
     
     [_communication resignFirstResponder];
+    FSFeedbackViewController * vi = (FSFeedbackViewController*)self.delegate;
+    vi.navTopBar.topItem.rightBarButtonItem = nil;
 }
 
 

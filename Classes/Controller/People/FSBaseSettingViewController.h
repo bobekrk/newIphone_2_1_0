@@ -20,7 +20,7 @@
 }
 
 @property (nonatomic,assign) BOOL isnavTopBar;
-
+@property (nonatomic,retain) UINavigationBar *navTopBar;
 -(NSString *)setTitle;
 
 @end

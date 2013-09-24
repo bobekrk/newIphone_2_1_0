@@ -37,6 +37,7 @@
     if (self.isnavTopBar) {
         
          _navTopBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, FSSETTING_VIEW_NAVBAR_HEIGHT)];
+        _navTopBar.tintColor = [UIColor whiteColor];
          #ifdef __IPHONE_5_0
          [_navTopBar setBackgroundImage:[UIImage imageNamed: @"navigatorBar.png"] forBarMetrics:UIBarMetricsDefault];
          #endif

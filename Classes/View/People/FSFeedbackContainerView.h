@@ -42,6 +42,7 @@
 
 @property (nonatomic,retain) NSString *contact;
 @property (nonatomic,retain) NSString *message;
+@property (nonatomic,assign) id        delegate;
 
 -(NSString *)getFeedbackMessage;
 
