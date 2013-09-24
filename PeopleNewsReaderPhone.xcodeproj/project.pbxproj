@@ -425,11 +425,11 @@
 		5893DB91179FD01C00068319 /* navigatorBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5893DB8F179FD01800068319 /* navigatorBar@2x.png */; };
 		5893DB93179FDBCC00068319 /* 翻页.png in Resources */ = {isa = PBXBuildFile; fileRef = 5893DB92179FDB9300068319 /* 翻页.png */; };
 		5893DB95179FDC4000068319 /* 跳转.png in Resources */ = {isa = PBXBuildFile; fileRef = 5893DB94179FDC0200068319 /* 跳转.png */; };
+		5896438717F1C7E50050CF47 /* FSTopicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5896438617F1C7E50050CF47 /* FSTopicObject.m */; };
 		589D9BF917E802010071686A /* content_onePIC.css in Resources */ = {isa = PBXBuildFile; fileRef = 589D9BF817E802010071686A /* content_onePIC.css */; };
 		589D9BFD17E8022E0071686A /* deep_content.css in Resources */ = {isa = PBXBuildFile; fileRef = 589D9BFA17E8022E0071686A /* deep_content.css */; };
 		589D9BFE17E8022E0071686A /* content.css in Resources */ = {isa = PBXBuildFile; fileRef = 589D9BFB17E8022E0071686A /* content.css */; };
 		589D9BFF17E8022E0071686A /* content_comment.css in Resources */ = {isa = PBXBuildFile; fileRef = 589D9BFC17E8022E0071686A /* content_comment.css */; };
-		58A6AD1217CD7FBA004C71BB /* FSTopicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A6AD1117CD7FBA004C71BB /* FSTopicObject.m */; };
 		58AE689A17ABD06C0007203C /* 朋友圈.png in Resources */ = {isa = PBXBuildFile; fileRef = 58AE689817ABD06C0007203C /* 朋友圈.png */; };
 		58AE689B17ABD06C0007203C /* 朋友圈@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 58AE689917ABD06C0007203C /* 朋友圈@2x.png */; };
 		58AE689E17ABD7820007203C /* shareCancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 58AE689C17ABD7820007203C /* shareCancel.png */; };
@@ -1357,12 +1357,12 @@
 		5893DB8F179FD01800068319 /* navigatorBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigatorBar@2x.png"; sourceTree = "<group>"; };
 		5893DB92179FDB9300068319 /* 翻页.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "翻页.png"; sourceTree = "<group>"; };
 		5893DB94179FDC0200068319 /* 跳转.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "跳转.png"; sourceTree = "<group>"; };
+		5896438517F1C7E50050CF47 /* FSTopicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSTopicObject.h; sourceTree = "<group>"; };
+		5896438617F1C7E50050CF47 /* FSTopicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSTopicObject.m; sourceTree = "<group>"; };
 		589D9BF817E802010071686A /* content_onePIC.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = content_onePIC.css; sourceTree = "<group>"; };
 		589D9BFA17E8022E0071686A /* deep_content.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = deep_content.css; sourceTree = "<group>"; };
 		589D9BFB17E8022E0071686A /* content.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = content.css; sourceTree = "<group>"; };
 		589D9BFC17E8022E0071686A /* content_comment.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = content_comment.css; sourceTree = "<group>"; };
-		58A6AD1017CD7FBA004C71BB /* FSTopicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSTopicObject.h; sourceTree = "<group>"; };
-		58A6AD1117CD7FBA004C71BB /* FSTopicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSTopicObject.m; sourceTree = "<group>"; };
 		58AE689817ABD06C0007203C /* 朋友圈.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "朋友圈.png"; sourceTree = "<group>"; };
 		58AE689917ABD06C0007203C /* 朋友圈@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "朋友圈@2x.png"; sourceTree = "<group>"; };
 		58AE689C17ABD7820007203C /* shareCancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareCancel.png; sourceTree = "<group>"; };
@@ -2631,9 +2631,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				58A6AD1017CD7FBA004C71BB /* FSTopicObject.h */,
-				58A6AD1117CD7FBA004C71BB /* FSTopicObject.m */,
 				5850C1D2179D24720024218B /* PeopleNewsReaderPhone.xcdatamodeld */,
+				5896438517F1C7E50050CF47 /* FSTopicObject.h */,
+				5896438617F1C7E50050CF47 /* FSTopicObject.m */,
 				58CC789A17E28B52001F011F /* FSOneDayNewsObject.h */,
 				58CC789B17E28B52001F011F /* FSOneDayNewsObject.m */,
 				5889DB2D17B1EADB00ED76BA /* FSLoadingImageObject.h */,
@@ -4337,6 +4337,7 @@
 				820B546E15DC7DF8007916E6 /* FSChannelSettingForOneDayViewController.m in Sources */,
 				820B55B615DCB46B007916E6 /* FSBaseRotateView.m in Sources */,
 				A65746FE15DCBC430090B4A4 /* FSRoutineNewsListContentView.m in Sources */,
+				5896438717F1C7E50050CF47 /* FSTopicObject.m in Sources */,
 				820B563015DCC0DA007916E6 /* FSTableAssistantIIView.m in Sources */,
 				820B563115DCC0DA007916E6 /* FSTableAssistantView.m in Sources */,
 				820B563215DCC0DA007916E6 /* FSTableView.m in Sources */,
@@ -4627,7 +4628,6 @@
 				0AE0769A17BB9A6A006B6358 /* MyNewsLIstView.m in Sources */,
 				5882B5E417CC4EDD00B77388 /* LygDeepListView.m in Sources */,
 				5882B5E717CC8EBB00B77388 /* LygDeepTableViewCell.m in Sources */,
-				58A6AD1217CD7FBA004C71BB /* FSTopicObject.m in Sources */,
 				589004E817D16F970001AE30 /* MyIndicatorView.m in Sources */,
 				5814919217D5424000CB58D7 /* LygDequeueScroView.m in Sources */,
 				586EDF3917D5BF1B00429F58 /* LygNewViewControllerDataMember.m in Sources */,

@@ -2,7 +2,7 @@
 //  FSTopicObject.m
 //  PeopleNewsReaderPhone
 //
-//  Created by lygn128 on 13-8-28.
+//  Created by lygn128 on 13-9-24.
 //
 //
 

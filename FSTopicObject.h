@@ -2,7 +2,7 @@
 //  FSTopicObject.h
 //  PeopleNewsReaderPhone
 //
-//  Created by lygn128 on 13-8-28.
+//  Created by lygn128 on 13-9-24.
 //
 //
 
@@ -16,7 +16,7 @@
 @property (nonatomic, retain) NSString * deepid;
 @property (nonatomic, retain) NSString * pictureLogo;
 @property (nonatomic, retain) NSString * news_abstract;
-@property (nonatomic, retain) NSString * sort;
+@property (nonatomic, retain) NSNumber * sort;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * pictureLink;
 @property (nonatomic, retain) NSString * pubDate;
