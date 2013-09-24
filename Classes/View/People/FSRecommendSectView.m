@@ -110,7 +110,7 @@
     for (UIView *o in v) {
         [o removeFromSuperview];
     }
-    
+    [[UIBarButtonItem appearance] setTintColor:[UIColor redColor]];
     CGFloat space = 85;
     CGFloat left_right = 19.0f;
     CGFloat Mspace = 13.0f;
@@ -122,57 +122,67 @@
     
     NSLog(@"array:%d",[array count]);
     if (array == nil || array.count == 0) {
-        UIAlertView* view = [[UIAlertView alloc]initWithTitle:@"safssfd" message:@"sdsfdg" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [view show];
-        [view release];
+//        UIAlertView* view = [[UIAlertView alloc]initWithTitle:@"safssfd" message:@"sdsfdg" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [view show];
+//        [view release];
         return;
     }
-    
-    for (FSRecommentAPPObject *o in array) {
-        
-        //set the image
-        
-        UIImageView *imageBackGR = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"more_PeopleApp.png"]];
-        imageBackGR.frame = CGRectMake( left_right + (space+Mspace) * i, 16, space, space+4);
-        [_scrollView addSubview:imageBackGR];
-        [imageBackGR release];
-        
-        
-        FSAsyncCheckImageView *imageView = [[FSAsyncCheckImageView alloc] initWithFrame:CGRectMake( 36 + (MORE_LIST_PEOPLEAPP_ICON_HEIGHT+46) * i, 26, MORE_LIST_PEOPLEAPP_ICON_HEIGHT, MORE_LIST_PEOPLEAPP_ICON_HEIGHT)];
-        // NSString *defaultDBPath = [getDocumentPath() stringByAppendingPathComponent:[o.channel_normal lastPathComponent]];
-        imageView.normalURLString = o.appLogo;
-        imageView.heighlightURLString = o.appLogo;
-        imageView.selectedURLString = o.appLogo;
-        imageView.imageCheckType = ImageCheckType_normal;//
-        imageView.tag = i;
-        [_scrollView addSubview:imageView];
-        [imageView updataCheckImageView];
-        
-        
-        
-        //set the label
-        UILabel *lab_title = [[UILabel alloc] init];
-        lab_title.backgroundColor = COLOR_CLEAR;
-        lab_title.font = [UIFont systemFontOfSize:14];
-        lab_title.textColor = COLOR_NEWSLIST_TITLE;
-        lab_title.textAlignment = UITextAlignmentCenter;
-        lab_title.text = o.appName;
-        //lab_title.frame = CGRectMake(space+(MORE_LIST_PEOPLEAPP_ICON_HEIGHT+space)*i+3, MORE_LIST_PEOPLEAPP_ICON_HEIGHT+5, MORE_LIST_PEOPLEAPP_ICON_HEIGHT, 20);
-        lab_title.frame = CGRectMake( left_right + (space+Mspace) * i, 28+MORE_LIST_PEOPLEAPP_ICON_HEIGHT, space, 18);
-        [_scrollView addSubview:lab_title];
-        [lab_title setAdjustsFontSizeToFitWidth:YES];
-        [lab_title release];
-        
-        //set the button under the image
-        UIButton *button = [[UIButton alloc] init];
-        button.frame = CGRectMake( left_right + (space+Mspace) * i, 16, space, space+4);
-        button.alpha = 0.05;
-        button.tag = i;
-        [button addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
-        [_scrollView addSubview:button];
-        [button release];
-        i++;
-        [imageView release];
+    @synchronized(self)
+    {
+        NSLog(@"%d",array.count);
+        for (FSRecommentAPPObject *o in array) {
+            
+            //set the image
+            
+            UIImageView *imageBackGR = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"more_PeopleApp.png"]];
+            imageBackGR.frame = CGRectMake( left_right + (space+Mspace) * i, 16, space, space+4 + 4);
+            [_scrollView addSubview:imageBackGR];
+            [imageBackGR release];
+            
+            
+            FSAsyncCheckImageView *imageView = [[FSAsyncCheckImageView alloc] initWithFrame:CGRectMake( 36 + (MORE_LIST_PEOPLEAPP_ICON_HEIGHT+46) * i, 26, MORE_LIST_PEOPLEAPP_ICON_HEIGHT, MORE_LIST_PEOPLEAPP_ICON_HEIGHT)];
+            // NSString *defaultDBPath = [getDocumentPath() stringByAppendingPathComponent:[o.channel_normal lastPathComponent]];
+            imageView.normalURLString = o.appLogo;
+            imageView.heighlightURLString = o.appLogo;
+            imageView.selectedURLString = o.appLogo;
+            imageView.imageCheckType = ImageCheckType_normal;//
+            imageView.tag = i;
+            [_scrollView addSubview:imageView];
+            [imageView updataCheckImageView];
+            
+            
+            
+            //set the label
+            UILabel *lab_title = [[UILabel alloc] init];
+            lab_title.backgroundColor = COLOR_CLEAR;
+            lab_title.font = [UIFont systemFontOfSize:13];
+            lab_title.textColor = COLOR_NEWSLIST_TITLE;
+            lab_title.textAlignment = UITextAlignmentCenter;
+            lab_title.numberOfLines = 2;
+            
+            lab_title.text = o.appName;
+            //lab_title.frame = CGRectMake(space+(MORE_LIST_PEOPLEAPP_ICON_HEIGHT+space)*i+3, MORE_LIST_PEOPLEAPP_ICON_HEIGHT+5, MORE_LIST_PEOPLEAPP_ICON_HEIGHT, 20);
+            lab_title.frame = CGRectMake( left_right + (space+Mspace) * i + 6, 28+MORE_LIST_PEOPLEAPP_ICON_HEIGHT - 5, space - 10, 18*2);
+            if (o.appName.length > 5) {
+                lab_title.font = [UIFont systemFontOfSize:12];
+                lab_title.frame = CGRectMake( left_right + (space+Mspace) * i + 6 + 5, 28+MORE_LIST_PEOPLEAPP_ICON_HEIGHT - 5, space - 10 - 10, 18*2);
+            }
+            [_scrollView addSubview:lab_title];
+            [lab_title setAdjustsFontSizeToFitWidth:YES];
+            [lab_title release];
+            
+            //set the button under the image
+            UIButton *button = [[UIButton alloc] init];
+            button.frame = CGRectMake( left_right + (space+Mspace) * i, 16, space, space+4);
+            button.alpha = 0.05;
+            button.tag = i;
+            [button addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
+            [_scrollView addSubview:button];
+            [button release];
+            i++;
+            [imageView release];
+        }
+
     }
     
     NSInteger pages = i/3;
