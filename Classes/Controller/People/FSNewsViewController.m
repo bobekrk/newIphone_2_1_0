@@ -91,7 +91,7 @@
     }
     UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 15, 8, 13)];
     imageView.image         = [UIImage imageWithNameString:@"箭头左"];
-    imageView.alpha         = 0.1;
+    imageView.alpha         = 0.3;
     [self.view  addSubview:imageView];
     [imageView release];
     imageView.tag           = 10000;
@@ -171,10 +171,10 @@
     
     UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake((320-192)/2, 30, 192, 140)];
     NSString *path = [[NSBundle mainBundle] pathForResource:@"左右滑动切换主题" ofType:@"png"];
-    //myImage = [UIImage imageWithContentsOfFile:path];
     imageView.image         = [UIImage imageWithContentsOfFile:path];
     [button addSubview:imageView];
     [button release];
+    [imageView release];
     [button addTarget:self action:@selector(removeGuide) forControlEvents:UIControlEventTouchUpInside];
     [[NSUserDefaults standardUserDefaults]setValue:@"userGuideView" forKey:@"userGuideView"];
     [[NSUserDefaults standardUserDefaults]synchronize];
@@ -287,7 +287,7 @@
     _currentIndex               = index;
     UIView * view               = [self.view viewWithTag:10000];
     UIView * view3               = [self.view viewWithTag:30000];
-    _currentIndex == 0?(view.alpha = 0.1):(view.alpha = 1);
+    _currentIndex == 0?(view.alpha = 0.3):(view.alpha = 1);
     _currentIndex == _fs_GZF_ChannelListDAO.objectList.count -1?(view3.alpha = 0.1):(view3.alpha = 1);
     
     MyNewsLIstView * view2 =  (MyNewsLIstView*)[[self.view viewWithTag:2000] viewWithTag:(100+index)];

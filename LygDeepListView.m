@@ -27,7 +27,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_BOTTOM_BUTTON_VIEW | FSTABLEVIEW_ASSISTANT_TOP_VIEW;
+        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_BOTTOM_BUTTON_VIEW | FSTABLEVIEW_ASSISTANT_TOP_VIEW | FSTABLEVIEW_ASSISTANT_BOTTOM_VIEW;
         _tvList.parentDelegate    = self;
         _tvList.dataSource = self;
         _tvList.delegate = self;
@@ -46,9 +46,10 @@
         _oldCount            = 0;
         _isfirstShow         = YES;
         _myDeepListDao       = aDao;
+        //_currentCount        = 20;
         //_myDeepListDao.parentDelegate = self;
         self.delegte         = aDeleagte;
-        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_TOP_VIEW;
+        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_BOTTOM_BUTTON_VIEW | FSTABLEVIEW_ASSISTANT_TOP_VIEW | FSTABLEVIEW_ASSISTANT_BOTTOM_VIEW;
         //[_myDeepListDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
     }
     return self;
@@ -155,8 +156,8 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	
+	//return _myDeepListDao.objectList.count > 20?20:_myDeepListDao.objectList.count;
 	return _myDeepListDao.objectList.count;
-	
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -169,7 +170,6 @@
 //        size.height = 130;
      NSLog(@"%d %@ %f",indexPath.row,top.news_abstract,size.height);
     return 48 + 5 + size.height + 5 + 15;
-    
 }
 
 
@@ -178,16 +178,15 @@
 }
 
 -(void)reSetAssistantViewFlag:(NSInteger)arrayCount{
-    return;
-    if (_oldCount==arrayCount && arrayCount!=0) {
+    if (_oldCount == arrayCount && arrayCount != 0 &&  _myDeepListDao.currentGetDataKind == GET_DataKind_Next) {
         _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_TOP_VIEW;
     }
     else{
-        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_TOP_VIEW;
-//        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_BOTTOM_BUTTON_VIEW | FSTABLEVIEW_ASSISTANT_TOP_VIEW | FSTABLEVIEW_ASSISTANT_BOTTOM_VIEW;
-//        _oldCount=arrayCount;
+        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_BOTTOM_BUTTON_VIEW | FSTABLEVIEW_ASSISTANT_TOP_VIEW | FSTABLEVIEW_ASSISTANT_BOTTOM_VIEW;
+        _oldCount=arrayCount;
     }
 }
+
 
 -(NSString *)cellIdentifierStringWithIndexPath:(NSIndexPath *)indexPath{
     return @"RoutineNewsListCellx";
@@ -236,7 +235,7 @@
             if (status == FSBaseDAOCallBack_SuccessfulStatus) {
                 [self reSetAssistantViewFlag:[_myDeepListDao.objectList count]];
                 [self loaddingComplete];
-                [_myDeepListDao operateOldBufferData];
+                //[_myDeepListDao operateOldBufferData];
             }else{
                 //[self loadData];
                 [self loadDataWithOutCompelet];
@@ -275,7 +274,7 @@
         
     }
     if (dataSource == tdsNextSection) {
-        [_myDeepListDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+        [_myDeepListDao HTTPGetDataWithKind:GET_DataKind_Next];
     }
 }
 

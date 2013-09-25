@@ -151,7 +151,7 @@
 -(void)doSomethingAtLayoutSubviews{
     NSLog(@"%f",self.frame.size.height);
     UIView * view = [self.contentView viewWithTag:100];
-    view.frame    =  CGRectMake(5, 5, 310, self.contentView.frame.size.height - 10);
+    view.frame    =  CGRectMake(7, 7, 306, self.contentView.frame.size.height - 7);
     self.clipsToBounds = YES;
     self.contentView.clipsToBounds = YES;
     _kindsLabel.textAlignment = NSTextAlignmentCenter;

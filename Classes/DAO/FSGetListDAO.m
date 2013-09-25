@@ -58,7 +58,7 @@
 
 - (void)readDataFromCoreData {
     
-    NSArray *array = [[FSBaseDB sharedFSBaseDB] getAllObjectsSortByKey:@"FSTopicPriorObject" key:[self batchKeyName] ascending:YES];
+    //NSArray *array = [[FSBaseDB sharedFSBaseDB] getAllObjectsSortByKey:@"FSTopicPriorObject" key:[self batchKeyName] ascending:YES];
 
     NSLog(@"%@\r\n:%@",[self entityName],array);
     

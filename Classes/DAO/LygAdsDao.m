@@ -158,7 +158,7 @@
 //        NSNumber *tempNumber = [[NSNumber alloc] initWithInt:[temp intValue]];
 //		_obj.timestamp = tempNumber;
         _obj.picUrl    = temp;
-		//[content release];
+		[content release];
         //[tempNumber release];
 	}
     else if ([_currentElementName isEqualToString:@"AD_LINK"]) {

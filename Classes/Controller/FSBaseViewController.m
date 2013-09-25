@@ -71,7 +71,7 @@
         _myNaviBar.items = [NSArray arrayWithObject:navItem];
         [navItem release];
         [self.view addSubview:_myNaviBar];
-        [self.myNaviBar release];
+        [_myNaviBar release];
         NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:18], UITextAttributeFont,[UIColor blackColor],UITextAttributeTextColor,[NSValue valueWithCGSize:CGSizeMake(0, 0)],UITextAttributeTextShadowOffset,nil];
         _myNaviBar.titleTextAttributes = dict;
     }

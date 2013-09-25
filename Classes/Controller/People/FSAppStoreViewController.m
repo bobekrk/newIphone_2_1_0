@@ -98,8 +98,8 @@
     
     //[self.navigationController setNavigationBarHidden:YES animated:YES];
     
-    NSString *idstr = self.url;
-    NSInteger number = [idstr integerValue];
+    //NSString *idstr = self.url;
+    NSInteger number = [self.url integerValue];
     NSLog(@"integer is %d",number);
     SKStoreProductViewController *storeViewController =
     [[SKStoreProductViewController alloc] init];

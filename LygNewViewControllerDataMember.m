@@ -17,10 +17,11 @@
         self.fs_GZF_ForOnedayNewsFocusTopDAO  = [[FS_GZF_ForOnedayNewsFocusTopDAO alloc]init];
         
     }
+    return self;
 }
 -(void)dealloc
 {
-    
+    [super dealloc];
 }
 
 

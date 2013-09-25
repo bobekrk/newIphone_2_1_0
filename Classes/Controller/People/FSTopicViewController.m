@@ -86,13 +86,13 @@
     if (!self.isListStyle) {
         [_scrollPageView         removeFromSuperview];
         [_deepFloattingTitleView removeFromSuperview];
-        _fs_GZF_DeepListDAO.parentDelegate = _myDeepListView;
+       // _fs_GZF_DeepListDAO.parentDelegate = _myDeepListView;
         [self.view addSubview:_myDeepListView];
-        [_myDeepListView  reloadData];
+        //[_myDeepListView  reloadData];
     }else
     {
         [_myDeepListView removeFromSuperview];
-        _fs_GZF_DeepListDAO.parentDelegate = self;
+        //_fs_GZF_DeepListDAO.parentDelegate = self;
         [self.view addSubview:_scrollPageView];
         [self.view addSubview:_deepFloattingTitleView];
     }
@@ -103,7 +103,7 @@
 	[super loadChildView];
     self.myNaviBar.topItem.leftBarButtonItem = nil;
     self.myNaviBar.topItem.rightBarButtonItem = nil;
-    
+    self.myNaviBar.tintColor = [UIColor whiteColor];
     UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithTitle:@"封面" style:UIBarButtonItemStyleBordered target:self action:@selector(changeStyleOfDeepList)];
     item.tintColor         = [UIColor whiteColor];
     NSDictionary * dication            = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor darkGrayColor],UITextAttributeTextColor,[NSValue valueWithUIOffset:UIOffsetMake(0, 0)],UITextAttributeTextShadowOffset,nil];
@@ -138,7 +138,8 @@
 {
     FSTopicObject *topicObj                          = [_fs_GZF_DeepListDAO.objectList objectAtIndex:index];
     FSDeepPageContainerController *pageContainerCtrl = [[FSDeepPageContainerController alloc] init];
-    pageContainerCtrl.deepid                         = topicObj.deepid;
+    //pageContainerCtrl.deepid                         = topicObj.deepid;
+    pageContainerCtrl.deepid                         = [NSString stringWithFormat:@"%d",topicObj.deepid.intValue];
     pageContainerCtrl.Deep_title                     = topicObj.title;
     pageContainerCtrl.newsAbstract                   = topicObj.news_abstract;
     [PeopleNewsStati deepStatideepID:pageContainerCtrl.deepid deepTitle:pageContainerCtrl.Deep_title];
@@ -276,7 +277,15 @@
     
 }
 
-
+//-(void)reSetAssistantViewFlag:(NSInteger)arrayCount{
+//    if (_oldCount==arrayCount && arrayCount!=0) {
+//        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_TOP_VIEW;
+//    }
+//    else{
+//        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_BOTTOM_BUTTON_VIEW | FSTABLEVIEW_ASSISTANT_TOP_VIEW | FSTABLEVIEW_ASSISTANT_BOTTOM_VIEW;
+//        _oldCount=arrayCount;
+//    }
+//}
 
 #pragma mark -
 -(void)doSomethingWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status{
@@ -285,9 +294,15 @@
             NSLog(@"_fs_GZF_DeepListDAO:%d",[_fs_GZF_DeepListDAO.objectList count]);
             [_myDeepListView reloadData];
             [_scrollPageView loadPageData];
+            [_fs_GZF_DeepListDAO operateOldBufferData];
             if (status == FSBaseDAOCallBack_SuccessfulStatus) {
-                [_fs_GZF_DeepListDAO operateOldBufferData];
+                [_myDeepListView reSetAssistantViewFlag:_fs_GZF_DeepListDAO.objectList.count];
+
+            }else
+            {
+                [_myDeepListView reSetAssistantViewFlag:0];
             }
+            [_fs_GZF_DeepListDAO operateOldBufferData];
             
         }
     }
@@ -295,6 +310,7 @@
     {
         //[_scrollPageView performSelector:@selector(dissMissRefreshView) withObject:nil afterDelay:10];
         [_scrollPageView dissMissRefreshView];
+        
     }
     [_myDeepListView loaddingComplete];
 }

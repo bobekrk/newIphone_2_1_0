@@ -472,9 +472,9 @@
     if (dataSource == tdsNextSection) {
         NSLog(@"更多");
         
-        FSOneDayNewsObject *o = [_newsListData.objectList lastObject];
+        //FSOneDayNewsObject *o = [_newsListData.objectList lastObject];
         _newsListData.getNextOnline = YES;
-         NSLog(@"更多:%@",o.realtimeid);
+         //NSLog(@"更多:%@",o.realtimeid);
         //_newsListData.lastid = o.realtimeid;//by zhiliang
         [_newsListData selectChannelListString];
         [_newsListData HTTPGetDataWithKind:GET_DataKind_Next];

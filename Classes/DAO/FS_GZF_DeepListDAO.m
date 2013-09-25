@@ -35,8 +35,9 @@
 
 
 
-#define FSDEEPLIST_URL @"http://mobile.app.people.com.cn:81/topic/topic.php?act=info_list&rt=xml&type=list&iswp=0"
-
+//#define FSDEEPLIST_URL @"http://mobile.app.people.com.cn:81/topic/topic.php?act=info_list&rt=xml&type=list&iswp=0"
+#define FSDEEPLIST_URL   @"http://mobile.app.people.com.cn:81/topic/topic.php?act=info_list&rt=xml&type=list&iswp=0&count=20"
+#define FSDEEPLIST_URL2  @"http://mobile.app.people.com.cn:81/topic/topic.php?act=info_list&rt=xml&type=list&iswp=0&count=20&last_id=%@"
 
 @implementation FS_GZF_DeepListDAO
 
@@ -44,7 +45,7 @@
 - (id)init {
 	self = [super init];
 	if (self) {
-        
+        _oldcount = 1;
 	}
 	return self;
 }
@@ -63,12 +64,37 @@
 
 
 -(NSString *)readDataURLStringFromRemoteHostWithGETDataKind:(GET_DataKind)getDataKind{
-    NSLog(@"FSDEEPLIST_URL:%@",FSDEEPLIST_URL);
-    return FSDEEPLIST_URL;
+//    NSLog(@"FSDEEPLIST_URL:%@",FSDEEPLIST_URL);
+//    return FSDEEPLIST_URL;
+    for (FSTopicObject * obj in self.objectList) {
+        //NSLog(@"<<<<<<<<<<<<<%@",obj.deepid);
+    }
+    if (getDataKind == GET_DataKind_Refresh) {
+        _oldcount = 1;
+        self.getNextOnline  = YES;
+        //NSLog(@"%@",[NSString stringWithFormat:FS_NEWS_URL_IMPORT,FS_NEWS_PAGECOUNT,@""]);
+		return [NSString stringWithFormat:FSDEEPLIST_URL];
+	} else {
+        //self.getNextOnline  = NO;
+        _oldcount += 1;
+        FSTopicObject * obj = self.objectList.lastObject;
+        return [NSString stringWithFormat:FSDEEPLIST_URL2,obj.deepid];
+	}
 }
+//-(void)reSetAssistantViewFlag:(NSInteger)arrayCount{
+//    if (_oldcount==arrayCount && arrayCount!=0) {
+//        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_TOP_VIEW;
+//    }
+//    else{
+//        _tvList.assistantViewFlag = FSTABLEVIEW_ASSISTANT_BOTTOM_BUTTON_VIEW | FSTABLEVIEW_ASSISTANT_TOP_VIEW | FSTABLEVIEW_ASSISTANT_BOTTOM_VIEW;
+//        _oldcount=arrayCount;
+//    }
+//}
+
 
 -(NSString *)timestampFlag{
     return @"FSTopicObject_flag";
+    //FSTopicObject
 }
 
 -(NSString *)predicateStringWithQueryDataKind:(Query_DataKind)dataKind{
@@ -84,11 +110,31 @@
 
 
 - (void)initializeSortDescriptions:(NSMutableArray *)descriptions {
-	[self addSortDescription:descriptions withSortFieldName:@"sort" withAscending:YES];
+    //[self addSortDescription:descriptions withSortFieldName:@"deepid" withAscending:NO];
+	[self addSortDescription:descriptions withSortFieldName:@"sort" withAscending:NO];
 }
 
--(NSInteger)fetchLimitWithGETDDataKind:(GET_DataKind)getDataKind{
-    return 0;
+//-(NSInteger)fetchLimitWithGETDDataKind:(GET_DataKind)getDataKind{
+//    return 20;
+//}
+//- (NSInteger)fetchLimitWithGETDDataKind:(GET_DataKind)getDataKind {
+//    NSLog(@"%d",self.objectList.count);
+//	if (getDataKind == GET_DataKind_Refresh) {
+//		return 20;
+//	} else {
+//		return [self.objectList count] + 20;
+//	}
+//}
+- (NSInteger)fetchLimitWithGETDDataKind:(GET_DataKind)getDataKind {
+	if (getDataKind == GET_DataKind_Refresh || getDataKind == GET_DataKind_ForceRefresh) {
+		return 20;
+	} else if (getDataKind == GET_DataKind_Next){
+		return [self.objectList count] + 20;
+	}
+    else if(getDataKind == GET_DataKind_Unlimited){
+        return 0;
+    }
+    return  0;
 }
 
 #pragma mark -
@@ -175,13 +221,15 @@
     else if ([_currentElementName isEqualToString:@"deepid"]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
 		_obj.deepid = trimString(content);
+        int x = trimString(content).intValue;
+        _obj.sort   = [NSNumber numberWithInt:x];
 		[content release];
 	}
     else if ([_currentElementName isEqualToString:@"sort"]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
-        NSString *temp = trimString(content);
+        //NSString *temp = trimString(content);
         //NSNumber *tempNumber = [[NSNumber alloc] initWithInt:[temp intValue]];
-		_obj.sort = temp;
+		//_obj.sort = temp.intValue;
 		[content release];
         //[tempNumber release];
 	}
@@ -189,32 +237,34 @@
 
 
 - (void)executeFetchRequest:(NSFetchRequest *)request {
+    [self setBufferFlag];
 	NSError *error = nil;
     
 	NSArray *resultSet = [self.managedObjectContext executeFetchRequest:request error:&error];
-	if (!error) {
+    for (FSTopicObject * top in resultSet) {
+        printf("%s %d %d\n",__func__,top.deepid.intValue,top.bufferFlag.intValue);
+    }
+    if (!error) {
         
 		if ([resultSet count]>0) {
             NSMutableArray *idArray = [[NSMutableArray alloc] init];
             NSMutableArray *TopicObjectArray = [[NSMutableArray alloc] init];
             NSInteger mark = 0;
+
             for (FSTopicObject *o in resultSet) {
                 mark = 0;
-                for (NSString *deepid in idArray) {
-                    if ([deepid isEqualToString:o.deepid]) {
+                for (FSTopicObject *vi in TopicObjectArray) {
+                    if ([vi.deepid isEqualToString:o.deepid]) {
                         mark = 1;
                         break;
                     }
                 }
                 if (mark == 0) {
                     [TopicObjectArray addObject:o];
-                   // [idArray addObject:o.deepid];
                 }
             }
-            //NSLog(@"[resultSet count]:%d",[resultSet count]);
             self.objectList = TopicObjectArray;//(NSMutableArray *)resultSet;
             self.isRecordListTail = [self.objectList count] < [self.fetchRequest fetchLimit];
-            [self setBufferFlag];
             [idArray release];
             [TopicObjectArray release];
         }
@@ -222,44 +272,34 @@
 }
 
 -(void)setBufferFlag{
+
+    NSArray *array = [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext] getAllObjectsSortByKey:[self entityName] key:@"timestamp" ascending:NO];
+    for (FSTopicObject * top in array) {
+        printf("before setbuffer %s %d %d\n",__func__,top.deepid.intValue,top.bufferFlag.intValue);
+    }
+
     
-    NSArray *array = [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext] getAllObjectsSortByKey:[self entityName] key:@"timestamp" ascending:YES];
-    
-    if (self.currentGetDataKind == GET_DataKind_Next){
-        for (FSTopicObject *o in array) {
-            if ([o.bufferFlag isEqualToString:@"1"]) {
-                o.bufferFlag = @"2";
-            }
-        }
-        [self saveCoreDataContext];
-        return;
-    }
-    for (FSTopicObject *o in array) {
-        if (_isRefreshToDeleteOldData == YES && [o.bufferFlag isEqualToString:@"2"]) {
-            ;//o.bufferFlag = @"3";
-        }else if (_isRefreshToDeleteOldData == YES && [o.bufferFlag isEqualToString:@"1"]){
-            o.bufferFlag = @"2";
+    NSMutableDictionary * dicat = [[NSMutableDictionary alloc]init];
+    for (FSTopicObject * obj1  in array) {
+        NSString * string = [dicat objectForKey:obj1.deepid];
+        if (!string) {
+            [dicat setValue:@"1" forKey:obj1.deepid];
+        }else{
+            obj1.bufferFlag = @"3";
         }
     }
+    [dicat release];
     [self saveCoreDataContext];
+//    for (FSTopicObject * top in array) {
+//        printf("after setbuffer %s %d %d\n",__func__,top.deepid.intValue,top.bufferFlag.intValue);
+//    }
+    [self operateOldBufferData];
+    return;
 }
-
--(void)setBufferFlag3{
-    NSArray *array = [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext] getAllObjectsSortByKey:[self entityName] key:@"timestamp" ascending:YES];
-
-    for (FSTopicObject *o in array) {
-        if (_isRefreshToDeleteOldData == YES && [o.bufferFlag isEqualToString:@"2"]) {
-            o.bufferFlag = @"3";
-        }
-    }
-    [self saveCoreDataContext];
-}
-
-
 -(void)operateOldBufferData{
-    if (self.currentGetDataKind == GET_DataKind_Refresh) {
+    //if (self.currentGetDataKind == GET_DataKind_Refresh) {
 		
-        if (_isRefreshToDeleteOldData == YES) {
+       // if (_isRefreshToDeleteOldData == YES) {
              NSArray *array = [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext] getAllObjectsSortByKey:[self entityName] key:@"timestamp" ascending:YES];
             for (FSTopicObject *o in array) {
                 if ([o.bufferFlag isEqualToString:@"3"]) {
@@ -269,8 +309,8 @@
             }
             [self saveCoreDataContext];
             
-        }
-	}
+    //    }
+	//}
 }
 
 
