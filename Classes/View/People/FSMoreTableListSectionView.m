@@ -41,7 +41,7 @@
 
 -(void)doSomethingAtLayoutSubviews{
     
-    _lab_sectionTitle.text = (NSString *)_data;
+    _lab_sectionTitle.text = (NSString *)self.data;
     _lab_sectionTitle.textColor = COLOR_NEWSLIST_TITLE;
     
     _sectionBGR.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);

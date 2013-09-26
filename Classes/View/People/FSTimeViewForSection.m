@@ -72,7 +72,7 @@
 
 -(void)doSomethingAtLayoutSubviews{
     
-    FSSectionObject *o = (FSSectionObject *)_data;
+    FSSectionObject *o = (FSSectionObject *)self.data;
     if (o==nil) {
         return;
     }

@@ -446,9 +446,8 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 #pragma mark Memory management
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    /*
-     Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
-     */
+    UIButton * button = (UIButton*)[self.window viewWithTag:1000];
+    [button setTitle:@"!!!!!!!!" forState:UIControlStateNormal];
 }
 
 
@@ -562,6 +561,17 @@ extern NSString * CTSettingCopyMyPhoneNumber();
     [navi release];
     [self DidRecivePushMessage:pushInof];
     
+    
+    UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = CGRectMake(0, 100, 100, 100);
+    [button addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
+    [self.window addSubview:button];
+    button.tag     = 1000;
+    
+}
+-(void)exit
+{
+    exit(0);
 }
 
 - (void)showChannelSettingForOneDay {

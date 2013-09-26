@@ -128,6 +128,27 @@
 	//标签栏设置
 	//[self.fsTabBarItem setTabBarItemWithNormalImage:[UIImage imageNamed:@"deepSubject.png"] withSelectedImage:[UIImage imageNamed:@"deepSubject.png"] withText:NSLocalizedString(@"深度", nil)];
 }
+-(void)myDidReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    [_scrollPageView   release];
+    _scrollPageView = nil;
+    [_myDeepListView  release];
+    _myDeepListView = nil;
+    self.view = nil;
+    [self unLoadDataModel];
+}
+-(void)unLoadDataModel
+{
+//    self.fs_GZF_GetWeatherMessageDAO     = nil;
+//    self.fsForOneDayNewsListFocusTopData = nil;
+//    self.newsListData                    = nil;
+//    self.lygAdsDao                       = nil;
+//    self.view                            = nil;
+   
+    self.fs_GZF_DeepListDAO              = nil;
+    self.isFirstTimeShow                 = NO;
+}
 
 -(void)initDataModel{
     _fs_GZF_DeepListDAO = [[FS_GZF_DeepListDAO alloc] init];

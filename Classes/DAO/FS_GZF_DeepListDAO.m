@@ -241,9 +241,6 @@
 	NSError *error = nil;
     
 	NSArray *resultSet = [self.managedObjectContext executeFetchRequest:request error:&error];
-    for (FSTopicObject * top in resultSet) {
-        printf("%s %d %d\n",__func__,top.deepid.intValue,top.bufferFlag.intValue);
-    }
     if (!error) {
         
 		if ([resultSet count]>0) {
@@ -274,9 +271,6 @@
 -(void)setBufferFlag{
 
     NSArray *array = [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext] getAllObjectsSortByKey:[self entityName] key:@"timestamp" ascending:NO];
-    for (FSTopicObject * top in array) {
-        printf("before setbuffer %s %d %d\n",__func__,top.deepid.intValue,top.bufferFlag.intValue);
-    }
 
     
     NSMutableDictionary * dicat = [[NSMutableDictionary alloc]init];
@@ -290,9 +284,6 @@
     }
     [dicat release];
     [self saveCoreDataContext];
-//    for (FSTopicObject * top in array) {
-//        printf("after setbuffer %s %d %d\n",__func__,top.deepid.intValue,top.bufferFlag.intValue);
-//    }
     [self operateOldBufferData];
     return;
 }

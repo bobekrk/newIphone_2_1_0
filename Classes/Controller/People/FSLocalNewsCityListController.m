@@ -51,6 +51,7 @@
 }
 -(void)addLeftButtonItem
 {
+    self.myNaviBar.tintColor = [UIColor whiteColor];
     UIBarButtonItem * leftbutton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"返回.png"] style:UIBarButtonItemStylePlain target:self action:@selector(returnBack:)];
     leftbutton.tintColor         = [UIColor whiteColor];
     NSLog(@"%@",self.myNaviBar.topItem);
@@ -68,11 +69,7 @@
     [_titleView release];
     [_titleView reSetFrame];
     
-//    UIButton *returnBT = [[UIButton alloc] initWithFrame:CGRectMake(0, (FSSETTING_VIEW_NAVBAR_HEIGHT-34)/2, 65, 34)];
-//    [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
-//    [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.myNaviBar addSubview:returnBT];
-//    [returnBT release];
+
     [self addLeftButtonItem];
     
     _titleView.data = self.cityName;

@@ -141,10 +141,10 @@
                      //NSLog(@"111111");
                      
                      if ([_cityName isEqualToString:[State substringToIndex:[State length]-1]]) {
-                         _localCity = _cityName;
+                         self.localCity = _cityName;
                          return;
                      }
-                     _localCity = [State substringToIndex:[State length]-1];
+                     self.localCity = [State substringToIndex:[State length]-1];
                      _fs_GZF_localGetWeatherMessageDAO.group = [State substringToIndex:[State length]-1];
                      [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
                  }
@@ -153,10 +153,10 @@
                      NSString *shi = [SubLocality substringFromIndex:[SubLocality length]-1];
                      if ([shi isEqualToString:@"市"]) {
                          if ([_cityName isEqualToString:[SubLocality substringToIndex:[SubLocality length]-1]]) {
-                             _localCity = _cityName;
+                             self.localCity = _cityName;
                              return;
                          }
-                         _localCity = [State substringToIndex:[State length]-1];
+                         self.localCity = [State substringToIndex:[State length]-1];
                          _fs_GZF_localGetWeatherMessageDAO.group = [SubLocality substringToIndex:[SubLocality length]-1];
                          [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
                      }
@@ -182,17 +182,6 @@
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     NSLog(@" locationManager errorerror");
-    //请先允许 人民新闻是用定位服务。
-//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"授权"
-//                                                        message:@"请先手动开启隐私授权，允许人民新闻使用定位服务！"
-//                                                       delegate:nil
-//                                              cancelButtonTitle:@"OK"
-//                                              otherButtonTitles:nil];
-//    [alertView show];
-//    [alertView release];
-    
-    
-    //[_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
 }
 
 
@@ -231,10 +220,10 @@
         //NSLog(@"111111");
         
         if ([_cityName isEqualToString:[State substringToIndex:[State length]-1]]) {
-            _localCity = _cityName;
+            self.localCity = _cityName;
             return;
         }
-        _localCity = [State substringToIndex:[State length]-1];
+        self.localCity = [State substringToIndex:[State length]-1];
         _fs_GZF_localGetWeatherMessageDAO.group = [State substringToIndex:[State length]-1];
         [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
     }
@@ -243,10 +232,10 @@
         NSString *shi = [SubLocality substringFromIndex:[SubLocality length]-1];
         if ([shi isEqualToString:@"市"]) {
             if ([_cityName isEqualToString:[SubLocality substringToIndex:[SubLocality length]-1]]) {
-                _localCity = _cityName;
+                self.localCity = _cityName;
                 return;
             }
-            _localCity = [State substringToIndex:[State length]-1];
+            self.localCity = [State substringToIndex:[State length]-1];
             _fs_GZF_localGetWeatherMessageDAO.group = [SubLocality substringToIndex:[SubLocality length]-1];
             [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
         }
@@ -262,8 +251,6 @@
 -(void)initDataModel{
     
     _fs_GZF_CityListDAO = [[FS_GZF_CityListDAO alloc] init];
-    //_fs_GZF_CityListDAO.parentDelegate = self;
-    //_fs_GZF_CityListDAO.isGettingList = YES;
     
     _fs_GZF_localGetWeatherMessageDAO = [[FS_GZF_GetWeatherMessageDAO alloc] init];
     _fs_GZF_localGetWeatherMessageDAO.parentDelegate = self;
@@ -365,7 +352,7 @@
                 _cityName = obj.cityname;
                 
                 if ([_localCity length]==0) {
-                    _localCity = _cityName;
+                    self.localCity = _cityName;
                 }
                 
                 if (status == FSBaseDAOCallBack_SuccessfulStatus ) {//if(_fsUserSelectObject.keyValue3!=nil)

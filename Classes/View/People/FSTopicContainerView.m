@@ -58,7 +58,7 @@
     _fsImagesScrInRowView.pageControlViewShow = YES;
     _fsImagesScrInRowView.spacing = 0.0;
     _fsImagesScrInRowView.bottonHeigh = 100.0f;
-    _fsImagesScrInRowView.objectList =  (NSArray *)_data;
+    _fsImagesScrInRowView.objectList =  (NSArray *)self.data;
     
     _lab_title.frame = CGRectMake(10, self.frame.size.height-90, self.frame.size.width-20, 30);
     _lab_description.frame = CGRectMake(10, self.frame.size.height-60, self.frame.size.width-20, 50);;
@@ -87,7 +87,7 @@
     if (o.isMove) {
         //NSLog(@"FSTodayNewsListTopBigImageCell:%d",o.imageIndex);
         if ([_fsImagesScrInRowView.objectList count]>o.imageIndex) {
-            FSFocusTopObject *o1 =[(NSArray *)_data objectAtIndex:o.imageIndex];
+            FSFocusTopObject *o1 =[(NSArray *)self.data objectAtIndex:o.imageIndex];
             
             _lab_title.text = o1.title;
             _lab_description.text = o1.picture;

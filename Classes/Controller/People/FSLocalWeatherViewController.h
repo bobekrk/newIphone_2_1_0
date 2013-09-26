@@ -36,5 +36,5 @@
     
     NSString *_localCity;
 }
-
+@property(nonatomic,retain)NSString * localCity;
 @end

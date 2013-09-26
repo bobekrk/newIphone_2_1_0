@@ -46,7 +46,7 @@
 
 -(void)doSomethingAtLayoutSubviews{
     
-    FSFocusTopObject *o = (FSFocusTopObject *)_data;
+    FSFocusTopObject *o = (FSFocusTopObject *)self.data;
     NSLog(@"o.title:%@",o.title);
     _lab_title.text = o.title;
     _lab_title.frame = CGRectMake(16, 0, self.frame.size.width-32, self.frame.size.height);

@@ -120,8 +120,8 @@
     
     NSMutableArray *array = (NSMutableArray *)self.data;
     
-    NSLog(@"array:%d",[array count]);
-    if (array == nil || array.count == 0) {
+    //、、NSLog(@"array:%d",[array count]);
+        if (array == nil || array.count == 0) {
 //        UIAlertView* view = [[UIAlertView alloc]initWithTitle:@"safssfd" message:@"sdsfdg" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
 //        [view show];
 //        [view release];
@@ -129,7 +129,8 @@
     }
     @synchronized(self)
     {
-        NSLog(@"%d",array.count);
+        printf("****************************%p   %d",self.data,array.count);
+
         for (FSRecommentAPPObject *o in array) {
             
             //set the image

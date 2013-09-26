@@ -417,6 +417,10 @@
 		586AA1FD17D72D46000D356F /* PeopleNewsStati.m in Sources */ = {isa = PBXBuildFile; fileRef = 586AA1FC17D72D46000D356F /* PeopleNewsStati.m */; };
 		586AA25717D75783000D356F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 586AA25617D75783000D356F /* CoreTelephony.framework */; };
 		586EDF3917D5BF1B00429F58 /* LygNewViewControllerDataMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 586EDF3817D5BF1B00429F58 /* LygNewViewControllerDataMember.m */; };
+		5870278D17F3B3FF003B3BEB /* icon3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5870278C17F3B3FF003B3BEB /* icon3.png */; };
+		5870279117F3B599003B3BEB /* icon29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = 5870278E17F3B599003B3BEB /* icon29x29.png */; };
+		5870279217F3B599003B3BEB /* icon58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 5870278F17F3B599003B3BEB /* icon58x58.png */; };
+		5870279317F3B599003B3BEB /* icon80x80.png in Resources */ = {isa = PBXBuildFile; fileRef = 5870279017F3B599003B3BEB /* icon80x80.png */; };
 		5882B5E417CC4EDD00B77388 /* LygDeepListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5882B5E317CC4EDD00B77388 /* LygDeepListView.m */; };
 		5882B5E717CC8EBB00B77388 /* LygDeepTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5882B5E617CC8EBB00B77388 /* LygDeepTableViewCell.m */; };
 		5889DB2F17B1EADB00ED76BA /* FSLoadingImageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5889DB2E17B1EADB00ED76BA /* FSLoadingImageObject.m */; };
@@ -1345,6 +1349,10 @@
 		586AA25617D75783000D356F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		586EDF3717D5BF1B00429F58 /* LygNewViewControllerDataMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LygNewViewControllerDataMember.h; sourceTree = "<group>"; };
 		586EDF3817D5BF1B00429F58 /* LygNewViewControllerDataMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LygNewViewControllerDataMember.m; sourceTree = "<group>"; };
+		5870278C17F3B3FF003B3BEB /* icon3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon3.png; sourceTree = "<group>"; };
+		5870278E17F3B599003B3BEB /* icon29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon29x29.png; sourceTree = "<group>"; };
+		5870278F17F3B599003B3BEB /* icon58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon58x58.png; sourceTree = "<group>"; };
+		5870279017F3B599003B3BEB /* icon80x80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon80x80.png; sourceTree = "<group>"; };
 		5882B5E217CC4EDD00B77388 /* LygDeepListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LygDeepListView.h; sourceTree = "<group>"; };
 		5882B5E317CC4EDD00B77388 /* LygDeepListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LygDeepListView.m; sourceTree = "<group>"; };
 		5882B5E517CC8EBB00B77388 /* LygDeepTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LygDeepTableViewCell.h; sourceTree = "<group>"; };
@@ -2318,9 +2326,13 @@
 				04E518691700250300445E12 /* loadingbgd.png */,
 				04DA613116AFB00D009BDB36 /* aboutIcon.png */,
 				04DA612C16AF807F009BDB36 /* AsyncImage.png */,
+				5870278E17F3B599003B3BEB /* icon29x29.png */,
+				5870278F17F3B599003B3BEB /* icon58x58.png */,
+				5870279017F3B599003B3BEB /* icon80x80.png */,
 				04DA612D16AF807F009BDB36 /* AsyncImage@2x.png */,
 				04E5A0431682941B005349B0 /* Default-568h@2x.png */,
 				04E2B05816674D7200B839F4 /* icon.png */,
+				5870278C17F3B3FF003B3BEB /* icon3.png */,
 				04E2B05916674D7200B839F4 /* icon@2x.png */,
 				A6A22E1A15D8988100E48EB8 /* Default.png */,
 				A6A22E1B15D8988100E48EB8 /* Default@2x.png */,
@@ -3984,6 +3996,7 @@
 				04449BA5167724ED00A8F31C /* newsDitail_font_1@2x.png in Resources */,
 				04449BA6167724ED00A8F31C /* newsDitail_font_2.png in Resources */,
 				04449BA7167724ED00A8F31C /* newsDitail_font_2@2x.png in Resources */,
+				5870279317F3B599003B3BEB /* icon80x80.png in Resources */,
 				04449BA8167724ED00A8F31C /* newsDitail_mid.png in Resources */,
 				04449BA9167724ED00A8F31C /* newsDitail_mid@2x.png in Resources */,
 				04449BAA167724ED00A8F31C /* newsDitail_shear_1.png in Resources */,
@@ -4027,6 +4040,7 @@
 				04DE0165167EC5D600085C30 /* BT_fanhui@2x.png in Resources */,
 				04DE0166167EC5D600085C30 /* BT_fasong.png in Resources */,
 				04DE0167167EC5D600085C30 /* BT_fasong@2x.png in Resources */,
+				5870279217F3B599003B3BEB /* icon58x58.png in Resources */,
 				04DE016A167EC5F700085C30 /* Share_tishi.png in Resources */,
 				04DE016B167EC5F700085C30 /* Share_tishi@2x.png in Resources */,
 				041FFA1D167F12B000A13E5C /* Deep_listbook.png in Resources */,
@@ -4109,6 +4123,7 @@
 				042B04F816ACE4C8001920C7 /* open_mark.png in Resources */,
 				042B04F916ACE4C8001920C7 /* open_mark@2x.png in Resources */,
 				042B050216AD0C65001920C7 /* Deep_EndTitle.png in Resources */,
+				5870279117F3B599003B3BEB /* icon29x29.png in Resources */,
 				042B050316AD0C65001920C7 /* Deep_EndTitle@2x.png in Resources */,
 				042B050416AD0C65001920C7 /* Deep_TextTitle.png in Resources */,
 				042B050516AD0C65001920C7 /* Deep_TextTitle@2x.png in Resources */,
@@ -4224,6 +4239,7 @@
 				58FA000017A7CDCD00841355 /* clearh@2x.png in Resources */,
 				58FA000117A7CDCD00841355 /* collect.png in Resources */,
 				58FA000217A7CDCD00841355 /* collect@2x.png in Resources */,
+				5870278D17F3B3FF003B3BEB /* icon3.png in Resources */,
 				58FA000317A7CDCD00841355 /* collecth.png in Resources */,
 				58FA000417A7CDCD00841355 /* collecth@2x.png in Resources */,
 				58FA000617A7CFD200841355 /* clear@2x.png in Resources */,

@@ -54,6 +54,7 @@
 {
     [super didReceiveMemoryWarning];
     [self unLoadDataModel];
+    [_myScroview removeObserver:self forKeyPath:@"contentoffset"];
     self.view   = nil;
     _myScroview = nil;
     _topRedImageView = nil;
