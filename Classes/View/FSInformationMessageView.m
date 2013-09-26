@@ -118,7 +118,7 @@
 														FS_INFORMATION_MESSAGE_VIEW__MAX_HEIGHT) 
 							   lineBreakMode:_lblMessage.lineBreakMode];
 		
-		_clientSize = CGSizeMake(_messageSize.width + FS_INFORMATION_MESSAGE_VIEW__LEFT_RIGHT_SPACE * 2.0f + FS_INFORMATION_MESSAGE_VIEW__ROUND_SPACE * 2.0f, 
+		_clientSize = CGSizeMake(_messageSize.width + FS_INFORMATION_MESSAGE_VIEW__LEFT_RIGHT_SPACE * 2.0f + FS_INFORMATION_MESSAGE_VIEW__ROUND_SPACE * 2.0f,
 								 _messageSize.height + FS_INFORMATION_MESSAGE_VIEW__TOP_BOTTOM_SPACE * 2.0f + FS_INFORMATION_MESSAGE_VIEW__ROUND_SPACE * 2.0f);
 		
 		UIImage *backgroundImage = [self drawInformationMessageViewBackgroundWithRect:CGRectMake(0.0f, 0.0f, _clientSize.width, _clientSize.height)];
@@ -216,18 +216,18 @@
 								   _messageSize.height);
 	
 	if (_positionKind == PositionKind_Vertical_Horizontal_Center) {
-		self.center = CGPointMake(self.superview.frame.size.width / 2.0f, self.superview.frame.size.height / 2.0f);
+		self.center = CGPointMake(self.superview.frame.size.width / 2.0f, self.superview.frame.size.height / 2.0f - 10);
 	} else if (_positionKind == PositionKind_Vertical_Center) {
 		//垂直
-		self.frame = CGRectMake(_offset, (self.superview.frame.size.height - rClient.size.height) / 2.0f, rClient.size.width, rClient.size.height);
+		self.frame = CGRectMake(_offset, (self.superview.frame.size.height - rClient.size.height) / 2.0f - 10, rClient.size.width, rClient.size.height);
 	} else if (_positionKind == PositionKind_Horizontal_Center) {
 		//水平
 		self.frame = CGRectMake((self.superview.frame.size.width - rClient.size.width) / 2.0f, 
-								_offset, 
+								_offset -10,
 								rClient.size.width, 
 								rClient.size.height);
 	} else {
-		self.center = CGPointMake(self.superview.frame.size.width / 2.0f, self.superview.frame.size.height / 2.0f);
+		self.center = CGPointMake(self.superview.frame.size.width / 2.0f, self.superview.frame.size.height / 2.0f -10);
 	}
 
 }

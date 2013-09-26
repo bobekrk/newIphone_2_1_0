@@ -75,9 +75,20 @@ NSString                       *_newsID;
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:NO];
     self.navigationController.navigationBarHidden = YES;
+    //[super viewWillAppear:NO];
+    if (self.isNewNavigation) {
+        //_fsNewsContainerView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        _fsNewsContainerView.frame = self.view.frame;
+    }
+    else{
+        _fsNewsContainerView.frame = self.view.frame;
+        
+    }
+    _fsShareNoticView.frame = CGRectMake((self.view.frame.size.width - 219)/2, (self.view.frame.size.height-160)/2, 219, 70);
+    
     self.view.backgroundColor = [UIColor whiteColor];
+    
 }
 -(void)setIsImportant:(BOOL)isImportant
 {
