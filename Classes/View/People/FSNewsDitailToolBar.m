@@ -8,7 +8,7 @@
 
 #import "FSNewsDitailToolBar.h"
 #import "FSNewsContainerView.h"
-
+#import "FSInformationMessageView.h"
 @implementation FSNewsDitailToolBar
 
 @synthesize touchEvenKind = _touchEvenKind;
@@ -257,6 +257,19 @@
 -(void)send:(id)sender{
     self.touchEvenKind = TouchEvenKind_Commentsend;
     self.comment_content = _growingText.text;
+    if (_growingText.text == nil || _growingText.text.length == 0) {
+//        FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:CGRectZero andBool:YES];
+//        [indicatorMessageView showIndicatorMessageViewInView:self.view withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
+//        [indicatorMessageView release];
+        FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
+        informationMessageView.parentDelegate = self.parentDelegate;
+        [informationMessageView showInformationMessageViewInView:self.superview
+                                                     withMessage:@"请输入评论内容"
+                                                withDelaySeconds:1
+                                                withPositionKind:PositionKind_Vertical_Horizontal_Center
+                                                      withOffset:0.0f];
+        return;
+    }
     [self sendTouchEvent];
     [_growingText resignFirstResponder];
 }
