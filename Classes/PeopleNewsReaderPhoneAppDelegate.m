@@ -43,7 +43,7 @@
 
 
 @interface PeopleNewsReaderPhoneAppDelegate(PrivateMethod)
-- (void)showLoadingView;
+- (void)showLoadingView:(UIView *)aview;
 - (void)showMainUserInterface;
 - (void)showChannelSettingForOneDay;
 @end
@@ -483,8 +483,8 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 {
     [PeopleNewsStati insertNewEventLabel:LOADING andAction:TABBARCLICK];
 }
--(void)showLoadingView{
-    float xxx = ISIPHONE5?548:460;
+-(void)showLoadingView:(UIView*)aView{
+    float xxx = ISIPHONE5?568:480;
     [self performSelectorInBackground:@selector(loading) withObject:nil];
     FSLoadingImageView *loadingView = [[FSLoadingImageView alloc] initWithFrame:CGRectMake(0, 0, 320, xxx)];
     loadingView.userInteractionEnabled = YES;
@@ -548,22 +548,21 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 		[fsViewCtrls addObject:navMoreCtrl];
 		[navMoreCtrl release];
 		[moreCtrl release];
-//
+        
         _rootViewController.fsViewControllers = fsViewCtrls;
 		[fsViewCtrls release];
         
 	}
-	
 
 	
 	_slideViewController.rootViewController = _rootViewController;
-    self.window.rootViewController = navi;
+       self.window.rootViewController = navi;
     [navi release];
     [self DidRecivePushMessage:pushInof];
     
     
     UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.frame = CGRectMake(0, 100, 100, 100);
+    button.frame = CGRectMake(0, 100, 40, 40);
     [button addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
     [self.window addSubview:button];
     button.tag     = 1000;
@@ -599,7 +598,9 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 	} else {
 		[self showMainUserInterface];
 	}
-    [self showLoadingView];
+    //[self showLoadingView];
+    [self showLoadingView:_slideViewController.view];
+
 }
 
 - (void)fsLoaddingImageViewWillDisappear:(FSLoadingImageView *)sender {

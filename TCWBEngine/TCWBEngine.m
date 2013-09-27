@@ -269,9 +269,7 @@ static id   handurldelegate = nil;
         //NSString *abc = [[NSString alloc ] init]
         self.accessToken = [[NSString alloc] initWithFormat:@"%@",token.accessToken ];
         self.openId = [[NSString alloc] initWithFormat:@"%@",token.openid ];
-        [_openId release];
         self.name = [[NSString alloc]initWithFormat:@"%@",sname];
-        [_name release];
         
         
     }

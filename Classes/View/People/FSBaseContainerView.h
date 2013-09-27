@@ -12,14 +12,14 @@
 
 @interface FSBaseContainerView : UIView{
 @protected
-    //NSObject *_data;
+    NSObject *_data;
     NSArray  *_objectList;
     CGSize    _clientSize;
     id        _parentDelegate;
 }
 
-@property (nonatomic, retain) NSObject *data;
-@property (nonatomic, retain) NSArray *objectList;
+@property (nonatomic, retain, setter = setData:) NSObject *data;
+@property (nonatomic, retain, setter = setArray:) NSArray *objectList;
 @property (nonatomic, assign) id parentDelegate;
 
 //初始化

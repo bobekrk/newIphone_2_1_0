@@ -20,7 +20,7 @@
 #import <UIKit/UITableView.h>
 #import "FSTopicObject.h"
 #import "LygDeepTableViewCell.h"
-#define DEEPABSTRACTFONTSIZE 16.0f
+
 @implementation LygDeepListView
 - (id)initWithFrame:(CGRect)frame
 {
@@ -169,7 +169,7 @@
 //    if(indexPath.row%3 == 0)
 //        size.height = 130;
      NSLog(@"%d %@ %f",indexPath.row,top.news_abstract,size.height);
-    return 48 + 5 + size.height + 5 + 15;
+    return 48 + 5 + size.height + 5;
 }
 
 

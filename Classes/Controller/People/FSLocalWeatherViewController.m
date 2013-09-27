@@ -142,7 +142,7 @@
                      
                      if ([_cityName isEqualToString:[State substringToIndex:[State length]-1]]) {
                          self.localCity = _cityName;
-                         return;
+                         //return;
                      }
                      self.localCity = [State substringToIndex:[State length]-1];
                      _fs_GZF_localGetWeatherMessageDAO.group = [State substringToIndex:[State length]-1];

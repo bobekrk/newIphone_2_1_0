@@ -132,14 +132,13 @@
 - (void)engine:(WBEngine *)engine requestDidFailWithError:(NSError *)error
 {
     
-    _fsShareNoticView.data = @"分享失败！";
+    _fsShareNoticView.data = @"分享内容重复";
     _fsShareNoticView.backgroundColor = COLOR_CLEAR;
     _fsShareNoticView.alpha = 1.0f;
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:2.0];
     _fsShareNoticView.alpha = 0.0f;
     [UIView commitAnimations];
-    
     return;
     
     FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectMake(70, 70, 70, 70)];

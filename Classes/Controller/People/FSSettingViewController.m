@@ -144,6 +144,12 @@
 - (void)tappedInSettingView:(UIView *)settingView myCollectionButton:(UIButton *)button
 {
     NSLog(@"MY CLOLLECTION");
+    NSArray * xxx  = [[FSBaseDB sharedFSBaseDB] getAllObjectsSortByKey:@"FSMyFaverateObject" key:@"UPDATE_DATE" ascending:NO];
+    if (!xxx||xxx.count == 0) {
+        UIAlertView * oooo = [[UIAlertView alloc]initWithTitle:@"没有找到收藏记录" message:nil delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+        [oooo show];
+        return;
+    }
     FSMyFavoritesViewController *myFavoritesCtrl = [[FSMyFavoritesViewController alloc] init];
     myFavoritesCtrl.isnavTopBar                  = YES;
     myFavoritesCtrl.title                        = @"我的收藏";

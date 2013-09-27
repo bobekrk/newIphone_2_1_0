@@ -50,6 +50,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+//        UIImageView * VIEW = [[UIImageView alloc]initWithFrame:frame];
+//        VIEW.image         = [UIImage imageWithContentsOfFile:@"Default"];
+//        [self addSubview:VIEW];
+//        [VIEW release];
         _adImageView = [[FSAsyncImageView alloc] initWithFrame:frame];
         _adImageView.backgroundColor = [UIColor grayColor];
         //NSString *localStoreFileName = getFileNameWithURLString(obj.picUrl, getCachesPath());
@@ -69,11 +73,9 @@
         if (ISIPHONE5) {
             
             _adImageView.defaultFileName = @"Default-568h@2x.png";
-            //_adImageView.imageView.image = [UIImage imageNamed:@"Default-568h.png"];
         }
         else{
             _adImageView.defaultFileName = @"Default.png";
-            //_adImageView.imageView.image = [UIImage imageNamed:@"Default.png"];
         }
         
         [_adImageView updateAsyncImageView];
@@ -459,7 +461,8 @@
     
     [_fs_GZF_ForLoadingImageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
     
-    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(timeOutEvent) userInfo:nil repeats:NO];
+    //[NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(timeOutEvent) userInfo:nil repeats:NO];
+   //  [self performSelector:@selector(timeOutEvent) withObject:self afterDelay:3];
     _fsShareIconContainView = [[FSShareIconContainView alloc] initWithFrame:CGRectZero];
     _fsShareIconContainView.parentDelegate = self;
     [self addSubview:_fsShareIconContainView];
@@ -469,6 +472,8 @@
 
 
 -(void)dealloc{
+    printf("deeeeeeeeeee\n");
+    [_fsShareIconContainView removeFromSuperview];
     [_fs_GZF_ForLoadingImageDAO release];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LOADINGIMAGE_LOADING_XML_COMPELECT object:nil];
     [super dealloc];
@@ -511,6 +516,8 @@
 
         
         //_timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timerEvent) userInfo:nil repeats:NO];
+      
+        
         [_adImageView updateAsyncImageView];
     }
 }

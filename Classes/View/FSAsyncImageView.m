@@ -53,7 +53,7 @@
 		self.borderWidth = 1.0f;
 		self.imageCuttingKind = ImageCuttingKind_None;
 		
-		_imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+		_imageView = [[UIImageView alloc] initWithFrame:frame];
         _imageView.clipsToBounds = YES;
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
 		[self addSubview:_imageView];

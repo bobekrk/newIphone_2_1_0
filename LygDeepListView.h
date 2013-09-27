@@ -13,6 +13,7 @@
 #import "FSNewsListCell.h"
 #import "FSOneDayNewsObject.h"
 #import "FS_GZF_DeepListDAO.h"
+#define DEEPABSTRACTFONTSIZE 15.0f
 @class FS_GZF_ForOnedayNewsFocusTopDAO,FS_GZF_ForNewsListDAO,FSUserSelectObject,FS_GZF_ChannelListDAO;
 @interface LygDeepListView : FSTableContainerView<FSTableContainerViewDelegate,UIScrollViewDelegate, UIGestureRecognizerDelegate,FSBaseDAODelegate,UITableViewDataSource,UITableViewDelegate>
 {

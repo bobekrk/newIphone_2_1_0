@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.data = nil;
+        _data = nil;
         [self doSomethingAtInit];
     }
     return self;
@@ -59,6 +59,7 @@
 -(void)doSomethingAtLayoutSubviews{
     
 }
+
 - (void)setData:(NSObject *)value {
 	if (value != _data && value != nil) {
         if ([_data retainCount]>1) {

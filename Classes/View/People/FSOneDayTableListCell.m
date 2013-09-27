@@ -145,10 +145,18 @@ static void drawRoundCornerRect(CGContextRef context,CGRect aRect,CGFloat corneR
     
     CGRect tempRect2;
     if ([_image_newsimage.urlString length]>0 && [self isDownloadPic]) {
-        tempRect2 = CGRectMake(43, 28 + move_down_space, self.frame.size.width - 128 + 5, self.frame.size.height -28);
+        FSOneDayNewsObject *o = (FSOneDayNewsObject *)_data;
+        //tempRect2 = CGRectMake(46, 28 + move_down_space, self.frame.size.width - 128 + 5, self.frame.size.height -28);
+        CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT] constrainedToSize:CGSizeMake(320 - 128 + 5, 300) lineBreakMode:UILineBreakModeWordWrap];
+        if (size.height > 57) {
+            tempRect2 = CGRectMake(46, 28 + move_down_space, self.frame.size.width - 128 + 5, self.frame.size.height -28);
+        }else
+        {
+            tempRect2 = CGRectMake(46, 28 + move_down_space - (size.height - 57)/2, self.frame.size.width - 128 + 5, self.frame.size.height -28);
+        }
     }
     else{
-        tempRect2 = CGRectMake(43, 28 + move_down_space, self.frame.size.width - 50-25, self.frame.size.height -28);
+        tempRect2 = CGRectMake(46, 28 + move_down_space, self.frame.size.width - 50-25, self.frame.size.height -28);
         //[o.news_abstract drawInRect:_lab_description.frame withFont:[UIFont systemFontOfSize:14] lineBreakMode:UILineBreakModeWordWrap];
         
     }
@@ -209,17 +217,34 @@ static void drawRoundCornerRect(CGContextRef context,CGRect aRect,CGFloat corneR
 
     _lineView.frame = CGRectMake(44, 34, self.frame.size.width - 56, 1);
     
-    _oneday_eastImage.frame = CGRectMake(self.frame.size.width - 20, 15, 6, 8);
+    _oneday_eastImage.frame = CGRectMake(self.frame.size.width - 25, 15 + 3, 6, 8);
     if ([_image_newsimage.urlString length]>0 && [self isDownloadPic]) {
+        
+        FSOneDayNewsObject *o = (FSOneDayNewsObject *)_data;
+        //tempRect2 = CGRectMake(46, 28 + move_down_space, self.frame.size.width - 128 + 5, self.frame.size.height -28);
+        CGSize size = [o.news_abstract sizeWithFont:[UIFont systemFontOfSize:TODAYNEWSLIST_DESCRIPTION_FONT] constrainedToSize:CGSizeMake(320 - 128 + 5, 300) lineBreakMode:UILineBreakModeWordWrap];
+        
+        if (size.height < 57) {
+            ///_image_newsimage.frame = CGRectMake(46 + self.frame.size.width - 128 + 5, 38+move_down_space -8 , 57, 57);
+            _image_newsimage.frame = CGRectMake(46 + self.frame.size.width - 128 + 5, 28 + move_down_space, 57, 57);
+            //tempRect2 = CGRectMake(46, 28 + move_down_space - (size.height - 57)/2, self.frame.size.width - 128 + 5, self.frame.size.height -28);
+        }else
+        {
+            _image_newsimage.frame = CGRectMake(46 + self.frame.size.width - 128 + 5, 28 + move_down_space + (size.height - 57)/2, 57, 57);
+        }
+        
         _image_newsimage.alpha = 1.0f;
-        _image_newsimage.frame = CGRectMake(46 + self.frame.size.width - 128 + 5, 38+move_down_space -8 , 57, 57);
+        
+        
+        
         [_image_newsimage updateAsyncImageView];
-        _lab_title.frame = CGRectMake(46, 6, self.frame.size.width - 46 - 25, 28);
+        //_lab_title.frame = CGRectMake(45, 6, self.frame.size.width - 46 - 25, 28);
     }
     else{
         _image_newsimage.alpha = 0.0f;
-        _lab_title.frame = CGRectMake(50, 4, self.frame.size.width - 50 - 25, 28);
+        
     }
+    _lab_title.frame = CGRectMake(45, 8, self.frame.size.width - 50, 28);
 }
 
 

@@ -10,6 +10,7 @@
 #import "FSTopicObject.h"
 #import "FSCommonFunction.h"
 #import <QuartzCore/QuartzCore.h>
+#import "LygDeepListView.h"
 @implementation LygDeepTableViewCell
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -48,7 +49,7 @@
     
     
     _kindsLabel            = [[UILabel alloc] initWithFrame:CGRectMake(8, 6, 42, 21)];
-    _kindsLabel.font       = [UIFont systemFontOfSize:17];
+    _kindsLabel.font       = [UIFont systemFontOfSize:8];
     _kindsLabel.textColor  = [UIColor redColor];
     _kindsLabel.textAlignment = NSTextAlignmentCenter;
     
@@ -66,7 +67,7 @@
     
     _abstractLabel               = [[UILabel alloc] initWithFrame:CGRectMake(8, 48, 295, 61)];
     _abstractLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
-    _abstractLabel.font          = [UIFont systemFontOfSize:16];
+    _abstractLabel.font          = [UIFont systemFontOfSize:DEEPABSTRACTFONTSIZE];
     _abstractLabel.numberOfLines = 0;
     _dateLabel.textColor   = [UIColor lightGrayColor];
     
@@ -102,10 +103,10 @@
     view.backgroundColor = [UIColor whiteColor];
     
     
-    _kindsLabel            = [[UILabel alloc] initWithFrame:CGRectMake(8, 6, 42, 21)];
+    _kindsLabel            = [[UILabel alloc] initWithFrame:CGRectMake(8, 20, 50, 21)];
     _kindsLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
     _kindsLabel.layer.borderWidth = 1;
-    _kindsLabel.font       = [UIFont systemFontOfSize:17];
+    _kindsLabel.font       = [UIFont systemFontOfSize:10];
     _kindsLabel.textColor  = [UIColor redColor];
     
     
@@ -122,7 +123,7 @@
     
     _abstractLabel               = [[UILabel alloc] initWithFrame:CGRectMake(8, 48, 295, 61)];
     _abstractLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
-    _abstractLabel.font          = [UIFont systemFontOfSize:16];
+    _abstractLabel.font          = [UIFont systemFontOfSize:DEEPABSTRACTFONTSIZE];
     _abstractLabel.numberOfLines = 0;
     _abstractLabel.textColor   = [UIColor grayColor];
     
@@ -155,10 +156,10 @@
     self.clipsToBounds = YES;
     self.contentView.clipsToBounds = YES;
     _kindsLabel.textAlignment = NSTextAlignmentCenter;
-    _kindsLabel.Frame = CGRectMake(8, 6, 70, 21);
-    _nameLabel.Frame = CGRectMake(80,0, 220, 34);
-    _dateLabel.Frame = CGRectMake(222, 27, 300 - 222, 21);
-    _abstractLabel.Frame = CGRectMake(8, 45, 295, view.frame.size.height - 48);
+    _kindsLabel.Frame = CGRectMake(8, 10, 45, 15);
+    _nameLabel.Frame = CGRectMake(53,0, 220, 34);
+    _abstractLabel.Frame = CGRectMake(8, 45 - 15, 295, view.frame.size.height - 48);
+    _dateLabel.Frame = CGRectMake(222, self.frame.size.height - 30, 300 - 222, 21);
 }
 
 -(NSString *)timeTostring:(NSNumber *)time{

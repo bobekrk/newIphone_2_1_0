@@ -425,7 +425,7 @@ static GlobalConfig *shareManager = nil;
         //FSLog(@"filePath:%@", path);
         while (fileName = [directoryEnumerator nextObject]) {
             //FSLog(@"fileName:%@", fileName);
-            if ([fileName hasSuffix:@".sqlite"]) {
+            if ([fileName hasSuffix:@".sqlite"] || [fileName hasSuffix:@"Snapshots"]) {
                 continue;
             }
             NSError *error = nil;
