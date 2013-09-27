@@ -521,6 +521,9 @@
                 
                 [_fs_GZF_GetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
                 
+            }else if (status == FSBaseDAOCallBack_BufferWorkingStatus)
+            {
+                //[self ]
             }
             else{
                 [self reSetSectionMessage];

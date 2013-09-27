@@ -49,12 +49,14 @@
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		
         if (_isNewsView) {
-            UIImageView * view = [[UIImageView alloc]initWithFrame:CGRectMake(97/2 - 7, -20, 97, 92)];
+            UIImageView * view = [[UIImageView alloc]initWithFrame:CGRectMake(97/2 - 7 + 97/4 + 3, -20 + 92/4 + 3, 97/2, 92/2)];
             [self addSubview:view];
-            view.image         = [UIImage imageNamed:@"图层-3.png"];
-            UIImageView * view2 = [[UIImageView alloc]initWithFrame:CGRectMake(97/2 - 15, 92 - 15, 106, 47)];
+            view.image         = [UIImage imageWithNameString:@"图层-3"];
+            [view release];
+            UIImageView * view2 = [[UIImageView alloc]initWithFrame:CGRectMake(97/2 - 15  + 106/4 + 3, 92 - 15 - 47/2, 106/2, 47/2)];
             [self addSubview:view2];
-            view2.image         = [UIImage imageNamed:@"PEOPLE--NEWS.png"];
+            view2.image         = [UIImage imageWithNameString:@"PEOPLE--NEWS"];
+            [view2 release];
         }else
         {
              _lblMessage = [[UILabel alloc] initWithFrame:CGRectZero];

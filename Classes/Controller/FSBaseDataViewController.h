@@ -36,4 +36,5 @@
 - (BOOL)canShowIndicatorMessageViewWithDAO:(FSBaseDAO *)sender;
 - (NSString *)indicatorMessageTextWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status;
 -(void)myDidReceiveMemoryWarning;
+-(void)showIndacactorInView:(UIView*)aView;
 @end

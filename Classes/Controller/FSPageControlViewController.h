@@ -15,7 +15,7 @@
 #import "FSShareIconContainView.h"
 
 @interface FSPageControlViewController : FSBaseDataViewController <FSDeepPageControllViewDelegate,UIScrollViewDelegate> {
-@private
+//@private
     FSDeepPageControllView *_pageControlView;
     UIScrollView *_svContainer;
     

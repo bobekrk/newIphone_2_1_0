@@ -110,7 +110,13 @@
 }
 
 - (void)doSomethingWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status {
+    if (status == FSBaseDAOCallBack_WorkingStatus) {
+        FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:self.view.frame andBool:YES];
+        [indicatorMessageView showIndicatorMessageViewInView:_svContainer withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
+        [indicatorMessageView release];
+    }
     if ([sender isEqual:_fs_GZF_DeepPageListDAO]) {
+        
         if (status == FSBaseDAOCallBack_BufferSuccessfulStatus || status == FSBaseDAOCallBack_SuccessfulStatus) {
             NSLog(@"_fs_GZF_DeepPageListDAO:%d",[_fs_GZF_DeepPageListDAO.objectList count]);
             
@@ -119,6 +125,11 @@
                 [self setPageControllerCount:[_fs_GZF_DeepPageListDAO.objectList count]];
             }
         }
+//        if (status == FSBaseDAOCallBack_WorkingStatus) {
+//            FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:CGRectZero andBool:YES];
+//			[indicatorMessageView showIndicatorMessageViewInView:self.view withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
+//			[indicatorMessageView release];
+//        }
     }
 }
 

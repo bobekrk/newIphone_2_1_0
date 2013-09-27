@@ -198,6 +198,11 @@
                 }
             }
         }
+        if (status == FSBaseDAOCallBack_WorkingStatus) {
+            FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:self.view.frame andBool:NO];
+            [indicatorMessageView showIndicatorMessageViewInView:_fsMoreContainerView withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
+            [indicatorMessageView release];
+        }
     }
 }
 

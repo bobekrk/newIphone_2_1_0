@@ -112,11 +112,11 @@
 	self.currentDAOStatus = status;
 	
 	if (status == FSBaseDAOCallBack_WorkingStatus || status == FSBaseDAOCallBack_ListWorkingStatus ) {
-		if ([self canShowIndicatorMessageViewWithDAO:sender]&&status == FSBaseDAOCallBack_WorkingStatus) {
-			FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:CGRectZero];
-			[indicatorMessageView showIndicatorMessageViewInView:self.view withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
-			[indicatorMessageView release];
-		}
+//		if ([self canShowIndicatorMessageViewWithDAO:sender]&&status == FSBaseDAOCallBack_WorkingStatus) {
+//			FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:CGRectZero];
+//			[indicatorMessageView showIndicatorMessageViewInView:self.view withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
+//			[indicatorMessageView release];
+//		}
         
         if ([self canShowIndicatorMessageViewWithDAO:sender]&&status == FSBaseDAOCallBack_ListWorkingStatus) {
             [self doSomethingWithLoadingListDAO:sender withStatus:status];
@@ -159,6 +159,10 @@
 	}
 
 	[self doSomethingWithDAO:sender withStatus:status];
+}
+-(void)showIndacactorInView:(UIView *)aView
+{
+     
 }
 
 - (void)doSomethingWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status {
