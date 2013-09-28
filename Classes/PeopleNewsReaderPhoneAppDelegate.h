@@ -11,7 +11,7 @@
 #import "FSUINavigationController.h"
 #import "FSLoadingImageView.h"
 #import "WXApi.h"
-#import "MobClick.h"
+//#import "MobClick.h"
 
 @class FSTabBarViewCotnroller;
 @class FSSlideViewController;

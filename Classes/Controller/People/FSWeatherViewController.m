@@ -106,7 +106,7 @@
     CLLocationCoordinate2D loc = [newLocation coordinate];
 //    NSString *lat =[NSString stringWithFormat:@"%f",loc.latitude];//get latitude
 //    NSString *lon =[NSString stringWithFormat:@"%f",loc.longitude];//get longitude
-    NSLog(@"locationManager:%@ %@",lat,lon);
+//    NSLog(@"locationManager:%@ %@",lat,lon);
     
     
     

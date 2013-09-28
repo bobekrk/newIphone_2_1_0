@@ -15,13 +15,13 @@
 
 #define TCURLSchemePrefix              @"TC_"
 
-#define TCKeychainServiceNameSuffix    @"_WeiBoServiceName"
-#define TCKeychainAccessToken          @"WeiBoAccessToken"
-#define TCKeychainExpireTime           @"WeiBoExpireTime"
-#define TCKeychainOpenId               @"WeiBoOpenId"
-#define TCKeychainOpenKey              @"WeiBoOpenKey"
-#define TCKeychainRefreshToken         @"WeiBoRefreshToken"
-#define TCKeychainName                 @"WeiBoName"
+#define TCKeychainServiceNameSuffix    @"TC_WeiBoServiceName"
+#define TCKeychainAccessToken          @"TC_WeiBoAccessToken"
+#define TCKeychainExpireTime           @"TC_WeiBoExpireTime"
+#define TCKeychainOpenId               @"TC_WeiBoOpenId"
+#define TCKeychainOpenKey              @"TC_WeiBoOpenKey"
+#define TCKeychainRefreshToken         @"TC_WeiBoRefreshToken"
+#define TCKeychainName                 @"TC_WeiBoName"
 
 @implementation DelegateObject
 
@@ -70,7 +70,7 @@ static id   handurldelegate = nil;
         _httpRequests = [[NSMutableArray alloc] initWithCapacity:2];
         [self readAuthorizeDataFromKeychain];
         self.rootViewController = nil;
-        self.isSSOAuth = YES;
+        self.isSSOAuth = NO;
         self.isRefreshTokenSuccess = YES;
     }
     
@@ -131,14 +131,14 @@ static id   handurldelegate = nil;
 	BOOL accessTokenSaveOK = [SFHFKeychainUtils storeUsername:TCKeychainAccessToken andPassword:self.accessToken forServiceName:serviceName updateExisting:YES error:nil];
     BOOL openIdSaveOK = [SFHFKeychainUtils storeUsername:TCKeychainOpenId andPassword:self.openId forServiceName:serviceName updateExisting:YES error:nil];
     //BOOL openKeySaveOK = [SFHFKeychainUtils storeUsername:TCKeychainOpenKey andPassword:self.openKey forServiceName:serviceName updateExisting:YES error:nil];
-	//BOOL expireTimeSaveOK = [SFHFKeychainUtils storeUsername:TCKeychainExpireTime andPassword:[NSString stringWithFormat:@"%lf", self.expireTime] forServiceName:serviceName updateExisting:YES error:nil];
+	BOOL expireTimeSaveOK = [SFHFKeychainUtils storeUsername:TCKeychainExpireTime andPassword:[NSString stringWithFormat:@"%lf", self.expireTime] forServiceName:serviceName updateExisting:YES error:nil];
     
     [SFHFKeychainUtils storeUsername:@"isSSOAuth" andPassword:[NSString stringWithFormat:@"%c", self.isSSOAuth] forServiceName:serviceName updateExisting:YES error:nil];
 
     
     
     
-    //BOOL refreshTokenSaveOK = [SFHFKeychainUtils storeUsername:TCKeychainRefreshToken andPassword:self.refreshToken forServiceName:serviceName updateExisting:YES error:nil];
+    BOOL refreshTokenSaveOK = [SFHFKeychainUtils storeUsername:TCKeychainRefreshToken andPassword:self.refreshToken forServiceName:serviceName updateExisting:YES error:nil];
     
     
     BOOL nameSaveOK = [SFHFKeychainUtils storeUsername:TCKeychainName andPassword:self.name forServiceName:serviceName updateExisting:YES error:nil];
@@ -1677,7 +1677,7 @@ static id   handurldelegate = nil;
 {
     G_LOGOUT = NO;
     
-    _isSSOAuth = YES;
+    _isSSOAuth = NO;
     [self saveWBTokenInfo:token name:sname];
     //self.name = [[NSString alloc] initWithFormat:@"%@",sname ];
     self.expireTime = token.expires +[[NSDate date] timeIntervalSince1970];
@@ -1700,9 +1700,11 @@ static id   handurldelegate = nil;
 
 -(BOOL) handleOpenURL:(NSURL *) url delegate:(id<SSODelegate>) delegate
 {
+    //return NO;
     handurldelegate = delegate;
     if(_isUIDelegate == YES && _auth_delegate!=nil)
     {
+        return NO;
         return [WBApi handleOpenURL:url delegate:_auth_delegate];
     }
     else

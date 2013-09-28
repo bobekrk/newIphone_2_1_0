@@ -29,7 +29,7 @@
 //布局
 -(void)doSomethingAtLayoutSubviews;
 
--(void)sendTouchEvent;
+-(void)sendTouchEvent; 
 
 @end
 

@@ -127,18 +127,21 @@
     _abstractLabel.numberOfLines = 0;
     _abstractLabel.textColor   = [UIColor grayColor];
     
-    
+    _timerImageView            = [[UIImageView alloc]init];
+    _timerImageView.image      = [UIImage imageWithNameString:@"时钟"];
     
     [view addSubview:_kindsLabel];
     [view addSubview:_nameLabel];
     [view addSubview:_dateLabel];
     [view addSubview:_abstractLabel];
+    [view addSubview:_timerImageView];
     
     
     [_kindsLabel     release];
     [_nameLabel      release];
     [_dateLabel      release];
     [_abstractLabel  release];
+    [_timerImageView release];
     
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -151,15 +154,16 @@
 
 -(void)doSomethingAtLayoutSubviews{
     NSLog(@"%f",self.frame.size.height);
-    UIView * view = [self.contentView viewWithTag:100];
-    view.frame    =  CGRectMake(7, 7, 306, self.contentView.frame.size.height - 7);
+    UIView * view      = [self.contentView viewWithTag:100];
+    view.frame         =  CGRectMake(7, 7, 306, self.contentView.frame.size.height - 7);
     self.clipsToBounds = YES;
     self.contentView.clipsToBounds = YES;
     _kindsLabel.textAlignment = NSTextAlignmentCenter;
-    _kindsLabel.Frame = CGRectMake(8, 10, 45, 15);
-    _nameLabel.Frame = CGRectMake(53,0, 220, 34);
+    _kindsLabel.Frame  = CGRectMake(8, 10, 45, 15);
+    _nameLabel.Frame   = CGRectMake(53,0, 220, 34);
     _abstractLabel.Frame = CGRectMake(8, 45 - 15, 295, view.frame.size.height - 48);
-    _dateLabel.Frame = CGRectMake(222, self.frame.size.height - 30, 300 - 222, 21);
+    _dateLabel.Frame     = CGRectMake(222, self.frame.size.height - 30, 300 - 222, 21);
+    _timerImageView.frame= CGRectMake(222 - 20, self.frame.size.height - 30 + 3, 15, 15);
 }
 
 -(NSString *)timeTostring:(NSNumber *)time{

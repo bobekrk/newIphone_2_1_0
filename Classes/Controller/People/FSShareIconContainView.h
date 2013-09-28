@@ -11,15 +11,17 @@
 
 
 typedef enum _ShareSelectEvent{
-    ShareSelectEvent_return = 0,//返回
+    ShareSelectEvent_peopleBlog = 0,//人民微博
+    ShareSelectEvent_weixin,    //微信
+    ShareSelectEvent_friend,     //微信朋友圈
     ShareSelectEvent_sina,      //新浪
     ShareSelectEvent_netease,   //网易
-    ShareSelectEvent_weixin,    //微信
-    ShareSelectEvent_peopleBlog,//人民微博
-    ShareSelectEvent_mail,      //邮件
-    ShareSelectEvent_message,   //短信
     ShareSelectEvent_tencent,   //腾讯微博
-    ShareSelectEvent_friend     //微信朋友圈
+    ShareSelectEvent_message,   //短信
+    ShareSelectEvent_mail,      //邮件
+    ShareSelectEvent_return,//返回
+    
+    
 }ShareSelectEvent;
 
 
@@ -41,4 +43,15 @@ typedef enum _ShareSelectEvent{
 -(void)layoutIcons;
 -(CGFloat)getHeight;
 
+@end
+
+
+@interface WeiBoObject : NSObject
+{
+    
+}
+@property(nonatomic,assign)int      index;
+@property(nonatomic,copy) NSString * picName;
+@property(nonatomic,copy) NSString * disPlayName;
+-(id)initWithIndex:(int)index andPicName:(NSString*)picName andDisplayName:(NSString*)disPlayName;
 @end

@@ -80,13 +80,14 @@
         _navTopBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, FSSETTING_VIEW_NAVBAR_HEIGHT)];
         [_navTopBar setBackgroundImage:[UIImage imageNamed: @"navigatorBar.png"] forBarMetrics:UIBarMetricsDefault];
         UINavigationItem *topItem = [[UINavigationItem alloc] init];
+        _navTopBar.tintColor = [UIColor whiteColor];
         NSArray *items = [[NSArray alloc] initWithObjects:topItem, nil];
         _navTopBar.items = items;
         _navTopBar.topItem.title = self.title;
         [topItem release];
         [items release];
         [self.view addSubview:_navTopBar];
-        NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:18], UITextAttributeFont,[UIColor blackColor],UITextAttributeTextColor,nil];
+        NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:18], UITextAttributeFont,[UIColor blackColor],UITextAttributeTextColor,CGSizeMake(0, 0),UITextAttributeTextShadowOffset,nil];
         _navTopBar.titleTextAttributes = dict;
         
 

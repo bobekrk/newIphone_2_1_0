@@ -60,7 +60,7 @@
     
     //NSArray *array = [[FSBaseDB sharedFSBaseDB] getAllObjectsSortByKey:@"FSTopicPriorObject" key:[self batchKeyName] ascending:YES];
 
-    NSLog(@"%@\r\n:%@",[self entityName],array);
+    //NSLog(@"%@\r\n:%@",[self entityName],array);
     
 //******************************************************************************
     NSMutableArray *sorts = [[NSMutableArray alloc] init];

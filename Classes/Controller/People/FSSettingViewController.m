@@ -167,7 +167,8 @@
 //清理缓存
 - (void)tappedInSettingView:(UIView *)settingView clearMemoryButton:(UIButton *)button{
     NSLog(@"CLEAR MEMORY");
-    [self clearAllBufferWithPath];
+    //[self clearAllBufferWithPath];
+    [self performSelectorInBackground:@selector(clearAllBufferWithPath) withObject:nil];
 }
 
 //检查更新
@@ -188,7 +189,15 @@
 	[checkAppStoreVersionObject release];
 
 }
-
+-(void)xxxxxxx:(NSString *)message
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"通知"
+                                                   message:message
+                                                  delegate:self
+                                         cancelButtonTitle:@"返回" otherButtonTitles: nil];
+    [alert show];
+    [alert release];
+}
 
 -(void)clearAllBufferWithPath{
     
@@ -208,13 +217,7 @@
     }else{
        message = @"缓存文件已经成功清除！";
     }
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"通知"
-                                                   message:message
-                                                  delegate:self
-                                         cancelButtonTitle:@"返回" otherButtonTitles: nil];
-    [alert show];
-    [alert release];
-    
+    [self performSelectorOnMainThread:@selector(xxxxxxx:) withObject:message waitUntilDone:nil];
 }
 
 

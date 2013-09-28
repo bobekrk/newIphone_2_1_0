@@ -13,4 +13,5 @@
 @property(nonatomic,retain)IBOutlet UILabel * nameLabel;
 @property(nonatomic,retain)IBOutlet UILabel * dateLabel;
 @property(nonatomic,retain)IBOutlet UILabel * abstractLabel;
+@property(nonatomic,retain)UIImageView      * timerImageView;
 @end

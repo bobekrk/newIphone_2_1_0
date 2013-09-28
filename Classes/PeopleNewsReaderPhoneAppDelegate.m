@@ -97,36 +97,36 @@ extern NSString * CTSettingCopyMyPhoneNumber();
         [[UIApplication sharedApplication] unregisterForRemoteNotifications];
     }
 	
-    [MobClick setDelegate:self reportPolicy:REALTIME];//友盟
+//    [MobClick setDelegate:self reportPolicy:REALTIME];//友盟
     
     [self ShareWeiXinSetting];//微信
     
     
     //友盟追踪 begin
-    NSString * appKey = @"361bcf569ed3991df0a74850a1f84d6f";
-    
-    NSString * deviceName = [[[UIDevice currentDevice] name] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-   NSString * mac = [self macString];
-    NSString * urlString = [NSString stringWithFormat:@"http://log.umtrack.com/ping/%@/?devicename=%@&udid=%@", appKey,deviceName,mac];
-    
-    [NSURLConnection connectionWithRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:urlString]] delegate:nil];
-    
-    //友盟追踪 end
-    
-//    [self showLoadingView];
-    
-//    GlobalConfig *config = [GlobalConfig shareConfig];
-//	BOOL isShowChannel = [config isPostChannel];
-//	
-//	if (!isShowChannel) {
-//		[self showChannelSettingForOneDay];
-//	} else {
-//		[self showMainUserInterface];
-//	}
-    
-    //激活统计
-    [self postStatistice];
+//    NSString * appKey = @"361bcf569ed3991df0a74850a1f84d6f";
+//    
+//    NSString * deviceName = [[[UIDevice currentDevice] name] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    
+//   NSString * mac = [self macString];
+//    NSString * urlString = [NSString stringWithFormat:@"http://log.umtrack.com/ping/%@/?devicename=%@&udid=%@", appKey,deviceName,mac];
+//    
+//    [NSURLConnection connectionWithRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:urlString]] delegate:nil];
+//    
+//    //友盟追踪 end
+//    
+////    [self showLoadingView];
+//    
+////    GlobalConfig *config = [GlobalConfig shareConfig];
+////	BOOL isShowChannel = [config isPostChannel];
+////	
+////	if (!isShowChannel) {
+////		[self showChannelSettingForOneDay];
+////	} else {
+////		[self showMainUserInterface];
+////	}
+//    
+//    //激活统计
+//    [self postStatistice];
     
     //[self  fsLoaddingImageViewWillDisappear:nil];
     [self showFirstLoad];

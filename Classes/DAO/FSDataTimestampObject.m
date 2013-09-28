@@ -70,7 +70,7 @@
     NSError *error = nil;
     NSLog(@"111111:%@,:%@",_flagValue,_context);
     //NSArray *array = [[FSBaseDB sharedFSBaseDB] getObjectsByKeyWithName:FSTIMESTAMPS key:@"flag" value:_flagValue];
-    NSLog(@"array:%@",array);
+    //NSLog(@"array:%@",array);
     NSArray *resultSet = [_context executeFetchRequest:request error:&error];
     NSLog(@"222222");
     if (!error) {

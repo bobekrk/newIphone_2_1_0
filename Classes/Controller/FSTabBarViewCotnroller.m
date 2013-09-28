@@ -55,7 +55,7 @@
 		self.view.backgroundColor = [UIColor blackColor];
 	[self inner_initializeFSViewControllers];
     
-    _fsTabBar.fsSelectedIndex = 0;
+    _fsTabBar.fsSelectedIndex = 1;
     
 
 }

@@ -39,8 +39,7 @@
 -(id)initWithFrame:(CGRect)frame andBool:(BOOL)isNewsView
 {
     _isNewsView  = isNewsView;
-    [self initWithFrame:frame];
-    return self;
+     return [self initWithFrame:frame];
 }
 - (id)initWithFrame:(CGRect)frame {
     

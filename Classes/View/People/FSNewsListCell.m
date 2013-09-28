@@ -31,10 +31,10 @@
 {
     CGRect tempRect;
     if ([_image_Onright.urlString length]>0 && [self isDownloadPic]) {
-        tempRect = CGRectMake(13, 30, self.frame.size.width- 72 - 10, self.frame.size.height - 25);
+        tempRect = CGRectMake(11, 30, self.frame.size.width- 72 - 10, self.frame.size.height - 25);
     }
     else{
-        tempRect = CGRectMake(13, 30, self.frame.size.width-20, self.frame.size.height - 25);
+        tempRect = CGRectMake(11, 30, self.frame.size.width-20, self.frame.size.height - 25);
     }
 
     CGContextRef context = UIGraphicsGetCurrentContext();
