@@ -62,6 +62,7 @@
 }
 
 -(void)loadChildView{
+    [super loadChildView];
 //    _fsNewsContainerCommentListView = [[FSNewsContainerCommentListView alloc] init];
 //    _fsNewsContainerCommentListView.parentDelegate = self;
 //    _fsNewsContainerCommentListView.withOutSection = YES;
@@ -74,46 +75,46 @@
     
     
     
-    _navTopBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-#ifdef __IPHONE_5_0
-    [_navTopBar setBackgroundImage:[UIImage imageNamed: @"navigatorBar.png"] forBarMetrics:UIBarMetricsDefault];
-#endif
-    
-    if (_withnavTopBar) {
-        UINavigationItem *topItem = [[UINavigationItem alloc] init];
-        NSArray *items = [[NSArray alloc] initWithObjects:topItem, nil];
-        _navTopBar.items = items;
-        _navTopBar.topItem.title = NSLocalizedString(@"网友评论", nil);
-        [topItem release];
-        [items release];
-        [self.view addSubview:_navTopBar];
-        
-        
-        UIButton *returnBT = [[UIButton alloc] init];
-        [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
-        [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
-        [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
-        returnBT.frame = CGRectMake(0, (FSSETTING_VIEW_NAVBAR_HEIGHT-34)/2, 65, 34);
-        
-        [_navTopBar addSubview:returnBT];
-        [returnBT release];
-    
-    }
-    else{
-        UIButton *returnBT = [[UIButton alloc] init];
-        [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
-        //[returnBT setTitle:NSLocalizedString(@"返回", nil) forState:UIControlStateNormal];
-        returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
-        [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
-        [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
-        returnBT.frame = CGRectMake(0, 0, 55, 30);
-        
-        UIBarButtonItem *returnButton = [[UIBarButtonItem alloc] initWithCustomView:returnBT];
-        self.navigationItem.leftBarButtonItem = returnButton;
-        [returnButton release];
-        [returnBT release];
-
-    }
+//    _navTopBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+//#ifdef __IPHONE_5_0
+//    [_navTopBar setBackgroundImage:[UIImage imageNamed: @"navigatorBar.png"] forBarMetrics:UIBarMetricsDefault];
+//#endif
+//    
+//    if (_withnavTopBar) {
+//        UINavigationItem *topItem = [[UINavigationItem alloc] init];
+//        NSArray *items = [[NSArray alloc] initWithObjects:topItem, nil];
+//        _navTopBar.items = items;
+//        _navTopBar.topItem.title = NSLocalizedString(@"网友评论", nil);
+//        [topItem release];
+//        [items release];
+//        [self.view addSubview:_navTopBar];
+//        
+//        
+//        UIButton *returnBT = [[UIButton alloc] init];
+//        [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
+//        [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
+//        [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
+//        returnBT.frame = CGRectMake(0, (FSSETTING_VIEW_NAVBAR_HEIGHT-34)/2, 65, 34);
+//        
+//        [_navTopBar addSubview:returnBT];
+//        [returnBT release];
+//    
+//    }
+//    else{
+//        UIButton *returnBT = [[UIButton alloc] init];
+//        [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
+//        //[returnBT setTitle:NSLocalizedString(@"返回", nil) forState:UIControlStateNormal];
+//        returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
+//        [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
+//        [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
+//        returnBT.frame = CGRectMake(0, 0, 55, 30);
+//        
+//        UIBarButtonItem *returnButton = [[UIBarButtonItem alloc] initWithCustomView:returnBT];
+//        self.navigationItem.leftBarButtonItem = returnButton;
+//        [returnButton release];
+//        [returnBT release];
+//
+//    }
 	
     
     
@@ -122,7 +123,7 @@
 
 -(void)layoutControllerViewWithRect:(CGRect)rect{
 //    _fsNewsContainerCommentListView.frame = CGRectMake(0, 44.0f, rect.size.width, rect.size.height-44.0f);
-    if (_withnavTopBar) {
+    if (_isnavTopBar) {
         _fsNewsCommentListView.frame = CGRectMake(0, 44.0f, rect.size.width, rect.size.height-44.0f);
     }
     else{
@@ -139,7 +140,7 @@
     if ([sender isEqual:_fs_GZF_CommentListDAO]) {
         if (status == FSBaseDAOCallBack_BufferSuccessfulStatus || status == FSBaseDAOCallBack_SuccessfulStatus) {
             FSLog(@"_fs_GZF_CommentListDAO:%d",[_fs_GZF_CommentListDAO.objectList count]);
-//            [_fsNewsContainerCommentListView loadData];
+
             _fsNewsCommentListView.data = _fs_GZF_CommentListDAO.objectList;
             if (status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
                 [_fs_GZF_CommentListDAO operateOldBufferData];

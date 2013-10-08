@@ -55,10 +55,12 @@
 	if (getDataKind == GET_DataKind_Refresh) {
         _count = 1;
         //NSLog(@"%@",[NSString stringWithFormat:FS_NEWS_URL_IMPORT,FS_NEWS_PAGECOUNT,@""]);
-		return [NSString stringWithFormat:FS_NEWS_URL_IMPORT, 100,@""];
+		return [NSString stringWithFormat:FS_NEWS_URL_IMPORT, 20,@""];
 	} else {
         _count =_count +1;
-        return [NSString stringWithFormat:FS_NEWS_URL_IMPORT, FS_NEWS_PAGECOUNT + self.objectList.count,@"100000000"];
+        FSOneDayNewsObject * obj = self.objectList.lastObject;
+        NSLog(@"%@",obj.newsid);
+        return [NSString stringWithFormat:FS_NEWS_URL_IMPORT, 20,obj.newsid];
        
 	}
 }

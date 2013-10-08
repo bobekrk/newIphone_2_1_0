@@ -45,22 +45,23 @@
 -(BOOL)goBackToBeforePage
 {
 
-    if (self.fsNewsContainerWebView.hasebeenLoad == 100) {
-        if ([self.fsNewsContainerWebView.webContent canGoBack]) {
-            [self.fsNewsContainerWebView.webContent goBack];
-        }else
-        {
-            [self.fsNewsContainerWebView loadWebPageWithContent:nil];
-        }
-        return NO;
-    }else
-    {
-        return YES;
-    }
+//    if (self.fsNewsContainerWebView.hasebeenLoad == 100) {
+//        if ([self.fsNewsContainerWebView.webContent canGoBack]) {
+//            [self.fsNewsContainerWebView.webContent goBack];
+//        }else
+//        {
+//            [self.fsNewsContainerWebView loadWebPageWithContent:nil];
+//        }
+//        return NO;
+//    }else
+//    {
+//        return YES;
+//    }
+    return YES;
 }
 
 -(void)doSomethingAtDealloc{
-    
+    _fsNewsContainerWebView.parentDelegate = nil;
 //   [_fsNewsContainerCommentListView release];
 //    [_scrollView release];
     [_comment_content release];

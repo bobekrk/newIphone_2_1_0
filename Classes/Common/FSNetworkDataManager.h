@@ -22,11 +22,12 @@
 	NSMutableDictionary *_networkDataList;
     NSOperationQueue *_queue;
 }
-
+@property(nonatomic,retain)NSMutableDictionary *networkDataList;
 + (FSNetworkDataManager *)shareNetworkDataManager;
 
 - (NSData *)networkDataWithURLString:(NSString *)URLString withLocalFilePath:(NSString *)localFilePath withDelegate:(id)delegate;
 
 -(void)CancelAllOpration;
+-(void)clearMemory;
 
 @end

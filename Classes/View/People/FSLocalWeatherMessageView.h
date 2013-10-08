@@ -48,10 +48,10 @@
     UIView *_rightView1BACK;
     UIView *_rightView2BACK;
     
-    NSString *_group;
+    //NSString *_group;
 }
 
-@property(nonatomic,retain) NSString *group;
+@property(nonatomic,copy) NSString *group;
 
 -(NSString *)getCHineseDate:(NSDate *)date;
 -(CGFloat)getTextLabHeight:(NSString *)text font:(CGFloat)font;

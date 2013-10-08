@@ -10,7 +10,7 @@
 #import "FSNewsListTopCellTextFloatView.h"
 #import "FSFocusTopObject.h"
 #import "FSCommonFunction.h"
-#import "FSLoadingImageObject.h"
+#import "LygAdsLoadingImageObject.h"
 #define VISITICON_BEGIN_X 220.0f
 
 @implementation FSNewsListTopCell
@@ -165,7 +165,7 @@
             }
             else
             {
-                FSLoadingImageObject *oo = ooo;
+                LygAdsLoadingImageObject *oo = ooo;
                 _fsNewsListTopCellTextFloatView.data = oo;
                 
                 //            _lab_VisitVolume.text = [NSString stringWithFormat:@"%d",[oo.browserCount integerValue]];

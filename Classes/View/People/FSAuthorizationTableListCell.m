@@ -16,7 +16,7 @@
     if (self) {
         // Initialization code
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        self.backgroundColor = COLOR_NEWSLIST_TITLE_WHITE;
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
@@ -28,9 +28,7 @@
 
 -(void)doSomethingAtInit{
     
-//    UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CellBackground.png"]];
-//    self.backgroundView = image;
-//    [image release];
+
     
     _lab_title = [[UILabel alloc] init];
     _lab_title.textAlignment = UITextAlignmentLeft;

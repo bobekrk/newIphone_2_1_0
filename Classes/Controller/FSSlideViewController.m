@@ -68,6 +68,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+    
     if (_presentModal) {
 		[_parentDelegate performSelector:_selector withObject:nil afterDelay:0.1];
 	}

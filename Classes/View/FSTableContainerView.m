@@ -103,9 +103,12 @@
 }
 
 - (void)loadData {
-    
-    [_tvList loaddingComplete];
-	[_tvList reloadData];
+    @synchronized(self)
+    {
+        [_tvList loaddingComplete];
+        [_tvList reloadData];
+    }
+  
 	
 }
 

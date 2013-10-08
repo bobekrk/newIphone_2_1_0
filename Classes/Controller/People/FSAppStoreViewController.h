@@ -15,7 +15,7 @@
 //FSAppStoreContainerView * _fsAppStoreContainerView;
     
     BOOL _isprsend;
-    
+    SKStoreProductViewController *storeViewController;
 } 
 
 @property (nonatomic,assign) BOOL isprsend;

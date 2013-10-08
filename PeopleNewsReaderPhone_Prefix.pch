@@ -15,11 +15,13 @@
     #import "PeopleNewsStati.h"
     #import "BaiduMobStat.h"
     #import "UIImage+customer.h"
+    //#import "PeopleNewsReaderPhoneAppDelegate.h"
 #endif
 
-//#define RELEASE
+#define RELEASE
 #ifdef  RELEASE
 #define NSLog(...)
+#define printf(...)
 #endif
 
 #ifdef MYDEBUG

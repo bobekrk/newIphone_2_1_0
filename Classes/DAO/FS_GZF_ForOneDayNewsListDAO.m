@@ -407,7 +407,7 @@
 		if ([resultSet count]>0) {
             
             for (FSOneDayNewsObject *o in resultSet) {
-                NSArray *array3 = [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext] getObjectsByKeyWithName:@"FSChannelObject" key:@"channelid" value:o.channelid];
+//                NSArray *array3 = [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext] getObjectsByKeyWithName:@"FSChannelObject" key:@"channelid" value:o.channelid];
                 if ([o.channalIcon length]==0 && self.SetChannalIcon) {
                     NSArray *array = [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext] getObjectsByKeyWithName:@"FSChannelObject" key:@"channelid" value:o.channelid];
                     if ([array count]>0) {

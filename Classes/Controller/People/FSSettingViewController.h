@@ -12,18 +12,17 @@
 #import "FS_GZF_GetNewsDataForOFFlineDAO.h"
 #import "FSWeatherView.h"
 #import "FSNewSettingView.h"
+#import "FS_GZF_GetWeatherMessageDAO.h"
 @class FS_GZF_AppUpdateDAO;
 
 @interface FSSettingViewController : FSBaseDataViewController <FSGETForOFFlineDAODelegate,UIGestureRecognizerDelegate,FSNewSettingViewDelegate> {
 @private
-	//FSSettingView *_settingView;
     FSNewSettingView *_settingView;
     
 	UINavigationBar *_navTopBar;
     FS_GZF_GetNewsDataForOFFlineDAO *_fs_GZF_GetNewsDataForOFFlineDAO;
-    FS_GZF_AppUpdateDAO *fsAppUpdateDAO;
-    
-    
+    FS_GZF_AppUpdateDAO             *fsAppUpdateDAO;
+    FS_GZF_GetWeatherMessageDAO     * _myMessageDao;
 }
 
 

@@ -10,7 +10,7 @@
 #import "FSAsyncImageView.h"
 #import "FSCommonFunction.h"
 #import "FSFocusTopObject.h"
-#import "FSLoadingImageObject.h"
+#import "LygAdsLoadingImageObject.h"
 @implementation FSImagesScrInRowView
 
 @synthesize imageSize = _imageSize;
@@ -90,7 +90,7 @@
             usrlString = ((FSFocusTopObject*)o).picture;
         }else
         {
-            usrlString = ((FSLoadingImageObject*)o).picUrl;
+            usrlString = ((LygAdsLoadingImageObject*)o).picUrl;
         }
         FSAsyncImageView *imageView = [[FSAsyncImageView alloc] initWithFrame:CGRectMake(size.width*i + _spacing, _spacing, _imageSize.width, _imageSize.height)];
         

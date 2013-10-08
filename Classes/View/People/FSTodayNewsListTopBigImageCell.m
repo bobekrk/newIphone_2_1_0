@@ -9,7 +9,7 @@
 #import "FSTodayNewsListTopBigImageCell.h"
 #import "FSCommonFunction.h"
 #import "FSOneNewsListTopCellTextFloatView.h"
-#import "FSLoadingImageObject.h"
+#import "LygAdsLoadingImageObject.h"
 #import "FSFocusTopObject.h"
 
 #define VISITICON_BEGIN_X 220.0f
@@ -182,7 +182,7 @@
 
             }else
             {
-                FSLoadingImageObject * image = o1;
+                LygAdsLoadingImageObject * image = o1;
                 if ([image.adTitle length]>16) {
                     _lab_NewsType.text = [image.adTitle substringToIndex:16];
                 }

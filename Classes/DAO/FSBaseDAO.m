@@ -25,6 +25,7 @@
 }
 
 - (void)dealloc {
+    _parentDelegate = nil;
 	[super dealloc];
 }
 

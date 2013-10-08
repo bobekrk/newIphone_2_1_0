@@ -19,7 +19,7 @@
 
 @class FS_GZF_ForLocalNewsListDAO,FS_GZF_CityListDAO,FS_GZF_GetWeatherMessageDAO;
 
-@interface FSWeatherViewController : FSBaseDataViewController<UIPopoverControllerDelegate,FSTableContainerViewDelegate,UIGestureRecognizerDelegate,FSTitleViewDelegate,CLLocationManagerDelegate,MKReverseGeocoderDelegate>{
+@interface FSWeatherViewController : FSBaseDataViewController<UIPopoverControllerDelegate,FSTableContainerViewDelegate,UIGestureRecognizerDelegate,FSTitleViewDelegate,CLLocationManagerDelegate>{
 @protected
     FSLocalNewsListContentView *_localNewsListContentView;
     UINavigationBar *_navTopBar;

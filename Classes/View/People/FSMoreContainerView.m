@@ -30,6 +30,11 @@
     if (self) {
         // Initialization code
         _flag = 0;
+        _tvList.frame = roundToRect(CGRectMake(0.0f, 0.0f, self.frame.size.width, self.frame.size.height));
+        [_tvList reloadData];
+        UIImageView *bgimage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chunbai.png"]];
+        _tvList.backgroundView = bgimage;
+        [bgimage release];
     }
     return self;
 }
@@ -207,15 +212,13 @@
 
 -(void)layoutSubviews{
     _tvList.frame = roundToRect(CGRectMake(0.0f, 0.0f, self.frame.size.width, self.frame.size.height));
-    UIImageView *bgimage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chunbai.png"]];
-	_tvList.backgroundView = bgimage;
-    [bgimage release];
+
     
 	if (!CGSizeEqualToSize(_tvSize, _tvList.frame.size)) {
 		_tvSize = _tvList.frame.size;
 		//防止不重新装载数据
-		[_tvList reloadData];
-	} 
+//		[_tvList reloadData];
+	}
     
     _tvList.delegate = self;
     _tvList.separatorStyle = YES;

@@ -12,12 +12,14 @@
 
 #define LOADINGIMAGE_LOADING_XML_COMPELECT @"LOADINGIMAGE_LOADING_XML_COMPELECT"
 
-@class LygAdsLoadingImageObject;
+@class FSLoadingImageObject;
 
-@interface LygAdsDao : FS_GZF_BaseGETXMLDataListDAO{
+@interface FS_GZF_ForLoadingImageDAO : FS_GZF_BaseGETXMLDataListDAO{
 @protected
-    LygAdsLoadingImageObject *_obj;
-    
+    FSLoadingImageObject *_obj;
+    BOOL _isIphone5;
 }
-@property (nonatomic,assign)int placeID;
+
+@property (nonatomic,assign) BOOL isIphone5;
+
 @end

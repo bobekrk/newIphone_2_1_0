@@ -10,6 +10,7 @@
 #import "FSConst.h"
 #import "FSBaseDB.h"
 #import "FSWeatherObject.h"
+#import "PeopleNewsReaderPhoneAppDelegate.h"
 #define HEIGHT  44
 #define WEIGHT  280
 @implementation settingDataObject
@@ -52,13 +53,17 @@
      }
 }
 -(void)updataWeatherStatus{
-    NSArray *array = [[FSBaseDB sharedFSBaseDB] getObjectsByKeyWithName:@"FSWeatherObject" key:@"group" value:@""];
-    
-    for (FSWeatherObject *obj in array) {
-        if ([obj.day isEqualToString:@"0"]) {
-            _fsWeatherView.data = obj;
-            [_fsWeatherView doSomethingAtLayoutSubviews];
+    //NSArray *array = [[FSBaseDB sharedFSBaseDB] getObjectsByKeyWithName:@"FSWeatherObject" key:@"group" value:@""];
+    @synchronized(self)
+    {
+        NSArray *array2 = [[FSBaseDB sharedFSBaseDBWithContext:[FSBaseDB sharedFSBaseDB].managedObjectContext] getObjectsByKeyWithName:@"FSWeatherObject" key:@"group" value:getCityName()];
+        for (FSWeatherObject *obj in array2) {
+            if ([obj.day isEqualToString:@"0"]) {
+                _fsWeatherView.data = obj;
+                [_fsWeatherView doSomethingAtLayoutSubviews];
+            }
         }
+
     }
     
 }

@@ -47,7 +47,7 @@
     }
     
     if ([_tcWBEngine isLoggedIn] && ![_tcWBEngine isAuthorizeExpired]) {
-		[self postShareMessage];
+		//[self postShareMessage];
 		;
 	} else {
 

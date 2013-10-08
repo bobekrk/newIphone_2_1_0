@@ -18,7 +18,7 @@
 #import "FSUserSelectObject.h"
 #import "FSWeatherObject.h"
 #import "FSBaseDB.h"
-
+#import "PeopleNewsReaderPhoneAppDelegate.h"
 #define KIND_CITY_SELECTED @"KIND_CITY_SELECTED"
 
 #define FSSETTING_VIEW_NAVBAR_HEIGHT 44.0f
@@ -40,9 +40,14 @@
 
 - (void)dealloc {
     [_fs_GZF_CityListDAO release];
+    _fs_GZF_CityListDAO = nil;
+    _fs_GZF_localGetWeatherMessageDAO.parentDelegate = nil;
     [_fs_GZF_localGetWeatherMessageDAO release];
+    _fs_GZF_localGetWeatherMessageDAO = nil;
     [_reFreshDate release];
+    _reFreshDate = nil;
     [_titleView removeFromSuperview];
+    _titleView = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSNOTIF_POPOCITYLISTCONTROLLER object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSNOTIF_LOCALNEWSLISTREFRESH object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSNOTIF_LOCALNEWSLIST_CITYSELECTED object:nil];
@@ -68,7 +73,6 @@
 -(void)setNaviBar
 {
     _titleView = [[FSTitleView alloc] initWithFrame:CGRectMake(10, 0, self.view.frame.size.width, 44)];
-    //_titleView = [[FSTitleView alloc] init];
     _titleView.hidRefreshBt = YES;
     _titleView.toBottom = NO;
     _titleView.parentDelegate = self;
@@ -83,6 +87,7 @@
 -(void)setWeatherView
 {
     _fsLocalWeatherMessageView = [[FSLocalWeatherMessageView alloc] initWithFrame:CGRectMake(0.0, self.canBeHaveNaviBar?44:0, self.view.frame.size.width, self.view.frame.size.height)];
+    _fsLocalWeatherMessageView.group = getCityName();
     _fsLocalWeatherMessageView.parentDelegate = self;
     [self.view addSubview:_fsLocalWeatherMessageView];
     [_fsLocalWeatherMessageView release];
@@ -106,163 +111,25 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNewsListRefresh) name:NSNOTIF_LOCALNEWSLISTREFRESH object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(localNewsListCitySelected:) name:NSNOTIF_LOCALNEWSLIST_CITYSELECTED object:nil];
 }
--(void)getlocationManager{
-    CLLocationManager *_locManager = [[CLLocationManager alloc] init];
-    [_locManager setDelegate:self];
-    [_locManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
-    [_locManager startMonitoringSignificantLocationChanges];
-}
-
--(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-    
-    CLLocationCoordinate2D loc = [newLocation coordinate];
-    NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
-    NSInteger v = [systemVersion integerValue];
-    
-    if (v>5) {
-        //获取所在地城市名
-        CLGeocoder *geocoder=[[CLGeocoder alloc]init];
-        [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks,NSError *error)
-         {
-             for(CLPlacemark *placemark in placemarks)
-             {
-                 //NSString *currentCity=[[placemark.addressDictionary objectForKey:@"City"] substringToIndex:2];
-                 NSDictionary *addressDictionary = placemark.addressDictionary;
-                 //NSLog(@"addressDictionary%@",placemark.addressDictionary);
-                 
-                 //北京、上海、重庆、天津
-                 NSString *State = [addressDictionary objectForKey:@"State"];
-                 
-                 NSString *SubLocality = [addressDictionary objectForKey:@"SubLocality"];
-                
-                 NSString *shi = [State substringFromIndex:[State length]-1];
-                
-                 if ([shi isEqualToString:@"市"]) {
-                     //NSLog(@"111111");
-                     
-                     if ([_cityName isEqualToString:[State substringToIndex:[State length]-1]]) {
-                         self.localCity = _cityName;
-                         //return;
-                     }
-                     self.localCity = [State substringToIndex:[State length]-1];
-                     _fs_GZF_localGetWeatherMessageDAO.group = [State substringToIndex:[State length]-1];
-                     [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
-                 }
-                 else{
-                     //NSLog(@"222222");
-                     NSString *shi = [SubLocality substringFromIndex:[SubLocality length]-1];
-                     if ([shi isEqualToString:@"市"]) {
-                         if ([_cityName isEqualToString:[SubLocality substringToIndex:[SubLocality length]-1]]) {
-                             self.localCity = _cityName;
-                             return;
-                         }
-                         self.localCity = [State substringToIndex:[State length]-1];
-                         _fs_GZF_localGetWeatherMessageDAO.group = [SubLocality substringToIndex:[SubLocality length]-1];
-                         [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
-                     }
-                     else{
-                         return;//[_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
-                     }
-                 }
-                 
-             }
-         }];
-        [geocoder release];
-        
-    }
-    else{
-        MKReverseGeocoder *reverseGeocoder =[[[MKReverseGeocoder alloc] initWithCoordinate:loc] autorelease];
-        reverseGeocoder.delegate = self;
-        [reverseGeocoder start];
-    }
-    
-    [manager stopUpdatingLocation];
-    
-}
-
--(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
-    NSLog(@" locationManager errorerror");
-}
-
-
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
-{
-    NSString *errorMessage = [error localizedDescription];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"定位失败."
-                                                        message:errorMessage
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-    [alertView show];
-    [alertView release];
-    
-    
-    //[_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
-}
-
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
-{
-    
-    
-    NSDictionary *addressDictionary = placemark.addressDictionary;
-    //NSLog(@"addressDictionary%@",placemark.addressDictionary);
-    
-    //NSLog(@"SubLocality%@",[addressDictionary objectForKey:@"State"]);
-    
-    //北京、上海、重庆、天津
-    NSString *State = [addressDictionary objectForKey:@"State"];
-    
-    NSString *SubLocality = [addressDictionary objectForKey:@"SubLocality"];
-    
-    NSString *shi = [State substringFromIndex:[State length]-1];
-    
-    if ([shi isEqualToString:@"市"]) {
-        //NSLog(@"111111");
-        
-        if ([_cityName isEqualToString:[State substringToIndex:[State length]-1]]) {
-            self.localCity = _cityName;
-            return;
-        }
-        self.localCity = [State substringToIndex:[State length]-1];
-        _fs_GZF_localGetWeatherMessageDAO.group = [State substringToIndex:[State length]-1];
-        [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
-    }
-    else{
-        //NSLog(@"222222");
-        NSString *shi = [SubLocality substringFromIndex:[SubLocality length]-1];
-        if ([shi isEqualToString:@"市"]) {
-            if ([_cityName isEqualToString:[SubLocality substringToIndex:[SubLocality length]-1]]) {
-                self.localCity = _cityName;
-                return;
-            }
-            self.localCity = [State substringToIndex:[State length]-1];
-            _fs_GZF_localGetWeatherMessageDAO.group = [SubLocality substringToIndex:[SubLocality length]-1];
-            [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
-        }
-        else{
-            return;//[_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
-        }
-    }
-    
-}
 
 
 
 -(void)initDataModel{
-    
+    self.cityName = getCityName();
     _fs_GZF_CityListDAO = [[FS_GZF_CityListDAO alloc] init];
     
     _fs_GZF_localGetWeatherMessageDAO = [[FS_GZF_GetWeatherMessageDAO alloc] init];
     _fs_GZF_localGetWeatherMessageDAO.parentDelegate = self;
     _fs_GZF_localGetWeatherMessageDAO.isGettingList = NO;
-    _fs_GZF_localGetWeatherMessageDAO.group = @"";
-    
+    _fs_GZF_localGetWeatherMessageDAO.group = getCityName();
 }
+
 
 -(void)doSomethingForViewFirstTimeShow{
     
     _reFreshDate = [[NSDate alloc] initWithTimeIntervalSinceNow:0];
-    [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+    [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+
 }
 
 
@@ -315,7 +182,7 @@
 	_cityName = [info objectForKey:NSNOTIF_LOCALNEWSLIST_CITYSELECTED_KEY];
     //NSLog(@"localNewsListCitySelected 111111");
     _fs_GZF_localGetWeatherMessageDAO.group = _cityName;
-    [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+    [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
 }
 
 #pragma mark -
@@ -338,51 +205,77 @@
     
     
     if ([sender isEqual:_fs_GZF_localGetWeatherMessageDAO]) {
-        
-        if (status == FSBaseDAOCallBack_SuccessfulStatus || status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
-            NSLog(@"获取天气成功！！！:%d",[_fs_GZF_localGetWeatherMessageDAO.objectList count]);
-            if ([_fs_GZF_localGetWeatherMessageDAO.objectList count]>0) {
+        @synchronized(self)
+        {
+            if (status == FSBaseDAOCallBack_SuccessfulStatus || status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
+                NSLog(@"获取天气成功！！！:%d",[_fs_GZF_localGetWeatherMessageDAO.objectList count]);
                 
-                _fsLocalWeatherMessageView.group = _fs_GZF_localGetWeatherMessageDAO.group;
-                _fsLocalWeatherMessageView.data = _fs_GZF_localGetWeatherMessageDAO.objectList;
-                
-                FSWeatherObject *obj =  [_fs_GZF_localGetWeatherMessageDAO.objectList objectAtIndex:0];
-                
-                _titleView.data = obj.cityname;
-                _cityName = obj.cityname;
-                
-                if ([_localCity length]==0) {
-                    self.localCity = _cityName;
-                }
-                
-                if (status == FSBaseDAOCallBack_SuccessfulStatus ) {//if(_fsUserSelectObject.keyValue3!=nil)
+                if ([_fs_GZF_localGetWeatherMessageDAO.objectList count]>0) {
+                    NSLog(@"%@",_fs_GZF_localGetWeatherMessageDAO.group);
+                    _fsLocalWeatherMessageView.group = _fs_GZF_localGetWeatherMessageDAO.group;
+                    _fsLocalWeatherMessageView.data = _fs_GZF_localGetWeatherMessageDAO.objectList;
+                    //[_fsLocalWeatherMessageView doSomethingAtLayoutSubviews];
+                    FSWeatherObject *obj =  [_fs_GZF_localGetWeatherMessageDAO.objectList objectAtIndex:0];
                     
-                    if (![_fs_GZF_localGetWeatherMessageDAO.group isEqualToString:_cityName] && [_fs_GZF_localGetWeatherMessageDAO.group length]>0) {
-                        //NSLog(@"%@ 暂无数据！",_fs_GZF_localGetWeatherMessageDAO.group);
-                        FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
-                        informationMessageView.parentDelegate = self;
-                        [informationMessageView showInformationMessageViewInView:self.view
-                                                                     withMessage:[NSString stringWithFormat:@"%@ 暂无数据！",_fs_GZF_localGetWeatherMessageDAO.group]
-                                                                withDelaySeconds:2.0f
-                                                                withPositionKind:PositionKind_Vertical_Horizontal_Center
-                                                                      withOffset:0.0f];
-                        [informationMessageView release];
+                    _titleView.data = obj.cityname;
+                    self.cityName = obj.cityname;
+                    
+                    if ([_localCity length]==0) {
+                        self.localCity = _cityName;
                     }
                     
-                    [_fs_GZF_localGetWeatherMessageDAO operateOldBufferData];
-                    //[_fs_GZF_CityListDAO HTTPGetDataWithKind:GET_DataKind_Unlimited];
-                    if (_isFirstShow) {
-                        _isFirstShow = NO;
-                        [self getlocationManager];
+                    if (status == FSBaseDAOCallBack_SuccessfulStatus ) {//if(_fsUserSelectObject.keyValue3!=nil)
                         
+                        if (![_fs_GZF_localGetWeatherMessageDAO.group isEqualToString:_cityName] && [_fs_GZF_localGetWeatherMessageDAO.group length]>0) {
+                            //NSLog(@"%@ 暂无数据！",_fs_GZF_localGetWeatherMessageDAO.group);
+                            FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
+                            informationMessageView.parentDelegate = self;
+                            [informationMessageView showInformationMessageViewInView:self.view
+                                                                         withMessage:[NSString stringWithFormat:@"%@ 暂无数据！",_fs_GZF_localGetWeatherMessageDAO.group]
+                                                                    withDelaySeconds:2.0f
+                                                                    withPositionKind:PositionKind_Vertical_Horizontal_Center
+                                                                          withOffset:0.0f];
+                            [informationMessageView release];
+                        }
+                        
+                        [_fs_GZF_localGetWeatherMessageDAO operateOldBufferData];
+                        //[_fs_GZF_CityListDAO HTTPGetDataWithKind:GET_DataKind_Unlimited];
+                        if (_isFirstShow) {
+                            _isFirstShow = NO;
+                           // [self getlocationManager];
+                            
+                        }
                     }
+                }else
+                {
+                    NSArray *array = [[FSBaseDB sharedFSBaseDB] getObjectsByKeyWithName:@"FSWeatherObject" key:@"group" value:getCityName()];
+                   // FSWeatherObject * obj = (FSWeatherObject*)[array objectAtIndex:0];
+                    if (array.count > 0 ) {
+                        _fsLocalWeatherMessageView.data = array;
+                        _titleView.data                 = getCityName();
+                        _cityName                       = getCityName();
+                        [_fsLocalWeatherMessageView doSomethingAtLayoutSubviews];
+                    }
+//                    for (FSWeatherObject *obj in array) {
+//                        if ([obj.day isEqualToString:@"0"]) {
+//                            _fsLocalWeatherMessageView.data = obj;
+//                            [_fsLocalWeatherMessageView doSomethingAtLayoutSubviews];
+//                        }
+//                    }
+
                 }
             }
+            else if (status == FSBaseDAOCallBack_WorkingStatus)
+            {
+                FSIndicatorMessageView* INDICTORE  = [[FSIndicatorMessageView alloc] init];
+                [INDICTORE showIndicatorMessageViewInView:self.view withMessage:@"正在更新天气信息"];
+            }
+            else if(status ==FSBaseDAOCallBack_NetworkErrorStatus){
+                ;
+            }
+            return;
         }
-        else if(status ==FSBaseDAOCallBack_NetworkErrorStatus){
-            ;
-        }
-        return;
+
     }
 }
 

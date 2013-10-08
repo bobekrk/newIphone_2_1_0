@@ -1,11 +1,11 @@
-    //
+     //
 //  FSSettingViewController.m
 //  PeopleNewsReaderPhone
 //
 //  Created by people.com.cn on 12-8-13.
 //  Copyright 2012 people.com.cn. All rights reserved.
 //
-
+#import "PeopleNewsReaderPhoneAppDelegate.h"
 #import "FSSettingViewController.h"
 #import "FSMyFavoritesViewController.h"
 #import "FSUINavigationController.h"
@@ -38,6 +38,8 @@
 	[_navTopBar release];
 	[_settingView release];
     [_fs_GZF_GetNewsDataForOFFlineDAO release];
+    _myMessageDao.parentDelegate = nil;
+    [_myMessageDao release];
     [super dealloc];
 }
 -(void)addNavView
@@ -80,13 +82,16 @@
     
     
     
-        //[weatcherBt release];
-
-    
+//    _myMessageDao = [[FS_GZF_GetWeatherMessageDAO alloc] init];
+//    _myMessageDao.group =   getCityName();
+//    _myMessageDao.parentDelegate = self;
+//    _myMessageDao.isGettingList = NO;
+//    [_myMessageDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
 }
 - (void)weatherNewsViewButtonClick
 {
     FSLocalWeatherViewController *weatherCtrl = [[FSLocalWeatherViewController alloc] init];
+    //weatherCtrl.fs_GZF_localGetWeatherMessageDAO = _myMessageDao;
     weatherCtrl.canBeHaveNaviBar = YES;
     UINavigationController * navi = (UINavigationController*)[UIApplication sharedApplication].keyWindow.rootViewController;
     [navi pushViewController:weatherCtrl animated:YES];
@@ -109,21 +114,32 @@
     //[self.navigationController pushViewController:fsChannelSettingForOneDayViewController animated:YES];
     [fsChannelSettingForOneDayViewController release];
     
-    /*
-    
-    FSNewsTextFontSettingController *fsSettingViewController = [[FSNewsTextFontSettingController alloc] init];
-    
-    //FSUINavigationController *navMyFavoritesCtrl = [[FSUINavigationController alloc]init];
-    //[navMyFavoritesCtrl pushViewController:fsSettingViewController animated:YES];
-    
-    FSUINavigationController *navFont = [[FSUINavigationController alloc]initWithRootViewController:fsSettingViewController];
-    [self.fsSlideViewController  presentModalViewController:navFont animated:YES];
-    
-    [fsSettingViewController release];
-    [navFont release];
-     */
+
 
 }
+
+-(void)doSomethingWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status
+{
+    if ([sender isEqual:_myMessageDao]) {
+        if (status == FSBaseDAOCallBack_SuccessfulStatus ||
+            status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
+            //NSLog(@"_fs_GZF_GetWeatherMessageDAO");
+            if ([_myMessageDao.objectList count]>0) {
+                if (status == FSBaseDAOCallBack_SuccessfulStatus) {
+                    [_myMessageDao operateOldBufferData];
+                }
+                
+                @synchronized(self)
+                {
+                    [_settingView updataWeatherStatus];
+                }
+                
+            }
+            
+        }
+    }
+}
+
 
 //设置
 - (void)tappedInSettingView:(UIView *)settingView nightModeButton:(UIButton *)button
@@ -174,15 +190,6 @@
 //检查更新
 - (void)tappedInSettingView:(UIView *)settingView updateButton:(UIButton *)button
 {
-//    NSLog(@"UPDATE");
-//    if (! fsAppUpdateDAO ) {
-//        fsAppUpdateDAO = [[FS_GZF_AppUpdateDAO alloc]init];
-//    }
-//    fsAppUpdateDAO.isShow = 0;
-//    fsAppUpdateDAO.isManualUpdata = YES;
-//    [fsAppUpdateDAO getVersion];
-//    NSLog(@"手动更新");
-    
     FSCheckAppStoreVersionObject *checkAppStoreVersionObject = [[FSCheckAppStoreVersionObject alloc] init];
     checkAppStoreVersionObject.isManual = YES;
 	[checkAppStoreVersionObject checkAppVersion:MYAPPLICATIONID_IN_APPSTORE];
@@ -232,82 +239,9 @@
 	_settingView.frame = CGRectMake(0.0f, FSSETTING_VIEW_NAVBAR_HEIGHT, rect.size.width, rect.size.height - FSSETTING_VIEW_NAVBAR_HEIGHT);
 }
 
-- (void)doSomethingForViewFirstTimeShow {
-	//[_settingView loadData];
+
+-(void)doSomethingForViewFirstTimeShow{
+        [_myMessageDao HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
 }
-
-
-//
-////每个cell的data
-//- (NSObject *)tableViewCellData:(FSTableContainerView *)sender withIndexPath:(NSIndexPath *)indexPath {
-//	NSInteger section = [indexPath section];
-//	NSInteger row = [indexPath row];
-//	if (section == 0) {
-//		FSSettingObject *obj = [[[FSSettingObject alloc] init] autorelease];
-//		if (row == 0) {
-//            obj.description = NSLocalizedString(@"离线下载", nil);
-//			obj.settingKind = FSSetting_None;
-//		} else if (row == 1) {
-//			obj.description = NSLocalizedString(@"我的收藏", nil);
-//			obj.settingKind = FSSetting_None;
-//			obj.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//		} else if (row == 2) {
-//			obj.description = NSLocalizedString(@"清理缓存", nil);
-//			obj.settingKind = FSSetting_None;
-//		} else if (row == 3) {
-//			obj.description = NSLocalizedString(@"检查更新", nil);
-//			obj.settingKind = FSSetting_None;
-//		} 
-//		return obj;
-//	} else {
-//		return nil;
-//	}
-//}
-//
-////cell数量
-//- (NSInteger)tableViewNumberInSection:(FSTableContainerView *)sender section:(NSInteger)section {
-//	if (section == 0) {
-//		return 4;
-//	} else {
-//		return 0;
-//	}
-//}
-//
-//- (NSInteger)tableViewSectionNumber:(FSTableContainerView *)sender {
-//	return 1;
-//}
-//
-//-(void)tableViewDataSourceDidSelected:(FSTableContainerView *)sender withIndexPath:(NSIndexPath *)indexPath{
-//    NSInteger section = [indexPath section];
-//	NSInteger row = [indexPath row];
-//    if (section == 0) {
-//		if (row == 0) {
-//            //[_fs_GZF_GetNewsDataForOFFlineDAO getDataForOFFline];
-//		}
-//        
-//        if (row == 1) {
-//			FSMyFavoritesViewController *myFavoritesCtrl = [[FSMyFavoritesViewController alloc] init];
-//			FSUINavigationController *navMyFavoritesCtrl = [[FSUINavigationController alloc] initWithRootViewController:myFavoritesCtrl];
-//			[self.fsSlideViewController  presentModalViewController:navMyFavoritesCtrl animated:YES];
-//			[navMyFavoritesCtrl release];
-//			[myFavoritesCtrl release];
-//		}
-//        if (row == 2) {
-//			;//清理缓存
-//		}
-//        if (row == 3) {
-//			;//检查更新
-//		}
-//	} 
-//}
-//
-//
-////***********************************************
-//-(void)getAllDataComplete:(FS_GZF_BaseGETForOFFlineDAO *)sender{
-//    NSLog(@"getAllDataComplete");
-//    [[GlobalConfig shareConfig] setOFFlineReading:YES];
-//    [_settingView loadData];
-//}
-//
 
 @end

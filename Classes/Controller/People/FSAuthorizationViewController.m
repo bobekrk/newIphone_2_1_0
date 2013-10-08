@@ -56,8 +56,16 @@
     _tencentEngine = [[TCWBEngine alloc]initWithAppKey:QQAPPKEY andSecret:QQSECRET andRedirectUrl:QQREDIRECTURL];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    CGRect xxx = self.view.frame;
+    xxx.origin.y = 0;
+    self.view.frame = xxx;
+}
 -(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+    //[super viewDidAppear:animated];
+   
     [_fsALLSettingContainerView loadData];
 }
 

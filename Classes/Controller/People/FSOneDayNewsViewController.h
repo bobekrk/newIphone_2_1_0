@@ -19,7 +19,7 @@
 //	FS_GZF_ForOneDayNewsListDAO       *_newsListData;
 //    FS_GZF_ForOnedayNewsFocusTopDAO   *_fsForOneDayNewsListFocusTopData;
 //    LygAdsDao                         *_lygAdsDao;
-    FS_GZF_GetWeatherMessageDAO       *_fs_GZF_GetWeatherMessageDAO;
+    //FS_GZF_GetWeatherMessageDAO       *_fs_GZF_GetWeatherMessageDAO;
     
     NSMutableArray                    *_sectionMessage;
     
@@ -31,7 +31,7 @@
 @property(nonatomic,retain) FS_GZF_ForOneDayNewsListDAO       *newsListData;
 @property(nonatomic,retain) FS_GZF_ForOnedayNewsFocusTopDAO   *fsForOneDayNewsListFocusTopData;
 @property(nonatomic,retain) LygAdsDao                         *lygAdsDao;
-@property(nonatomic,retain) FS_GZF_GetWeatherMessageDAO       *fs_GZF_GetWeatherMessageDAO;
+//@property(nonatomic,retain) FS_GZF_GetWeatherMessageDAO       *fs_GZF_GetWeatherMessageDAO;
 //@property(nonatomic,retain)
 //@property(nonatomic,retain)
 -(void)reSetSectionMessage;

@@ -51,7 +51,13 @@
 }
 
 -(void)returnBack:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.navigationController) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else if (self.presentingViewController)
+    {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    
 }
 
 -(void)layoutControllerViewWithRect:(CGRect)rect{

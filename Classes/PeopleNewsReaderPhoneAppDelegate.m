@@ -41,7 +41,12 @@
 //推送
 #import "FS_GZF_PushTokenPOSTXMLDAO.h"
 
-
+NSString * getCityName()
+{
+    PeopleNewsReaderPhoneAppDelegate * xxx = (PeopleNewsReaderPhoneAppDelegate*)[UIApplication sharedApplication].delegate;
+    return xxx.cityName?xxx.cityName:@"北京";
+    //return xxx.cityName;
+}
 @interface PeopleNewsReaderPhoneAppDelegate(PrivateMethod)
 - (void)showLoadingView:(UIView *)aview;
 - (void)showMainUserInterface;
@@ -56,20 +61,7 @@
 
 #pragma mark -
 #pragma mark Application lifecycle
-/*typedef NS_ENUM(NSInteger, UIStatusBarStyle) {
-    UIStatusBarStyleDefault,
-    UIStatusBarStyleBlackTranslucent,
-    UIStatusBarStyleBlackOpaque
-};
 
-typedef NS_ENUM(NSInteger, UIStatusBarAnimation) {
-    UIStatusBarAnimationNone,
-#if __IPHONE_3_2 <= __IPHONE_OS_VERSION_MAX_ALLOWED
-    UIStatusBarAnimationFade,
-    UIStatusBarAnimationSlide,
-#endif
-};*/
-extern NSString * CTSettingCopyMyPhoneNumber();
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackOpaque;
     _fsNewsContainerViewController_forPush = nil;
@@ -102,57 +94,31 @@ extern NSString * CTSettingCopyMyPhoneNumber();
     [self ShareWeiXinSetting];//微信
     
     
-    //友盟追踪 begin
-//    NSString * appKey = @"361bcf569ed3991df0a74850a1f84d6f";
-//    
-//    NSString * deviceName = [[[UIDevice currentDevice] name] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//    
-//   NSString * mac = [self macString];
-//    NSString * urlString = [NSString stringWithFormat:@"http://log.umtrack.com/ping/%@/?devicename=%@&udid=%@", appKey,deviceName,mac];
-//    
-//    [NSURLConnection connectionWithRequest:[NSURLRequest requestWithURL: [NSURL URLWithString:urlString]] delegate:nil];
-//    
-//    //友盟追踪 end
-//    
-////    [self showLoadingView];
-//    
-////    GlobalConfig *config = [GlobalConfig shareConfig];
-////	BOOL isShowChannel = [config isPostChannel];
-////	
-////	if (!isShowChannel) {
-////		[self showChannelSettingForOneDay];
-////	} else {
-////		[self showMainUserInterface];
-////	}
-//    
-//    //激活统计
-//    [self postStatistice];
-    
-    //[self  fsLoaddingImageViewWillDisappear:nil];
+
     [self showFirstLoad];
     [self.window makeKeyAndVisible];
 #ifdef MYDEBUG
  	NSLog(@"%@", NSLocalizedString(@"DemoTitle", nil)); 
 #endif
     
-//    [FSHTTPWebExData HTTPGetDataWithURLString:@"http://mobile.app.people.com.cn:81/paper/rmrb.php?action=iphone"
-//                              blockCompletion:^(NSData *data, BOOL success) {
-//                                  NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//                                  FSLog(@"test.str:%@", str);
-//                                  [str release];
-//    }];
-	
-    
-    NSDictionary *value = (NSDictionary *)[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
-    //NSLog(@"didFinishLaunchingWithOptions");
+
+	NSDictionary *value = (NSDictionary *)[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
     pushInof = [value retain];
     
     NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceNow:0];
     _TimeForeground = [date timeIntervalSince1970];
     [date release];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
     //NSLog(@"%@",CTSettingCopyMyPhoneNumber());
-        return YES;
+    _locManager = [[CLLocationManager alloc] init];
+    [_locManager setDelegate:self];
+    [_locManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
+    [_locManager startMonitoringSignificantLocationChanges];
+    _fs_GZF_localGetWeatherMessageDAO = [[FS_GZF_GetWeatherMessageDAO alloc] init];
+    _fs_GZF_localGetWeatherMessageDAO.parentDelegate = self;
+    _fs_GZF_localGetWeatherMessageDAO.isGettingList = NO;
+    return YES;
 }
 -(void)xxxxx
 {
@@ -446,8 +412,8 @@ extern NSString * CTSettingCopyMyPhoneNumber();
 #pragma mark Memory management
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
-    UIButton * button = (UIButton*)[self.window viewWithTag:1000];
-    [button setTitle:@"!!!!!!!!" forState:UIControlStateNormal];
+//    UIButton * button = (UIButton*)[self.window viewWithTag:1000];
+//    [button setTitle:@"!!!!!!!!" forState:UIControlStateNormal];
 }
 
 
@@ -561,11 +527,11 @@ extern NSString * CTSettingCopyMyPhoneNumber();
     [self DidRecivePushMessage:pushInof];
     
     
-    UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.frame = CGRectMake(0, 100, 40, 40);
-    [button addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
-    [self.window addSubview:button];
-    button.tag     = 1000;
+//    UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    button.frame = CGRectMake(0, 100, 40, 40);
+//    [button addTarget:self action:@selector(exit) forControlEvents:UIControlEventTouchUpInside];
+//    [self.window addSubview:button];
+//    button.tag     = 1000;
     
 }
 -(void)exit
@@ -814,6 +780,153 @@ extern NSString * CTSettingCopyMyPhoneNumber();
         }
     }
 }
+
+#pragma dingwei 
+-(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
+    
+//    CLLocationCoordinate2D loc = [newLocation coordinate];
+    NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
+    NSInteger v = [systemVersion integerValue];
+    
+    if (v>5) {
+        //获取所在地城市名
+        CLGeocoder *geocoder=[[CLGeocoder alloc]init];
+        [geocoder reverseGeocodeLocation:newLocation completionHandler:^(NSArray *placemarks,NSError *error)
+         {
+             for(CLPlacemark *placemark in placemarks)
+             {
+                 //NSString *currentCity=[[placemark.addressDictionary objectForKey:@"City"] substringToIndex:2];
+                 NSDictionary *addressDictionary = placemark.addressDictionary;
+                 //NSLog(@"addressDictionary%@",placemark.addressDictionary);
+                 
+                 //北京、上海、重庆、天津
+//                 NSString *State = [addressDictionary objectForKey:@"State"];
+//                 
+//                 NSString *SubLocality = [addressDictionary objectForKey:@"SubLocality"];
+//                 
+//                 NSString *shi = [State substringFromIndex:[State length]-1];
+                 NSString * string = [addressDictionary objectForKey:@"City"];
+                 if (string) {
+                     self.cityName     = [string substringToIndex:string.length - 1];
+                 }else
+                 {
+                     NSString * string2 = [addressDictionary objectForKey:@"State"];
+                     self.cityName     = [string2 substringToIndex:string2.length - 1];
+                 }
+                 _fs_GZF_localGetWeatherMessageDAO.group = self.cityName;
+                 [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+                 NSLog(@"%@",_cityName);
+//                 NSLog(@"%@   %@   %@   ",State,SubLocality,shi);
+//                 if ([shi isEqualToString:@"市"]) {
+//                     //NSLog(@"111111");
+//                     
+//                     if ([_cityName isEqualToString:[State substringToIndex:[State length]-1]]) {
+//                         self.localCity = _cityName;
+//                         //return;
+//                     }
+//                     self.localCity = [State substringToIndex:[State length]-1];
+//                     _fs_GZF_localGetWeatherMessageDAO.group = [State substringToIndex:[State length]-1];
+//                     [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+//                 }
+//                 else{
+//                     //NSLog(@"222222");
+//                     NSString *shi = [SubLocality substringFromIndex:[SubLocality length]-1];
+//                     if ([shi isEqualToString:@"市"]) {
+//                         if ([_cityName isEqualToString:[SubLocality substringToIndex:[SubLocality length]-1]]) {
+//                             self.localCity = _cityName;
+//                             return;
+//                         }
+//                         self.localCity = [State substringToIndex:[State length]-1];
+//                         _fs_GZF_localGetWeatherMessageDAO.group = [SubLocality substringToIndex:[SubLocality length]-1];
+//                         [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+//                     }
+//                     else{
+//                         return;
+//                         [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+//                     }
+//                 }
+                 
+             }
+         }];
+        [geocoder release];
+        
+    }
+    else{
+//        MKReverseGeocoder *reverseGeocoder =[[[MKReverseGeocoder alloc] initWithCoordinate:loc] autorelease];
+//        reverseGeocoder.delegate = self;
+//        [reverseGeocoder start];
+    }
+    
+    [manager stopMonitoringSignificantLocationChanges];
+    
+}
+
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
+    NSLog(@" locationManager errorerror");
+}
+
+
+//- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
+//{
+//    NSString *errorMessage = [error localizedDescription];
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"定位失败."
+//                                                        message:errorMessage
+//                                                       delegate:nil
+//                                              cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil];
+//    [alertView show];
+//    [alertView release];
+//    
+//    
+//    //[_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+//}
+
+
+//- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
+//{
+//    
+//    
+//    NSDictionary *addressDictionary = placemark.addressDictionary;
+//    //NSLog(@"addressDictionary%@",placemark.addressDictionary);
+//    
+//    //NSLog(@"SubLocality%@",[addressDictionary objectForKey:@"State"]);
+//    
+//    //北京、上海、重庆、天津
+//    NSString *State = [addressDictionary objectForKey:@"State"];
+//    
+//    NSString *SubLocality = [addressDictionary objectForKey:@"SubLocality"];
+//    
+//    NSString *shi = [State substringFromIndex:[State length]-1];
+//    NSLog(@"%@   %@   %@   ",State,SubLocality,shi);
+////    if ([shi isEqualToString:@"市"]) {
+////        //NSLog(@"111111");
+////        
+////        if ([_cityName isEqualToString:[State substringToIndex:[State length]-1]]) {
+////            self.localCity = _cityName;
+////            return;
+////        }
+////        self.localCity = [State substringToIndex:[State length]-1];
+////        _fs_GZF_localGetWeatherMessageDAO.group = [State substringToIndex:[State length]-1];
+////        [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+////    }
+////    else{
+////        //NSLog(@"222222");
+////        NSString *shi = [SubLocality substringFromIndex:[SubLocality length]-1];
+////        if ([shi isEqualToString:@"市"]) {
+////            if ([_cityName isEqualToString:[SubLocality substringToIndex:[SubLocality length]-1]]) {
+////                self.localCity = _cityName;
+////                return;
+////            }
+////            self.localCity = [State substringToIndex:[State length]-1];
+////            _fs_GZF_localGetWeatherMessageDAO.group = [SubLocality substringToIndex:[SubLocality length]-1];
+////            [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+////        }
+////        else{
+////            return;//[_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+////        }
+////    }
+//    
+//}
 
 @end
 

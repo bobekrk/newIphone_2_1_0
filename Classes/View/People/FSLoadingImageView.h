@@ -11,24 +11,30 @@
 #import <MessageUI/MessageUI.h>
 #import "LygAdsDao.h"
 #import "FSAsyncImageView.h"
+#import "FS_GZF_ForLoadingImageDAO.h"
+//#import "FS_GZF_Fo"
 @class LygAdsDao;
 
-@interface FSLoadingImageView : UIView<MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate,MFMailComposeViewControllerDelegate>{
+@interface FSLoadingImageView : UIView<MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate,MFMailComposeViewControllerDelegate,FSBaseDAODelegate>{
 @protected
     id                         _parentDelegate;
     NSTimer                   *_timer;
-    //BOOL                       firstTime;
     LygAdsDao                 *_fs_GZF_ForLoadingImageDAO;
     
-    //BOOL                       _switch;
     FSShareIconContainView    *_fsShareIconContainView;
-    FSAsyncImageView          *_adImageView;
+//    FSAsyncImageView          *_adImageView;
+    
+    
+    FS_GZF_ForLoadingImageDAO *_fs_GZF_ForLoadingImageDAO2;
+    int                        _adsStatus;
+    int                        _headPicStatus;
 }
 
 -(void)imageLoadingComplete;
 
 @property (nonatomic,assign) id parentDelegate;
-
+@property (nonatomic,retain) FSAsyncImageView  *adImageView;
+@property (nonatomic,retain) FSAsyncImageView  *adImageView2;
 
 @end
 

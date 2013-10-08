@@ -105,6 +105,14 @@
     [self.view addSubview:_fsShareNoticView];
     
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    CGRect rect = self.view.frame;
+    rect.origin.y = 0;
+    self.view.frame = rect;
+    
+}
 
 -(void)returnBack:(id)sender{
 //    if (_withnavTopBar){

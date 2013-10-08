@@ -29,13 +29,22 @@ static FSNetworkDataManager *_globalNetworkManager = nil;
 	}
 	return self;
 }
-
+-(void)clearMemory
+{
+    if (_networkDataList) {
+        [_networkDataList release];
+        _networkDataList = nil;
+    }
+}
 + (FSNetworkDataManager *)shareNetworkDataManager {
 	@synchronized(self) {
 		if (_globalNetworkManager == nil) {
 			_globalNetworkManager = [[self alloc] init];
 			[_globalNetworkManager initializeNetworkDataList];
-		}
+		}else
+        {
+            
+        }
 	}
 	return _globalNetworkManager;
 }
@@ -183,7 +192,9 @@ static FSNetworkDataManager *_globalNetworkManager = nil;
 }
 
 - (void)initializeNetworkDataList {
-	_networkDataList = [[NSMutableDictionary alloc] init];
+    if (!_networkDataList) {
+        _networkDataList = [[NSMutableDictionary alloc] init];
+    }
 }
 
 @end

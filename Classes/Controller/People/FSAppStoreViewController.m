@@ -47,52 +47,41 @@
 }
 
 #pragma mark - view life cycle
-
+-(void)returnBack
+{
+    storeViewController.delegate = nil;
+    [storeViewController release];
+    if (self.navigationController) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else
+    {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+}
 -(void)loadChildView{
     [super loadChildView];
-    /*
-    self.title = NSLocalizedString(@"App Store", nil);
-    
-    UIButton *returnBT = [[UIButton alloc] init];
-    [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
-    //[returnBT setTitle:NSLocalizedString(@"返回", nil) forState:UIControlStateNormal];
-    returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
-    [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
-    [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
-    returnBT.frame = CGRectMake(0, 0, 55, 30);
-    
-    UIBarButtonItem *returnButton = [[UIBarButtonItem alloc] initWithCustomView:returnBT];
-    self.navigationItem.leftBarButtonItem = returnButton;
-    [returnButton release];
-    [returnBT release];
-    
-    _fsAppStoreContainerView = [[FSAppStoreContainerView alloc]init];
-    _fsAppStoreContainerView.data = self.url;
-    //[_fsAppStoreContainerView setUrl:self.url];
-    
-    [self.view addSubview:_fsAppStoreContainerView];
-    NSLog(@"_fsAppStoreContainerView.url %@",_fsAppStoreContainerView.url);
-    //NSLog(@"self.url %@",self.url);
-     */
-   
-//    UIButton *returnBT = [[UIButton alloc] init];
-//    [returnBT setBackgroundImage:[UIImage imageNamed:@"returnbackBT.png"] forState:UIControlStateNormal];
-//    //[returnBT setTitle:NSLocalizedString(@"返回", nil) forState:UIControlStateNormal];
-//    returnBT.titleLabel.font = [UIFont systemFontOfSize:12];
-//    [returnBT addTarget:self action:@selector(returnBack:) forControlEvents:UIControlEventTouchUpInside];
-//    [returnBT setTitleColor:COLOR_NEWSLIST_TITLE_WHITE forState:UIControlStateNormal];
-//    returnBT.frame = CGRectMake(0, 0, 55, 30);
+//    self.navTopBar.topItem.leftBarButtonItem = nil;
 //    
-//    UIBarButtonItem *returnButton = [[UIBarButtonItem alloc] initWithCustomView:returnBT];
-//    self.navigationItem.leftBarButtonItem = returnButton;
-    
-    
-    
+////    UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(10, 7, 40, 30)];
+////    label.text      = @"取消";
+//    UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(10, 7, 40, 30)];
+//    [button setTitle:@"取消" forState:UIControlStateNormal];
+//    
+////    UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(returnBack)];
+////    item.tintColor         = [UIColor whiteColor];
+////    self.navTopBar.topItem.leftBarButtonItem = item;
+//    
+//    
+//    UIBarButtonItem * item = [[UIBarButtonItem alloc]initWithCustomView:label];
+//    item.tintColor         = [UIColor whiteColor];
+//    self.navTopBar.topItem.leftBarButtonItem = item;
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    [self.view setAlpha:0.4];
-    UIActivityIndicatorView *_activityIndicatorView = [[UIActivityIndicatorView alloc]initWithFrame:self.view.frame];
-    [_activityIndicatorView setCenter:self.view.center];
-    [_activityIndicatorView setActivityIndicatorViewStyle: UIActivityIndicatorViewStyleWhiteLarge];  //颜色根据不同的界面调整
+    [self.view setAlpha:1];
+    CGRect rect = self.view.frame;
+    rect.origin.y = 44;
+    UIActivityIndicatorView *_activityIndicatorView = [[UIActivityIndicatorView alloc]initWithFrame:rect];
+    //[_activityIndicatorView setCenter:self.view.center];
+    [_activityIndicatorView setActivityIndicatorViewStyle: UIActivityIndicatorViewStyleGray];  //颜色根据不同的界面调整
     [_activityIndicatorView startAnimating];
     [self.view addSubview:_activityIndicatorView];
     
@@ -101,23 +90,21 @@
     //NSString *idstr = self.url;
     NSInteger number = [self.url integerValue];
     NSLog(@"integer is %d",number);
-    SKStoreProductViewController *storeViewController =
+    storeViewController =
     [[SKStoreProductViewController alloc] init];
     
     storeViewController.delegate = self;
+    storeViewController.view.backgroundColor = [UIColor whiteColor];
     
     
-//    NSDictionary *parameters =
-//    @{SKStoreProductParameterITunesItemIdentifier:
-//    [NSNumber numberWithInteger:number]};
-    NSLog(@"%@",self.url);
+
     NSDictionary * parameters = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:number], SKStoreProductParameterITunesItemIdentifier,nil];
     NSLog(@"%@",parameters);
-    
+    __block UIViewController * xxx = self;
     [storeViewController loadProductWithParameters:parameters
                                    completionBlock:^(BOOL result, NSError *error) {
                                        if (result)
-                                           [self presentViewController:storeViewController animated:NO completion:nil];
+                                           [xxx presentViewController:storeViewController animated:NO completion:nil];
                                    }];
     
 //    [returnButton release];

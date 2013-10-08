@@ -15,7 +15,7 @@
 #import "WBLogInAlertView.h"
 #import "FS_GZF_NewsContainerDAO.h"
 #import <MessageUI/MessageUI.h>
-
+#import "LygAdsDao.h"
 
 
 @class FSOneDayNewsObject,FSFocusTopObject,FSMyFaverateObject,FS_GZF_NewsContainerDAO,FS_GZF_CommentListDAO,FS_GZF_NewsCommentPOSTXMLDAO;
@@ -56,6 +56,7 @@
 @property (nonatomic,assign)  NewsSourceKind       newsSourceKind;
 @property (nonatomic,copy)    void (^fpChangeTitleClor)(UITableViewCell*);
 @property (nonatomic,assign)  BOOL isImportant;
+@property (nonatomic,retain)  LygAdsDao  *      adsDao;
 
 
 -(void)share;

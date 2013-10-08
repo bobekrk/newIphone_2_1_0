@@ -28,7 +28,8 @@
 }
 
 -(void)doSomethingAtInit{
-    self.backgroundColor = COLOR_NEWSLIST_TITLE_WHITE;
+    //self.backgroundColor = COLOR_NEWSLIST_TITLE_WHITE;
+    self.backgroundColor = [UIColor clearColor];
     _swichButton = [[UISwitch alloc] init];
     self.textLabel.textColor = COLOR_NEWSLIST_TITLE;
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0) {

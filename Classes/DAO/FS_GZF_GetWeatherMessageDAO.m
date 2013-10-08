@@ -41,9 +41,9 @@
 #import "FS_GZF_GetWeatherMessageDAO.h"
 #import "FSWeatherObject.h"
 #import "FSUserSelectObject.h"
+#import "PeopleNewsReaderPhoneAppDelegate.h"
 
-
-#define  WEATHER_WITH_IP @"http://mobile.app.people.com.cn:81/news2/news.php?act=weather_detail&rt=xml&cityname=%@"
+#define  WEATHER_WITH_IP @"http://mobile.app.people.com.cn:81/news2/news.php?act=weather_detail&rt=xml"
 
 #define  WEATHER_WITH_CITYID @"http://mobile.app.people.com.cn:81/news2/news.php?act=weather&rt=xml&cityid=%@"
 
@@ -111,7 +111,7 @@
    
     _cityName = @"";
     _UpdataDate = @"";
-    NSString *url = [NSString stringWithFormat:@"%@&cityname=%@",WEATHER_WITH_IP,self.group];
+    NSString *url = [NSString stringWithFormat:@"%@&cityname=%@",WEATHER_WITH_IP, self.group];
     return [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //return WEATHER_WITH_IP;
 }
@@ -120,7 +120,7 @@
 
 -(NSString *)predicateStringWithQueryDataKind:(Query_DataKind)dataKind{
             
-    return [NSString stringWithFormat:@"group='%@' AND bufferFlag!='3'",self.group];
+    return [NSString stringWithFormat:@"cityname='%@' AND bufferFlag!='3'",self.group];
         
     //return [NSString stringWithFormat:@"group='%@'",self.group];
     return nil;
@@ -236,17 +236,21 @@
 
 
 - (void)executeFetchRequest:(NSFetchRequest *)request {
-	NSError *error = nil;
-	NSArray *resultSet = [self.managedObjectContext executeFetchRequest:request error:&error];
-	if (!error) {
-        
-		if ([resultSet count]>0) {
-            //NSLog(@"[resultSet count]:%d",[resultSet count]);
-            self.objectList = (NSMutableArray *)resultSet;
-            self.isRecordListTail = [self.objectList count] < [self.fetchRequest fetchLimit];
-            [self setBufferFlag];
+     @synchronized(self)
+    {
+        NSError *error = nil;
+        NSArray *resultSet = [self.managedObjectContext executeFetchRequest:request error:&error];
+        if (!error) {
+            
+            if ([resultSet count]>0) {
+                //NSLog(@"[resultSet count]:%d",[resultSet count]);
+                self.objectList = (NSMutableArray *)resultSet;
+                self.isRecordListTail = [self.objectList count] < [self.fetchRequest fetchLimit];
+                [self setBufferFlag];
+            }
         }
-	}
+    }
+	
 }
 
 -(void)setBufferFlag{
@@ -264,11 +268,11 @@
     NSArray *Uarray = [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext] getObjectsByKeyWithName:@"FSUserSelectObject" key:@"kind" value:[NSString stringWithFormat:@"weather_%@",self.group]];
     
     for (FSUserSelectObject *o in Uarray) {
-        if (_isRefreshToDeleteOldData == YES && [o.bufferFlag isEqualToString:@"2"]) {
-            o.bufferFlag = @"3";
-        }else if (_isRefreshToDeleteOldData == YES && [o.bufferFlag isEqualToString:@"1"]){
-            o.bufferFlag = @"2";
-        }
+//        if (_isRefreshToDeleteOldData == YES && [o.bufferFlag isEqualToString:@"2"]) {
+//            o.bufferFlag = @"3";
+//        }else if (_isRefreshToDeleteOldData == YES && [o.bufferFlag isEqualToString:@"1"]){
+//            o.bufferFlag = @"2";
+//        }
     }
     
     [[FSBaseDB sharedFSBaseDBWithContext:self.managedObjectContext].managedObjectContext save:nil];

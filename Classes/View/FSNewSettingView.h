@@ -37,6 +37,7 @@
 @property(nonatomic,retain)FSWeatherView  * fsWeatherView;
 @property(nonatomic,retain)UITableView    * myTableView;
 @property(nonatomic,retain)NSArray * dataObjectArry;
+-(void)updataWeatherStatus;
 @end
 @interface settingDataObject : NSObject
 {
@@ -45,4 +46,5 @@
 @property(nonatomic,retain)UIImage*leftImage;
 @property(nonatomic,retain)UIImage*leftHighLightedImage;
 @property(nonatomic,copy)NSString * titleString;
+
 @end

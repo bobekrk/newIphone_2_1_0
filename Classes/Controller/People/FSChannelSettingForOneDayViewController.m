@@ -79,7 +79,7 @@
     //if (self.isReSetting) {
         
          _navTopBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-    _navTopBar.tintColor = [UIColor whiteColor];
+         _navTopBar.tintColor = [UIColor whiteColor];
          #ifdef __IPHONE_5_0
          [_navTopBar setBackgroundImage:[UIImage imageNamed: @"navigatorBar.png"] forBarMetrics:UIBarMetricsDefault];
          #endif
@@ -106,6 +106,14 @@
         UIBarButtonItem *returnButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回.png"] style:UIBarButtonItemStylePlain target:self action:@selector(returnBack:)];
         returnButton.tintColor       = [UIColor whiteColor];
         _navTopBar.topItem.leftBarButtonItem = returnButton;
+        _navTopBar.tintColor         = [UIColor whiteColor];
+        UIBarButtonItem * buttonxxxx = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(popFinished)];
+        buttonxxxx.tintColor = [UIColor whiteColor];
+        NSDictionary * dict2 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor darkGrayColor],UITextAttributeTextColor,CGSizeMake(0, 0),UITextAttributeTextShadowOffset,nil];
+        [buttonxxxx setTitleTextAttributes:dict2 forState:UIControlStateNormal];
+        _navTopBar.topItem.rightBarButtonItem = buttonxxxx;
+    //[rightButton setTitleTextAttributes:dict2 forState:UIControlStateNormal];
+        [buttonxxxx release];
         [returnButton release];
         [returnBT release];
     //}
@@ -138,10 +146,8 @@
     
     
 }
-
-
--(void)returnBack:(id)sender{
-    
+-(void)popFinished
+{
     NSArray *array = [[FSBaseDB sharedFSBaseDB] getAllObjectsSortByKey:@"FSChannelSelectedObject" key:@"channelid" ascending:YES];
     if ([array count]==0) {
         FSInformationMessageView *informationMessageView = [[FSInformationMessageView alloc] initWithFrame:CGRectZero];
@@ -152,7 +158,7 @@
                                                 withPositionKind:PositionKind_Vertical_Horizontal_Center
                                                       withOffset:0.0f];
         [informationMessageView release];
-
+        
         return;
     }
     
@@ -176,8 +182,34 @@
             [_parentDelegate fsChannelSettingForOneDayViewControllerWillDisapear:self];
         }
         [self dismissWithKind:FSChannelSettingForOneDayDismissKind_ClipToLeft];
-
+        
     }
+
+}
+
+
+-(void)returnBack:(id)sender{
+    if (self.isReSetting) {
+        if (self.presentingViewController) {
+            [self dismissModalViewControllerAnimated:YES];
+        }else if(self.navigationController){
+            [self.navigationController popViewControllerAnimated:YES];
+        }else
+        {
+            if ([_parentDelegate respondsToSelector:@selector(fsChannelSettingForOneDayViewControllerWillDisapear:)]) {
+                [_parentDelegate fsChannelSettingForOneDayViewControllerWillDisapear:self];
+            }
+            [self dismissWithKind:FSChannelSettingForOneDayDismissKind_ClipToLeft];
+        }
+    }
+    else{
+        if ([_parentDelegate respondsToSelector:@selector(fsChannelSettingForOneDayViewControllerWillDisapear:)]) {
+            [_parentDelegate fsChannelSettingForOneDayViewControllerWillDisapear:self];
+        }
+        [self dismissWithKind:FSChannelSettingForOneDayDismissKind_ClipToLeft];
+        
+    }
+
 }
 
 

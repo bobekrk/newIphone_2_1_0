@@ -134,44 +134,45 @@
 
 -(NSString *)processCommentList:(NSString *)templateString{
     
-//    NSArray *array = (NSArray *)self.data;
+    NSArray *array = (NSArray *)self.data;
     
     templateString = [NSString stringWithFormat:@"%@%@",templateString,CONTENTWEBVIEW_COMMENT_TITLE_DESC];
-//    for (FSCommentObject *o in array) {
-//        NSString *nickName = o.nickname;
-//        
-//        NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:[o.timestamp doubleValue]];
-//        
-//        NSString *datetime = timeIntervalStringSinceNow(date);
-//        
-//        NSString *body = o.content;
-//        body = [body stringByReplacingOccurrencesOfString:@"\"" withString:@"&quot;"];
-//        body = [body stringByReplacingOccurrencesOfString:@"\r\n" withString:@"<br>"];
-//        body = [body stringByReplacingOccurrencesOfString:@"\n\r" withString:@"<br>"];
-//        body = [body stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
-//        body = [body stringByReplacingOccurrencesOfString:@"\r" withString:@"<br>"];
-//        NSString *comefrom = @"";
-//        NSString *strCommentBlock = [NSString stringWithFormat:CONTENTWEBVIEW_COMMENT_BLOCK, nickName, datetime, body, comefrom];
-//        templateString = [NSString stringWithFormat:@"%@%@",templateString,strCommentBlock];
-//        
-//        if ([o.adminNickname length]>0) {
-//            NSString *admin = o.adminNickname;
-//            NSDate *REdate = [[NSDate alloc] initWithTimeIntervalSince1970:[o.adminTimestamp doubleValue]];
-//            NSString *REdatetime = timeIntervalStringSinceNow(REdate);
-//            NSString *REbody = o.adminContent;
-//            NSString *strCommentREBlock = [NSString stringWithFormat:CONTENTWEBVIEW_COMMENT_RE_BLOCK, admin, REdatetime, REbody, comefrom];
-//            templateString = [NSString stringWithFormat:@"%@%@",templateString,strCommentREBlock];
-//        }
-//    }
-//    if (_oldCount==[array count]) {
-//        ;
-//    }
-//    else{
-//        _oldCount = [array count];
-//        templateString = [NSString stringWithFormat:@"%@%@",templateString,CONTENTWEBVIEW_COMMENT_MORE];
-//    }
-//	
-//    
+    for (FSCommentObject *o in array) {
+        NSString *nickName = o.nickname;
+        
+        NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:[o.timestamp doubleValue]];
+        
+        NSString *datetime = timeIntervalStringSinceNow(date);
+        
+        NSString *body = o.content;
+        body = [body stringByReplacingOccurrencesOfString:@"\"" withString:@"&quot;"];
+        body = [body stringByReplacingOccurrencesOfString:@"\r\n" withString:@"<br>"];
+        body = [body stringByReplacingOccurrencesOfString:@"\n\r" withString:@"<br>"];
+        body = [body stringByReplacingOccurrencesOfString:@"\n" withString:@"<br>"];
+        body = [body stringByReplacingOccurrencesOfString:@"\r" withString:@"<br>"];
+        NSString *comefrom = @"";
+        NSString *strCommentBlock = [NSString stringWithFormat:CONTENTWEBVIEW_COMMENT_BLOCK, nickName, datetime, body, comefrom];
+        templateString = [NSString stringWithFormat:@"%@%@",templateString,strCommentBlock];
+        
+        if ([o.adminNickname length]>0) {
+            NSString *admin = o.adminNickname;
+            NSDate *REdate = [[NSDate alloc] initWithTimeIntervalSince1970:[o.adminTimestamp doubleValue]];
+            NSString *REdatetime = timeIntervalStringSinceNow(REdate);
+            NSString *REbody = o.adminContent;
+            NSString *strCommentREBlock = [NSString stringWithFormat:CONTENTWEBVIEW_COMMENT_RE_BLOCK, admin, REdatetime, REbody, comefrom];
+            templateString = [NSString stringWithFormat:@"%@%@",templateString,strCommentREBlock];
+        }
+    }
+    if (_oldCount==[array count]) {
+        ;
+    }
+    else
+    {
+        _oldCount = [array count];
+        templateString = [NSString stringWithFormat:@"%@%@",templateString,CONTENTWEBVIEW_COMMENT_MORE];
+    }
+	
+    
     return templateString;
 }
 

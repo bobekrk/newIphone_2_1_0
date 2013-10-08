@@ -24,7 +24,7 @@
     
 }
 
-@property (nonatomic,retain) NSString *group;
+@property (nonatomic,copy) NSString *group;
 @property (nonatomic,retain) NSString *cityID;
 
 @end

@@ -42,17 +42,13 @@
 }
 - (id)init {
 	self = [super init];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadData) name:@"refreshSetting" object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadData) name:@"refreshSetting" object:nil];
 	if (self) {
 		NSDate *date = [[NSDate alloc] initWithTimeIntervalSinceNow:0];
         _TimeInterval = [date timeIntervalSince1970];
 		[date release];
 	}
 	return self;
-}
--(void)reloadData
-{
-    [_fsMoreContainerView reloadTableData];
 }
 
 - (void)dealloc {
@@ -110,18 +106,17 @@
     rect.size.height -= (self.canBeHaveNaviBar?44:0);
     _fsMoreContainerView.frame = rect;
 }
-
--(void)doSomethingForViewFirstTimeShow{
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     _peopleAPPS = [[NSMutableArray alloc] init];
     _RecommentAPPS = [[NSMutableArray alloc] init];
     
-    [_fsMoreContainerView loadData];
-    //[_fs_GZF_AppRecommendDAO HTTPGetDataWithKind:GET_DataKind_Unlimited];
+    //[_fsMoreContainerView loadData];
+}
+
+-(void)doSomethingForViewFirstTimeShow{
     
-    
-//    FSRecommendListCell *cell = [[FSRecommendListCell alloc]init];
-//    cell.deleaget = self;
-//    NSLog(@"cell.delegate %@",cell.deleaget);
 }
 
 -(void)swipeLeftAction:(id)sender{
@@ -167,7 +162,6 @@
         NSLog(@"时间过短");
         //[_scrollPageView loadPageData];
     }
-    [self updataWeatherMessage];
     
 }
 
@@ -199,9 +193,9 @@
             }
         }
         if (status == FSBaseDAOCallBack_WorkingStatus) {
-            FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:self.view.frame andBool:NO];
-            [indicatorMessageView showIndicatorMessageViewInView:_fsMoreContainerView withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
-            [indicatorMessageView release];
+//            FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:self.view.frame andBool:NO];
+//            [indicatorMessageView showIndicatorMessageViewInView:_fsMoreContainerView withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
+//            [indicatorMessageView release];
         }
     }
 }
@@ -258,11 +252,6 @@
 
 
 -(void)tableViewDataSourceDidSelected:(FSTableContainerView *)sender withIndexPath:(NSIndexPath *)indexPath{
-    
-//    NSInteger row = [indexPath row];
-//    NSString *url = [[_RecommentAPPS objectAtIndex:row] appLink];
-//    NSLog(@"the url is %@",url);
-//    [self addMyWebView:url];
     NSInteger section = [indexPath section];
     NSInteger row = [indexPath row];
     if (section == 0) {
@@ -360,15 +349,18 @@
         
         
         FSAppStoreViewController *fsAppStoreViewController = [[FSAppStoreViewController alloc]init];
-        fsAppStoreViewController.canBeHaveNaviBar          = YES;
+        fsAppStoreViewController.isnavTopBar               = YES;
         fsAppStoreViewController.url = obj.applinkid;
         
         
         NSLog(@"fsAppStoreViewController.url  :%@",fsAppStoreViewController.url);
         //[self.navigationController pushViewController:fsAppStoreViewController animated:YES];
         [self.parentNavigationController pushViewController:fsAppStoreViewController animated:YES];
-        fsAppStoreViewController.view.backgroundColor      = [UIColor blackColor];
+        //[self presentModalViewController:fsAppStoreViewController animated:YES];
+        fsAppStoreViewController.view.backgroundColor      = [UIColor whiteColor];
         [fsAppStoreViewController release];
+        
+        
         
     }else{
         
@@ -378,6 +370,15 @@
         
         NSLog(@"appUrl is %@",obj.appLink);
     }
+    
+}
+
+
+#pragma mark -
+#pragma mark SKStoreProductViewControllerDelegate
+-(void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController
+{
+    [viewController dismissViewControllerAnimated:YES completion:nil];
     
 }
 

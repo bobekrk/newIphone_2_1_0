@@ -10,7 +10,7 @@
 #import "FSBaseContainerView.h"
 //#import "FSNetworkData.h"
 #import "FSNewsDitailToolBar.h"
-
+#import "LygAdsLoadingImageObject.h"
 
 @interface FSNewsContainerWebView : FSBaseContainerView<UIWebViewDelegate,UIScrollViewDelegate>{
 @protected
@@ -34,6 +34,8 @@
 @property (nonatomic,assign) TouchEvenKind touchEvenKind;
 @property (nonatomic,retain) UIWebView * webContent;
 @property (nonatomic,assign) int hasLoaded;
+@property (nonatomic,retain) LygAdsLoadingImageObject * adsObject;
+@property (nonatomic,retain) NSString                 * adTextUrl;
 -(void)loadWebPageWithContent:(NSString *)contentFile;
 
 -(NSString *)processBodyImages:(NSString *)templateString;

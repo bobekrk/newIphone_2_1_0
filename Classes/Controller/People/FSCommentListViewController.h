@@ -9,18 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "FSBasePeopleViewController.h"
 #import "FSNewsContainerCommentListView.h"
-
+#import "FSBaseSettingViewController.h"
 #import "FSNewsCommentListView.h"
 
 
 @class FS_GZF_CommentListDAO;
 
-@interface FSCommentListViewController : FSBasePeopleViewController <UIGestureRecognizerDelegate,FSBaseContainerViewDelegate>{
+@interface FSCommentListViewController : FSBaseSettingViewController <UIGestureRecognizerDelegate,FSBaseContainerViewDelegate>{
 @protected
     //FSNewsContainerCommentListView *_fsNewsContainerCommentListView;
     FS_GZF_CommentListDAO *_fs_GZF_CommentListDAO;
     
-    UINavigationBar *_navTopBar;
+    //UINavigationBar *_navTopBar;
     
     NSString *_newsid;
     

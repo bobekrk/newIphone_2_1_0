@@ -12,7 +12,7 @@
 #import "FSNewsContainerWebView.h"
 //#import "FSNewsContainerCommentListView.h"
 #import "FSNewsDitailToolBar.h"
-
+#import "FSLoadingImageObject.h"
 
 @interface FSNewsContainerView : FSBaseContainerView <UIGestureRecognizerDelegate,FSBaseContainerViewDelegate,UIScrollViewDelegate>{
 @protected
@@ -41,6 +41,7 @@
 @property (nonatomic,assign) BOOL                 isFirstShow;
 @property (nonatomic,assign) BOOL                 isFullScream;
 @property (nonatomic,retain) FSNewsContainerWebView    *fsNewsContainerWebView;
+
 -(CGFloat)getCommentListHeight;
 
 -(void)showViewDelate;

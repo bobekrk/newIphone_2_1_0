@@ -10,7 +10,7 @@
 #import "FSBasePeopleViewController.h"
 #import "FSTitleView.h"
 #import "FSRoutineNewsListContentView.h"
-
+#import "FS_GZF_GetWeatherMessageDAO.h"
 @class FS_GZF_ForOnedayNewsFocusTopDAO,FS_GZF_ForNewsListDAO,FSUserSelectObject,FS_GZF_ChannelListDAO;
 
 @interface FSNewsViewController : FSBasePeopleViewController <FSTableContainerViewDelegate,UIScrollViewDelegate, UIGestureRecognizerDelegate>{
@@ -25,6 +25,7 @@
 }
 @property(nonatomic,retain)UIImageView * topRedImageView;
 @property(nonatomic,copy)void (^fpChangeTitleColor)(void);
+//@property(nonatomic,retain) FS_GZF_GetWeatherMessageDAO       *fs_GZF_GetWeatherMessageDAO;
 -(FSUserSelectObject *)getUserChannelSelectedObject;
 
 -(BOOL)channleISexp:(FSUserSelectObject *)obj;

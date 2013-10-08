@@ -28,7 +28,7 @@
 #import "FSWebViewForOpenURLViewController.h"
 #import "MyNewsLIstView.h"
 #import "LygDequeueScroView.h"
-
+#import "PeopleNewsReaderPhoneAppDelegate.h"
 #define KIND_USERCHANNEL_SELECTED  @"YAOWENCHANNEL"
 @implementation FSNewsViewController
 
@@ -67,6 +67,8 @@
 //    self.lygAdsDao                       = nil;
 //    self.view                            = nil;
 //    self.isFirstTimeShow                 = NO;
+    self.fpChangeTitleColor = nil;
+    _currentIndex           = 0;
 }
 -(void)viewDidLoad
 {
@@ -316,6 +318,8 @@
     _fs_GZF_ChannelListDAO.parentDelegate = self;
     _fs_GZF_ChannelListDAO.type = @"news";
     _fs_GZF_ChannelListDAO.isGettingList = YES;
+    
+
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -421,6 +425,45 @@
         }
         return;
     }
+    
+//    if ([sender isEqual:_fs_GZF_GetWeatherMessageDAO]) {
+//        if (status == FSBaseDAOCallBack_SuccessfulStatus || status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
+//            if (status == FSBaseDAOCallBack_SuccessfulStatus) {
+//                //FSLog(@"_fs_GZF_ForNewsListDAO Refresh");
+//                //[self getUserChannelSelectedObject];
+//                if ([_fs_GZF_GetWeatherMessageDAO.objectList count]>0) {
+////                    FSChannelObject *CObject = [_fs_GZF_ChannelListDAO.objectList objectAtIndex:0];
+////                    NSArray * arry = [[FSBaseDB sharedFSBaseDB]getObjectsByKeyWithName:@"FSUserSelectObject" key:nil value:nil];
+////                    [[FSBaseDB sharedFSBaseDB] deleteObjectByObjectS:arry];
+////                    FSUserSelectObject *sobj = (FSUserSelectObject *)[[FSBaseDB sharedFSBaseDB] insertObject:@"FSUserSelectObject"];
+////                    
+////                    sobj.kind = @"YAOWENCHANNEL";
+////                    sobj.keyValue1 = CObject.channelname;
+////                    sobj.keyValue2 = CObject.channelid;
+////                    [FSBaseDB saveDB];
+//                }
+////                FSChannelObject *CObject = [_fs_GZF_ChannelListDAO.objectList objectAtIndex:0];
+////                
+////                FSUserSelectObject *sobj = (FSUserSelectObject *)[[FSBaseDB sharedFSBaseDB] insertObject:@"FSUserSelectObject"];
+////                
+////                sobj.kind = KIND_USERCHANNEL_SELECTED;
+////                sobj.keyValue1 = CObject.channelname;
+////                sobj.keyValue2 = CObject.channelid;
+////                sobj.keyValue3 = nil;
+////                [[FSBaseDB sharedFSBaseDB].managedObjectContext save:nil];
+////                [self addKindsScrollView];
+////                if (status == FSBaseDAOCallBack_SuccessfulStatus) {
+////                    
+////                    [_fs_GZF_ChannelListDAO operateOldBufferData];
+////                }
+//            }
+//        }else if(status ==FSBaseDAOCallBack_NetworkErrorStatus){
+//            //[self getUserChannelSelectedObject];
+//            
+//            //[_fs_GZF_ForOnedayNewsFocusTopDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+//        }
+//
+//    }
     
 
 }

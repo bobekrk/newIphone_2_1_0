@@ -186,7 +186,7 @@
         UILabel *lab_2 = [[UILabel alloc] init];
         lab_2.backgroundColor = COLOR_CLEAR;
         lab_2.textColor = COLOR_NEWSLIST_DESCRIPTION;
-        lab_2.text = @"望看高层动态,倾听百姓里短;\r品读国际百味，关注环球军情;\r融入身边世界，我们做有温度的新闻。";
+        lab_2.text = @"望看高层动态,倾听百姓里短;\r品读国际百味，关注环球军情;\r 融入身边世界，做权威、真实的新闻。";
         lab_2.textAlignment = UITextAlignmentCenter;
         lab_2.font = [UIFont systemFontOfSize:16];
         lab_2.numberOfLines = 5;

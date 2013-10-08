@@ -8,6 +8,7 @@
 
 #import "FSTabBarViewCotnroller.h"
 #import "FSBasePeopleViewController.h"
+#import "FSNetworkDataManager.h"
 #define FSTABBAR_HEIGHT 49.0f
 
 @interface FSTabBarViewCotnroller(PrivateMethod)
@@ -94,6 +95,8 @@
             
         }
     }
+    printf("%d",[FSNetworkDataManager shareNetworkDataManager].networkDataList.allKeys.count);
+    //[[FSNetworkDataManager shareNetworkDataManager]clearMemory];
     
     // Release any cached data, images, etc. that aren't in use.
 }
@@ -139,6 +142,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+    CGRect rect = self.view.frame;
+    rect.origin.y = 0;
+    self.view.frame = rect;
 	[_fsSelectedViewController viewWillAppear:animated];
 }
 

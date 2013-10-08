@@ -15,7 +15,7 @@
 
 #import "FSBaseDB.h"
 #import "FSWeatherObject.h"
-
+#import "PeopleNewsReaderPhoneAppDelegate.h"
 
 @implementation FSBasePeopleViewController
 
@@ -175,7 +175,10 @@
 }
 
 -(void)updataWeatherMessage{
-   NSArray *array = [[FSBaseDB sharedFSBaseDB] getObjectsByKeyWithName:@"FSWeatherObject" key:@"group" value:@""];
+    if (!_fsWeatherView) {
+        return;
+    }
+   NSArray *array = [[FSBaseDB sharedFSBaseDB] getObjectsByKeyWithName:@"FSWeatherObject" key:@"group" value:getCityName()];
     
     for (FSWeatherObject *obj in array) {
         if ([obj.day isEqualToString:@"0"]) {

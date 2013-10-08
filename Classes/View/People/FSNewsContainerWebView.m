@@ -12,7 +12,7 @@
 #import "FSCommonFunction.h"
 #import <QuartzCore/QuartzCore.h>
 #import "FSCommentObject.h"
-
+#import "FSWebViewForOpenURLViewController.h"
 #import "FSNetworkDataManager.h"
 
 //评论块
@@ -99,6 +99,8 @@
     }
 	
     [_webContent release];
+    _webContent = nil;
+    self.adsObject = nil;
     
 }
 
@@ -129,8 +131,6 @@
     
 	_webContent.delegate = self;
 	_webContent.dataDetectorTypes = UIDataDetectorTypeNone;
-    
-    _adImageUrl = @"http://58.68.130.168/thumbs/640/320/data/newsimages/1_6_14_1/130312/F201303121363053500242313.jpg";
 	
 }
 
@@ -140,6 +140,14 @@
     
     _webContent.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     //NSLog(@":::%@",NSStringFromCGRect(_webContent.frame));
+    if (self.adsObject) {
+        if (self.adsObject.adType.intValue == 1) {
+            _adImageUrl = self.adsObject.picUrl;
+        }else
+        {
+            self.adTextUrl  = self.adsObject.adTitle;
+        }
+    }
     if (!_hasebeenLoad) {
         [self loadWebPageWithContent:nil];
     }
@@ -224,7 +232,16 @@
             //添加广告图片
             NSString *adString = [self processBodyADImages:nil];
             imageString = [NSString stringWithFormat:@"%@%@",imageString,adString];
-        } 
+        }
+        
+        if (self.adTextUrl.length > 0 ) {
+//            NSString * adString =  [NSString stringWithFormat:@"<p><a href=\"http://www.baidu.com\"><img border=\"0\" src=\"http://58.68.130.168/thumbs/640/320/data/newsimages/1_6_14_1/130312/F201303121363053500242313.jpg\" width=\"300\" height=\"75\"></a></p>"];
+            //printf("%s",self.adsObject.adLink.cString);
+            NSString * path = [[NSBundle mainBundle] pathForResource:@"ads" ofType:@"png"];
+            NSString * adString =  [NSString stringWithFormat:@"<p><img border=\"0\" src=\"%@\" width=\"10\" height=\"14\"><a href=\"%@\"><font color=#5493D3 size=\"4\">%@</font> </a></p>",path,self.adsObject.adLink,self.adsObject.adTitle];
+            imageString = [NSString stringWithFormat:@"%@%@",imageString,adString];
+            //<a href="http://www.w3school.com.cn/">Visit W3School</a>
+        }
         
         templateString = [self replayString:templateString oldString:@"{{body}}" newString:imageString];
         //templateString = [templateString stringByTrimmingCharactersInSet:<#(NSCharacterSet *)#>]
@@ -278,7 +295,8 @@
         //NSLog(@"o.picture:%@",o.picture);
         NSString *loaclFile = getFileNameWithURLString(o.picture, getCachesPath());
         if ([[NSFileManager defaultManager] fileExistsAtPath:loaclFile]) {
-            cachedImage = [UIImage imageWithContentsOfFile:loaclFile];
+            cachedImage   = [[UIImage alloc]initWithContentsOfFile:loaclFile];
+            
         }
         if (cachedImage)
         {
@@ -288,6 +306,7 @@
             //FSLog(@"imageString:%@",imageString);
             NSLog(@"%@",imageString);
             templateString = [NSString stringWithFormat:@"%@%@",templateString,imageString];
+            [cachedImage release];
         }
         else
         {
@@ -549,39 +568,73 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
 	//NSLog(@"should start load ");
+    NSString* urlString = [[request URL] absoluteString];
     if ([request.URL.absoluteString hasPrefix:@"file"]) {
-        self.hasebeenLoad = 50;
-    }else{
-        self.hasebeenLoad = 100;
+        //self.hasebeenLoad = 50;
         return YES;
     }
+    else if ([urlString isEqualToString:self.adsObject.adLink])
+    {
+        //self.hasebeenLoad = 100;
+        
+        int x = self.adsObject.adLinkFlag.intValue;
+        switch (x) {
+            case 0:
+            {
+                
+            }
+                break;
+            case 1:
+            {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.adsObject.adLink]];
+            }
+                break;
+            case 2:
+            {
+               // [[UIApplication sharedApplication] openURL:self.adsObject.adLink];
+                FSWebViewForOpenURLViewController  * temp = [[FSWebViewForOpenURLViewController alloc]init];
+                temp.urlString                            = self.adsObject.adLink;
+                UINavigationController * xxx = (UINavigationController*)[UIApplication sharedApplication].keyWindow.rootViewController;
+                [xxx pushViewController:temp animated:YES];
+                
+            }
+                break;
+                
+            default:
+                break;
+        }
+        return NO;
+    }
+    
+    
+    
 
-        NSString* urlString = [[request URL] absoluteString];
+        //NSString* urlString = [[request URL] absoluteString];
         //NSLog(@"urlString:%@",urlString);
         
-        if ([urlString isEqualToString:CONTENTWEBVIEW_COMMENT_MORE_LINK]) {
-            //更多评论
-            NSLog(@"更多评论......");
-            self.touchEvenKind = TouchEvenKind_PopCommentList;
-            [self sendTouchEvent];
+    if ([urlString isEqualToString:CONTENTWEBVIEW_COMMENT_MORE_LINK]) {
+        //更多评论
+        NSLog(@"更多评论......");
+        self.touchEvenKind = TouchEvenKind_PopCommentList;
+        [self sendTouchEvent];
+        return NO;
+    }
+    else{
+        if ([urlString hasPrefix:@"image://"]) {
+            if ([urlString isEqualToString:_adImageUrl]) {
+                NSLog(@"点击广告");//点击广告
+            }
+            else{
+                //浮动显示大图
+                if ([_imageList count]>0) {
+                    CGRect rect = CGRectZero;
+                    [self expandImagefrom:rect withImageUrl:urlString]; 
+                }
+            }
             return NO;
         }
-        else{
-            if ([urlString hasPrefix:@"image://"]) {
-                if ([urlString isEqualToString:_adImageUrl]) {
-                    NSLog(@"点击广告");//点击广告
-                }
-                else{
-                    //浮动显示大图
-                    if ([_imageList count]>0) {
-                        CGRect rect = CGRectZero;
-                        [self expandImagefrom:rect withImageUrl:urlString]; 
-                    }
-                }
-                return NO;
-            }
-            
-        }
+        
+    }
     
     
 

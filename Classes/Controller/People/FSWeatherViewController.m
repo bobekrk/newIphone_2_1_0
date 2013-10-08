@@ -103,7 +103,7 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
     
     NSLog(@"newLocation:%@",newLocation);
-    CLLocationCoordinate2D loc = [newLocation coordinate];
+//    CLLocationCoordinate2D loc = [newLocation coordinate];
 //    NSString *lat =[NSString stringWithFormat:@"%f",loc.latitude];//get latitude
 //    NSString *lon =[NSString stringWithFormat:@"%f",loc.longitude];//get longitude
 //    NSLog(@"locationManager:%@ %@",lat,lon);
@@ -156,9 +156,9 @@
         
     }
     else{
-        MKReverseGeocoder *reverseGeocoder =[[[MKReverseGeocoder alloc] initWithCoordinate:loc] autorelease];
-        reverseGeocoder.delegate = self;
-        [reverseGeocoder start];
+//        MKReverseGeocoder *reverseGeocoder =[[[MKReverseGeocoder alloc] initWithCoordinate:loc] autorelease];
+//        reverseGeocoder.delegate = self;
+//        [reverseGeocoder start];
     }
     
     [manager stopUpdatingLocation];
@@ -178,55 +178,55 @@
 }
 
 
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
-{
-    NSString *errorMessage = [error localizedDescription];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Cannot obtain address."
-                                                        message:errorMessage
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-    [alertView show];
-    [alertView release];
-}
+//- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error
+//{
+//    NSString *errorMessage = [error localizedDescription];
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Cannot obtain address."
+//                                                        message:errorMessage
+//                                                       delegate:nil
+//                                              cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil];
+//    [alertView show];
+//    [alertView release];
+//}
 
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
-{
-    
-    
-    NSDictionary *addressDictionary = placemark.addressDictionary;
-    //NSLog(@"addressDictionary%@",placemark.addressDictionary);
-    
-    //NSLog(@"SubLocality%@",[addressDictionary objectForKey:@"State"]);
-    
-    NSArray *array = [[FSBaseDB sharedFSBaseDB] getObjectsByKeyWithName:@"FSUserSelectObject" key:@"kind" value:KIND_CITY_SELECTED];
-    
-    if ([array count]>0) {
-        FSUserSelectObject *sobj = [array objectAtIndex:0];
-        NSDate *date = [NSDate dateWithTimeIntervalSince1970:0];
-        NSString *nsstringdate = dateToString_YMD(date);
-        if (![sobj.keyValue4 isEqualToString:nsstringdate]) {
-            sobj.kind = KIND_CITY_SELECTED;
-            sobj.keyValue1 = [addressDictionary objectForKey:@"State"];
-            sobj.keyValue2 = [addressDictionary objectForKey:@"SubLocality"];
-            sobj.keyValue3 = @"";
-            sobj.keyValue4 = nsstringdate;
-        }
-    }
-    else{
-        
-        NSDate *date = [NSDate dateWithTimeIntervalSince1970:0];
-        NSString *nsstringdate = dateToString_YMD(date);
-        FSUserSelectObject *sobj = (FSUserSelectObject *)[[FSBaseDB sharedFSBaseDB] insertObject:@"FSUserSelectObject"];
-        sobj.kind = KIND_CITY_SELECTED;
-        sobj.keyValue1 = [addressDictionary objectForKey:@"State"];
-        sobj.keyValue2 = [addressDictionary objectForKey:@"SubLocality"];
-        sobj.keyValue3 = @"";
-        sobj.keyValue4 = nsstringdate;
-        [[FSBaseDB sharedFSBaseDB].managedObjectContext save:nil];
-    }
-    
-}
+//- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark
+//{
+//    
+//    
+//    NSDictionary *addressDictionary = placemark.addressDictionary;
+//    //NSLog(@"addressDictionary%@",placemark.addressDictionary);
+//    
+//    //NSLog(@"SubLocality%@",[addressDictionary objectForKey:@"State"]);
+//    
+//    NSArray *array = [[FSBaseDB sharedFSBaseDB] getObjectsByKeyWithName:@"FSUserSelectObject" key:@"kind" value:KIND_CITY_SELECTED];
+//    
+//    if ([array count]>0) {
+//        FSUserSelectObject *sobj = [array objectAtIndex:0];
+//        NSDate *date = [NSDate dateWithTimeIntervalSince1970:0];
+//        NSString *nsstringdate = dateToString_YMD(date);
+//        if (![sobj.keyValue4 isEqualToString:nsstringdate]) {
+//            sobj.kind = KIND_CITY_SELECTED;
+//            sobj.keyValue1 = [addressDictionary objectForKey:@"State"];
+//            sobj.keyValue2 = [addressDictionary objectForKey:@"SubLocality"];
+//            sobj.keyValue3 = @"";
+//            sobj.keyValue4 = nsstringdate;
+//        }
+//    }
+//    else{
+//        
+//        NSDate *date = [NSDate dateWithTimeIntervalSince1970:0];
+//        NSString *nsstringdate = dateToString_YMD(date);
+//        FSUserSelectObject *sobj = (FSUserSelectObject *)[[FSBaseDB sharedFSBaseDB] insertObject:@"FSUserSelectObject"];
+//        sobj.kind = KIND_CITY_SELECTED;
+//        sobj.keyValue1 = [addressDictionary objectForKey:@"State"];
+//        sobj.keyValue2 = [addressDictionary objectForKey:@"SubLocality"];
+//        sobj.keyValue3 = @"";
+//        sobj.keyValue4 = nsstringdate;
+//        [[FSBaseDB sharedFSBaseDB].managedObjectContext save:nil];
+//    }
+//    
+//}
 
 
 

@@ -18,7 +18,7 @@
     id        _parentDelegate;
 }
 
-@property (nonatomic, retain, setter = setData:) NSObject *data;
+@property (atomic, retain, setter = setData:) NSObject *data;
 @property (nonatomic, retain, setter = setArray:) NSArray *objectList;
 @property (nonatomic, assign) id parentDelegate;
 

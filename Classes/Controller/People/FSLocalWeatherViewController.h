@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "FSBaseDataViewController.h"
-#import <MapKit/MapKit.h>
 
 #import "FSTitleView.h"
 
@@ -18,7 +17,7 @@
 
 @class FS_GZF_CityListDAO,FS_GZF_GetWeatherMessageDAO;
 
-@interface FSLocalWeatherViewController : FSBaseDataViewController<UIGestureRecognizerDelegate,CLLocationManagerDelegate,MKReverseGeocoderDelegate,FSTitleViewDelegate>{
+@interface FSLocalWeatherViewController : FSBaseDataViewController<UIGestureRecognizerDelegate,FSTitleViewDelegate>{
 @protected
     FSTitleView *_titleView;
     
@@ -28,8 +27,6 @@
     
     FS_GZF_GetWeatherMessageDAO *_fs_GZF_localGetWeatherMessageDAO;
     NSDate *_reFreshDate;
-    
-    NSString *_cityName;
     NSString *_provinceName;
     
     BOOL _isFirstShow;
@@ -37,4 +34,6 @@
     NSString *_localCity;
 }
 @property(nonatomic,retain)NSString * localCity;
+@property(nonatomic,retain)FS_GZF_GetWeatherMessageDAO *fs_GZF_localGetWeatherMessageDAO;
+@property(nonatomic,copy)  NSString *cityName;
 @end

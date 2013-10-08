@@ -29,8 +29,8 @@
 #import "FSNewsContainerViewController.h"
 #import "FSWebViewForOpenURLViewController.h"
 #import "FSOneDayTableListCell.h"
-#import "FSLoadingImageObject.h"
-
+#import "LygAdsLoadingImageObject.h"
+#import "PeopleNewsReaderPhoneAppDelegate.h"
 @implementation FSOneDayNewsViewController
 
 - (id)init {
@@ -57,21 +57,34 @@
 }
 -(void)unLoadDataModel
 {
-    self.fs_GZF_GetWeatherMessageDAO     = nil;
+    //self.fs_GZF_GetWeatherMessageDAO     = nil;
+    _fsForOneDayNewsListFocusTopData.parentDelegate = nil;
+    _newsListData.parentDelegate                    = nil;
+    
     self.fsForOneDayNewsListFocusTopData = nil;
     self.newsListData                    = nil;
+    _lygAdsDao.parentDelegate            = nil;
     self.lygAdsDao                       = nil;
     self.view                            = nil;
     self.isFirstTimeShow                 = NO;
+    self.changeTitleColor                = nil;
 }
 
 - (void)dealloc {
     
 	_newsListData.parentDelegate = nil;
     [_newsListData release];
-    [_fs_GZF_GetWeatherMessageDAO release];
+    _newsListData   = nil;
+    
+    //[_fs_GZF_GetWeatherMessageDAO release];
     [_fsOneDayNewsListContainerView release];
+    _fsForOneDayNewsListFocusTopData.parentDelegate = nil;
     [_fsForOneDayNewsListFocusTopData release];
+    _fsForOneDayNewsListFocusTopData = nil;
+    
+    _lygAdsDao.parentDelegate = nil;
+    [_lygAdsDao release];
+    _lygAdsDao = nil;
     [_sectionMessage removeAllObjects];
     [_sectionMessage release];
     [_reFreshDate release];
@@ -96,15 +109,13 @@
     
     _reFreshDate = nil;
     _TimeInterval = 0;
-    _fs_GZF_GetWeatherMessageDAO = [[FS_GZF_GetWeatherMessageDAO alloc] init];
-    _fs_GZF_GetWeatherMessageDAO.group = @"";
-    _fs_GZF_GetWeatherMessageDAO.parentDelegate = self;
-    _fs_GZF_GetWeatherMessageDAO.isGettingList = YES;
+   
     
     
     
     _lygAdsDao                                      = [[LygAdsDao alloc]init];
-    _lygAdsDao.placeID                              = 44;
+    _lygAdsDao.placeID                              = 74;
+    
     _lygAdsDao.parentDelegate                       = self;
     _lygAdsDao.isGettingList                        = NO;
     
@@ -406,7 +417,7 @@
 
         }else
         {
-            FSLoadingImageObject * xx = oo;
+            LygAdsLoadingImageObject * xx = oo;
             if ([xx.adLinkFlag isEqualToString:@"1"]) {
 //                FSNewsContainerViewController *fsNewsContainerViewController = [[FSNewsContainerViewController alloc] init];
 //                
@@ -519,7 +530,7 @@
                 [_fsOneDayNewsListContainerView loadData];
                 [_newsListData operateOldBufferData];
                 
-                [_fs_GZF_GetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+                //[_fs_GZF_GetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
                 
             }else if (status == FSBaseDAOCallBack_BufferWorkingStatus)
             {
@@ -539,7 +550,7 @@
 	}
     
     
-    if ([sender isEqual:_fs_GZF_GetWeatherMessageDAO]) {
+ //   if ([sender isEqual:_fs_GZF_GetWeatherMessageDAO]) {
 //		if (status == FSBaseDAOCallBack_SuccessfulStatus ||
 //			status == FSBaseDAOCallBack_BufferSuccessfulStatus) {
 //            //NSLog(@"_fs_GZF_GetWeatherMessageDAO");
@@ -557,7 +568,7 @@
 //            }
 //            
 //        }
-	}
+//	}
     
     if ([sender isEqual:_lygAdsDao]) {
         NSLog(@"%d",_lygAdsDao.objectList.count);
@@ -582,9 +593,9 @@
 }
 
 -(void)doSomethingWithLoadingListDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status{
-    if ([sender isEqual:_fs_GZF_GetWeatherMessageDAO]){
-        
-    }
+//    if ([sender isEqual:_fs_GZF_GetWeatherMessageDAO]){
+//        
+//    }
 }
 
 

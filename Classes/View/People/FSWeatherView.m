@@ -59,7 +59,7 @@
         return;
     }
     [self setContent];
-    _image_WeatherIcon.frame = CGRectMake(0, 9, self.frame.size.height-8, self.frame.size.height-8);
+    _image_WeatherIcon.frame = CGRectMake(0, 11, self.frame.size.height-8, self.frame.size.height-8);
     
     _lab_CityName.frame = CGRectMake(self.frame.size.height, 15, self.frame.size.width-self.frame.size.height + 16, self.frame.size.height/2-10);
     _lab_Temperature.frame = CGRectMake(self.frame.size.height, self.frame.size.height/2 - 3, self.frame.size.width-self.frame.size.height+8, self.frame.size.height/2-10);

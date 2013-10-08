@@ -2,7 +2,7 @@
 //  FSLoadingImageObject.m
 //  PeopleNewsReaderPhone
 //
-//  Created by lygn128 on 13-8-7.
+//  Created by lygn128 on 13-10-2.
 //
 //
 
@@ -11,22 +11,19 @@
 
 @implementation FSLoadingImageObject
 
-@dynamic adEndTime;
-@dynamic adFlagTime;
-@dynamic adLinkFlag;
-@dynamic adName;
-@dynamic adFlag;
-@dynamic picUrl;
-@dynamic adId;
-@dynamic adStartTime;
-@dynamic adPlaceId;
-@dynamic adLink;
-@dynamic adType;
-@dynamic adTitle;
-@dynamic adDesc;
-@dynamic adCtime;
--(NSString*)description
-{
-    return [NSString stringWithFormat:@"%@%@",self.adTitle,self.adDesc];
-}
+@dynamic newsid;
+@dynamic title;
+@dynamic browserCount;
+@dynamic type;
+@dynamic channelid;
+@dynamic timestamp;
+@dynamic date;
+@dynamic picture;
+@dynamic link;
+@dynamic flag;
+@dynamic shareContent;
+@dynamic shareUrl;
+@dynamic abStract;
+@dynamic bufferFlag;
+
 @end

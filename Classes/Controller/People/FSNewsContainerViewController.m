@@ -30,7 +30,7 @@
 #import "FSSinaBlogShareViewController.h"
 
 #import "FSCommentListViewController.h"
-
+#import "LygAdsLoadingImageObject.h"
 
 #define kWBSDKDemoAppKey @"1368810072"
 #define kWBSDKDemoAppSecret @"5dd07c1fd64d4e3ba3bef34ec59edfa1"
@@ -98,9 +98,11 @@ NSString                       *_newsID;
 
 
 - (void)dealloc {
-    _fsNewsContainerView.parentDelegate = nil;
+    _fs_GZF_CommentListDAO.parentDelegate = nil;
     [_fs_GZF_CommentListDAO release];
     _fs_GZF_CommentListDAO = nil;
+    _fsNewsContainerView.parentDelegate   = nil;
+    
     _fs_GZF_NewsContainerDAO.parentDelegate = NULL;
     [_fs_GZF_NewsContainerDAO release];
     _fs_GZF_NewsContainerDAO = nil;
@@ -115,6 +117,10 @@ NSString                       *_newsID;
     _FCObj = nil;
     [_FavObj release];
     _FavObj = nil;
+    _adsDao.parentDelegate = nil;
+    [_adsDao release];
+    _adsDao  = nil;
+
     [super dealloc];
 }
 
@@ -236,6 +242,12 @@ NSString                       *_newsID;
     
     _fs_GZF_NewsCommentPOSTXMLDAO = [[FS_GZF_NewsCommentPOSTXMLDAO alloc] init];
     _fs_GZF_NewsCommentPOSTXMLDAO.parentDelegate = self;
+    
+    
+    
+    _adsDao  = [[LygAdsDao alloc]init];
+    _adsDao.placeID  = 47;
+    _adsDao.parentDelegate = self;
 }
 
 -(void)doSomethingForViewFirstTimeShow{
@@ -270,6 +282,7 @@ NSString                       *_newsID;
     _fs_GZF_NewsContainerDAO.newsSourceKind = self.newsSourceKind;
     //NSLog(@"doSomethingForViewFirstTimeShowdoSomethingForViewFirstTimeShow");
     [_fs_GZF_NewsContainerDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
+    [_adsDao HTTPGetDataWithKind:GET_DataKind_Refresh];
     
     if (self.isNewNavigation) {
         //_fsNewsContainerView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -387,12 +400,27 @@ NSString                       *_newsID;
 
 -(void)doSomethingWithDAO:(FSBaseDAO *)sender withStatus:(FSBaseDAOCallBackStatus)status{
     NSLog(@"doSomethingWithDAO sender:%@ :%d",sender,status);
-    if ([sender isEqual:_fs_GZF_NewsContainerDAO]) {
-        if (status == FSBaseDAOCallBack_WorkingStatus) {
-            FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:CGRectZero andBool:YES];
-			[indicatorMessageView showIndicatorMessageViewInView:self.view withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
-			[indicatorMessageView release];
+    if (status == FSBaseDAOCallBack_WorkingStatus) {
+        FSIndicatorMessageView *indicatorMessageView = [[FSIndicatorMessageView alloc] initWithFrame:CGRectZero andBool:YES];
+        [indicatorMessageView showIndicatorMessageViewInView:self.view withMessage:[self indicatorMessageTextWithDAO:sender withStatus:status]];
+        [indicatorMessageView release];
+    }
+    
+    if ([sender isEqual:_adsDao]) {
+        printf("%d",_adsDao.objectList.count);
+        if (status == FSBaseDAOCallBack_SuccessfulStatus ||
+			status == FSBaseDAOCallBack_BufferSuccessfulStatus)
+        {
+            if (status == FSBaseDAOCallBack_SuccessfulStatus) {
+                [_adsDao operateOldBufferData];
+            }
+            if (_adsDao.objectList.count > 0) {
+               // _fsNewsContainerView.adsObject = (FSLoadingImageObject*)[_adsDao.objectList objectAtIndex:0];
+                _fsNewsContainerView.fsNewsContainerWebView.adsObject = (LygAdsLoadingImageObject*)[_adsDao.objectList objectAtIndex:0];
+
+            }
         }
+
     }
     if ([sender isEqual:_fs_GZF_NewsContainerDAO]) {
         if (status == FSBaseDAOCallBack_SuccessfulStatus ||
@@ -420,6 +448,7 @@ NSString                       *_newsID;
             
             [_fs_GZF_CommentListDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
         }
+        return;
     }
     
     if ([sender isEqual:_fs_GZF_CommentListDAO]) {
@@ -912,13 +941,16 @@ NSString                       *_newsID;
 -(void)showCommentList{
     if (self.isNewNavigation) {
         FSCommentListViewController *fsCommentListViewController = [[FSCommentListViewController alloc] init];
-        fsCommentListViewController.withnavTopBar = YES;
+        //fsCommentListViewController.withnavTopBar = YES;
+        fsCommentListViewController.isnavTopBar = YES;
         fsCommentListViewController.newsid = _fs_GZF_CommentListDAO.newsid;
         [self presentModalViewController:fsCommentListViewController animated:YES];
         [fsCommentListViewController release];
     }
     else{
         FSCommentListViewController *fsCommentListViewController = [[FSCommentListViewController alloc] init];
+//        fsCommentListViewController.withnavTopBar                = YES;
+        fsCommentListViewController.isnavTopBar             = YES;
         fsCommentListViewController.newsid = _fs_GZF_CommentListDAO.newsid;
         [self.navigationController pushViewController:fsCommentListViewController animated:YES];
         [fsCommentListViewController release];

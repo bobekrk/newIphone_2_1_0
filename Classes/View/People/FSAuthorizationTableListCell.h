@@ -13,7 +13,7 @@
 @protected
     UILabel *_lab_title;
     UILabel *_bt_SwichSelect;
-    BOOL _isSelect;
+    BOOL     _isSelect;
 }
 
 @end

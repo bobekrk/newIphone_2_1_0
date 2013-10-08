@@ -11,21 +11,21 @@
 #import "FSUINavigationController.h"
 #import "FSLoadingImageView.h"
 #import "WXApi.h"
+#import <MapKit/MapKit.h>
+#import "FS_GZF_GetWeatherMessageDAO.h"
 //#import "MobClick.h"
-
+NSString * getCityName();
 @class FSTabBarViewCotnroller;
 @class FSSlideViewController;
 @class FSChannelSettingForOneDayViewController;
 @class FSNewsContainerViewController;
 
-@interface PeopleNewsReaderPhoneAppDelegate : NSObject <UIApplicationDelegate,FSLoadingImageViewDelegate,WXApiDelegate> {
+@interface PeopleNewsReaderPhoneAppDelegate : NSObject <UIApplicationDelegate,FSLoadingImageViewDelegate,WXApiDelegate,CLLocationManagerDelegate> {
 	FSUINavigationController *_navChannelSettingController;
 	FSSlideViewController *_slideViewController;
     FSTabBarViewCotnroller *_rootViewController;
     UIWindow *window;
-    
-    
-    
+    CLLocationManager *_locManager;
 @private
     NSManagedObjectContext *managedObjectContext_;
     NSManagedObjectModel *managedObjectModel_;
@@ -40,8 +40,10 @@
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, retain, readonly) NSManagedObjectModel   *managedObjectModel;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (nonatomic, copy)             NSString               * cityName;
+@property (nonatomic, retain)           FS_GZF_GetWeatherMessageDAO * fs_GZF_localGetWeatherMessageDAO;
 
 - (NSURL *)applicationDocumentsDirectory;
 - (void)saveContext;

@@ -312,6 +312,7 @@
     }
     LygDeepTableViewCell * xxcell = (LygDeepTableViewCell*)cell;
     FSTopicObject * ddddddddd          = (FSTopicObject*)[_myDeepListDao.objectList objectAtIndex:indexPath.row];
+    
     xxcell.nameLabel.text              = ddddddddd.title;
     xxcell.dateLabel.text              = ddddddddd.pubDate;
     xxcell.abstractLabel.text          = ddddddddd.news_abstract;
@@ -330,6 +331,8 @@
         xxcell.dateLabel.hidden  = YES;
         xxcell.nameLabel.text  = obj.title;
     }
+    
+    
     xxcell.dateLabel.text  = [[[obj.pubDate componentsSeparatedByString:@" "] objectAtIndex:0] stringByAppendingString:@""];
     xxcell.abstractLabel.text = obj.news_abstract;
     

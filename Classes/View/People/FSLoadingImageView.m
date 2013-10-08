@@ -9,7 +9,7 @@
 #import "FSLoadingImageView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "FSAsyncImageView.h"
-#import "FSLoadingImageObject.h"
+#import "LygAdsLoadingImageObject.h"
 #import "FSShareIconContainView.h"
 #import "FSNewsContainerViewController.h"
 #import "FSWebViewForOpenURLViewController.h"
@@ -22,6 +22,7 @@
 #import <MessageUI/MessageUI.h>
 #import "PeopleNewsReaderPhoneAppDelegate.h"
 #import "LygAdsDao.h"
+#import "FSLoadingImageObject.h"
 //#import "MFMailComposeViewController.h"
 #define FSLOADING_IMAGEVIEW_ANIMATION_KEY @"FSLOADING_IMAGEVIEW_ANIMATION_KEY_STRING"
 
@@ -50,35 +51,48 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-//        UIImageView * VIEW = [[UIImageView alloc]initWithFrame:frame];
-//        VIEW.image         = [UIImage imageWithContentsOfFile:@"Default"];
-//        [self addSubview:VIEW];
-//        [VIEW release];
-        _adImageView = [[FSAsyncImageView alloc] initWithFrame:frame];
-        _adImageView.backgroundColor = [UIColor grayColor];
-        //NSString *localStoreFileName = getFileNameWithURLString(obj.picUrl, getCachesPath());
-        _adImageView.tag   = 1000;
-        //adImageView.urlString = obj.picUrl;
-        //adImageView.localStoreFileName = localStoreFileName;
-        //_adImageView.imageCuttingKind = ImageCuttingKind_fixrect;
-        _adImageView.borderColor = COLOR_CLEAR;
-        
-        
-        [self addSubview:_adImageView];
-        [_adImageView release];
+        UIImageView * VIEW = [[UIImageView alloc]initWithFrame:self.bounds];
+        //VIEW.image         = [UIImage imageWithContentsOfFile:@"Default"];
+        if (ISIPHONE5) {
+            
+            //_adImageView.defaultFileName = @"Default-568h@2x.png";
+            VIEW.image         = [UIImage imageWithNameString:@"Default-568h@2x"];
+        }
+        else{
+            VIEW.image         = [UIImage imageWithNameString:@"Default"];
+
+        }
+
+        [self addSubview:VIEW];
+        [VIEW release];
+        _adsStatus     = 0;
+        _headPicStatus = 0;
+//        _adImageView = [[FSAsyncImageView alloc] initWithFrame:frame];
+//        //_adImageView.alpha = 0;
+//        _adImageView.backgroundColor = [UIColor clearColor];
+//        //NSString *localStoreFileName = getFileNameWithURLString(obj.picUrl, getCachesPath());
+//        _adImageView.tag   = 1000;
+//        //adImageView.urlString = obj.picUrl;
+//        //adImageView.localStoreFileName = localStoreFileName;
+//        //_adImageView.imageCuttingKind = ImageCuttingKind_fixrect;
+//        _adImageView.borderColor = COLOR_CLEAR;
+//        
+//        
+//        [self addSubview:_adImageView];
+//        [_adImageView release];
         
         
         _timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timeOutEvent) userInfo:nil repeats:NO];
+        //[self performSelector:@selector(timeOutEvent) withObject:nil afterDelay:5];
+//        if (ISIPHONE5) {
+//            
+//            _adImageView.defaultFileName = @"Default-568h@2x.png";
+//        }
+//        else{
+//            _adImageView.defaultFileName = @"Default.png";
+//        }
         
-        if (ISIPHONE5) {
-            
-            _adImageView.defaultFileName = @"Default-568h@2x.png";
-        }
-        else{
-            _adImageView.defaultFileName = @"Default.png";
-        }
-        
-        [_adImageView updateAsyncImageView];
+//        [_adImageView updateAsyncImageView];
         UIImage * tempImage       = [UIImage imageNamed:@"翻页.png"];
         UIButton * button         = [[UIButton alloc]initWithFrame:CGRectMake(270, [UIScreen mainScreen].bounds.size.height/2, tempImage.size.width/2, tempImage.size.height/2)];
         [button setBackgroundImage:tempImage forState:UIControlStateNormal];
@@ -88,9 +102,7 @@
         [self addSubview:button];
         [button release];
         self.userInteractionEnabled = YES;
-        UILongPressGestureRecognizer * gester = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(saveImage)];
-        [self addGestureRecognizer:gester];
-        [gester release];
+
         //firstTime = YES;
     }
     return self;
@@ -105,7 +117,7 @@
             _timer = nil;
             UIImage * imagee = view.imageView.image;
             UIImageWriteToSavedPhotosAlbum(imagee, nil, nil, nil);
-            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"保存成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"图片保存成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             [alert show];
             [alert release];
         }
@@ -113,19 +125,20 @@
     NSLog(@"xxxxxxxxxx");
 }
 -(NSString *)shareContent{
-//    NSString *newsContent;
-//    NSString *resultStr;
-
-    FSLoadingImageObject * object = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
     NSMutableString * string = [[NSMutableString alloc]init];
-    [string appendFormat:@"【%@】%@->详见：%@ ->下载人民新闻客户端:https://itunes.apple.com/cn/app/id424180337",object.adTitle,object.adDesc,object.adLink];
-    
-    
+    if (_adsStatus == 1) {
+        LygAdsLoadingImageObject * object = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
+        [string appendFormat:@"【%@】%@->详见：%@ ->下载人民新闻客户端:%@",object.adTitle,object.adDesc,object.adLink,object.shareUrl];
+    }else
+    {
+        FSLoadingImageObject * temp = [_fs_GZF_ForLoadingImageDAO2.objectList objectAtIndex:0];
+        [string appendFormat:@"【%@】%@->详见：%@ ->下载人民新闻客户端:%@",temp.title,temp.shareContent,temp.link,temp.shareUrl];
+    }
     return [string autorelease];
 }
 -(void)fsBaseContainerViewTouchEvent:(FSBaseContainerView *)sender{
-    
     if ([sender isEqual:_fsShareIconContainView]) {
+        _fsShareIconContainView.isShow = NO;
         switch (_fsShareIconContainView.shareSelectEvent) {
             case ShareSelectEvent_return:
                 break;
@@ -231,8 +244,8 @@
                     [picker setToRecipients:toRecipients];
                     NSString *emailBody = [self shareContent];
                     [picker setMessageBody:emailBody isHTML:NO];
-                    [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:picker animated:YES];
-                    [picker release];
+                    UINavigationController * navi                = (UINavigationController*)([UIApplication sharedApplication].keyWindow.rootViewController);
+                    [navi.topViewController presentModalViewController:picker animated:YES];
                     [self removeFromSuperview];
                 }
                 else{
@@ -252,7 +265,8 @@
                 controller.delegate                          = self;
                 controller.messageComposeDelegate            = self;
                 controller.body                              = [self shareContent];
-                [[UIApplication sharedApplication].keyWindow.rootViewController presentModalViewController:controller animated:YES];
+                UINavigationController * navi                = (UINavigationController*)([UIApplication sharedApplication].keyWindow.rootViewController);
+                [navi.topViewController presentModalViewController:controller animated:YES];
                 [controller release];
                 [self removeFromSuperview];
                 
@@ -286,12 +300,12 @@
             default:
                 break;
         }
-        _fsShareIconContainView.isShow = NO;
+        
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.6];
         [_fsShareIconContainView removeFromSuperview];
         //_fsShareIconContainView.frame = CGRectMake(0, self.frame.size.height+44, self.frame.size.width, [_fsShareIconContainView getHeight]);
-        [self timeOutEvent];
+        //[self timeOutEvent];
         [UIView commitAnimations];
         
     }
@@ -350,8 +364,12 @@
 }
 -(void)buttonClick:(UIButton*)sender
 {
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
     int flag                  =  -1;  //[obj.adLinkFlag intValue];
-    FSLoadingImageObject *obj =  nil;
+    LygAdsLoadingImageObject *obj =  nil;
     if (_fs_GZF_ForLoadingImageDAO.objectList && _fs_GZF_ForLoadingImageDAO.objectList.count > 0) {
         obj = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
         flag                  =  [obj.adLinkFlag intValue];
@@ -399,7 +417,7 @@
 //                [[FSBaseDB sharedFSBaseDB] updata_visit_message:o.channelid];
             }
             else if (flag == 3){
-                NSString * string =[NSString stringWithFormat:@"http://%@",obj.adLink];
+                NSString * string =[NSString stringWithFormat:@"%@",obj.adLink];
                 NSURL *url = [[NSURL alloc] initWithString:string];
                 [[UIApplication sharedApplication] openURL:url];
                 [url release];
@@ -407,7 +425,7 @@
             else if (flag == 2){//内嵌浏览器
                 FSWebViewForOpenURLViewController *fsWebViewForOpenURLViewController = [[FSWebViewForOpenURLViewController alloc] init];
                 
-                fsWebViewForOpenURLViewController.urlString = [NSString stringWithFormat:@"http://%@",obj.adLink];
+                fsWebViewForOpenURLViewController.urlString = [NSString stringWithFormat:@"%@",obj.adLink];
                 fsWebViewForOpenURLViewController.withOutToolbar = NO;
                 //[[UIApplication sharedApplication].keyWindow
                // [self.window.rootViewController.navigationController pushViewController:fsWebViewForOpenURLViewController animated:YES];
@@ -442,40 +460,46 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(LoadingXMLComplete:) name:LOADINGIMAGE_LOADING_XML_COMPELECT object:nil];
     
     _fs_GZF_ForLoadingImageDAO         = [[LygAdsDao alloc] init];
+    _fs_GZF_ForLoadingImageDAO.parentDelegate  = self;
     _fs_GZF_ForLoadingImageDAO.placeID = 44;
-    _adImageView.frame                 =  [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds].frame;
-//    UIImageView *defaultImage = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//    //NSLog(@"11self.frame h:%f",[UIScreen mainScreen].bounds.size.height);
-//    if (ISIPHONE5) {
-//        defaultImage.image = [UIImage imageNamed:@"Default-568h@2x.png"];
-//    }
-//    else{
-//        defaultImage.image = [UIImage imageNamed:@"Default.png"];
-//    }
-//    
-//    [self addSubview:defaultImage];
-//   
-//
-//    [defaultImage release];
-    
-    
     [_fs_GZF_ForLoadingImageDAO HTTPGetDataWithKind:GET_DataKind_Refresh];
     
-    //[NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(timeOutEvent) userInfo:nil repeats:NO];
-   //  [self performSelector:@selector(timeOutEvent) withObject:self afterDelay:3];
+    
+    
+    
+    
+    
     _fsShareIconContainView = [[FSShareIconContainView alloc] initWithFrame:CGRectZero];
     _fsShareIconContainView.parentDelegate = self;
     [self addSubview:_fsShareIconContainView];
+    
     [_fsShareIconContainView release];
+    _fs_GZF_ForLoadingImageDAO2 = [[FS_GZF_ForLoadingImageDAO alloc] init];
+    _fs_GZF_ForLoadingImageDAO2.isIphone5 = ISIPHONE5;
+    [self performSelector:@selector(asyXXX) withObject:nil afterDelay:0.3];
+    
+}
+-(void)asyXXX
+{
+    [_fs_GZF_ForLoadingImageDAO2 HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+}
+- (void)dataAccessObjectSyncEnd:     (FSBaseDAO *)sender
+{
+    
 }
 
 
 
 -(void)dealloc{
     printf("deeeeeeeeeee\n");
-    [_fsShareIconContainView removeFromSuperview];
+    //[_fsShareIconContainView removeFromSuperview];
+    _fs_GZF_ForLoadingImageDAO.parentDelegate = nil;
     [_fs_GZF_ForLoadingImageDAO release];
+    _fs_GZF_ForLoadingImageDAO = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:LOADINGIMAGE_LOADING_XML_COMPELECT object:nil];
+    _fs_GZF_ForLoadingImageDAO2.parentDelegate = nil;
+    [_fs_GZF_ForLoadingImageDAO2 release];
+    _fs_GZF_ForLoadingImageDAO2 = nil;
     [super dealloc];
 }
 
@@ -487,12 +511,26 @@
 
 -(void)addButtons
 {
-    FSLoadingImageObject *obj = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
-
+    NSLog(@"%d",_fs_GZF_ForLoadingImageDAO.objectList.count);
+    //LygAdsLoadingImageObject *obj = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
+    
+    
+    UIButton * buttonxxx = (UIButton*)[self viewWithTag:-1];
+    [self bringSubviewToFront:buttonxxx];
     UIButton * titleButton    = [[UIButton alloc]initWithFrame:CGRectMake(10, [UIScreen mainScreen].bounds.size.height - 55, 260, 40)];
     //titleButton.backgroundColor = [UIColor clearColor];
     titleButton.tag           = -3;
-    [titleButton setTitle:obj.adTitle forState:UIControlStateNormal];
+    if (_adsStatus == 1) {
+        LygAdsLoadingImageObject *obj = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
+         [titleButton setTitle:obj.adTitle forState:UIControlStateNormal];
+    }else
+    {
+        
+        FSLoadingImageObject * load   = [_fs_GZF_ForLoadingImageDAO2.objectList objectAtIndex:0];
+        [titleButton setTitle:load.title  forState:UIControlStateNormal];
+
+    }
+   
     [titleButton addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:titleButton];
     [titleButton release];
@@ -507,19 +545,134 @@
     [button2 release];
 }
 -(void)imageLoadingComplete{
+//    if ([_fs_GZF_ForLoadingImageDAO.objectList count]>0) {
+//        FSLoadingImageObject *obj = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
+//        NSString *localStoreFileName = getFileNameWithURLString(obj.picUrl, getCachesPath());
+//        _adImageView.urlString = obj.picUrl;
+//        _adImageView.localStoreFileName = localStoreFileName;
+//        //_adImageView.imageCuttingKind = ImageCuttingKind_fixrect;
+//
+//        
+//        //_timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timerEvent) userInfo:nil repeats:NO];
+//      
+//        
+//        [_adImageView updateAsyncImageView];
+//    }
     if ([_fs_GZF_ForLoadingImageDAO.objectList count]>0) {
-        FSLoadingImageObject *obj = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
+        //firstTime = NO;
+        if (_adsStatus == 0) {
+            _adsStatus = 1;
+        }else if (_adsStatus == 1)
+        {
+            return;
+        }
+        [_fs_GZF_ForLoadingImageDAO operateOldBufferData];
+        LygAdsLoadingImageObject *obj = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
+        
+        self.adImageView = [[FSAsyncImageView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+        [_adImageView release];
         NSString *localStoreFileName = getFileNameWithURLString(obj.picUrl, getCachesPath());
+        _adImageView.alpha = 0.0f;
+        
         _adImageView.urlString = obj.picUrl;
         _adImageView.localStoreFileName = localStoreFileName;
-        //_adImageView.imageCuttingKind = ImageCuttingKind_fixrect;
-
+        _adImageView.imageCuttingKind = ImageCuttingKind_fixrect;
+        _adImageView.borderColor = COLOR_CLEAR;
         
-        //_timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timerEvent) userInfo:nil repeats:NO];
-      
+        [self addSubview:_adImageView];
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:1.0];
+        _adImageView.alpha = 1.0f;
+        [UIView commitAnimations];
+        
+        //_timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(timerEvent) userInfo:nil repeats:NO];
+        
+        if ([UIScreen mainScreen].bounds.size.height==568.0f) {
+            
+            _adImageView.defaultFileName = @"Default-568h@2x.png";
+            
+            //            UIImageView *image = [[UIImageView alloc] init];
+            //            image.image = [UIImage imageNamed:@"loadingbgd.png"];
+            //            image.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 180, self.frame.size.width, 180);
+            //
+            //            [self addSubview:image];
+            //            [image release];
+        }
+        else{
+            _adImageView.defaultFileName = @"Default.png";
+        }
         
         [_adImageView updateAsyncImageView];
+        [_adImageView release];
+        
+        
+        UILongPressGestureRecognizer * gester = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(saveImage)];
+        [self addGestureRecognizer:gester];
+        [gester release];
+        //_returnButton.alpha = 1.0f;
+        [self addButtons];
+        return;
     }
+    if ([_fs_GZF_ForLoadingImageDAO2.objectList count]>0) {
+        //firstTime = NO;
+        if (_adsStatus == 1) {
+            return;
+        }
+        if (_headPicStatus == 0) {
+            _headPicStatus = 1;
+        }else if (_headPicStatus == 1)
+        {
+            return;
+        }
+        
+        FSLoadingImageObject *obj = [_fs_GZF_ForLoadingImageDAO2.objectList objectAtIndex:0];
+        
+        _adImageView2 = [[FSAsyncImageView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+        NSString *localStoreFileName = getFileNameWithURLString(obj.picture, getCachesPath());
+        _adImageView2.alpha = 0.0f;
+        
+        _adImageView2.urlString = obj.picture;
+        _adImageView2.localStoreFileName = localStoreFileName;
+        _adImageView2.imageCuttingKind = ImageCuttingKind_fixrect;
+        _adImageView2.borderColor = COLOR_CLEAR;
+        
+        [self addSubview:_adImageView2];
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:1.0];
+        _adImageView2.alpha = 1.0f;
+        [UIView commitAnimations];
+        
+        //_timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(timerEvent) userInfo:nil repeats:NO];
+        
+        if ([UIScreen mainScreen].bounds.size.height==568.0f) {
+            
+            _adImageView2.defaultFileName = @"Default-568h@2x.png";
+            
+            //            UIImageView *image = [[UIImageView alloc] init];
+            //            image.image = [UIImage imageNamed:@"loadingbgd.png"];
+            //            image.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 180, self.frame.size.width, 180);
+            //
+            //            [self addSubview:image];
+            //            [image release];
+        }
+        else{
+            _adImageView2.defaultFileName = @"Default.png";
+        }
+        
+        [_adImageView2 updateAsyncImageView];
+        [_adImageView2 release];
+        
+        
+        UILongPressGestureRecognizer * gester = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(saveImage)];
+        [self addGestureRecognizer:gester];
+        [gester release];
+        //_returnButton.alpha = 1.0f;
+        [self addButtons];
+        return;
+    }
+
+    
+
 }
 
 
@@ -530,34 +683,54 @@
         _timer = nil;
     }
 	
-	CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-	
-	animation.duration = 0.3;
-	animation.delegate = self;
-	animation.removedOnCompletion = NO;
-	animation.fillMode = kCAFillModeForwards;
-	animation.fromValue = [NSValue valueWithCGPoint:self.layer.position];
-	animation.toValue = [NSValue valueWithCGPoint:CGPointMake(self.layer.position.x - self.layer.bounds.size.width, self.layer.position.y)];
-	
-	[self.layer addAnimation:animation forKey:FSLOADING_IMAGEVIEW_ANIMATION_KEY];
+//	CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+//	
+//	animation.duration = 0.3;
+//	animation.delegate = self;
+//	animation.removedOnCompletion = NO;
+//	animation.fillMode = kCAFillModeForwards;
+//	animation.fromValue = [NSValue valueWithCGPoint:self.layer.position];
+//	animation.toValue = [NSValue valueWithCGPoint:CGPointMake(self.layer.position.x - self.layer.bounds.size.width, self.layer.position.y)];
+//	
+//	[self.layer addAnimation:animation forKey:FSLOADING_IMAGEVIEW_ANIMATION_KEY];
+    
+    
+    [UIView beginAnimations:@"xxxxxxx" context:nil];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(animationStop:)];
+    CGRect xxx = self.frame;
+    xxx.origin.x -= 320;
+    self.frame = xxx;
+    [UIView commitAnimations];
     
     
     
 }
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-	if (flag) {
-
-		[self.layer removeAnimationForKey:FSLOADING_IMAGEVIEW_ANIMATION_KEY];
-		
-		[self removeFromSuperview];
-		
-		if ([_parentDelegate respondsToSelector:@selector(fsLoaddingImageViewDidDisappear:)]) {
-			[_parentDelegate fsLoaddingImageViewDidDisappear:self];
-		}
-
-	}
+-(void)animationStop:(id)sender
+{
+    if ([_parentDelegate respondsToSelector:@selector(fsLoaddingImageViewDidDisappear:)]) {
+        [_parentDelegate fsLoaddingImageViewDidDisappear:self];
+    }
+    [self performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:0.1];
+    //[self removeFromSuperview];
 }
+
+//- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+//	if (flag) {
+//
+//		[self.layer removeAnimationForKey:FSLOADING_IMAGEVIEW_ANIMATION_KEY];
+//		
+//		
+//		
+//		if ([_parentDelegate respondsToSelector:@selector(fsLoaddingImageViewDidDisappear:)]) {
+//			[_parentDelegate fsLoaddingImageViewDidDisappear:self];
+//		}
+//        //[self removeFromSuperview];
+//
+//	}
+//}
 
 
 
