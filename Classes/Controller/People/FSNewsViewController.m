@@ -114,6 +114,7 @@
     [_myScroview addObserver:self forKeyPath:@"contentoffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     //_myScroview.delegate       = self;
     _myScroview.contentSize    = CGSizeMake(56*[_fs_GZF_ChannelListDAO.objectList count], 44);
+    _myScroview.delegate       = self;
     
     
     for (int i = 0; i<[_fs_GZF_ChannelListDAO.objectList count]; i++) {
@@ -288,10 +289,16 @@
 
     _topRedImageView.frame      = CGRectMake(56*index, 40, 56, 4);
     _currentIndex               = index;
+//    UIView * view               = [self.view viewWithTag:20000];
+//    UIView * view3               = [self.view viewWithTag:30000];
+//    _currentIndex == 0?(view.alpha = 0.0):(view.alpha = 1);
+//    _currentIndex == _fs_GZF_ChannelListDAO.objectList.count -1?(view3.alpha = 0.1):(view3.alpha = 1);
+    
     UIView * view               = [self.view viewWithTag:20000];
     UIView * view3               = [self.view viewWithTag:30000];
-    _currentIndex == 0?(view.alpha = 0.0):(view.alpha = 1);
-    _currentIndex == _fs_GZF_ChannelListDAO.objectList.count -1?(view3.alpha = 0.1):(view3.alpha = 1);
+    printf("%f %f %f\n",_myScroview.contentOffset.x,_myScroview.contentSize.width,_myScroview.frame.size.width);
+    _myScroview.contentOffset.x      < 10?(view.alpha = 0.0):(view.alpha = 1);
+    _myScroview.contentOffset.x + 10 > (_myScroview.contentSize.width - _myScroview.frame.size.width)?(view3.alpha = 0.1):(view3.alpha = 1);
     
     MyNewsLIstView * view2 =  (MyNewsLIstView*)[[self.view viewWithTag:2000] viewWithTag:(100+index)];
     [view2 isNeedRefresh]?[view2 refreshDataSource]:1;
@@ -357,26 +364,36 @@
 #pragma mark -----左右滑动
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    int x = scrollView.contentOffset.x/320;
-    [self manuseletctbutton:x];
-    UIView * view = [_myScroview viewWithTag:x];
-    int index = view.frame.origin.x;
-    int yyy   = _myScroview.contentOffset.x;
-    if (index - yyy > 290) {
-        _myScroview.contentOffset = CGPointMake(index - 290+ 50, 0);
-    }else if(yyy > index)
-    {
-        _myScroview.contentOffset = CGPointMake(index, 0);
+    if (scrollView == _myScroview) {
+        
+    }else{
+        int x = scrollView.contentOffset.x/320;
+        [self manuseletctbutton:x];
+        UIView * view = [_myScroview viewWithTag:x];
+        int index = view.frame.origin.x;
+        int yyy   = _myScroview.contentOffset.x;
+        if (index - yyy > 290) {
+            _myScroview.contentOffset = CGPointMake(index - 290+ 50, 0);
+        }else if(yyy > index)
+        {
+            _myScroview.contentOffset = CGPointMake(index, 0);
+        }
+        if (index == _currentIndex) {
+            return;
+        }
+        MyNewsLIstView * view2 =  (MyNewsLIstView*)[scrollView viewWithTag:(100+x)];
+        [view2 isNeedRefresh]?[view2 refreshDataSource]:1;
     }
-    if (index == _currentIndex) {
-        return;
+    
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView == _myScroview) {
+        UIView * view               = [self.view viewWithTag:20000];
+        UIView * view3               = [self.view viewWithTag:30000];
+        _myScroview.contentOffset.x      < 10?(view.alpha = 0.05):(view.alpha = 1);
+        _myScroview.contentOffset.x + 10 > (_myScroview.contentSize.width - _myScroview.frame.size.width)?(view3.alpha = 0.05):(view3.alpha = 1);
     }
-    MyNewsLIstView * view2 =  (MyNewsLIstView*)[scrollView viewWithTag:(100+x)];
-    [view2 isNeedRefresh]?[view2 refreshDataSource]:1;
-//    if (x > 0) {
-//        MyNewsLIstView * view-1 =  (MyNewsLIstView*)[scrollView viewWithTag:(100+x)];
-//        
-//    }
 }
 
 #pragma mark - 
