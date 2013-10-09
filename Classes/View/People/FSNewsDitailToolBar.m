@@ -207,10 +207,11 @@
 -(void)onGoBackButtonClicked
 {
     UIViewController * temp = (UIViewController *)(((FSNewsContainerView*)(self.parentDelegate)).parentDelegate);
-    BOOL canReturn = [((FSNewsContainerView*)(self.parentDelegate))  goBackToBeforePage];
-    if (canReturn) {
+    if (temp.navigationController) {
         [temp.navigationController popViewControllerAnimated:YES];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"changeTitleColor" object:nil];
+    }else if (temp.presentingViewController)
+    {
+        [temp dismissModalViewControllerAnimated:YES];
     }
 }
 
