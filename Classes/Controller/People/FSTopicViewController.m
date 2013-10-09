@@ -231,7 +231,7 @@
     else{
          _scrollPageView.frame = CGRectMake(FSLEFT_RIGHT_SPACE, 10.0f + 44, rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f , (rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f)/2*3-18);
     }
-    float xxxx      = ISIPHONE5?(548 - 44 - 44):(460 - 44 - 44);
+    float xxxx      = ISIPHONE5?(548 - 44 - 49):(460 - 44 - 49);
     _myDeepListView.frame = CGRectMake(0, 44, 320, xxxx);
     _deepFloattingTitleView.frame= CGRectMake(FSLEFT_RIGHT_SPACE+12, 18.0f + _scrollPageView.frame.size.height, rect.size.width - FSLEFT_RIGHT_SPACE * 2.0f -24,rect.size.height- 18.0f - _scrollPageView.frame.size.height);
 }

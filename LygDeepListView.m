@@ -203,7 +203,7 @@
 
 
 -(void)layoutSubviews{
-    _tvList.frame = roundToRect(CGRectMake(0.0f, 0.0f, self.frame.size.width, self.frame.size.height));
+    _tvList.frame = roundToRect(CGRectMake(0.0f, 0.0f, self.frame.size.width, self.frame.size.height - 1));
 	
 	if (!CGSizeEqualToSize(_tvSize, _tvList.frame.size)) {
 		_tvSize = _tvList.frame.size;

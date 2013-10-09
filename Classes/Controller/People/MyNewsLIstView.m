@@ -593,7 +593,7 @@
             FSOneDayNewsObject *o = [_fs_GZF_ForNewsListDAO.objectList objectAtIndex:row-1];
             NSLog(@"%@",o);
             //[self newsSlecterStati:o];
-            //[self performSelectorInBackground:@selector(newsSlecterStati:) withObject:o];
+            [self performSelectorInBackground:@selector(newsSlecterStati:) withObject:o];
             int i = 0;
             for (FSOneDayNewsObject * obj in _fs_GZF_ForNewsListDAO.objectList) {
                 if ([obj.newsid isEqualToString:self.currentNewsId] && ![o.newsid isEqualToString:self.currentNewsId]) {
