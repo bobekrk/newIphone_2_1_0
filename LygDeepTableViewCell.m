@@ -160,12 +160,12 @@
     self.contentView.clipsToBounds = YES;
     _kindsLabel.textAlignment = NSTextAlignmentCenter;
     _kindsLabel.numberOfLines = 0;
-    _kindsLabel.Frame  = CGRectMake(8, 12, 0, 15);
+    _kindsLabel.Frame  = CGRectMake(8, 11, 0, 15);
     [_kindsLabel sizeToFit];
-    _nameLabel.Frame   = CGRectMake(_kindsLabel.frame.size.width + 8 + 12,0, 220, 34);
+    _nameLabel.Frame   = CGRectMake(_kindsLabel.frame.size.width + 10,0, 220, 34);
     _abstractLabel.Frame = CGRectMake(8, 45 - 15, 295, view.frame.size.height - 48);
-    _dateLabel.Frame     = CGRectMake(222, self.frame.size.height - 30, 300 - 222, 21);
-    _timerImageView.frame= CGRectMake(222 - 20, self.frame.size.height - 30 + 3, 15, 15);
+    _dateLabel.Frame     = CGRectMake(222, self.frame.size.height - 28, 300 - 222, 21);
+    _timerImageView.frame= CGRectMake(222 - 20, self.frame.size.height - 28 + 3, 15, 15);
 }
 
 -(NSString *)timeTostring:(NSNumber *)time{
