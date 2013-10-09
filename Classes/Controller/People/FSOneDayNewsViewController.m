@@ -211,6 +211,7 @@
 
 
 -(void)swipeLeftAction:(id)sender{
+    return;
 //    if ([self.fsSlideViewController.leftViewController isKindOfClass:[FSLocalWeatherViewController class]]) {
 //        //NSLog(@"swipeLeftAction 111111");
 //        [self.fsSlideViewController slideViewController:self.fsSlideViewController.leftViewController withKind:PushViewControllerKind_Left withAnimation:YES];
@@ -227,6 +228,7 @@
 }
 
 -(void)swipeRightAction:(id)sender{
+    return;
     
     if ([self.fsSlideViewController.rightViewController isKindOfClass:[FSSettingViewController class]]) {
         [self.fsSlideViewController slideViewController:self.fsSlideViewController.rightViewController withKind:PushViewControllerKind_Right withAnimation:YES];

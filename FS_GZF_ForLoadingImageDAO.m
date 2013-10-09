@@ -13,7 +13,7 @@
 #define DEEPPICTURE_IMAGESIZE_5 @"640/1136"
 
 
-#define FSLOADING_IMAGEVIEW_URL @"http://mobile.app.people.com.cn:81/paper_ipad/paper.php?act=headpic&type=5&appid=6&count=1&resolution=%@"
+#define FSLOADING_IMAGEVIEW_URL @"http://mobile.app.people.com.cn:81/paper_ipad/paper.php?act=headpic&type=4&appid=6&count=1&resolution=%@"
 
 /*
  

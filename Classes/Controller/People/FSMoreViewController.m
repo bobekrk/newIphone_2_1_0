@@ -120,11 +120,12 @@
 }
 
 -(void)swipeLeftAction:(id)sender{
+    return;
     [self  showLoadingView];
 }
 
 -(void)swipeRightAction:(id)sender{
-    
+    return;
     if ([self.fsSlideViewController.rightViewController isKindOfClass:[FSSettingViewController class]]) {
         [self.fsSlideViewController slideViewController:self.fsSlideViewController.rightViewController withKind:PushViewControllerKind_Right withAnimation:YES];
     }

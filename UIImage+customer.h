@@ -10,4 +10,5 @@
 
 @interface UIImage (customer)
 +(UIImage*)imageWithNameString:(NSString*)picName;
+-(UIImage*)initWithNameString:(NSString*)picName;
 @end

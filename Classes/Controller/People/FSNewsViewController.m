@@ -30,6 +30,7 @@
 #import "LygDequeueScroView.h"
 #import "PeopleNewsReaderPhoneAppDelegate.h"
 #define KIND_USERCHANNEL_SELECTED  @"YAOWENCHANNEL"
+#define WIDTHOFNAME 53
 @implementation FSNewsViewController
 
 - (id)init {
@@ -113,7 +114,7 @@
     _myScroview.tag            = 1000;
     [_myScroview addObserver:self forKeyPath:@"contentoffset" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
     //_myScroview.delegate       = self;
-    _myScroview.contentSize    = CGSizeMake(56*[_fs_GZF_ChannelListDAO.objectList count], 44);
+    _myScroview.contentSize    = CGSizeMake(WIDTHOFNAME*[_fs_GZF_ChannelListDAO.objectList count], 44);
     _myScroview.delegate       = self;
     
     
@@ -121,9 +122,9 @@
         FSChannelObject *CObject = [_fs_GZF_ChannelListDAO.objectList objectAtIndex:i];
         UIButton * button        = [UIButton buttonWithType:UIButtonTypeCustom];
         button.tag               = i;
-        button.frame             =  CGRectMake(i*56, 0, 56, 44);
+        button.frame             =  CGRectMake(i*WIDTHOFNAME, 0, WIDTHOFNAME, 44);
 
-        UILabel * label          = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 56, 44)];
+        UILabel * label          = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, WIDTHOFNAME, 44)];
         label.tag                = 100;
         label.textAlignment      = UITextAlignmentCenter;
         label.text               = CObject.channelname;
@@ -141,7 +142,7 @@
     
     [self.view addSubview:_myScroview];
     [_myScroview release];
-    _topRedImageView            = [[UIImageView alloc]initWithFrame:CGRectMake(0, 40, 56, 4)];
+    _topRedImageView            = [[UIImageView alloc]initWithFrame:CGRectMake(0, 40, WIDTHOFNAME, 4)];
     _topRedImageView.image      = [UIImage imageNamed:@"topSelected.png"];
     [_myScroview addSubview:_topRedImageView];
     [_topRedImageView release];
@@ -287,7 +288,7 @@
     Label.textColor             = [UIColor redColor];
 
 
-    _topRedImageView.frame      = CGRectMake(56*index, 40, 56, 4);
+    _topRedImageView.frame      = CGRectMake(WIDTHOFNAME*index, 40, WIDTHOFNAME, 4);
     _currentIndex               = index;
 //    UIView * view               = [self.view viewWithTag:20000];
 //    UIView * view3               = [self.view viewWithTag:30000];
@@ -372,8 +373,8 @@
         UIView * view = [_myScroview viewWithTag:x];
         int index = view.frame.origin.x;
         int yyy   = _myScroview.contentOffset.x;
-        if (index - yyy > 290) {
-            _myScroview.contentOffset = CGPointMake(index - 290+ 50, 0);
+        if (index - yyy > 290 - WIDTHOFNAME) {
+            _myScroview.contentOffset = CGPointMake(index - 290+ WIDTHOFNAME, 0);
         }else if(yyy > index)
         {
             _myScroview.contentOffset = CGPointMake(index, 0);

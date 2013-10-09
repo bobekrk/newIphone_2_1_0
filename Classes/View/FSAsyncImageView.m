@@ -57,8 +57,8 @@
         _imageView.clipsToBounds = YES;
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
 		[self addSubview:_imageView];
-        self.defaultFileName = @"AsyncImage.png";
-		
+        //self.defaultFileName = @"AsyncImage.png";
+		self.defaultFileName = @"AsyncImage";
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beginDownloading:) name:FSNETWORKDATA_MANAGER_BEGIN_DOWNLOADING_NOTIFICATION object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endDownloadingComplete:) name:FSNETWORKDATA_MANAGER_END_DOWNLOADING_COMPLETE_NOTIFICATION object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(endDownloadingError:) name:FSNETWORKDATA_MANAGER_END_DOWNLOADING_ERROR_NOTIFICATION object:nil];
@@ -115,7 +115,9 @@
 		} else {
 			dispatch_async(dispatch_get_main_queue(), ^(void) {
                 NSLog(@"");
-				UIImage *imageOri = [UIImage imageNamed:self.defaultFileName];
+
+				UIImage *imageOri = [[UIImage alloc]initWithNameString:self.defaultFileName];
+                //UIImage * imageOri = [UIImage imageWithNameString:self.defaultFileName];
 				CGRect rect;
                 if (self.frame.size.width<imageOri.size.width || self.frame.size.height < imageOri.size.height) {
                     rect = CGRectMake(0,0, self.frame.size.width, self.frame.size.height);//[self inner_computRectWithImage:imageOri withRect:self.frame];
@@ -127,6 +129,7 @@
 				//UIImage *image = [self inner_drawImageWithImage:imageOri withRect:rect];
                 
 				_imageView.image = imageOri;
+                [imageOri release];
                 _imageSize = rect.size;
 				_imageView.frame = rect;
 				

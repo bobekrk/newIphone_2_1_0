@@ -14,4 +14,9 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:picName ofType:@"png"];
     return [UIImage imageWithContentsOfFile:path];
 }
+-(UIImage*)initWithNameString:(NSString*)picName
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:picName ofType:@"png"];
+    return [self initWithContentsOfFile:path];
+}
 @end
