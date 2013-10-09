@@ -109,15 +109,32 @@ NSString * getCityName()
     _TimeForeground = [date timeIntervalSince1970];
     [date release];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    
+    _fs_GZF_localGetWeatherMessageDAO = [[FS_GZF_GetWeatherMessageDAO alloc] init];
+    _fs_GZF_localGetWeatherMessageDAO.parentDelegate = self;
+    _fs_GZF_localGetWeatherMessageDAO.isGettingList = NO;
     //NSLog(@"%@",CTSettingCopyMyPhoneNumber());
+
     _locManager = [[CLLocationManager alloc] init];
     [_locManager setDelegate:self];
     [_locManager setDesiredAccuracy:kCLLocationAccuracyThreeKilometers];
     [_locManager startMonitoringSignificantLocationChanges];
-    _fs_GZF_localGetWeatherMessageDAO = [[FS_GZF_GetWeatherMessageDAO alloc] init];
-    _fs_GZF_localGetWeatherMessageDAO.parentDelegate = self;
-    _fs_GZF_localGetWeatherMessageDAO.isGettingList = NO;
+    
+    
+    
+//    if (![CLLocationManager locationServicesEnabled]) {
+//        _fs_GZF_localGetWeatherMessageDAO.group = self.cityName;
+//        [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+//        return YES;
+//    }
+    
+    _fs_GZF_localGetWeatherMessageDAO2 = [[FS_GZF_GetWeatherMessageDAO alloc] init];
+    _fs_GZF_localGetWeatherMessageDAO2.parentDelegate = self;
+    _fs_GZF_localGetWeatherMessageDAO2.isGettingList = NO;
+    _fs_GZF_localGetWeatherMessageDAO2.group = getCityName();
+    [_fs_GZF_localGetWeatherMessageDAO2 HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
+
+    
+   
     return YES;
 }
 -(void)xxxxx
@@ -452,7 +469,9 @@ NSString * getCityName()
 -(void)showLoadingView:(UIView*)aView{
     float xxx = ISIPHONE5?568:480;
     [self performSelectorInBackground:@selector(loading) withObject:nil];
-    FSLoadingImageView *loadingView = [[FSLoadingImageView alloc] initWithFrame:CGRectMake(0, 0, 320, xxx)];
+    //FSLoadingImageView *loadingView = [[FSLoadingImageView alloc] initWithFrame:CGRectMake(0, 0, 320, xxx)];
+    FSLoadingImageView *loadingView = [[FSLoadingImageView alloc] initWithFrame:CGRectMake(0, 0, 320, xxx) andISNeedAutoClose:YES];
+    loadingView.isNeedAutoClose     = YES;
     loadingView.userInteractionEnabled = YES;
     //loadingView.parentDelegate = self;
     [self.window addSubview:loadingView];
@@ -863,6 +882,8 @@ NSString * getCityName()
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     NSLog(@" locationManager errorerror");
+//    _fs_GZF_localGetWeatherMessageDAO.group = self.cityName;
+//    [_fs_GZF_localGetWeatherMessageDAO HTTPGetDataWithKind:GET_DataKind_ForceRefresh];
 }
 
 

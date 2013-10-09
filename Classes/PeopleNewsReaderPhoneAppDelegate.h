@@ -44,6 +44,7 @@ NSString * getCityName();
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, copy)             NSString               * cityName;
 @property (nonatomic, retain)           FS_GZF_GetWeatherMessageDAO * fs_GZF_localGetWeatherMessageDAO;
+@property (nonatomic, retain)           FS_GZF_GetWeatherMessageDAO * fs_GZF_localGetWeatherMessageDAO2;
 
 - (NSURL *)applicationDocumentsDirectory;
 - (void)saveContext;
