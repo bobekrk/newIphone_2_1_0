@@ -109,7 +109,7 @@
         _navTopBar.tintColor         = [UIColor whiteColor];
         UIBarButtonItem * buttonxxxx = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(popFinished)];
         buttonxxxx.tintColor = [UIColor whiteColor];
-        NSDictionary * dict2 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor darkGrayColor],UITextAttributeTextColor,CGSizeMake(0, 0),UITextAttributeTextShadowOffset,nil];
+        NSDictionary * dict2 = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor darkGrayColor],UITextAttributeTextColor,[NSValue valueWithCGSize:CGSizeMake(0, 0)],UITextAttributeTextShadowOffset,nil];
         [buttonxxxx setTitleTextAttributes:dict2 forState:UIControlStateNormal];
         _navTopBar.topItem.rightBarButtonItem = buttonxxxx;
     //[rightButton setTitleTextAttributes:dict2 forState:UIControlStateNormal];
