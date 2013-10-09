@@ -31,10 +31,11 @@
 }
 
 -(void)imageLoadingComplete;
-
+- (id)initWithFrame:(CGRect)frame andISNeedAutoClose:(BOOL)isClose;
 @property (nonatomic,assign) id parentDelegate;
 @property (nonatomic,retain) FSAsyncImageView  *adImageView;
 @property (nonatomic,retain) FSAsyncImageView  *adImageView2;
+@property (nonatomic,assign) BOOL               isNeedAutoClose;
 
 @end
 

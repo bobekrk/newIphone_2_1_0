@@ -47,6 +47,13 @@
 
 @synthesize parentDelegate = _parentDelegate;
 
+
+- (id)initWithFrame:(CGRect)frame andISNeedAutoClose:(BOOL)isClose
+{
+    self.isNeedAutoClose = isClose;
+    
+    return [self initWithFrame:frame];
+}
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -81,8 +88,10 @@
 //        [self addSubview:_adImageView];
 //        [_adImageView release];
         
+        if (self.isNeedAutoClose) {
+            _timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timeOutEvent) userInfo:nil repeats:NO];
+        }
         
-        _timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timeOutEvent) userInfo:nil repeats:NO];
         //[self performSelector:@selector(timeOutEvent) withObject:nil afterDelay:5];
 //        if (ISIPHONE5) {
 //            
@@ -128,12 +137,13 @@
     NSMutableString * string = [[NSMutableString alloc]init];
     if (_adsStatus == 1) {
         LygAdsLoadingImageObject * object = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
-        [string appendFormat:@"【%@】%@->详见：%@ ->下载人民新闻客户端:%@",object.adTitle,object.adDesc,object.adLink,object.shareUrl];
+        [string appendFormat:@"%@%@",object.shareContent,object.shareUrl];
     }else
     {
         FSLoadingImageObject * temp = [_fs_GZF_ForLoadingImageDAO2.objectList objectAtIndex:0];
-        [string appendFormat:@"【%@】%@->详见：%@ ->下载人民新闻客户端:%@",temp.title,temp.shareContent,temp.link,temp.shareUrl];
+        [string appendFormat:@"%@%@",temp.shareContent,temp.shareUrl];
     }
+    
     return [string autorelease];
 }
 -(void)fsBaseContainerViewTouchEvent:(FSBaseContainerView *)sender{
@@ -318,12 +328,20 @@
         
 
         PeopleNewsReaderPhoneAppDelegate*appDelegate = (PeopleNewsReaderPhoneAppDelegate *)[UIApplication sharedApplication].delegate;
-        
+        NSString * xxxx = nil;
+        if (_adsStatus == 1) {
+            LygAdsLoadingImageObject * object = [_fs_GZF_ForLoadingImageDAO.objectList objectAtIndex:0];
+            xxxx                              = object.shareUrl;
+        }else
+        {
+            FSLoadingImageObject * temp = [_fs_GZF_ForLoadingImageDAO2.objectList objectAtIndex:0];
+            xxxx                              = temp.shareUrl;
+        }
 
         [self retain];
         UIImage *image = [UIImage imageNamed:@"icon@2x.png"];
         if (isSendToFriend == 0) {
-            if (![appDelegate sendWXMidiaMessage:[self shareContent] content:newsContent thumbImage:image webURL:@"https://itunes.apple.com/cn/app/id424180337"]) {
+            if (![appDelegate sendWXMidiaMessage:[self shareContent] content:[self shareContent] thumbImage:image webURL:xxxx]) {
                 //[CommonFuncs showMessage:@"人民新闻" ContentMessage:@"不能分享到微信，请确认安装了最新版本的微信客户端"];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"人民新闻" message:@"不能分享到微信，请确认安装了最新版本的微信客户端" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [alert show];
@@ -334,7 +352,7 @@
             }
         }else
         {
-            if (![appDelegate sendWXMidiaMessagePYQ:[self shareContent] content:[self shareContent] thumbImage:image webURL:@"https://itunes.apple.com/cn/app/id424180337"]) {
+            if (![appDelegate sendWXMidiaMessagePYQ:[self shareContent] content:[self shareContent] thumbImage:image webURL:xxxx]) {
                 //[CommonFuncs showMessage:@"人民新闻" ContentMessage:@"不能分享到微信，请确认安装了最新版本的微信客户端"];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"人民新闻" message:@"不能分享到微信，请确认安装了最新版本的微信客户端" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [alert show];
