@@ -87,7 +87,7 @@
         [topItem release];
         [items release];
         [self.view addSubview:_navTopBar];
-        NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:18], UITextAttributeFont,[UIColor blackColor],UITextAttributeTextColor,CGSizeMake(0, 0),UITextAttributeTextShadowOffset,nil];
+        NSDictionary * dict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:18], UITextAttributeFont,[UIColor blackColor],UITextAttributeTextColor,[NSValue valueWithCGSize:CGSizeMake(0, 0)],UITextAttributeTextShadowOffset,nil];
         _navTopBar.titleTextAttributes = dict;
         
 

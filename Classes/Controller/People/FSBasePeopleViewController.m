@@ -42,7 +42,9 @@
     [self performSelectorInBackground:@selector(xxxxxxxxxxx) withObject:nil];
     UIWindow * window = [UIApplication sharedApplication].keyWindow;
     
-    FSLoadingImageView *loadingView = [[FSLoadingImageView alloc] initWithFrame:CGRectMake(-320, 0, 320, xxx)];
+    //FSLoadingImageView *loadingView = [[FSLoadingImageView alloc] initWithFrame:CGRectMake(-320, 0, 320, xxx)];
+    
+    FSLoadingImageView *loadingView = [[FSLoadingImageView alloc] initWithFrame:CGRectMake(-320, 0, 320, xxx) andISNeedAutoClose:NO];
     loadingView.parentDelegate = self;
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.5];

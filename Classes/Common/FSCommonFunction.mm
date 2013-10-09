@@ -379,11 +379,19 @@ NSMutableData *decompressionZipDataWithSource(NSData *data) {
 } 
 
 void openAppStoreComment(NSString *applicationID) {
-	NSString *urlString = [[NSString alloc] initWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple%%20Software&id=%@", applicationID];
-	NSURL *urlComment = [[NSURL alloc] initWithString:urlString];
+    NSString * urlString = nil;
+    if ([UIDevice currentDevice].systemVersion.floatValue > 6.5) {
+        urlString = [[NSString alloc] initWithFormat:@"itms-apps://itunes.apple.com/app/id%@", applicationID];
+    }else
+    {
+        urlString = [[NSString alloc] initWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple%%20Software&id=%@", applicationID];
+    }
+    NSURL *urlComment = [[NSURL alloc] initWithString:urlString];
 	[[UIApplication sharedApplication] openURL:urlComment];
 	[urlComment release];
     [urlString release];
+    
+    //itms-apps://itunes.apple.com/app/id123456789
 }
 
 CGSize scalImageSizeFixWidth(UIImage *image, CGFloat fixWidth) {
