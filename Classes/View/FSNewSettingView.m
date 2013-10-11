@@ -114,6 +114,7 @@
 {
     static NSString * xxx = @"xxxxxxx";
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:xxx];
+    BOOL isNeedAutoRelease = NO;
     if (!cell) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:xxx];
         UIImageView * imageview = [[UIImageView alloc]initWithFrame:CGRectMake(30, 10, cell.frame.size.height - 20, cell.frame.size.height - 20)];
@@ -121,7 +122,7 @@
         [cell addSubview:imageview];
         [imageview release];
         
-        
+        isNeedAutoRelease = YES;
         UILabel * label = [[UILabel alloc]initWithFrame:CGRectMake(70, 0, 150, cell.frame.size.height)];
         label.highlightedTextColor    = [UIColor redColor];
         [cell addSubview:label];
@@ -144,7 +145,7 @@
     
     UILabel     * label    = (UILabel*)[cell viewWithTag:200];
     label.text             = ((settingDataObject*)[_dataObjectArry objectAtIndex:indexPath.row]).titleString;
-    return  cell; 
+    return  (isNeedAutoRelease?[cell autorelease]:cell);
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

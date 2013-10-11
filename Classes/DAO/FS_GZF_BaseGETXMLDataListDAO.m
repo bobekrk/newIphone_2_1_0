@@ -21,8 +21,7 @@
 }
 
 - (void)dealloc {
-    //[_objectList removeAllObjects];
-	//[_objectList release];
+	[_objectList release];
 	[super dealloc];
 }
 

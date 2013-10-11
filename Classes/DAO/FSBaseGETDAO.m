@@ -53,11 +53,12 @@
 	NSEntityDescription *entity = [[NSEntityDescription alloc] init];
 	[entity setName:[self entityName]];
 	[request setEntity:entity];
+    [entity release];
 	
 	//STEP 3.
 	NSError *error = nil;
 	NSInteger recordCount = [self.managedObjectContext countForFetchRequest:request error:&error];
-	
+	[request release];
 	if (error) {
 #ifdef MYDEBUG
 		NSLog(@"表中有多少记录,最后一次缓存的记录。错误");

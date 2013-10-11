@@ -13,7 +13,7 @@
 #define DEEPPICTURE_IMAGESIZE_5 @"640/1136"
 
 
-#define FSLOADING_IMAGEVIEW_URL @"http://mobile.app.people.com.cn:81/paper_ipad/paper.php?act=headpic&type=4&appid=6&count=1&resolution=%@"
+#define FSLOADING_IMAGEVIEW_URL @"http://mobile.app.people.com.cn:81/paper_ipad/paper.php?act=headpic&type=4&appid=6&format=xml&count=1&resolution=%@"
 
 /*
  
@@ -124,7 +124,7 @@
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-	//NSLog(@"foundCharacters:%@",string);
+	NSLog(@"foundCharacters:%@",string);
     
     /*
      NSString *strUnion = nil;
@@ -137,6 +137,12 @@
      }
      [strUnion release];
      */
+    if ([_currentElementName isEqualToString:Loading_newsid]) {
+        if (_obj.newsid == nil) {
+            _obj.newsid = string;
+        }
+		
+    }
 }
 
 - (void)parser:(NSXMLParser *)parser foundCDATA:(NSData *)CDATABlock {
@@ -194,6 +200,16 @@
     else if ([_currentElementName isEqualToString:Loading_flag]) {
 		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
 		_obj.flag = trimString(content);
+		[content release];
+	}
+    else if ([_currentElementName isEqualToString:@"SHARE_CONTENT"]) {
+		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
+		_obj.shareContent = trimString(content);
+		[content release];
+	}
+    else if ([_currentElementName isEqualToString:@"SHARE_URL"]) {
+		NSString *content = [[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
+		_obj.shareUrl = trimString(content);
 		[content release];
 	}
 }

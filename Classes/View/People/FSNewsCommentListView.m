@@ -143,7 +143,7 @@
         NSDate *date = [[NSDate alloc] initWithTimeIntervalSince1970:[o.timestamp doubleValue]];
         
         NSString *datetime = timeIntervalStringSinceNow(date);
-        
+        [date release];
         NSString *body = o.content;
         body = [body stringByReplacingOccurrencesOfString:@"\"" withString:@"&quot;"];
         body = [body stringByReplacingOccurrencesOfString:@"\r\n" withString:@"<br>"];
@@ -158,6 +158,7 @@
             NSString *admin = o.adminNickname;
             NSDate *REdate = [[NSDate alloc] initWithTimeIntervalSince1970:[o.adminTimestamp doubleValue]];
             NSString *REdatetime = timeIntervalStringSinceNow(REdate);
+            [REdate release];
             NSString *REbody = o.adminContent;
             NSString *strCommentREBlock = [NSString stringWithFormat:CONTENTWEBVIEW_COMMENT_RE_BLOCK, admin, REdatetime, REbody, comefrom];
             templateString = [NSString stringWithFormat:@"%@%@",templateString,strCommentREBlock];

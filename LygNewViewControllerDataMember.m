@@ -14,7 +14,7 @@
     if (self = [super init]) {
         self.fs_GZF_ForNewsListDAO = [[[FS_GZF_ForNewsListDAO alloc]init] autorelease];
         self.lygAdsDao             = [[LygAdsDao alloc] init];
-        self.fs_GZF_ForOnedayNewsFocusTopDAO  = [[FS_GZF_ForOnedayNewsFocusTopDAO alloc]init];
+        _fs_GZF_ForOnedayNewsFocusTopDAO  = [[FS_GZF_ForOnedayNewsFocusTopDAO alloc]init];
         
     }
     return self;

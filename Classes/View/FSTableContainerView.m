@@ -181,11 +181,12 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierString];
     
     //cell.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"CellBackground"]];
-    
+    BOOL isNeedAutoRelease = NO;
 	if (cell == nil) {
 		cell = (UITableViewCell *)[[[self cellClassWithIndexPath:indexPath] alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierString];
         cell.textLabel.font = [UIFont boldSystemFontOfSize:16];
         cell.textLabel.autoresizingMask = UIViewAutoresizingNone;
+        isNeedAutoRelease   = YES;
 	}
 	
 	if ([cell isKindOfClass:[FSTableViewCell class]]) {
@@ -203,7 +204,7 @@
 		[self initializeCell:cell withData:[self cellDataObjectWithIndexPath:indexPath] withIndexPath:indexPath];
 	}
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
+    return isNeedAutoRelease?[cell autorelease]:cell;
 }
 
 #pragma mark -

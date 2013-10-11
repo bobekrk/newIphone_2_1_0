@@ -187,7 +187,7 @@
     //_bt_comment.frame         = CGRectMake(75*2+27.5f, self.frame.size.height - 40, 40, 40);
     _bt_comment.frame           = CGRectMake(75*1+27.5f, self.frame.size.height - 40, 40, 40);
     //_bt_share.frame           = CGRectMake(75*3+27.5f, self.frame.size.height - 40, 40, 40);
-    _bt_share.frame             = CGRectMake(75*2+27.5f, self.frame.size.height - 40, 40, 40);
+    _bt_share.frame             = CGRectMake(75*2+27.5f + 7.5, self.frame.size.height - 40 + 7.5, 25, 25);
     _goBackButton.frame         = CGRectMake(75*0+27.5f, self.frame.size.height - 40, 40, 40);
     
     //_fontSelectBackground.frame = CGRectMake(6, self.frame.size.height - 90, 229, 50);

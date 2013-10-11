@@ -15,7 +15,7 @@
 //#import "FS_GZF_Fo"
 @class LygAdsDao;
 
-@interface FSLoadingImageView : UIView<MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate,MFMailComposeViewControllerDelegate,FSBaseDAODelegate>{
+@interface FSLoadingImageView : UIView<MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate,MFMailComposeViewControllerDelegate,FSBaseDAODelegate,UIActionSheetDelegate>{
 @protected
     id                         _parentDelegate;
     NSTimer                   *_timer;
@@ -36,6 +36,7 @@
 @property (nonatomic,retain) FSAsyncImageView  *adImageView;
 @property (nonatomic,retain) FSAsyncImageView  *adImageView2;
 @property (nonatomic,assign) BOOL               isNeedAutoClose;
+@property (nonatomic,assign) BOOL               isHaveSaved;
 
 @end
 
