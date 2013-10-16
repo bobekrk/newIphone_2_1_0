@@ -17,6 +17,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         //[self otherInitCode];
+        self.opaque = YES;
     }
     return self;
 }

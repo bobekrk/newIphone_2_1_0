@@ -19,7 +19,7 @@
     if (self) {
         // Initialization code
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+        self.opaque         = YES;
         UIImageView *contentBGR = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"deep_baground.png"]];
         self.backgroundView = contentBGR;
         [contentBGR release];

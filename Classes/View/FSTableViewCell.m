@@ -37,6 +37,7 @@
 		_rowIndex = -1;
 		_sectionIndex = 0;
 		_cellShouldWidth = self.frame.size.width;
+        self.opaque   = YES;
         [self doSomethingAtInit];
     }
     return self;
